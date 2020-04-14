@@ -1,0 +1,32 @@
+#https://www.home-assistant.io/components/input_boolean
+
+event_ale_letto:
+  name: Attivo
+  icon: mdi:bell
+
+event_ale_scuola:
+  name: Attivo
+  icon: mdi:bell
+
+event_sveglia_1:
+  name: Attivo
+  icon: mdi:bell
+
+event_sveglia_2:
+  name: Attivo
+  icon: mdi:bell
+
+event_sonoleore:
+  name: Attivo
+  icon: mdi:bell
+
+event_cover_up:
+  name: Attivo
+  icon: mdi:bell
+event_cover_down:
+  name: Attivo
+  icon: mdi:bell
+
+irrigation_active:
+  name: Attivo
+  icon: mdi:bell

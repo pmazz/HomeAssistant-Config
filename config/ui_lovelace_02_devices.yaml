@@ -1,0 +1,187 @@
+#+++++++++++++++++++++++++++
+#+++++ VIEW -> Devices +++++
+#+++++++++++++++++++++++++++
+path: devices
+title: Devices
+icon: mdi:monitor-cellphone-star
+panel: true
+cards:
+  - id: devices.container
+    type: custom:layout-card  #https://github.com/thomasloven/lovelace-layout-card
+    layout: vertical
+    max_columns: 3
+    cards:
+      - id: devices.router
+        type: conditional  #https://www.home-assistant.io/lovelace/conditional
+        conditions:
+          - entity: binary_sensor.online_router_fritzbox
+            state: "on"
+        card:
+          type: entities  #https://www.home-assistant.io/lovelace/entities
+          title: Router
+          show_header_toggle: false
+          entities:
+            - sensor.fritz_attr_uptime
+            - sensor.fritz_attr_external_ip
+            - entity: sensor.fritz_attr_is_connected
+              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+              name: Connected to
+              state_header: Internet
+              entities:
+                - entity: sensor.fritz_attr_is_linked
+                  name: Provider
+            - sensor.fritz_attr_wan_access_type
+            - entity: sensor.fritz_attr_received_mb
+              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+              name: Data Volume (MB)
+              state_header: Received
+              unit: " "
+              entities:
+                - entity: sensor.fritz_attr_sent_mb
+                  name: Sent
+                  unit: " "
+            - entity: sensor.fritz_attr_transmission_rate_down
+              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+              name: Current Stream (byte/sec)
+              state_header: Down
+              unit: " "
+              entities:
+                - entity: sensor.fritz_attr_transmission_rate_up
+                  name: Up
+                  unit: " "
+            - type: section
+            - entity: switch.guest_wifi
+              type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
+              state_color: true
+              users: Paolo
+      - break
+      - id: devices.adguard
+        type: conditional  #https://www.home-assistant.io/lovelace/conditional
+        conditions:
+          - entity: binary_sensor.online_adguard
+            state: "on"
+        card:
+          type: entities  #https://www.home-assistant.io/lovelace/entities
+          title: AdGuard Home
+          show_header_toggle: false
+          entities:
+            - entity: sensor.adguard_dns_queries
+              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+              name: DNS Queries
+              state_header: Total
+              unit: " "
+              entities:
+                - entity: sensor.adguard_dns_queries_blocked
+                  name: Blocked
+                  unit: " "
+                - entity: sensor.adguard_dns_queries_blocked_ratio
+                  name: "Blocked %"
+                  unit: " "
+            - entity: sensor.adguard_safe_browsing_blocked
+              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+              name: Blocked Requests
+              state_header: Safe Browsing
+              unit: " "
+              icon: mdi:shield-account
+              entities:
+                - entity: sensor.adguard_parental_control_blocked
+                  name: Parental Control
+                  unit: " "
+            - entity: sensor.adguard_rules_count
+              name: Rules Count
+            - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+              head:
+                type: section
+                label: Switches
+              open: true
+              items:
+                - entity: switch.adguard_protection
+                  state_color: true
+                - entity: switch.adguard_filtering
+                  name: "Filtering"
+                  state_color: true
+                - entity: switch.adguard_parental_control
+                  name: "Parental Control"
+                  state_color: true
+                # - switch.adguard_query_log
+                #   state_color: true
+                - entity: switch.adguard_safe_browsing
+                  name: "Safe Browsing"
+                  state_color: true
+                - entity: switch.adguard_safe_search
+                  name: "Safe Search"
+                  state_color: true
+      - break
+      - id: devices.ups
+        type: conditional  #https://www.home-assistant.io/lovelace/conditional
+        conditions:
+          - entity: sensor.tecnoware_ups_status
+            state: "Online"
+        card:
+          type: entities  #https://www.home-assistant.io/lovelace/entities
+          title: UPS
+          show_header_toggle: false
+          entities:
+            - entity: sensor.tecnoware_ups_status
+              name: Status
+            - entity: sensor.tecnoware_ups_battery_charge
+              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+              name: Battery
+              state_header: Charge
+              entities:
+                - entity: sensor.tecnoware_ups_battery_runtime
+                  name: Runtime
+            - entity: sensor.tecnoware_ups_load
+              name: Load
+            - entity: sensor.tecnoware_ups_output_voltage
+              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+              name: Voltage
+              state_header: Output
+              entities:
+                - entity: sensor.tecnoware_ups_input_voltage
+                  name: Input
+            # - entity: sensor.tecnoware_ups_input_line_frequency
+      - id: devices.nas
+        type: conditional  #https://www.home-assistant.io/lovelace/conditional
+        conditions:
+          - entity: binary_sensor.online_nas_qnap
+            state: "on"
+        card:
+          type: entities  #https://www.home-assistant.io/lovelace/entities
+          title: NAS
+          show_header_toggle: false
+          entities:
+            #- sensor.nas_attr_name
+            - sensor.nas_attr_model
+            #- sensor.nas_attr_serial
+            - sensor.nas_attr_uptime
+            - entity: sensor.nas_system_temperature
+              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+              entities:
+                - entity: sensor.nas_temperature_drive_0_1
+                  name: Drive 1
+                - entity: sensor.nas_temperature_drive_0_2
+                  name: Drive 2
+            - entity: sensor.nas_memory_usage
+              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+              entities:
+                - entity: sensor.nas_memory_used
+                  name: Used
+                - entity: sensor.nas_memory_available
+                  name: Available
+            - sensor.nas_cpu_usage
+            - entity: sensor.nas_volume_used_volume1
+              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+              name: Space usage
+              entities:
+                - entity: sensor.nas_used_space_volume1
+                  name: Used
+                - entity: sensor.nas_free_space_volume1
+                  name: Available
+            - entity: sensor.nas_status
+              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+              entities:
+                - entity: sensor.nas_smart_status_drive_0_1
+                  name: Drive 1
+                - entity: sensor.nas_smart_status_drive_0_2
+                  name: Drive 2

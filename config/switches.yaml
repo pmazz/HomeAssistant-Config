@@ -1,0 +1,310 @@
+- platform: template  #https://www.home-assistant.io/components/switch.template
+  switches:
+    event_sonoleore:
+      friendly_name: "Attivo"
+      icon_template: "{% if is_state('input_boolean.event_sonoleore', 'on') %}mdi:bell{% else %}mdi:bell-off{% endif %}"
+      value_template: "{{ is_state('input_boolean.event_sonoleore', 'on') }}"
+      turn_on:
+        service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.event_sonoleore
+      turn_off:
+        service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.event_sonoleore
+    event_ale_letto:
+      friendly_name: "Attivo"
+      icon_template: "{% if is_state('input_boolean.event_ale_letto', 'on') %}mdi:bell{% else %}mdi:bell-off{% endif %}"
+      value_template: "{{ is_state('input_boolean.event_ale_letto', 'on') }}"
+      turn_on:
+        service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.event_ale_letto
+      turn_off:
+        service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.event_ale_letto
+    event_ale_scuola:
+      friendly_name: "Attivo"
+      icon_template: "{% if is_state('input_boolean.event_ale_scuola', 'on') %}mdi:bell{% else %}mdi:bell-off{% endif %}"
+      value_template: "{{ is_state('input_boolean.event_ale_scuola', 'on') }}"
+      turn_on:
+        service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.event_ale_scuola
+      turn_off:
+        service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.event_ale_scuola
+    event_sveglia_1:
+      friendly_name: "Attivo"
+      icon_template: "{% if is_state('input_boolean.event_sveglia_1', 'on') %}mdi:bell{% else %}mdi:bell-off{% endif %}"
+      value_template: "{{ is_state('input_boolean.event_sveglia_1', 'on') }}"
+      turn_on:
+        service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.event_sveglia_1
+      turn_off:
+        service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.event_sveglia_1
+    event_sveglia_2:
+      friendly_name: "Attivo"
+      icon_template: "{% if is_state('input_boolean.event_sveglia_2', 'on') %}mdi:bell{% else %}mdi:bell-off{% endif %}"
+      value_template: "{{ is_state('input_boolean.event_sveglia_2', 'on') }}"
+      turn_on:
+        service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.event_sveglia_2
+      turn_off:
+        service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.event_sveglia_2
+    event_cover_up:
+      friendly_name: "Attivo"
+      icon_template: "{% if is_state('input_boolean.event_cover_up', 'on') %}mdi:bell{% else %}mdi:bell-off{% endif %}"
+      value_template: "{{ is_state('input_boolean.event_cover_up', 'on') }}"
+      turn_on:
+        service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.event_cover_up
+      turn_off:
+        service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.event_cover_up
+    event_cover_down:
+      friendly_name: "Attivo"
+      icon_template: "{% if is_state('input_boolean.event_cover_down', 'on') %}mdi:bell{% else %}mdi:bell-off{% endif %}"
+      value_template: "{{ is_state('input_boolean.event_cover_down', 'on') }}"
+      turn_on:
+        service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.event_cover_down
+      turn_off:
+        service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.event_cover_down
+
+
+#+++++++++++++++++++++++++++++++
+#+++++ Irrigation switches +++++
+#+++++++++++++++++++++++++++++++
+    irrigation_active:
+      friendly_name: "Attivo"
+      icon_template: "{% if is_state('input_boolean.irrigation_active', 'on') %}mdi:bell{% else %}mdi:bell-off{% endif %}"
+      value_template: "{{ is_state('input_boolean.irrigation_active', 'on') }}"
+      turn_on:
+        service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.irrigation_active
+      turn_off:
+        service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.irrigation_active
+
+
+#+++++++++++++++++++++++++++
+#+++++ Router switches +++++
+#+++++++++++++++++++++++++++
+- platform: template  #https://www.home-assistant.io/components/switch.template
+  switches:
+    guest_wifi:
+      friendly_name: Guest Wifi
+      icon_template: mdi:wifi
+      value_template: "{{ is_state('switch.fritz_box_guest_wifi', 'on') }}"
+      turn_on:
+        service: script.guest_wifi_start
+      turn_off:
+        service: script.guest_wifi_stop
+
+
+#++++++++++++++++++++++++++++
+#+++++ Tasmota switches +++++
+#++++++++++++++++++++++++++++
+- platform: mqtt  #https://www.home-assistant.io/components/switch.mqtt
+  name: sonoff_basic_1
+  command_topic: "home/sonoff_basic_1/cmnd/POWER"
+  state_topic: "home/sonoff_basic_1/stat/POWER"
+  state_on: "ON"
+  state_off: "OFF"
+  availability_topic: "home/sonoff_basic_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+  qos: 1
+- platform: mqtt  #https://www.home-assistant.io/components/switch.mqtt
+  name: sonoff_basic_2
+  command_topic: "home/sonoff_basic_2/cmnd/POWER"
+  state_topic: "home/sonoff_basic_2/stat/POWER"
+  state_on: "ON"
+  state_off: "OFF"
+  availability_topic: "home/sonoff_basic_2/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+  qos: 1
+- platform: mqtt  #https://www.home-assistant.io/components/switch.mqtt
+  name: sonoff_basic_3
+  command_topic: "home/sonoff_basic_3/cmnd/POWER"
+  state_topic: "home/sonoff_basic_3/stat/POWER"
+  state_on: "ON"
+  state_off: "OFF"
+  availability_topic: "home/sonoff_basic_3/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+  qos: 1
+- platform: mqtt  #https://www.home-assistant.io/components/switch.mqtt
+  name: sonoff_dual_1
+  command_topic: "home/sonoff_dual_1/cmnd/POWER1"
+  state_topic: "home/sonoff_dual_1/stat/POWER1"
+  state_on: "ON"
+  state_off: "OFF"
+  availability_topic: "home/sonoff_dual_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+  qos: 1
+- platform: mqtt  #https://www.home-assistant.io/components/switch.mqtt
+  name: sonoff_dual_2
+  command_topic: "home/sonoff_dual_1/cmnd/POWER2"
+  state_topic: "home/sonoff_dual_1/stat/POWER2"
+  state_on: "ON"
+  state_off: "OFF"
+  availability_topic: "home/sonoff_dual_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+  qos: 1
+- platform: mqtt  #https://www.home-assistant.io/components/switch.mqtt
+  name: sonoff_4ch_1
+  command_topic: "home/sonoff_4ch_1/cmnd/POWER1"
+  state_topic: "home/sonoff_4ch_1/stat/POWER1"
+  state_on: "ON"
+  state_off: "OFF"
+  availability_topic: "home/sonoff_4ch_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+  qos: 1
+- platform: mqtt  #https://www.home-assistant.io/components/switch.mqtt
+  name: sonoff_4ch_2
+  command_topic: "home/sonoff_4ch_1/cmnd/POWER2"
+  state_topic: "home/sonoff_4ch_1/stat/POWER2"
+  state_on: "ON"
+  state_off: "OFF"
+  availability_topic: "home/sonoff_4ch_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+  qos: 1
+- platform: mqtt  #https://www.home-assistant.io/components/switch.mqtt
+  name: sonoff_4ch_3
+  command_topic: "home/sonoff_4ch_1/cmnd/POWER3"
+  state_topic: "home/sonoff_4ch_1/stat/POWER3"
+  state_on: "ON"
+  state_off: "OFF"
+  availability_topic: "home/sonoff_4ch_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+  qos: 1
+- platform: mqtt  #https://www.home-assistant.io/components/switch.mqtt
+  name: sonoff_4ch_4
+  command_topic: "home/sonoff_4ch_1/cmnd/POWER4"
+  state_topic: "home/sonoff_4ch_1/stat/POWER4"
+  state_on: "ON"
+  state_off: "OFF"
+  availability_topic: "home/sonoff_4ch_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+  qos: 1
+- platform: mqtt  #https://www.home-assistant.io/components/switch.mqtt
+  name: smartplug_1
+  command_topic: "home/smart_plug_1/cmnd/POWER"
+  state_topic: "home/smart_plug_1/stat/POWER"
+  state_on: "ON"
+  state_off: "OFF"
+  availability_topic: "home/smart_plug_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+  qos: 1
+- platform: mqtt  #https://www.home-assistant.io/components/switch.mqtt
+  name: smartplug_2
+  command_topic: "home/smart_plug_2/cmnd/POWER"
+  state_topic: "home/smart_plug_2/stat/POWER"
+  state_on: "ON"
+  state_off: "OFF"
+  availability_topic: "home/smart_plug_2/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+  qos: 1
+- platform: mqtt  #https://www.home-assistant.io/components/switch.mqtt
+  name: smartplug_3
+  command_topic: "home/smart_plug_3/cmnd/POWER"
+  state_topic: "home/smart_plug_3/stat/POWER"
+  state_on: "ON"
+  state_off: "OFF"
+  availability_topic: "home/smart_plug_3/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+  qos: 1
+- platform: mqtt  #https://www.home-assistant.io/components/switch.mqtt
+  name: smartplug_4
+  command_topic: "home/smart_plug_4/cmnd/POWER"
+  state_topic: "home/smart_plug_4/stat/POWER"
+  state_on: "ON"
+  state_off: "OFF"
+  availability_topic: "home/smart_plug_4/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+  qos: 1
+- platform: mqtt  #https://www.home-assistant.io/components/switch.mqtt
+  name: smartplug_5
+  command_topic: "home/smart_plug_5/cmnd/POWER"
+  state_topic: "home/smart_plug_5/stat/POWER"
+  state_on: "ON"
+  state_off: "OFF"
+  availability_topic: "home/smart_plug_5/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+  qos: 1
+- platform: mqtt  #https://www.home-assistant.io/components/switch.mqtt
+  name: smartplug_6
+  command_topic: "home/smart_plug_6/cmnd/POWER"
+  state_topic: "home/smart_plug_6/stat/POWER"
+  state_on: "ON"
+  state_off: "OFF"
+  availability_topic: "home/smart_plug_6/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+  qos: 1
+- platform: mqtt  #https://www.home-assistant.io/components/switch.mqtt
+  name: smartplug_7
+  command_topic: "home/smart_plug_7/cmnd/POWER"
+  state_topic: "home/smart_plug_7/stat/POWER"
+  state_on: "ON"
+  state_off: "OFF"
+  availability_topic: "home/smart_plug_7/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+  qos: 1
+- platform: mqtt  #https://www.home-assistant.io/components/switch.mqtt
+  name: smartplug_8
+  command_topic: "home/smart_plug_8/cmnd/POWER"
+  state_topic: "home/smart_plug_8/stat/POWER"
+  state_on: "ON"
+  state_off: "OFF"
+  availability_topic: "home/smart_plug_8/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+  qos: 1

@@ -1,0 +1,6 @@
+#https://www.home-assistant.io/components/shell_command
+
+#++++++++++++++++++++++++++++++++++++++++++++++++++
+#+++++ Commit/Push configuration files to Git +++++
+#++++++++++++++++++++++++++++++++++++++++++++++++++
+config_commit_to_git: cd /config; git add .; git status; git commit -m "Committed at $(date +"%Y-%m-%d %H:%M")"; git push origin master

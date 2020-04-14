@@ -1,0 +1,253 @@
+homeassistant:
+  #Name of the location where Home Assistant is running
+  name: Casa Mazzini
+  #Location required to calculate the time the sun rises and sets
+  latitude: !secret home_latitude
+  longitude: !secret home_longitude
+  #Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 70
+  #metric for Metric, imperial for Imperial
+  unit_system: metric
+  #Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Europe/Rome
+  #Customization file
+  customize: !include customize.yaml
+
+#Show links to resources in log and frontend
+#introduction:
+
+#Enables the frontend
+frontend:
+  themes: !include_dir_merge_named themes
+
+#Enables configuration UI
+config:
+
+hassio:
+
+lovelace:
+  mode: yaml
+
+http:
+  #Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+#  base_url: !secret base_url
+#  ssl_certificate: /ssl/fullchain.pem
+#  ssl_key: /ssl/privkey.pem
+  login_attempts_threshold: 3
+  ip_ban_enabled: false
+
+logger:  #https://www.home-assistant.io/components/logger
+  #Log Severities: notset, debug, info, warn, warning, error, fatal, critical
+  default: !secret log_default
+  logs:
+    #homeassistant.components.sensor: debug
+    homeassistant.components.automation: debug
+    homeassistant.components.python_script: debug
+    #homeassistant.components.shell_command: debug
+    #homeassistant.components.media_player: debug
+    #homeassistant.components.script.tts_speak: debug
+    homeassistant.components.script: debug
+    #homeassistant.components.recorder: debug
+    #homeassistant.components.device_tracker: debug
+
+python_script:  #https://www.home-assistant.io/components/python_script
+
+#Checks for available updates
+#Note: This component will send some information about your system to the developers to assist with development of Home Assistant.
+#For more information, please see: https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  #Optional, allows Home Assistant developers to focus on popular components.
+  #include_used_components: true
+
+#Discover some devices automatically
+discovery:
+
+#Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+#Enables support for tracking state changes over time
+history:  #https://www.home-assistant.io/integrations/history
+
+#View all events in a logbook
+logbook:  #https://www.home-assistant.io/integrations/logbook
+
+recorder:  #https://www.home-assistant.io/components/recorder
+  purge_keep_days: 7
+  purge_interval: 1
+  exclude:
+    event_types:
+      - call_service
+      - component_loaded
+      - config_entry_discovered
+      - hacs/config
+      - hacs/reload
+      - hacs/repository
+      - hacs/status
+      - homeassistant_start
+      - homeassistant_stop
+      - lovelace_updated
+      - panels_updated
+      - persistent_notifications_updated
+      - platform_discovered
+      - service_registered
+      - service_removed
+      # - state_changed
+      - themes_updated
+      - timer_out_of_sync
+    domains:
+      - automation
+      - binary_sensor
+      - calendar
+      - camera
+      - cover
+      - device_tracker
+      - group
+      - input_boolean
+      - input_datetime
+      - input_number
+      - input_select
+      - input_text
+      - media_player
+      - persistent_notification
+      - script
+      - sensor
+      - sun
+      - switch
+      - weather
+      - weblink
+      - zone
+  include:
+    entities:
+      - sensor.xiaomi_temperature_1
+      - sensor.xiaomi_humidity_1
+      - sensor.xiaomi_hub_illumination
+      - binary_sensor.xiaomi_motion_1
+      - sensor.xiaomi_motion_1_illumination
+      - binary_sensor.xiaomi_motion_2
+      - sensor.xiaomi_motion_2_illumination
+      - input_text.mqtt_last_service
+      - input_text.tts_last_sentence
+      - input_text.webhook_last_script
+      - sensor.pzem_power
+      - sensor.pzem_energy_entire_day
+
+#Enables a map showing the location of tracked devices
+#map:
+
+system_health:  #https://www.home-assistant.io/components/system_health
+
+#Track the sun
+sun:  #https://www.home-assistant.io/components/sun
+
+#Text to speech
+tts:  #https://www.home-assistant.io/components/tts
+  - platform: google_translate  #https://www.home-assistant.io/components/google_translate
+    language: it
+    service_name: google_say
+
+#cloud:
+
+xiaomi_aqara:
+  discovery_retry: 5
+  gateways:
+    - key: !secret xiaomi_gateway_key
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+zone: !include zones.yaml
+sensor: !include sensors.yaml
+binary_sensor: !include sensors_binary.yaml
+rss_feed_template: !include rss_feeds.yaml
+
+hacs:
+  token: !secret github_hacs
+
+samsungtv:  #https://www.home-assistant.io/integrations/samsungtv
+  - host: !secret samsung_tv_ip
+
+# duckdns:  #https://www.home-assistant.io/components/duckdns
+#   domain: !secret duckdns_domain
+#   access_token: !secret duckdns_token
+
+ifttt:  #https://www.home-assistant.io/components/ifttt
+  key: !secret ifttt_key
+
+mqtt:  #https://www.home-assistant.io/components/mqtt
+  broker: !secret mqtt_broker
+  port: !secret mqtt_port
+  username: !secret mqtt_user
+  password: !secret mqtt_pwd
+  birth_message:
+    topic: "home/hass/status"
+    payload: "online"
+    qos: 1
+    retain: true
+  will_message:
+    topic: "home/hass/status"
+    payload: "offline"
+    qos: 1
+    retain: true
+
+device_tracker:
+  - platform: mqtt_json  #https://www.home-assistant.io/components/device_tracker.mqtt_json
+    devices:
+      cell_paolo: mobile/cell-paolo
+      cell_silvia: mobile/cell-silvia
+      tablet_paolo: mobile/tablet-paolo
+
+telegram_bot:  #https://www.home-assistant.io/components/telegram_bot
+  - platform: polling
+    api_key: !secret telegram_api
+    allowed_chat_ids:
+      - !secret telegram_chatid_paolo
+      - !secret telegram_chatid_silvia
+
+notify:
+  - platform: telegram  #https://www.home-assistant.io/components/notify.telegram
+    name: telegram_paolo
+    chat_id: !secret telegram_chatid_paolo
+  - platform: telegram  #https://www.home-assistant.io/components/notify.telegram
+    name: telegram_silvia
+    chat_id: !secret telegram_chatid_silvia
+
+input_select: !include inputs_select.yaml
+input_text: !include inputs_text.yaml
+input_number: !include inputs_number.yaml
+input_datetime: !include inputs_datetime.yaml
+input_boolean: !include inputs_boolean.yaml
+
+switch: !include switches.yaml
+
+shell_command: !include shell_commands.yaml
+
+cover: !include covers.yaml
+
+camera:
+  - platform: generic  #https://www.home-assistant.io/components/camera.generic
+    name: Weather Map (Ponzano)
+    still_image_url: https://www.yr.no/place/Italy/Veneto/Ponzano_Veneto/meteogram.svg
+    content_type: "image/svg+xml"
+  - platform: generic
+    name: Map Paolo  #https://www.home-assistant.io/components/camera.generic
+    still_image_url: https://dev.virtualearth.net/REST/V1/Imagery/Map/Road/{{states.sensor.cell_paolo_latlong.state}}/13?mapSize=400,300&format=png&pushpin={{states.sensor.cell_paolo_latlong.state}};66;P&key={{states.sensor.maps_api_key.state}}
+    limit_refetch_to_url_change: true
+  - platform: generic
+    name: Map Silvia  #https://www.home-assistant.io/components/camera.generic
+    still_image_url: https://dev.virtualearth.net/REST/V1/Imagery/Map/Road/{{states.sensor.cell_silvia_latlong.state}}/13?mapSize=400,300&format=png&pushpin={{states.sensor.cell_silvia_latlong.state}};64;S&key={{states.sensor.maps_api_key.state}}
+    limit_refetch_to_url_change: true
+
+tuya:  #https://www.home-assistant.io/components/tuya
+  country_code: !secret tuya_country_code
+  username: !secret tuya_user
+  password: !secret tuya_pwd
+  platform: smart_life
+
+openuv:  #https://www.home-assistant.io/components/openuv
+  api_key: !secret openuv_api_key
+
+uilogs:  #https://github.com/custom-components/uilogs
+
+fritzbox_tools:  #https://github.com/mammuth/ha-fritzbox-tools
+  host: !secret router_fritzbox_ip
+  username: !secret router_fritzbox_user
+  password: !secret router_fritzbox_pwd

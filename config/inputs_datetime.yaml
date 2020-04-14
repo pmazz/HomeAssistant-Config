@@ -1,0 +1,258 @@
+#https://www.home-assistant.io/components/input_datetime
+
+#dummy_datetime_1:
+#  name: Input with both date and time
+#  has_date: true
+#  has_time: true
+#  initial: "1970-01-01 00:00"
+#dummy_datetime_2:
+#  name: Input with only date
+#  has_date: true
+#  has_time: false
+#  initial: "1970-01-01"
+#dummy_datetime_3:
+#  name: Input with only time
+#  has_date: false
+#  has_time: true
+#  initial: "00:00"
+
+event_ale_letto:
+  name: Ora
+  icon: mdi:clock-alert-outline
+  has_date: false
+  has_time: true
+
+event_ale_scuola:
+  name: Ora
+  icon: mdi:clock-alert-outline
+  has_date: false
+  has_time: true
+
+event_sveglia_1:
+  name: Ora
+  icon: mdi:clock-alert-outline
+  has_date: false
+  has_time: true
+
+event_sveglia_2:
+  name: Ora
+  icon: mdi:clock-alert-outline
+  has_date: false
+  has_time: true
+
+event_toggle_smartplug_1:
+  name: Ora
+  icon: mdi:clock-alert-outline
+  has_date: false
+  has_time: true
+event_poweron_smartplug_1:
+  name: Accensione
+  icon: mdi:clock-start
+  has_date: false
+  has_time: true
+event_poweroff_smartplug_1:
+  name: Spegnimento
+  icon: mdi:clock-end
+  has_date: false
+  has_time: true
+
+event_toggle_smartplug_2:
+  name: Ora
+  icon: mdi:clock-alert-outline
+  has_date: false
+  has_time: true
+event_poweron_smartplug_2:
+  name: Accensione
+  icon: mdi:clock-start
+  has_date: false
+  has_time: true
+event_poweroff_smartplug_2:
+  name: Spegnimento
+  icon: mdi:clock-end
+  has_date: false
+  has_time: true
+
+event_toggle_smartplug_3:
+  name: Ora
+  icon: mdi:clock-alert-outline
+  has_date: false
+  has_time: true
+event_poweron_smartplug_3:
+  name: Accensione
+  icon: mdi:clock-start
+  has_date: false
+  has_time: true
+event_poweroff_smartplug_3:
+  name: Spegnimento
+  icon: mdi:clock-end
+  has_date: false
+  has_time: true
+
+event_toggle_smartplug_4:
+  name: Ora
+  icon: mdi:clock-alert-outline
+  has_date: false
+  has_time: true
+event_poweron_smartplug_4:
+  name: Accensione
+  icon: mdi:clock-start
+  has_date: false
+  has_time: true
+event_poweroff_smartplug_4:
+  name: Spegnimento
+  icon: mdi:clock-end
+  has_date: false
+  has_time: true
+
+event_toggle_smartplug_5:
+  name: Ora
+  icon: mdi:clock-alert-outline
+  has_date: false
+  has_time: true
+event_poweron_smartplug_5:
+  name: Accensione
+  icon: mdi:clock-start
+  has_date: false
+  has_time: true
+event_poweroff_smartplug_5:
+  name: Spegnimento
+  icon: mdi:clock-end
+  has_date: false
+  has_time: true
+
+event_toggle_smartplug_6:
+  name: Ora
+  icon: mdi:clock-alert-outline
+  has_date: false
+  has_time: true
+event_poweron_smartplug_6:
+  name: Accensione
+  icon: mdi:clock-start
+  has_date: false
+  has_time: true
+event_poweroff_smartplug_6:
+  name: Spegnimento
+  icon: mdi:clock-end
+  has_date: false
+  has_time: true
+
+event_toggle_smartplug_7:
+  name: Ora
+  icon: mdi:clock-alert-outline
+  has_date: false
+  has_time: true
+event_poweron_smartplug_7:
+  name: Accensione
+  icon: mdi:clock-start
+  has_date: false
+  has_time: true
+event_poweroff_smartplug_7:
+  name: Spegnimento
+  icon: mdi:clock-end
+  has_date: false
+  has_time: true
+
+event_toggle_smartplug_8:
+  name: Ora
+  icon: mdi:clock-alert-outline
+  has_date: false
+  has_time: true
+event_poweron_smartplug_8:
+  name: Accensione
+  icon: mdi:clock-start
+  has_date: false
+  has_time: true
+event_poweroff_smartplug_8:
+  name: Spegnimento
+  icon: mdi:clock-end
+  has_date: false
+  has_time: true
+
+event_toggle_sonoff_basic_1:
+  name: Ora
+  icon: mdi:clock-alert-outline
+  has_date: false
+  has_time: true
+event_poweron_sonoff_basic_1:
+  name: Accensione
+  icon: mdi:clock-start
+  has_date: false
+  has_time: true
+event_poweroff_sonoff_basic_1:
+  name: Spegnimento
+  icon: mdi:clock-end
+  has_date: false
+  has_time: true
+
+event_toggle_sonoff_basic_2:
+  name: Ora
+  icon: mdi:clock-alert-outline
+  has_date: false
+  has_time: true
+event_poweron_sonoff_basic_2:
+  name: Accensione
+  icon: mdi:clock-start
+  has_date: false
+  has_time: true
+event_poweroff_sonoff_basic_2:
+  name: Spegnimento
+  icon: mdi:clock-end
+  has_date: false
+  has_time: true
+
+event_time_cover_up:
+  name: Ora Avvio
+  icon: mdi:clock-alert-outline
+  has_date: false
+  has_time: true
+event_time_cover_down:
+  name: Ora Avvio
+  icon: mdi:clock-alert-outline
+  has_date: false
+  has_time: true
+
+tts_last_occurred:
+  name: Last TTS time
+  icon: mdi:clock-outline
+  has_date: true
+  has_time: true
+
+webhook_last_script_exec:
+  name: Last script (via webhook) time
+  icon: mdi:clock-outline
+  has_date: true
+  has_time: true
+
+mqtt_last_service_exec:
+  name: Last service (via MQTT) time
+  icon: mdi:clock-outline
+  has_date: true
+  has_time: true
+
+rain_last_occurred:
+  name: Last rainy day
+  icon: mdi:weather-rainy
+  has_date: true
+  has_time: true
+
+zone_paolo_last_changed:
+  name: Current zone since
+  icon: mdi:map-clock-outline
+  has_date: true
+  has_time: true
+zone_silvia_last_changed:
+  name: Current zone since
+  icon: mdi:map-clock-outline
+  has_date: true
+  has_time: true
+
+irrigation_start_date:
+  name: Giorno
+  icon: mdi:calendar-check
+  has_date: true
+  has_time: false
+irrigation_start_time:
+  name: Ora
+  icon: mdi:clock-check-outline
+  has_date: false
+  has_time: true

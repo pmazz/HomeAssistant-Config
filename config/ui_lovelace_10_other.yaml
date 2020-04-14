@@ -1,0 +1,13 @@
+#+++++++++++++++++++++++++++++++
+#+++++ VIEW -> Other Stuff +++++
+#+++++++++++++++++++++++++++++++
+path: other
+title: Other Stuff
+icon: mdi:alien
+panel: true
+cards:
+  - id: other.container
+    type: custom:layout-card  #https://github.com/thomasloven/lovelace-layout-card
+    layout: vertical
+    max_columns: 2
+    cards:

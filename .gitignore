@@ -1,0 +1,19 @@
+# Ignore folders
+config/.cloud/*
+config/.storage/*
+config/_backups_/*
+config/deps/*
+config/node-red/*
+config/tts/*
+addons/*
+devices/*
+node-red/*
+tools/*
+**/.vscode/*
+**/__pycache__/*
+
+# Ignore files
+*.db*
+*.log
+*.py[cod]
+.google.token

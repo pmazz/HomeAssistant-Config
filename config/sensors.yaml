@@ -1,0 +1,977 @@
+- platform: moon  #https://www.home-assistant.io/components/sensor.moon
+
+- platform: season  #https://www.home-assistant.io/integrations/season
+  type: astronomical
+
+- platform: template  #https://www.home-assistant.io/components/sensor.template
+  sensors:
+    weekday:
+      friendly_name: Weekday
+      icon_template: mdi:calendar-today
+      entity_id: sensor.time
+      value_template: >
+        {% set dd = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] %}
+        {{ dd[now().weekday()] }}
+    sun_next_dawn:
+      friendly_name: Prossima Alba
+      icon_template: mdi:weather-sunset-up
+      value_template: "{{ as_timestamp(states.sun.sun.attributes.next_dawn) | timestamp_custom('%H:%M') }}"
+    sun_next_setting:
+      friendly_name: Prossimo Tramonto
+      icon_template: mdi:weather-sunset-down
+      value_template: "{{ as_timestamp(states.sun.sun.attributes.next_setting) | timestamp_custom('%H:%M') }}"
+    maps_api_key:
+      icon_template: mdi:alert
+      value_template: !secret maps_api_key
+    cover_up_start:
+      friendly_name: Avvio Serrande Sù
+      icon_template: mdi:clock-alert-outline
+      entity_id:
+        - input_select.event_starttype_cover_up
+        - input_datetime.event_time_cover_up
+        - input_number.event_afterdawn_cover_up
+        - sensor.sun_next_dawn
+      value_template: >
+        {%- set today_start = as_timestamp(now()) | timestamp_custom('%Y-%m-%d') +' '+ states.input_datetime.event_time_cover_up.state %}
+        {%- set today_start_ts = as_timestamp(today_start) %}
+        {%- if states.input_select.event_starttype_cover_up.state == 'Orario' %}
+          {%- set cover_start_ts = today_start_ts %}
+        {%- else %}
+          {%- set dawn = states.sun.sun.attributes.next_dawn %}
+          {%- set dawn_ts = as_timestamp(dawn) %}
+          {%- set cover_start_ts = dawn_ts + (states.input_number.event_afterdawn_cover_up.state | int) * 60 %}
+        {%- endif %}
+        {%- set cover_start = cover_start_ts | timestamp_custom('%H:%M') %}
+        {{- cover_start }}
+    cover_down_start:
+      friendly_name: Avvio Serrande Giù
+      icon_template: mdi:clock-alert-outline
+      entity_id:
+        - input_select.event_starttype_cover_down
+        - input_datetime.event_time_cover_down
+        - input_number.event_aftersunset_cover_down
+        - sensor.sun_next_setting
+      value_template: >
+        {%- set today_start = as_timestamp(now()) | timestamp_custom('%Y-%m-%d') +' '+ states.input_datetime.event_time_cover_down.state %}
+        {%- set today_start_ts = as_timestamp(today_start) %}
+        {%- if states.input_select.event_starttype_cover_down.state == 'Orario' %}
+          {%- set cover_start_ts = today_start_ts %}
+        {%- else %}
+          {%- set dawn = states.sun.sun.attributes.next_setting %}
+          {%- set dawn_ts = as_timestamp(dawn) %}
+          {%- set cover_start_ts = dawn_ts + (states.input_number.event_aftersunset_cover_down.state | int) * 60 %}
+        {%- endif %}
+        {%- set cover_start = cover_start_ts | timestamp_custom('%H:%M') %}
+        {{- cover_start }}
+
+
+#++++++++++++++++++++++++++++++++++
+#+++++ Home Assistant sensors +++++
+#++++++++++++++++++++++++++++++++++
+- platform: version  #https://www.home-assistant.io/components/sensor.version
+  #HA Installed Version
+  name: hass_installed_version
+
+- platform: rest  #https://www.home-assistant.io/components/sensor.rest
+  #HA Last Version Available
+  name: hass_available_version
+  resource: https://pypi.python.org/pypi/homeassistant/json
+  value_template: "{{ value_json.info.version }}"
+  scan_interval: 3600
+
+- platform: command_line  #https://www.home-assistant.io/components/sensor.command_line
+  #Internal IP addresses
+  name: hass_ip_address
+  command: ifconfig | sed -n -e 's/:127\.0\.0\.1 //g' -e 's/ *inet addr:\([0-9.]\+\).*/\1/gp'
+  scan_interval: 600
+
+- platform: command_line  #https://www.home-assistant.io/components/sensor.command_line
+  #DB File Size
+  name: hass_db_filesize
+  command: stat -c %s '/config/home-assistant_v2.db'
+  unit_of_measurement: "MB"
+  value_template: "{{ (value|int / 1024 / 1024)|round(1) }}"
+  scan_interval: 600
+
+- platform: sql  #https://www.home-assistant.io/integrations/sql
+  #Nr of states/events in DB
+  queries:
+    - name: hass_db_states_count
+      query: "SELECT COUNT(entity_id) AS states_count FROM states"
+      column: states_count
+    - name: hass_db_events_count
+      query: "SELECT COUNT(event_id) AS events_count FROM events"
+      column: events_count
+
+
+#+++++++++++++++++++++++++++++
+#+++++ Raspberry sensors +++++
+#+++++++++++++++++++++++++++++
+- platform: systemmonitor  #https://www.home-assistant.io/components/sensor.systemmonitor
+  #Raspberry sensors
+  resources:
+    - type: processor_use
+    - type: memory_use
+    - type: memory_use_percent
+    - type: memory_free
+    - type: disk_use_percent
+      arg: /
+    - type: disk_use
+      arg: /
+    - type: disk_free
+      arg: /
+    - type: ipv4_address
+    - type: last_boot
+
+- platform: template  #https://www.home-assistant.io/components/sensor.template
+  #Template sensors
+  sensors:
+    last_boot_verbose:
+      icon_template: mdi:clock
+      friendly_name: Last boot
+      unit_of_measurement: ago
+      entity_id: sensor.last_boot
+      value_template: >-
+        {%- if states.sensor.last_boot -%}
+          {% set delta_sec = as_timestamp(now()) - as_timestamp(states.sensor.last_boot.state) %}
+          {%- set days = (delta_sec / (60 * 60 * 24)) | int %}
+          {%- set delta_sec = (delta_sec % (60 * 60 * 24)) %}
+          {%- set hours = (delta_sec / (60 * 60)) | int %}
+          {%- set delta_sec = (delta_sec % (60 * 60)) %}
+          {%- set minutes = (delta_sec / 60) | int %}
+          {%- if days == 0 and hours == 0 and minutes == 0 -%}
+            less than a minute
+          {%- else -%}
+            {%- if days > 0 -%}
+              {%- if days == 1 -%}
+                1 day
+              {%- else -%}
+                {{ days }} days
+              {%- endif -%}
+            {%- endif -%}
+            {%- if hours > 0 -%}
+              {%- if days > 0 -%}
+                {{ ', ' }}
+              {%- endif -%}
+              {%- if hours == 1 -%}
+                1 {% if count == 3 %}h.{% else %}hour{% endif %}
+              {%- else -%}
+                {{ hours }} {% if count == 3 %}h.{% else %}hours{% endif %}
+              {%- endif -%}
+            {%- endif -%}
+            {%- if minutes > 0 -%}
+              {%- if days > 0 or hours > 0 -%}
+                {{ ', ' }}
+              {%- endif -%}
+              {%- if minutes == 1 -%}
+                1 {% if count == 3 %}min.{% else %}minute{% endif %}
+              {%- else -%}
+                {{ minutes }} {% if count == 3 %}min.{% else %}minutes{% endif %}
+              {%- endif -%}
+            {%- endif -%}
+          {%- endif -%}
+        {%- else -%}
+          N/A
+        {%- endif -%}
+
+- platform: uptime  #https://www.home-assistant.io/components/sensor.uptime
+  #Hours since last_boot
+  name: Time Online
+  unit_of_measurement: minutes
+
+- platform: command_line  #https://www.home-assistant.io/components/sensor.command_line
+  #CPU Temperature
+  name: CPU temperature
+  #NB: Questo sensore (cpu_temperature) mostra sempre 'Unknown' quando HA gira su macchina virtuale
+  command: "cat /sys/class/thermal/thermal_zone0/temp"
+  unit_of_measurement: "°C"
+  value_template: "{{ value | multiply(0.001) | round(2) }}"
+  scan_interval: 120
+
+- platform: time_date  #https://www.home-assistant.io/components/sensor.time_date
+  #Current date/time
+  display_options:
+    - date
+    - time
+
+
+#+++++++++++++++++++++++
+#+++++ NAS sensors +++++
+#+++++++++++++++++++++++
+- platform: qnap  #https://www.home-assistant.io/components/sensor.qnap
+  host: !secret nas_ip
+  port: !secret nas_port
+  username: !secret nas_admin_user
+  password: !secret nas_admin_pwd
+  timeout: 20
+  monitored_conditions:
+    - system_temp #Displays the overall system temperature
+    #- cpu_temp #Displays the CPU's temperature (always shown as 'unknown')
+    - status #Displays overall system health
+    - cpu_usage #Displays the CPU's utilization as a percentage
+    - memory_percent_used #Displays the size of used RAM as a percentage of total RAM
+    - memory_used #Displays the size of used RAM in GB
+    - memory_free #Displays the size of available RAM in GB
+    #- network_link_status #Displays whether the network interfaces is up (creates a new entry for each interface)
+    #- network_tx #Displays the upload speed of a network interface in MB/s (creates a new entry for each interface)
+    #- network_rx #Displays the download speed of a network interface in MB/s (creates a new entry for each interface)
+    - drive_smart_status #Displays the S.M.A.R.T. status of the drive (creates a new entry for each drive)
+    - drive_temp #Displays the temperature of the drive (creates a new entry for each drive)
+    - volume_percentage_used #Displays the used space of the volume as a percentage (creates a new entry for each volume)
+    - volume_size_used #Displays the used space of the volume in GB (creates a new entry for each volume)
+    - volume_size_free #Displays the available space of the volume in GB (creates a new entry for each volume)
+- platform: template  #https://www.home-assistant.io/components/sensor.template
+  sensors:
+    nas_attr_model:
+      friendly_name: Model
+      entity_id: sensor.nas_status
+      value_template: "{% if states.sensor.nas_status %}{{states.sensor.nas_status.attributes['Model']}}{% else %}N/A{% endif %}"
+    nas_attr_uptime:
+      icon_template: mdi:clock
+      friendly_name: Uptime
+      entity_id: sensor.nas_status
+      value_template: "{% if states.sensor.nas_status %}{{states.sensor.nas_status.attributes['Uptime']}}{% else %}N/A{% endif %}"
+
+
+#++++++++++++++++++++++++++
+#+++++ Router sensors +++++
+#++++++++++++++++++++++++++
+- platform: fritzbox_netmonitor  #https://www.home-assistant.io/components/sensor.fritzbox_netmonitor
+- platform: template  #https://www.home-assistant.io/components/sensor.template
+  sensors:
+    fritz_attr_uptime: #Uptime in seconds
+      icon_template: mdi:clock
+      friendly_name: Uptime
+      entity_id: sensor.fritz_netmonitor
+      value_template: "{% if states.sensor.fritz_netmonitor %}{{states.sensor.fritz_netmonitor.attributes.uptime // 60}}{% else %}N/A{% endif %}"
+      unit_of_measurement: minutes
+    fritz_attr_external_ip: #External ip address
+      icon_template: mdi:earth
+      friendly_name: External IP
+      entity_id: sensor.fritz_netmonitor
+      value_template: "{% if states.sensor.fritz_netmonitor %}{{states.sensor.fritz_netmonitor.attributes.external_ip}}{% else %}N/A{% endif %}"
+    fritz_attr_is_linked: #True if the FritzBox is physically linked to the provider
+      icon_template: "{% if states.sensor.fritz_netmonitor and states.sensor.fritz_netmonitor.attributes.is_linked %}mdi:ethernet-cable{% else %}mdi:ethernet-cable-off{% endif %}"
+      friendly_name: Linked to provider
+      entity_id: sensor.fritz_netmonitor
+      value_template: "{% if states.sensor.fritz_netmonitor %}{{states.sensor.fritz_netmonitor.attributes.is_linked}}{% else %}N/A{% endif %}"
+    fritz_attr_is_connected: #True if the FritzBox has established an internet-connection
+      icon_template: "{% if states.sensor.fritz_netmonitor and states.sensor.fritz_netmonitor.attributes.is_connected %}mdi:ethernet-cable{% else %}mdi:ethernet-cable-off{% endif %}"
+      friendly_name: Internet connected
+      entity_id: sensor.fritz_netmonitor
+      value_template: "{% if states.sensor.fritz_netmonitor %}{{states.sensor.fritz_netmonitor.attributes.is_connected}}{% else %}N/A{% endif %}"
+    fritz_attr_wan_access_type: #Connection-type, can be DSL or Cable
+      icon_template: mdi:network
+      friendly_name: Wan access type
+      entity_id: sensor.fritz_netmonitor
+      value_template: "{% if states.sensor.fritz_netmonitor %}{{states.sensor.fritz_netmonitor.attributes.wan_access_type}}{% else %}N/A{% endif %}"
+    fritz_attr_sent_mb: #Bytes sent
+      icon_template: mdi:call-made
+      friendly_name: Sent
+      entity_id: sensor.fritz_netmonitor
+      value_template: "{% if states.sensor.fritz_netmonitor %}{{states.sensor.fritz_netmonitor.attributes.bytes_sent // 1024}}{% else %}N/A{% endif %}"
+      unit_of_measurement: MB
+    fritz_attr_received_mb: #Bytes received
+      icon_template: mdi:call-received
+      friendly_name: Received
+      entity_id: sensor.fritz_netmonitor
+      value_template: "{% if states.sensor.fritz_netmonitor %}{{states.sensor.fritz_netmonitor.attributes.bytes_received // 1024}}{% else %}N/A{% endif %}"
+      unit_of_measurement: MB
+    fritz_attr_transmission_rate_up: #Current upstream speed in bytes/s
+      icon_template: mdi:upload-network
+      friendly_name: Current upstream
+      entity_id: sensor.fritz_netmonitor
+      value_template: "{% if states.sensor.fritz_netmonitor %}{{states.sensor.fritz_netmonitor.attributes.transmission_rate_up}}{% else %}N/A{% endif %}"
+      unit_of_measurement: bytes/sec
+    fritz_attr_transmission_rate_down: #Current downstream speed in bytes/s
+      icon_template: mdi:download-network
+      friendly_name: Current downstream
+      entity_id: sensor.fritz_netmonitor
+      value_template: "{% if states.sensor.fritz_netmonitor %}{{states.sensor.fritz_netmonitor.attributes.transmission_rate_down}}{% else %}N/A{% endif %}"
+      unit_of_measurement: bytes/sec
+
+
+#+++++++++++++++++++++++
+#+++++ UPS sensors +++++
+#+++++++++++++++++++++++
+- platform: nut  #https://www.home-assistant.io/integrations/nut
+  name: "Tecnoware UPS"
+  resources:
+    - battery.charge
+    - battery.runtime
+    - battery.voltage
+    - ups.load
+    - ups.status.display
+    - input.voltage
+    - output.voltage
+    - input.frequency
+
+
+#++++++++++++++++++++++++++++++++++++++
+#+++++ Dark Sky sensors (weather) +++++
+#++++++++++++++++++++++++++++++++++++++
+- platform: darksky  #https://www.home-assistant.io/integrations/darksky
+  api_key: !secret darksky_api_key
+  latitude: !secret home_latitude
+  longitude: !secret home_longitude
+  language: it
+  forecast:
+    - 1
+    - 2
+    - 3
+  monitored_conditions:
+    - summary
+    - icon
+    - temperature
+    - temperature_min
+    - temperature_max
+    - humidity
+    - hourly_summary
+    - daily_summary
+    - precip_probability
+    - precip_intensity
+    - wind_bearing
+    - wind_speed
+    - pressure
+- platform: template  #https://www.home-assistant.io/components/sensor.template
+  sensors:
+    dark_sky_summary_custom:
+      friendly_name: Summary
+      value_template: "{{ states('sensor.dark_sky_summary') }}"
+      entity_picture_template: "{{ '/local/ico/weather/'+ states.sensor.dark_sky_icon.state +'.png'}}"
+    dark_sky_wind_dir:
+      friendly_name: Wind Direction
+      value_template: >-
+        {% set wind_dir = states.sensor.dark_sky_wind_bearing.state %}
+        {% if wind_dir | float<=23 %}N [Tramontana]
+        {% elif wind_dir | float>338 %}N [Tramontana]
+        {% elif 23 < (wind_dir|float) <=68 %}NE [Grecale]
+        {% elif 68 < (wind_dir|float) <=113 %}E [Levante]
+        {% elif 113 < (wind_dir|float) <=158 %}SE [Scirocco]
+        {% elif 158 < (wind_dir|float) <=203 %}S [Mezzogiorno]
+        {% elif 203 < (wind_dir|float) <=248 %}SW [Libeccio]
+        {% elif 248 < (wind_dir|float) <=293 %}W [Ponente]
+        {% elif 293 < (wind_dir|float) <=338 %}NW [Maestrale]
+        {%- endif %}
+      icon_template: mdi:compass
+    dark_sky_wind_dir_1d:
+      friendly_name: Wind Direction
+      value_template: >-
+        {% set wind_dir = states.sensor.dark_sky_wind_bearing_1d.state %}
+        {% if wind_dir | float<=23 %}N [Tramontana]
+        {% elif wind_dir | float>338 %}N [Tramontana]
+        {% elif 23 < (wind_dir|float) <=68 %}NE [Grecale]
+        {% elif 68 < (wind_dir|float) <=113 %}E [Levante]
+        {% elif 113 < (wind_dir|float) <=158 %}SE [Scirocco]
+        {% elif 158 < (wind_dir|float) <=203 %}S [Mezzogiorno]
+        {% elif 203 < (wind_dir|float) <=248 %}SW [Libeccio]
+        {% elif 248 < (wind_dir|float) <=293 %}W [Ponente]
+        {% elif 293 < (wind_dir|float) <=338 %}NW [Maestrale]
+        {%- endif %}
+      icon_template: mdi:compass
+    dark_sky_wind_dir_2d:
+      friendly_name: Wind Direction
+      value_template: >-
+        {% set wind_dir = states.sensor.dark_sky_wind_bearing_2d.state %}
+        {% if wind_dir | float<=23 %}N [Tramontana]
+        {% elif wind_dir | float>338 %}N [Tramontana]
+        {% elif 23 < (wind_dir|float) <=68 %}NE [Grecale]
+        {% elif 68 < (wind_dir|float) <=113 %}E [Levante]
+        {% elif 113 < (wind_dir|float) <=158 %}SE [Scirocco]
+        {% elif 158 < (wind_dir|float) <=203 %}S [Mezzogiorno]
+        {% elif 203 < (wind_dir|float) <=248 %}SW [Libeccio]
+        {% elif 248 < (wind_dir|float) <=293 %}W [Ponente]
+        {% elif 293 < (wind_dir|float) <=338 %}NW [Maestrale]
+        {%- endif %}
+      icon_template: mdi:compass
+    dark_sky_wind_dir_3d:
+      friendly_name: Wind Direction
+      value_template: >-
+        {% set wind_dir = states.sensor.dark_sky_wind_bearing_3d.state %}
+        {% if wind_dir | float<=23 %}N [Tramontana]
+        {% elif wind_dir | float>338 %}N [Tramontana]
+        {% elif 23 < (wind_dir|float) <=68 %}NE [Grecale]
+        {% elif 68 < (wind_dir|float) <=113 %}E [Levante]
+        {% elif 113 < (wind_dir|float) <=158 %}SE [Scirocco]
+        {% elif 158 < (wind_dir|float) <=203 %}S [Mezzogiorno]
+        {% elif 203 < (wind_dir|float) <=248 %}SW [Libeccio]
+        {% elif 248 < (wind_dir|float) <=293 %}W [Ponente]
+        {% elif 293 < (wind_dir|float) <=338 %}NW [Maestrale]
+        {%- endif %}
+      icon_template: mdi:compass
+    dark_sky_forecast_header:
+      friendly_name: Date
+      value_template: Min ~ Max | Rain
+      icon_template: None
+    dark_sky_forecast_1d:
+      friendly_name_template: "{{ (as_timestamp(now()) + (1 * 86400)) | timestamp_custom('%A %d') }}"
+      value_template: "{{ states.sensor.dark_sky_daily_low_temperature_1d.state | round(0) }}° ~ {{ states.sensor.dark_sky_daily_high_temperature_1d.state | round(0) }}° | {{ states.sensor.dark_sky_precip_probability_1d.state | round(0) }}%"
+      entity_picture_template: "{{ '/local/ico/weather/'+ states.sensor.dark_sky_icon_1d.state +'.png'}}"
+    dark_sky_forecast_2d:
+      friendly_name_template: "{{ (as_timestamp(now()) + (2 * 86400)) | timestamp_custom('%A %d') }}"
+      value_template: "{{ states.sensor.dark_sky_daily_low_temperature_2d.state | round(0) }}° ~ {{ states.sensor.dark_sky_daily_high_temperature_2d.state | round(0) }}° | {{ states.sensor.dark_sky_precip_probability_2d.state | round(0) }}%"
+      entity_picture_template: "{{ '/local/ico/weather/'+ states.sensor.dark_sky_icon_2d.state +'.png'}}"
+    dark_sky_forecast_3d:
+      friendly_name_template: "{{ (as_timestamp(now()) + (3 * 86400)) | timestamp_custom('%A %d') }}"
+      value_template: "{{ states.sensor.dark_sky_daily_low_temperature_3d.state | round(0) }}° ~ {{ states.sensor.dark_sky_daily_high_temperature_3d.state | round(0) }}° | {{ states.sensor.dark_sky_precip_probability_3d.state | round(0) }}%"
+      entity_picture_template: "{{ '/local/ico/weather/'+ states.sensor.dark_sky_icon_3d.state +'.png'}}"
+    rain_last_occurred:
+      friendly_name: Last rainy day
+      value_template: "{{ states.input_datetime.rain_last_occurred.state.split(' ')[0] }}"
+      icon_template: mdi:weather-rainy
+- platform: template  #https://www.home-assistant.io/components/sensor.template
+  sensors:
+    irrigation_status:
+      friendly_name: Stato
+      value_template: "{% if is_state('switch.sonoff_4ch_1', 'on') or is_state('switch.sonoff_4ch_2', 'on') or is_state('switch.sonoff_4ch_3', 'on') %}On{% else %}Off{% endif %}"
+      icon_template: "{% if is_state('switch.sonoff_4ch_1', 'on') or is_state('switch.sonoff_4ch_2', 'on') or is_state('switch.sonoff_4ch_3', 'on') %}mdi:water-pump{% else %}mdi:water-pump-off{% endif %}"
+
+
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#+++++ Tracking & telemetry sensors (Cell. Paolo) +++++
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: cell_paolo_lastupdate
+  state_topic: "mobile/cell-paolo"
+  value_template: "{{ value_json.dt | timestamp_local }}"
+  icon: mdi:update
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: cell_paolo_battery
+  unit_of_measurement: "%"
+  device_class: battery
+  state_topic: "mobile/cell-paolo"
+  value_template: "{{ value_json.battery }}"
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: cell_paolo_charging
+  state_topic: "mobile/cell-paolo"
+  value_template: "{{ value_json.charge }}"
+  icon: mdi:power-plug-off
+- platform: template  #https://www.home-assistant.io/components/sensor.template
+  sensors:
+    cell_paolo_lat:
+     icon_template: mdi:map-marker
+     friendly_name: Latitude
+     entity_id: device_tracker.cell_paolo
+     value_template: "{% if states.device_tracker.cell_paolo %}{{states.device_tracker.cell_paolo.attributes.latitude}}{% else %}N/A{% endif %}"
+    cell_paolo_long:
+     icon_template: mdi:map-marker
+     friendly_name: Longitude
+     entity_id: device_tracker.cell_paolo
+     value_template: "{% if states.device_tracker.cell_paolo %}{{states.device_tracker.cell_paolo.attributes.longitude}}{% else %}N/A{% endif %}"
+    cell_paolo_latlong:
+      icon_template: mdi:map-marker
+      friendly_name: Lat./Long.
+      entity_id: device_tracker.cell_paolo
+      value_template: "{% if states.device_tracker.cell_paolo %}{{states.device_tracker.cell_paolo.attributes.latitude}},{{states.device_tracker.cell_paolo.attributes.longitude}}{% else %}N/A{% endif %}"
+    cell_paolo_accuracy:
+      icon_template: mdi:map-marker-radius
+      friendly_name: GPS accuracy
+      unit_of_measurement: mt
+      entity_id: device_tracker.cell_paolo
+      value_template: "{% if states.device_tracker.cell_paolo %}{{states.device_tracker.cell_paolo.attributes.gps_accuracy}}{% else %}N/A{% endif %}"
+    cell_paolo_address:
+      friendly_name: Address
+      icon_template: mdi:compass-outline
+      value_template: N/A
+    cell_paolo_address_confidence:
+      friendly_name: Confidence
+      icon_template: mdi:compass-outline
+      value_template: N/A
+    cell_paolo_distance_home:
+      friendly_name: Distanza da casa
+      entity_id: device_tracker.cell_paolo
+      icon_template: mdi:math-compass
+      value_template: "{{ distance(states.device_tracker.cell_paolo, states.zone.home) | round(0) }}"
+      unit_of_measurement: Km
+    cell_paolo_distance_silvia:
+      friendly_name: Distanza da Silvia
+      entity_id: 
+        - device_tracker.cell_paolo
+        - device_tracker.cell_silvia
+      icon_template: mdi:ruler-square-compass
+      value_template: "{{ distance(states.device_tracker.cell_paolo, states.device_tracker.cell_silvia) | round(0) }}"
+      unit_of_measurement: Km
+    zone_paolo_last_changed:
+      friendly_name: Current zone since
+      entity_id: input_datetime.zone_paolo_last_changed
+      icon_template: mdi:map-clock-outline
+      value_template: "{{ states.input_datetime.zone_paolo_last_changed.state }}"
+
+
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#+++++ Tracking & telemetry sensors (Cell. Silvia) +++++
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: cell_silvia_lastupdate
+  state_topic: "mobile/cell-silvia"
+  value_template: "{{ value_json.dt | timestamp_local }}"
+  icon: mdi:update
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: cell_silvia_battery
+  unit_of_measurement: "%"
+  device_class: battery
+  state_topic: "mobile/cell-silvia"
+  value_template: "{{ value_json.battery }}"
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: cell_silvia_charging
+  state_topic: "mobile/cell-silvia"
+  value_template: "{{ value_json.charge }}"
+  icon: mdi:power-plug-off
+- platform: template  #https://www.home-assistant.io/components/sensor.template
+  sensors:
+    cell_silvia_lat:
+     icon_template: mdi:map-marker
+     friendly_name: Latitude
+     entity_id: device_tracker.cell_silvia
+     value_template: "{% if states.device_tracker.cell_silvia %}{{states.device_tracker.cell_silvia.attributes.latitude}}{% else %}N/A{% endif %}"
+    cell_silvia_long:
+     icon_template: mdi:map-marker
+     friendly_name: Longitude
+     entity_id: device_tracker.cell_silvia
+     value_template: "{% if states.device_tracker.cell_silvia %}{{states.device_tracker.cell_silvia.attributes.longitude}}{% else %}N/A{% endif %}"
+    cell_silvia_latlong:
+      icon_template: mdi:map-marker
+      friendly_name: Lat./Long.
+      entity_id: device_tracker.cell_silvia
+      value_template: "{% if states.device_tracker.cell_silvia %}{{states.device_tracker.cell_silvia.attributes.latitude}},{{states.device_tracker.cell_silvia.attributes.longitude}}{% else %}N/A{% endif %}"
+    cell_silvia_accuracy:
+      icon_template: mdi:map-marker-radius
+      friendly_name: GPS accuracy
+      unit_of_measurement: mt
+      entity_id: device_tracker.cell_silvia
+      value_template: "{% if states.device_tracker.cell_silvia %}{{states.device_tracker.cell_silvia.attributes.gps_accuracy}}{% else %}N/A{% endif %}"
+    cell_silvia_address:
+      friendly_name: Address
+      icon_template: mdi:compass-outline
+      value_template: N/A
+    cell_silvia_address_confidence:
+      friendly_name: Confidence
+      icon_template: mdi:compass-outline
+      value_template: N/A
+    cell_silvia_distance_home:
+      friendly_name: Distanza da casa
+      entity_id: device_tracker.cell_silvia
+      icon_template: mdi:math-compass
+      value_template: "{{ distance(states.device_tracker.cell_silvia, states.zone.home) | round(0) }}"
+      unit_of_measurement: Km
+    cell_silvia_distance_paolo:
+      friendly_name: Distanza da Paolo
+      entity_id: 
+        - device_tracker.cell_paolo
+        - device_tracker.cell_silvia
+      icon_template: mdi:ruler-square-compass
+      value_template: "{{ distance(states.device_tracker.cell_silvia, states.device_tracker.cell_paolo) | round(0) }}"
+      unit_of_measurement: Km
+    zone_silvia_last_changed:
+      friendly_name: Current zone since
+      entity_id: input_datetime.zone_silvia_last_changed
+      icon_template: mdi:map-clock-outline
+      value_template: "{{ states.input_datetime.zone_silvia_last_changed.state }}"
+
+
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#+++++ Tracking & telemetry sensors (Tablet Paolo) +++++
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: tablet_paolo_lastupdate
+  state_topic: "mobile/tablet-paolo"
+  value_template: "{{ value_json.dt | timestamp_local }}"
+  icon: mdi:update
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: tablet_paolo_battery
+  unit_of_measurement: "%"
+  device_class: battery
+  state_topic: "mobile/tablet-paolo"
+  value_template: "{{ value_json.battery }}"
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: tablet_paolo_charging
+  state_topic: "mobile/tablet-paolo"
+  value_template: "{{ value_json.charge }}"
+  icon: mdi:power-plug-off
+- platform: template  #https://www.home-assistant.io/components/sensor.template
+  sensors:
+    tablet_paolo_lat:
+     icon_template: mdi:map-marker
+     friendly_name: Latitude
+     entity_id: device_tracker.tablet_paolo
+     value_template: "{% if states.device_tracker.tablet_paolo %}{{states.device_tracker.tablet_paolo.attributes.latitude}}{% else %}N/A{% endif %}"
+    tablet_paolo_long:
+     icon_template: mdi:map-marker
+     friendly_name: Longitude
+     entity_id: device_tracker.tablet_paolo
+     value_template: "{% if states.device_tracker.tablet_paolo %}{{states.device_tracker.tablet_paolo.attributes.longitude}}{% else %}N/A{% endif %}"
+    tablet_paolo_latlong:
+      icon_template: mdi:map-marker
+      friendly_name: Lat./Long.
+      entity_id: device_tracker.tablet_paolo
+      value_template: "{% if states.device_tracker.tablet_paolo %}{{states.device_tracker.tablet_paolo.attributes.latitude}},{{states.device_tracker.tablet_paolo.attributes.longitude}}{% else %}N/A{% endif %}"
+    tablet_paolo_accuracy:
+      icon_template: mdi:map-marker-radius
+      friendly_name: GPS accuracy
+      unit_of_measurement: mt
+      entity_id: device_tracker.tablet_paolo
+      value_template: "{% if states.device_tracker.tablet_paolo %}{{states.device_tracker.tablet_paolo.attributes.gps_accuracy}}{% else %}N/A{% endif %}"
+    tablet_paolo_address:
+      friendly_name: Address
+      icon_template: mdi:compass-outline
+      value_template: N/A
+    tablet_paolo_address_confidence:
+      friendly_name: Confidence
+      icon_template: mdi:compass-outline
+      value_template: N/A
+
+
+#+++++++++++++++++++++++++++++++++++++++++++++++++
+#+++++ PZEM-004T sensors (Energy consumption) ++++
+#+++++++++++++++++++++++++++++++++++++++++++++++++
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: pzem_voltage
+  state_topic: "home/pzem_004t/tele/SENSOR"
+  value_template: "{{ value_json['ENERGY'].Voltage }}"
+  unit_of_measurement: "V"
+  icon: mdi:flash
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: pzem_current
+  state_topic: "home/pzem_004t/tele/SENSOR"
+  value_template: "{{ value_json['ENERGY'].Current }}"
+  unit_of_measurement: "A"
+  icon: mdi:power-socket
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: pzem_power
+  state_topic: "home/pzem_004t/tele/SENSOR"
+  value_template: "{{ value_json['ENERGY'].Power }}"
+  unit_of_measurement: "W"
+  icon: mdi:power-plug
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: pzem_power_factor
+  state_topic: "home/pzem_004t/tele/SENSOR"
+  value_template: "{{ value_json['ENERGY'].Factor }}"
+  icon: mdi:percent
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: pzem_energy_today
+  state_topic: "home/pzem_004t/tele/SENSOR"
+  value_template: "{{ value_json['ENERGY'].Today }}"
+  unit_of_measurement: "kWh"
+  icon: mdi:calendar-today
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: pzem_energy_yesterday
+  state_topic: "home/pzem_004t/tele/SENSOR"
+  value_template: "{{ value_json['ENERGY'].Yesterday }}"
+  unit_of_measurement: "kWh"
+  icon: mdi:calendar-today
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: pzem_energy_total
+  state_topic: "home/pzem_004t/tele/SENSOR"
+  value_template: "{{ value_json['ENERGY'].Total }}"
+  unit_of_measurement: "kWh"
+  icon: mdi:calendar-blank
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: pzem_wifi_rssi
+  state_topic: "home/pzem_004t/tele/STATE"
+  value_template: "{{ value_json['Wifi'].RSSI }}"
+  icon: mdi:wifi
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: pzem_boot_count
+  state_topic: "home/pzem_004t/stat/STATUS1"
+  value_template: "{{ value_json['StatusPRM'].BootCount }}"
+  icon: mdi:restart-alert
+- platform: template  #https://www.home-assistant.io/components/sensor.template
+  sensors:
+    pzem_energy_entire_day:
+      icon_template: mdi:calendar-today
+      friendly_name: Consumi Giornata
+      value_template: "0"
+
+
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#+++++ Tasmota telemetry sensors (Switches & Plugs) +++++
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: sonoff_basic_1_wifi_rssi
+  state_topic: "home/sonoff_basic_1/tele/STATE"
+  value_template: "{{ value_json['Wifi'].RSSI }}"
+  icon: mdi:wifi
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: sonoff_basic_1_boot_count
+  state_topic: "home/sonoff_basic_1/stat/STATUS1"
+  value_template: "{{ value_json['StatusPRM'].BootCount }}"
+  icon: mdi:restart-alert
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: sonoff_basic_2_wifi_rssi
+  state_topic: "home/sonoff_basic_2/tele/STATE"
+  value_template: "{{ value_json['Wifi'].RSSI }}"
+  icon: mdi:wifi
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: sonoff_basic_2_boot_count
+  state_topic: "home/sonoff_basic_2/stat/STATUS1"
+  value_template: "{{ value_json['StatusPRM'].BootCount }}"
+  icon: mdi:restart-alert
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: sonoff_basic_3_wifi_rssi
+  state_topic: "home/sonoff_basic_3/tele/STATE"
+  value_template: "{{ value_json['Wifi'].RSSI }}"
+  icon: mdi:wifi
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: sonoff_basic_3_boot_count
+  state_topic: "home/sonoff_basic_3/stat/STATUS1"
+  value_template: "{{ value_json['StatusPRM'].BootCount }}"
+  icon: mdi:restart-alert
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: sonoff_dual_1_wifi_rssi
+  state_topic: "home/sonoff_dual_1/tele/STATE"
+  value_template: "{{ value_json['Wifi'].RSSI }}"
+  icon: mdi:wifi
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: sonoff_dual_1_boot_count
+  state_topic: "home/sonoff_dual_1/stat/STATUS1"
+  value_template: "{{ value_json['StatusPRM'].BootCount }}"
+  icon: mdi:restart-alert
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: sonoff_4ch_1_wifi_rssi
+  state_topic: "home/sonoff_4ch_1/tele/STATE"
+  value_template: "{{ value_json['Wifi'].RSSI }}"
+  icon: mdi:wifi
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: sonoff_4ch_1_boot_count
+  state_topic: "home/sonoff_4ch_1/stat/STATUS1"
+  value_template: "{{ value_json['StatusPRM'].BootCount }}"
+  icon: mdi:restart-alert
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: smart_plug_1_wifi_rssi
+  state_topic: "home/smart_plug_1/tele/STATE"
+  value_template: "{{ value_json['Wifi'].RSSI }}"
+  icon: mdi:wifi
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: smart_plug_1_boot_count
+  state_topic: "home/smart_plug_1/stat/STATUS1"
+  value_template: "{{ value_json['StatusPRM'].BootCount }}"
+  icon: mdi:restart-alert
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: smart_plug_2_wifi_rssi
+  state_topic: "home/smart_plug_2/tele/STATE"
+  value_template: "{{ value_json['Wifi'].RSSI }}"
+  icon: mdi:wifi
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: smart_plug_2_boot_count
+  state_topic: "home/smart_plug_2/stat/STATUS1"
+  value_template: "{{ value_json['StatusPRM'].BootCount }}"
+  icon: mdi:restart-alert
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: smart_plug_3_wifi_rssi
+  state_topic: "home/smart_plug_3/tele/STATE"
+  value_template: "{{ value_json['Wifi'].RSSI }}"
+  icon: mdi:wifi
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: smart_plug_3_boot_count
+  state_topic: "home/smart_plug_3/stat/STATUS1"
+  value_template: "{{ value_json['StatusPRM'].BootCount }}"
+  icon: mdi:restart-alert
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: smart_plug_4_wifi_rssi
+  state_topic: "home/smart_plug_4/tele/STATE"
+  value_template: "{{ value_json['Wifi'].RSSI }}"
+  icon: mdi:wifi
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: smart_plug_4_boot_count
+  state_topic: "home/smart_plug_4/stat/STATUS1"
+  value_template: "{{ value_json['StatusPRM'].BootCount }}"
+  icon: mdi:restart-alert
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: smart_plug_5_wifi_rssi
+  state_topic: "home/smart_plug_5/tele/STATE"
+  value_template: "{{ value_json['Wifi'].RSSI }}"
+  icon: mdi:wifi
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: smart_plug_5_boot_count
+  state_topic: "home/smart_plug_5/stat/STATUS1"
+  value_template: "{{ value_json['StatusPRM'].BootCount }}"
+  icon: mdi:restart-alert
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: smart_plug_6_wifi_rssi
+  state_topic: "home/smart_plug_6/tele/STATE"
+  value_template: "{{ value_json['Wifi'].RSSI }}"
+  icon: mdi:wifi
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: smart_plug_6_boot_count
+  state_topic: "home/smart_plug_6/stat/STATUS1"
+  value_template: "{{ value_json['StatusPRM'].BootCount }}"
+  icon: mdi:restart-alert
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: smart_plug_7_wifi_rssi
+  state_topic: "home/smart_plug_7/tele/STATE"
+  value_template: "{{ value_json['Wifi'].RSSI }}"
+  icon: mdi:wifi
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: smart_plug_7_boot_count
+  state_topic: "home/smart_plug_7/stat/STATUS1"
+  value_template: "{{ value_json['StatusPRM'].BootCount }}"
+  icon: mdi:restart-alert
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: smart_plug_8_wifi_rssi
+  state_topic: "home/smart_plug_8/tele/STATE"
+  value_template: "{{ value_json['Wifi'].RSSI }}"
+  icon: mdi:wifi
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: smart_plug_8_boot_count
+  state_topic: "home/smart_plug_8/stat/STATUS1"
+  value_template: "{{ value_json['StatusPRM'].BootCount }}"
+  icon: mdi:restart-alert
+
+
+#++++++++++++++++++++++++++++++++++++++++++++
+#+++++ Tasmota telemetry sensors (PZEM) +++++
+#++++++++++++++++++++++++++++++++++++++++++++
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: mqtt_broker_clients_total
+  state_topic: "$SYS/broker/clients/total"
+  icon: mdi:devices
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: mqtt_broker_bytes_received
+  state_topic: "$SYS/broker/bytes/received"
+  value_template: "{{ '{:,}'.format(value | int) | replace(',', '.') }}"
+  icon: mdi:cloud-sync-outline
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: mqtt_broker_bytes_sent
+  state_topic: "$SYS/broker/bytes/sent"
+  value_template: "{{ '{:,}'.format(value | int) | replace(',', '.') }}"
+  icon: mdi:cloud-sync-outline
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: mqtt_broker_messages_received
+  state_topic: "$SYS/broker/messages/received"
+  value_template: "{{ '{:,}'.format(value | int) | replace(',', '.') }}"
+  icon: mdi:message-text
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: mqtt_broker_messages_sent
+  state_topic: "$SYS/broker/messages/sent"
+  value_template: "{{ '{:,}'.format(value | int) | replace(',', '.') }}"
+  icon: mdi:message-text
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: mqtt_broker_messages_retained
+  state_topic: "$SYS/broker/retained messages/count"
+  icon: mdi:message-text
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: mqtt_broker_version
+  state_topic: "$SYS/broker/version"
+  icon: mdi:server-network
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: mqtt_broker_uptime
+  state_topic: "$SYS/broker/uptime"
+  unit_of_measurement: seconds
+  value_template: "{{ value.split(' ')[0] }}"
+  icon: mdi:clock
+- platform: template  #https://www.home-assistant.io/components/sensor.template
+  sensors:
+    mqtt_broker_uptime_verbose:
+      icon_template: mdi:clock
+      friendly_name: Broker Uptime
+      entity_id: sensor.mqtt_broker_uptime
+      unit_of_measurement: ago
+      value_template: >-
+        {% set uptime_sec = states.sensor.mqtt_broker_uptime.state.split(" ")[0]|int %}
+        {%- set days = (uptime_sec / (60 * 60 * 24)) | int %}
+        {%- set uptime_sec = (uptime_sec % (60 * 60 * 24)) %}
+        {%- set hours = (uptime_sec / (60 * 60)) | int %}
+        {%- set uptime_sec = (uptime_sec % (60 * 60)) %}
+        {%- set minutes = (uptime_sec / 60) | int %}
+        {%- if days == 0 and hours == 0 and minutes == 0 -%}
+          less than a minute
+        {%- else -%}
+          {%- if days > 0 -%}
+            {%- if days == 1 -%}
+              1 day
+            {%- else -%}
+              {{ days }} days
+            {%- endif -%}
+          {%- endif -%}
+          {%- if hours > 0 -%}
+            {%- if days > 0 -%}
+              {{ ', ' }}
+            {%- endif -%}
+            {%- if hours == 1 -%}
+              1 {% if count == 3 %}h.{% else %}hour{% endif %}
+            {%- else -%}
+              {{ hours }} {% if count == 3 %}h.{% else %}hours{% endif %}
+            {%- endif -%}
+          {%- endif -%}
+          {%- if minutes > 0 -%}
+            {%- if days > 0 or hours > 0 -%}
+              {{ ', ' }}
+            {%- endif -%}
+            {%- if minutes == 1 -%}
+              1 {% if count == 3 %}min.{% else %}minute{% endif %}
+            {%- else -%}
+              {{ minutes }} {% if count == 3 %}min.{% else %}minutes{% endif %}
+            {%- endif -%}
+          {%- endif -%}
+        {%- endif -%}
+
+
+#++++++++++++++++++++++++++
+#+++++ Xiaomi sensors +++++
+#++++++++++++++++++++++++++
+- platform: template  #https://www.home-assistant.io/components/sensor.template
+  sensors:
+    xiaomi_attr_battery_temperature_1:
+      device_class: battery
+      unit_of_measurement: "%"
+      friendly_name: Battery
+      entity_id: sensor.xiaomi_temperature_1
+      value_template: "{% if states.sensor.xiaomi_temperature_1 %}{{states.sensor.xiaomi_temperature_1.attributes['battery_level']}}{% else %}N/A{% endif %}"
+    xiaomi_attr_battery_door_window_1:
+      device_class: battery
+      unit_of_measurement: "%"
+      friendly_name: Battery
+      entity_id: binary_sensor.xiaomi_door_window_1
+      value_template: "{% if states.binary_sensor.xiaomi_door_window_1 %}{{states.binary_sensor.xiaomi_door_window_1.attributes['battery_level']}}{% else %}N/A{% endif %}"
+    xiaomi_attr_battery_motion_1:
+      device_class: battery
+      unit_of_measurement: "%"
+      friendly_name: Battery
+      entity_id: binary_sensor.xiaomi_motion_1
+      value_template: "{% if states.binary_sensor.xiaomi_motion_1 %}{{states.binary_sensor.xiaomi_motion_1.attributes['battery_level']}}{% else %}N/A{% endif %}"
+    xiaomi_attr_battery_motion_2:
+      device_class: battery
+      unit_of_measurement: "%"
+      friendly_name: Battery
+      entity_id: binary_sensor.xiaomi_motion_2
+      value_template: "{% if states.binary_sensor.xiaomi_motion_2 %}{{states.binary_sensor.xiaomi_motion_2.attributes['battery_level']}}{% else %}N/A{% endif %}"
+
+
+#++++++++++++++++++++++++++++
+#+++++ Calendar sensors +++++
+#++++++++++++++++++++++++++++
+- platform: ics  #https://github.com/KoljaWindeler/ics
+  id: 1
+  url: http://hassio:8123/local/calendars/contarina.ics
+  name: Secco
+  startswith: Secco
+  timeformat: "%A, %d-%m-%Y"
+  show_remaining: false
+- platform: ics  #https://github.com/KoljaWindeler/ics
+  id: 2
+  url: http://hassio:8123/local/calendars/contarina.ics
+  name: Umido
+  startswith: Umido
+  timeformat: "%A, %d-%m-%Y"
+  show_remaining: false
+- platform: ics  #https://github.com/KoljaWindeler/ics
+  id: 3
+  url: http://hassio:8123/local/calendars/contarina.ics
+  name: Plastica
+  startswith: Plastica
+  timeformat: "%A, %d-%m-%Y"
+  show_remaining: false
+- platform: ics  #https://github.com/KoljaWindeler/ics
+  id: 4
+  url: http://hassio:8123/local/calendars/contarina.ics
+  name: Carta
+  startswith: Carta
+  timeformat: "%A, %d-%m-%Y"
+  show_remaining: false
+- platform: ics  #https://github.com/KoljaWindeler/ics
+  id: 5
+  url: http://hassio:8123/local/calendars/contarina.ics
+  name: Vegetale
+  startswith: Vegetale
+  timeformat: "%A, %d-%m-%Y"
+  show_remaining: false

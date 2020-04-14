@@ -1,0 +1,23 @@
+cell_paolo:
+  hide_if_away: false
+  icon:
+  mac:
+  name: Paolo (Cell.)
+  picture: /local/paolo.jpg
+  track: true
+
+cell_silvia:
+  hide_if_away: false
+  icon:
+  mac:
+  name: Silvia (Cell.)
+  picture: /local/silvia.png
+  track: true
+
+tablet_paolo:
+  hide_if_away: false
+  icon:
+  mac:
+  name: Paolo (Tablet)
+  picture: /local/paolo.jpg
+  track: true

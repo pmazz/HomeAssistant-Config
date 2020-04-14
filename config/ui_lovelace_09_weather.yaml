@@ -1,0 +1,152 @@
+#+++++++++++++++++++++++++++
+#+++++ VIEW -> Weather +++++
+#+++++++++++++++++++++++++++
+path: weather
+title: Weather
+icon: mdi:weather-partly-cloudy
+panel: true
+cards:
+  - id: weather.container
+    type: custom:layout-card  #https://github.com/thomasloven/lovelace-layout-card
+    layout: vertical
+    max_columns: 2
+    cards:
+      - id: weather.weather_current
+        type: entities  #https://www.home-assistant.io/lovelace/entities
+        title: Current
+        show_header_toggle: false
+        entities:
+          - entity: sensor.dark_sky_summary_custom
+            secondary_info: last-changed
+          - sensor.dark_sky_temperature
+          - sensor.dark_sky_pressure
+          - sensor.dark_sky_humidity
+          - entity: sensor.dark_sky_precip_intensity
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: Rain
+            state_header: Intensity
+            entities:
+              - entity: sensor.dark_sky_precip_probability
+                name: Probability
+          - entity: sensor.dark_sky_wind_speed
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: Wind
+            state_header: Speed
+            entities:
+              - entity: sensor.dark_sky_wind_dir
+                name: Direction
+          - type: section
+          - sun.sun
+          - sensor.season
+          - sensor.rain_last_occurred
+          - type: section
+            label: UV & Ozone
+          # - entity: binary_sensor.protection_window
+          #   secondary_info: last-changed
+          - sensor.current_ozone_level
+          - entity: sensor.current_uv_index
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: Current UV
+            state_header: Index
+            unit: " "
+            entities:
+              - entity: sensor.current_uv_level
+                name: Level
+          - sensor.max_uv_index
+          # - sensor.skin_type_1_safe_exposure_time
+          # - sensor.skin_type_2_safe_exposure_time
+          # - sensor.skin_type_3_safe_exposure_time
+          # - sensor.skin_type_4_safe_exposure_time
+          # - sensor.skin_type_5_safe_exposure_time
+          # - sensor.skin_type_6_safe_exposure_time
+      - break
+      - id: weather.weather_meteogram
+        type: picture
+        image: https://www.yr.no/place/Italy/Veneto/Ponzano_Veneto/meteogram.svg
+      - id: weather.weather_forecast
+        type: entities  #https://www.home-assistant.io/lovelace/entities
+        title: Forecast
+        show_header_toggle: false
+        entities:
+          - sensor.dark_sky_forecast_header
+          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+            head: sensor.dark_sky_forecast_1d
+            items:
+              - sensor.dark_sky_summary_1d
+              - entity: sensor.dark_sky_daily_high_temperature_1d
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: Temperature
+                state_header: High
+                entities:
+                  - entity: sensor.dark_sky_daily_low_temperature_1d
+                    name: Low
+              - sensor.dark_sky_pressure_1d
+              - sensor.dark_sky_humidity_1d
+              - entity: sensor.dark_sky_precip_intensity_1d
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: Rain
+                state_header: Intensity
+                entities:
+                  - entity: sensor.dark_sky_precip_probability_1d
+                    name: Probability
+              - entity: sensor.dark_sky_wind_speed_1d
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: Wind
+                state_header: Speed
+                entities:
+                  - entity: sensor.dark_sky_wind_dir_1d
+                    name: Direction
+          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+            head: sensor.dark_sky_forecast_2d
+            items:
+              - sensor.dark_sky_summary_2d
+              - entity: sensor.dark_sky_daily_high_temperature_2d
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: Temperature
+                state_header: High
+                entities:
+                  - entity: sensor.dark_sky_daily_low_temperature_2d
+                    name: Low
+              - sensor.dark_sky_pressure_2d
+              - sensor.dark_sky_humidity_2d
+              - entity: sensor.dark_sky_precip_intensity_2d
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: Rain
+                state_header: Intensity
+                entities:
+                  - entity: sensor.dark_sky_precip_probability_2d
+                    name: Probability
+              - entity: sensor.dark_sky_wind_speed_2d
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: Wind
+                state_header: Speed
+                entities:
+                  - entity: sensor.dark_sky_wind_dir_2d
+                    name: Direction
+          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+            head: sensor.dark_sky_forecast_3d
+            items:
+              - sensor.dark_sky_summary_3d
+              - entity: sensor.dark_sky_daily_high_temperature_3d
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: Temperature
+                state_header: High
+                entities:
+                  - entity: sensor.dark_sky_daily_low_temperature_3d
+                    name: Low
+              - sensor.dark_sky_pressure_3d
+              - sensor.dark_sky_humidity_3d
+              - entity: sensor.dark_sky_precip_intensity_3d
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: Rain
+                state_header: Intensity
+                entities:
+                  - entity: sensor.dark_sky_precip_probability_3d
+                    name: Probability
+              - entity: sensor.dark_sky_wind_speed_3d
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: Wind
+                state_header: Speed
+                entities:
+                  - entity: sensor.dark_sky_wind_dir_3d
+                    name: Direction

@@ -1,0 +1,348 @@
+#+++++++++++++++++++++++++++++
+#+++++ Raspberry sensors +++++
+#+++++++++++++++++++++++++++++
+sensor.time_online:
+  friendly_name: Online for
+  icon: mdi:clock
+  unit_of_measurement: minutes
+sensor.processor_use:
+  friendly_name: Processor use
+  icon: mdi:chip
+  unit_of_measurement: "%"
+sensor.memory_use:
+  friendly_name: Memory in use
+  icon: mdi:memory
+  unit_of_measurement: MB
+sensor.memory_use_percent:
+  friendly_name: Memory in use
+  icon: mdi:memory
+  unit_of_measurement: "%"
+sensor.memory_free:
+  friendly_name: Free memory
+  icon: mdi:memory
+  unit_of_measurement: MB
+sensor.hass_ip_address:
+  friendly_name: Internal IPs
+  icon: mdi:earth-off
+
+
+#++++++++++++++++++++++++++
+#+++++ Router sensors +++++
+#++++++++++++++++++++++++++
+sensor.fritz_netmonitor:
+  friendly_name: Status
+  icon: mdi:router
+  hidden: true
+
+
+#+++++++++++++++++++++++
+#+++++ NAS sensors +++++
+#+++++++++++++++++++++++
+sensor.nas_system_temperature:
+  friendly_name: System temperature
+sensor.nas_cpu_temperature:
+  friendly_name: CPU temperature
+sensor.nas_temperature_drive_0_1:
+  friendly_name: Drive 1 temperature
+sensor.nas_temperature_drive_0_2:
+  friendly_name: Drive 2 temperature
+sensor.nas_memory_usage:
+  friendly_name: Memory usage
+sensor.nas_memory_used:
+  friendly_name: Used memory
+sensor.nas_memory_available:
+  friendly_name: Available memory
+sensor.nas_cpu_usage:
+  friendly_name: CPU usage
+sensor.nas_used_space_volume1:
+  friendly_name: Used space
+sensor.nas_volume_used_volume1:
+  friendly_name: Used space %
+sensor.nas_free_space_volume1:
+  friendly_name: Free space
+sensor.nas_status:
+  friendly_name: System health
+sensor.nas_smart_status_drive_0_1:
+  friendly_name: SMART status (drive 1)
+sensor.nas_smart_status_drive_0_2:
+  friendly_name: SMART status (drive 2)
+sensor.nas_attr_model:
+  icon: mdi:nas
+
+
+#++++++++++++++++++++++++++++++++++++++
+#+++++ Dark Sky sensors (weather) +++++
+#++++++++++++++++++++++++++++++++++++++
+sensor.dark_sky_temperature:
+  friendly_name: Temperature
+sensor.dark_sky_daily_low_temperature_1d:
+  friendly_name: Low Temperature
+sensor.dark_sky_daily_high_temperature_1d:
+  friendly_name: High Temperature
+sensor.dark_sky_daily_low_temperature_2d:
+  friendly_name: Low Temperature
+sensor.dark_sky_daily_high_temperature_2d:
+  friendly_name: High Temperature
+sensor.dark_sky_daily_low_temperature_3d:
+  friendly_name: Low Temperature
+sensor.dark_sky_daily_high_temperature_3d:
+  friendly_name: High Temperature
+sensor.dark_sky_humidity:
+  friendly_name: Humidity
+sensor.dark_sky_humidity_1d:
+  friendly_name: Humidity
+sensor.dark_sky_humidity_2d:
+  friendly_name: Humidity
+sensor.dark_sky_humidity_3d:
+  friendly_name: Humidity
+sensor.dark_sky_pressure:
+  friendly_name: Pressure
+sensor.dark_sky_pressure_1d:
+  friendly_name: Pressure
+sensor.dark_sky_pressure_2d:
+  friendly_name: Pressure
+sensor.dark_sky_pressure_3d:
+  friendly_name: Pressure
+sensor.dark_sky_precip_intensity:
+  friendly_name: Rain Intensity
+sensor.dark_sky_precip_intensity_1d:
+  friendly_name: Rain Intensity
+sensor.dark_sky_precip_intensity_2d:
+  friendly_name: Rain Intensity
+sensor.dark_sky_precip_intensity_3d:
+  friendly_name: Rain Intensity
+sensor.dark_sky_precip_probability:
+  friendly_name: Rain Probability
+  icon: mdi:weather-rainy
+sensor.dark_sky_precip_probability_1d:
+  friendly_name: Rain Probability
+  icon: mdi:weather-rainy
+sensor.dark_sky_precip_probability_2d:
+  friendly_name: Rain Probability
+  icon: mdi:weather-rainy
+sensor.dark_sky_precip_probability_3d:
+  friendly_name: Rain Probability
+  icon: mdi:weather-rainy
+sensor.dark_sky_wind_speed:
+  friendly_name: Wind Speed
+sensor.dark_sky_wind_speed_1d:
+  friendly_name: Wind Speed
+sensor.dark_sky_wind_speed_2d:
+  friendly_name: Wind Speed
+sensor.dark_sky_wind_speed_3d:
+  friendly_name: Wind Speed
+sensor.dark_sky_wind_dir_1d:
+  friendly_name: Wind Direction
+sensor.dark_sky_wind_dir_2d:
+  friendly_name: Wind Direction
+sensor.dark_sky_wind_dir_3d:
+  friendly_name: Wind Direction
+sensor.dark_sky_summary_1d:
+  friendly_name: Summary
+  entity_picture: ""
+  icon: mdi:blank
+sensor.dark_sky_summary_2d:
+  friendly_name: Summary
+  entity_picture: ""
+  icon: mdi:blank
+sensor.dark_sky_summary_3d:
+  friendly_name: Summary
+  entity_picture: ""
+  icon: mdi:blank
+
+
+#+++++++++++++++++++++++++++++
+#+++++ Date/time sensors +++++
+#+++++++++++++++++++++++++++++
+sensor.date:
+  friendly_name: Date
+sensor.time:
+  friendly_name: Time
+binary_sensor.workday:
+  friendly_name: Working day
+  icon: mdi:briefcase
+
+
+#++++++++++++++++++++++++++
+#+++++ System sensors +++++
+#++++++++++++++++++++++++++
+sensor.hass_installed_version:
+  friendly_name: Installed Version
+  icon: mdi:home-assistant
+sensor.hass_available_version:
+  friendly_name: Available Version
+  icon: mdi:home-assistant
+sensor.hass_db_filesize:
+  friendly_name: DB Size
+  icon: mdi:database
+
+
+#++++++++++++++++++++++++++
+#+++++ Device sensors +++++
+#++++++++++++++++++++++++++
+binary_sensor.online_router_fritzbox:
+  friendly_name: Router (FritzBox)
+  icon: mdi:router-wireless
+  device_class: connectivity
+binary_sensor.online_nas_qnap:
+  friendly_name: NAS (Qnap)
+  icon: mdi:nas
+  device_class: connectivity
+binary_sensor.online_adguard:
+  friendly_name: AdGuard
+  icon: mdi:shield-half-full
+  device_class: connectivity
+binary_sensor.online_samsung_tv:
+  friendly_name: TV (Samsung)
+  icon: mdi:television-classic
+  device_class: connectivity
+binary_sensor.online_cell_paolo:
+  friendly_name: Cell. Paolo
+  icon: mdi:cellphone
+  device_class: connectivity
+binary_sensor.online_cell_silvia:
+  friendly_name: Cell. Silvia
+  icon: mdi:cellphone
+  device_class: connectivity
+binary_sensor.online_tablet_ale1:
+  friendly_name: Tablet Ale 1
+  icon: mdi:tablet-android
+  device_class: connectivity
+binary_sensor.online_tablet_ale2:
+  friendly_name: Tablet Ale 2
+  icon: mdi:tablet-android
+  device_class: connectivity
+binary_sensor.online_tablet_paolo:
+  friendly_name: Tablet Paolo
+  icon: mdi:tablet-android
+  device_class: connectivity
+binary_sensor.online_google_home:
+  friendly_name: Google Home Mini
+  icon: mdi:google-home
+  device_class: connectivity
+binary_sensor.online_google_chromecast:
+  friendly_name: Chromecast
+  icon: mdi:google-chrome
+  device_class: connectivity
+binary_sensor.online_xiaomi_gateway:
+  friendly_name: Xiaomi Gateway
+  icon: mdi:blur-radial
+  device_class: connectivity
+binary_sensor.online_epson_printer:
+  friendly_name: Epson WF-3620
+  icon: mdi:printer
+  device_class: connectivity
+binary_sensor.online_prusa_3d_printer:
+  friendly_name: Prusa Mini
+  icon: mdi:printer-3d
+  device_class: connectivity
+binary_sensor.online_pzem_004t:
+  friendly_name: PZEM-004T
+  icon: mdi:power-socket-eu
+  device_class: connectivity
+
+
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#+++++ Tracking & telemetry sensors (Cell. Paolo) +++++
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++
+sensor.cell_paolo_lastupdate:
+  friendly_name: Last update
+sensor.cell_paolo_battery:
+  friendly_name: Battery
+sensor.cell_paolo_charging:
+  friendly_name: Charging
+
+
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#+++++ Tracking & telemetry sensors (Cell. Silvia) +++++
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+sensor.cell_silvia_lastupdate:
+  friendly_name: Last update
+sensor.cell_silvia_battery:
+  friendly_name: Battery
+sensor.cell_silvia_charging:
+  friendly_name: Charging
+
+
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#+++++ Tracking & telemetry sensors (Tablet Paolo) +++++
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+sensor.tablet_paolo_lastupdate:
+  friendly_name: Last update
+sensor.tablet_paolo_battery:
+  friendly_name: Battery
+sensor.tablet_paolo_charging:
+  friendly_name: Charging
+
+
+#++++++++++++++++++++++++++++
+#+++++ Tasmota switches +++++
+#++++++++++++++++++++++++++++
+switch.sonoff_basic_1:
+  friendly_name: Sonoff Basic 1
+switch.sonoff_basic_2:
+  friendly_name: Sonoff Basic 2
+switch.sonoff_basic_3:
+  friendly_name: Sonoff Basic 3
+switch.sonoff_dual_1:
+  friendly_name: Sonoff Dual 1
+switch.sonoff_dual_2:
+  friendly_name: Sonoff Dual 2
+switch.sonoff_4ch_1:
+  friendly_name: Sonoff 4CH 1
+switch.sonoff_4ch_2:
+  friendly_name: Sonoff 4CH 2
+switch.sonoff_4ch_3:
+  friendly_name: Sonoff 4CH 3
+switch.sonoff_4ch_4:
+  friendly_name: Sonoff 4CH 4
+switch.smartplug_1:
+  friendly_name: Smart Plug 1
+switch.smartplug_2:
+  friendly_name: Smart Plug 2
+switch.smartplug_3:
+  friendly_name: Smart Plug 3
+switch.smartplug_4:
+  friendly_name: Smart Plug 4
+switch.smartplug_5:
+  friendly_name: Smart Plug 5
+switch.smartplug_6:
+  friendly_name: Smart Plug 6
+switch.smartplug_7:
+  friendly_name: Smart Plug 7
+switch.smartplug_8:
+  friendly_name: Smart Plug 8
+
+
+#++++++++++++++++++++++++++++++++++++++++++++++++++
+#+++++ PZEM-004T sensors (Energy consumption) +++++
+#++++++++++++++++++++++++++++++++++++++++++++++++++
+sensor.pzem_power:
+  friendly_name: "Consumo"
+sensor.pzem_voltage:
+  friendly_name: "Tensione"
+sensor.pzem_current:
+  friendly_name: "Corrente"
+sensor.pzem_power_factor:
+  friendly_name: "Fattore di Potenza"
+sensor.pzem_energy_today:
+  friendly_name: "Consumi Oggi"
+sensor.pzem_energy_yesterday:
+  friendly_name: "Consumi Ieri"
+sensor.pzem_energy_total:
+  friendly_name: "Consumi Totali"
+
+
+#++++++++++++++++++++++++++++
+#+++++ Calendar sensors +++++
+#++++++++++++++++++++++++++++
+sensor.ics_1:
+  entity_picture: /local/ico/rifiuti/secco.png
+sensor.ics_2:
+  entity_picture: /local/ico/rifiuti/umido.png
+sensor.ics_3:
+  entity_picture: /local/ico/rifiuti/vpl.png
+sensor.ics_4:
+  entity_picture: /local/ico/rifiuti/carta.png
+sensor.ics_5:
+  entity_picture: /local/ico/rifiuti/vegetale.png

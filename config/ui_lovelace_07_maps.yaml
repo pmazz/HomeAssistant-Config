@@ -1,0 +1,106 @@
+#++++++++++++++++++++++++
+#+++++ VIEW -> Maps +++++
+#++++++++++++++++++++++++
+path: maps
+title: Maps
+icon: mdi:map-marker-radius
+panel: true
+cards:
+  - id: maps.container
+    type: custom:layout-card  #https://github.com/thomasloven/lovelace-layout-card
+    layout: vertical
+    max_columns: 2
+    cards:
+      - id: maps.where_is_paolo
+        type: entities  #https://www.home-assistant.io/lovelace/entities
+        title: Where is Paolo?
+        show_header_toggle: false
+        entities:
+          - entity: device_tracker.cell_paolo
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: Paolo is (at)
+            secondary_info:
+              entity: sensor.zone_paolo_last_changed
+              name: "Since:"
+          - entity: sensor.cell_paolo_latlong
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: Lat/Long
+            show_state: false
+            entities:
+              - entity: sensor.cell_paolo_lat
+                name: Lat.
+              - entity: sensor.cell_paolo_long
+                name: Long.
+            secondary_info:
+              entity: sensor.cell_paolo_accuracy
+              name: "Accuracy:"
+          - entity: sensor.cell_paolo_address
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            secondary_info:
+              entity: sensor.cell_paolo_address_confidence
+              name: "Confidence:"
+          - entity: sensor.cell_paolo_distance_silvia
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: Distanza (Km)
+            state_header: Da Silvia
+            unit: " "
+            entities:
+              - entity: sensor.cell_paolo_distance_home
+                name: Da casa
+                unit: " "
+            secondary_info:
+              entity: sensor.cell_paolo_lastupdate
+              name: "Update:"
+      - id: maps.map_paolo
+        type: map  #https://www.home-assistant.io/lovelace/map
+        aspect_ratio: 75%
+        default_zoom: 17
+        entities:
+          - device_tracker.cell_paolo
+      - break
+      - id: maps.where_is_silvia
+        type: entities  #https://www.home-assistant.io/lovelace/entities
+        title: Where is Silvia?
+        show_header_toggle: false
+        entities:
+          - entity: device_tracker.cell_silvia
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: Silvia is (at)
+            secondary_info:
+              entity: sensor.zone_silvia_last_changed
+              name: "Since:"
+          - entity: sensor.cell_silvia_latlong
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: Lat/Long
+            show_state: false
+            entities:
+              - entity: sensor.cell_silvia_lat
+                name: Lat.
+              - entity: sensor.cell_silvia_long
+                name: Long.
+            secondary_info:
+              entity: sensor.cell_silvia_accuracy
+              name: "Accuracy:"
+          - entity: sensor.cell_silvia_address
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            secondary_info:
+              entity: sensor.cell_silvia_address_confidence
+              name: "Confidence:"
+          - entity: sensor.cell_silvia_distance_paolo
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: Distanza (Km)
+            state_header: Da Paolo
+            unit: " "
+            entities:
+              - entity: sensor.cell_silvia_distance_home
+                name: Da casa
+                unit: " "
+            secondary_info:
+              entity: sensor.cell_silvia_lastupdate
+              name: "Update:"
+      - id: maps.map_silvia
+        type: map  #https://www.home-assistant.io/lovelace/map
+        aspect_ratio: 75%
+        default_zoom: 17
+        entities:
+          - device_tracker.cell_silvia

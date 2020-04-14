@@ -1,0 +1,362 @@
+#https://www.home-assistant.io/components/input_select
+
+hass_selected_theme:
+  name: Select the theme to apply
+  options:
+    - default
+    - midnight
+    - dark_cyan
+    - dark_red
+  initial: default
+  icon: mdi:theme-light-dark
+
+home_mode:
+  name: Modalità casa
+  options:
+    - giorno
+    - notte
+  icon: mdi:home-circle
+
+radio_station:
+  name: Radio Station
+  options:
+    - -Off-
+    #- Radio24
+    - Radio Rai 1
+    - Radio Deejay
+    - RDS
+    - Radio 101
+    #- RTL 102.5
+    - Radio 105
+    - Virgin Radio
+    - Radio Capital
+    - George Michael
+  initial: -Off-
+  icon: mdi:radio
+
+event_daytype_sveglia_1:
+  name: Tipo Giorno
+  options:
+    - tutti
+    - feriale
+    - festivo
+  icon: mdi:calendar
+event_homemode_sveglia_1:
+  name: Modalità casa
+  options:
+    - tutti
+    - giorno
+    - notte
+  icon: mdi:home-circle
+
+event_daytype_sveglia_2:
+  name: Tipo Giorno
+  options:
+    - tutti
+    - feriale
+    - festivo
+  icon: mdi:calendar
+event_homemode_sveglia_2:
+  name: Modalità casa
+  options:
+    - tutti
+    - giorno
+    - notte
+  icon: mdi:home-circle
+
+event_daytype_ale_letto:
+  name: Tipo Giorno
+  options:
+    - tutti
+    - feriale
+    - festivo
+  icon: mdi:calendar
+event_homemode_ale_letto:
+  name: Modalità casa
+  options:
+    - tutti
+    - giorno
+    - notte
+  icon: mdi:home-circle
+
+event_daytype_ale_scuola:
+  name: Tipo Giorno
+  options:
+    - tutti
+    - feriale
+    - festivo
+  icon: mdi:calendar
+event_homemode_ale_scuola:
+  name: Modalità casa
+  options:
+    - tutti
+    - giorno
+    - notte
+  icon: mdi:home-circle
+
+event_daytype_cover_up:
+  name: Tipo Giorno
+  options:
+    - tutti
+    - feriale
+    - festivo
+  icon: mdi:calendar
+event_daytype_cover_down:
+  name: Tipo Giorno
+  options:
+    - tutti
+    - feriale
+    - festivo
+  icon: mdi:calendar
+event_starttype_cover_up:
+  name: Tipo Avvio
+  options:
+    - Orario
+    - Alba
+  icon: mdi:calendar
+event_starttype_cover_down:
+  name: Tipo Avvio
+  options:
+    - Orario
+    - Tramonto
+  icon: mdi:calendar
+
+event_charge_device_smartplug_1:
+  name: Device
+  options:
+    - None
+    - cell_paolo_battery
+    - cell_silvia_battery
+    - tablet_paolo_battery
+  icon: mdi:tablet-cellphone
+event_starttype_smartplug_1:
+  name: Tipo Avvio
+  options:
+    - None
+    - Toggle
+    - On/Off
+    - Battery
+  icon: mdi:flash-outline
+event_daytype_smartplug_1:
+  name: Tipo Giorno
+  options:
+    - tutti
+    - feriale
+    - festivo
+  icon: mdi:calendar
+
+event_charge_device_smartplug_2:
+  name: Device
+  options:
+    - None
+    - cell_paolo_battery
+    - cell_silvia_battery
+    - tablet_paolo_battery
+  icon: mdi:tablet-cellphone
+event_starttype_smartplug_2:
+  name: Tipo Avvio
+  options:
+    - None
+    - Toggle
+    - On/Off
+    - Battery
+  icon: mdi:flash-outline
+event_daytype_smartplug_2:
+  name: Tipo Giorno
+  options:
+    - tutti
+    - feriale
+    - festivo
+  icon: mdi:calendar
+
+event_charge_device_smartplug_3:
+  name: Device
+  options:
+    - None
+    - cell_paolo_battery
+    - cell_silvia_battery
+    - tablet_paolo_battery
+  icon: mdi:tablet-cellphone
+event_starttype_smartplug_3:
+  name: Tipo Avvio
+  options:
+    - None
+    - Toggle
+    - On/Off
+    - Battery
+  icon: mdi:flash-outline
+event_daytype_smartplug_3:
+  name: Tipo Giorno
+  options:
+    - tutti
+    - feriale
+    - festivo
+  icon: mdi:calendar
+
+event_charge_device_smartplug_4:
+  name: Device
+  options:
+    - None
+    - cell_paolo_battery
+    - cell_silvia_battery
+    - tablet_paolo_battery
+  icon: mdi:tablet-cellphone
+event_starttype_smartplug_4:
+  name: Tipo Avvio
+  options:
+    - None
+    - Toggle
+    - On/Off
+    - Battery
+  icon: mdi:flash-outline
+event_daytype_smartplug_4:
+  name: Tipo Giorno
+  options:
+    - tutti
+    - feriale
+    - festivo
+  icon: mdi:calendar
+
+event_charge_device_smartplug_5:
+  name: Device
+  options:
+    - None
+    - cell_paolo_battery
+    - cell_silvia_battery
+    - tablet_paolo_battery
+  icon: mdi:tablet-cellphone
+event_starttype_smartplug_5:
+  name: Tipo Avvio
+  options:
+    - None
+    - Toggle
+    - On/Off
+    - Battery
+  icon: mdi:flash-outline
+event_daytype_smartplug_5:
+  name: Tipo Giorno
+  options:
+    - tutti
+    - feriale
+    - festivo
+  icon: mdi:calendar
+
+event_charge_device_smartplug_6:
+  name: Device
+  options:
+    - None
+    - cell_paolo_battery
+    - cell_silvia_battery
+    - tablet_paolo_battery
+  icon: mdi:tablet-cellphone
+event_starttype_smartplug_6:
+  name: Tipo Avvio
+  options:
+    - None
+    - Toggle
+    - On/Off
+    - Battery
+  icon: mdi:flash-outline
+event_daytype_smartplug_6:
+  name: Tipo Giorno
+  options:
+    - tutti
+    - feriale
+    - festivo
+  icon: mdi:calendar
+
+event_charge_device_smartplug_7:
+  name: Device
+  options:
+    - None
+    - cell_paolo_battery
+    - cell_silvia_battery
+    - tablet_paolo_battery
+  icon: mdi:tablet-cellphone
+event_starttype_smartplug_7:
+  name: Tipo Avvio
+  options:
+    - None
+    - Toggle
+    - On/Off
+    - Battery
+  icon: mdi:flash-outline
+event_daytype_smartplug_7:
+  name: Tipo Giorno
+  options:
+    - tutti
+    - feriale
+    - festivo
+  icon: mdi:calendar
+
+event_charge_device_smartplug_8:
+  name: Device
+  options:
+    - None
+    - cell_paolo_battery
+    - cell_silvia_battery
+    - tablet_paolo_battery
+  icon: mdi:tablet-cellphone
+event_starttype_smartplug_8:
+  name: Tipo Avvio
+  options:
+    - None
+    - Toggle
+    - On/Off
+    - Battery
+  icon: mdi:flash-outline
+event_daytype_smartplug_8:
+  name: Tipo Giorno
+  options:
+    - tutti
+    - feriale
+    - festivo
+  icon: mdi:calendar
+
+event_charge_device_sonoff_basic_1:
+  name: Device
+  options:
+    - None
+    - cell_paolo_battery
+    - cell_silvia_battery
+    - tablet_paolo_battery
+  icon: mdi:tablet-cellphone
+event_starttype_sonoff_basic_1:
+  name: Tipo Avvio
+  options:
+    - None
+    - Toggle
+    - On/Off
+    - Battery
+  icon: mdi:flash-outline
+event_daytype_sonoff_basic_1:
+  name: Tipo Giorno
+  options:
+    - tutti
+    - feriale
+    - festivo
+  icon: mdi:calendar
+
+event_charge_device_sonoff_basic_2:
+  name: Device
+  options:
+    - None
+    - cell_paolo_battery
+    - cell_silvia_battery
+    - tablet_paolo_battery
+  icon: mdi:tablet-cellphone
+event_starttype_sonoff_basic_2:
+  name: Tipo Avvio
+  options:
+    - None
+    - Toggle
+    - On/Off
+    - Battery
+  icon: mdi:flash-outline
+event_daytype_sonoff_basic_2:
+  name: Tipo Giorno
+  options:
+    - tutti
+    - feriale
+    - festivo
+  icon: mdi:calendar

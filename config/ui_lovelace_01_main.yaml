@@ -1,0 +1,197 @@
+#++++++++++++++++++++++++
+#+++++ VIEW -> Main +++++
+#++++++++++++++++++++++++
+path: main
+title: Main
+icon: mdi:home-assistant
+panel: true
+cards:
+  - id: main.container
+    type: custom:layout-card  #https://github.com/thomasloven/lovelace-layout-card
+    layout: vertical
+    max_columns: 3
+    cards:
+      - id: main.connected_devices
+        type: entities  #https://www.home-assistant.io/lovelace/entities
+        title: Connected Devices
+        show_header_toggle: false
+        entities:
+          - entity: binary_sensor.online_router_fritzbox
+            name: Router
+            state_color: true
+          - entity: binary_sensor.online_nas_qnap
+            name: NAS
+            state_color: true
+          - entity: binary_sensor.online_adguard
+            state_color: true
+          - entity: binary_sensor.online_google_home
+            name: Google Home
+            state_color: true
+          - entity: binary_sensor.online_samsung_tv
+            name: TV
+            state_color: true
+          - entity: binary_sensor.online_google_chromecast
+            state_color: true
+          - entity: binary_sensor.online_xiaomi_gateway
+            state_color: true
+          - entity: binary_sensor.online_epson_printer
+            state_color: true
+          - entity: binary_sensor.online_prusa_3d_printer
+            state_color: true
+          - entity: binary_sensor.online_pzem_004t
+            state_color: true
+          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+            head:
+              type: section
+              label: Smart Plugs & Switches
+            open: true
+            items:
+              - entity: binary_sensor.online_sonoff_dual_1
+                name: Sonoff Dual (Serrande)
+                state_color: true
+              - entity: binary_sensor.online_sonoff_4ch_1
+                name: Sonoff 4CH (Irrigazione)
+                state_color: true
+              - entity: binary_sensor.online_sonoff_basic_1
+                state_color: true
+              - entity: binary_sensor.online_sonoff_basic_2
+                name: Sonoff Basic 2 (Tablet Paolo)
+                state_color: true
+              - entity: binary_sensor.online_sonoff_basic_3
+                name: Sonoff Basic 3 (NAS)
+                state_color: true
+              - entity: binary_sensor.online_smartplug_1
+                name: Smart Plug 1 (Cell. Silvia)
+                state_color: true
+              - entity: binary_sensor.online_smartplug_2
+                state_color: true
+              - entity: binary_sensor.online_smartplug_3
+                state_color: true
+              - entity: binary_sensor.online_smartplug_4
+                state_color: true
+              - entity: binary_sensor.online_smartplug_5
+                state_color: true
+              - entity: binary_sensor.online_smartplug_6
+                state_color: true
+              - entity: binary_sensor.online_smartplug_7
+                state_color: true
+              - entity: binary_sensor.online_smartplug_8
+                state_color: true
+      - break
+      - id: main.mobile_devices
+        type: entities  #https://www.home-assistant.io/lovelace/entities
+        title: Mobile Devices
+        show_header_toggle: false
+        entities:
+          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+            head:
+              type: section
+              label: Phones & Tablets
+            open: true
+            items:
+              - entity: binary_sensor.online_cell_paolo
+                state_color: true
+              - entity: binary_sensor.online_cell_silvia
+                state_color: true
+              - entity: binary_sensor.online_tablet_paolo
+                state_color: true
+              - entity: binary_sensor.online_tablet_ale1
+                name: Tablet Ale Blu
+                state_color: true
+              - entity: binary_sensor.online_tablet_ale2
+                name: Tablet Ale Nero
+                state_color: true
+          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+            head:
+              type: section
+              label: Batteries
+            open: true
+            items:
+              - entity: sensor.cell_paolo_battery
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: Paolo's Phone
+                state_header: Battery
+                entities:
+                  - sensor.cell_paolo_charging
+                secondary_info:
+                  entity: sensor.cell_paolo_lastupdate
+                  name: "Update:"
+              - entity: sensor.cell_silvia_battery
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: Silvia's Phone
+                state_header: Battery
+                entities:
+                  - sensor.cell_silvia_charging
+                secondary_info:
+                  entity: sensor.cell_silvia_lastupdate
+                  name: "Update:"
+
+              - entity: sensor.tablet_paolo_battery
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: Paolo's Tablet
+                state_header: Battery
+                entities:
+                  - sensor.tablet_paolo_charging
+                secondary_info:
+                  entity: sensor.tablet_paolo_lastupdate
+                  name: "Update:"
+      - break
+      - id: main.tools
+        type: entities  #https://www.home-assistant.io/lovelace/entities
+        title: Tools
+        show_header_toggle: false
+        entities:
+          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+            head:
+              type: section
+              label: Home Devices
+            open: true
+            items:
+              - type: weblink
+                name: Router
+                icon: mdi:router-wireless
+                url: http://fritz.box
+              - type: weblink
+                name: NAS
+                icon: mdi:nas
+                url: http://nas:8080
+          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+            head:
+              type: section
+              label: Hass.io Addons
+            open: true
+            items:
+              - type: weblink
+                name: IDE
+                icon: mdi:file-document
+                url: http://hassio:8321
+              - type: weblink
+                name: SQLite Web
+                icon: mdi:database-search
+                url: http://hassio:6210
+              - type: weblink
+                name: TasmoAdmin
+                icon: mdi:z-wave
+                url: http://hassio:9541
+              - type: weblink
+                name: Bitwarden
+                icon: mdi:shield-key
+                url: http://hassio:7277
+          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+            head:
+              type: section
+              label: RSS Links
+            open: false
+            items:
+              - type: weblink
+                name: Raspberry Sensors
+                icon: mdi:rss-box
+                url: /api/rss_template/raspberry
+              - type: weblink
+                name: FritzBox Sensors
+                icon: mdi:rss-box
+                url: /api/rss_template/fritzbox
+              - type: weblink
+                name: Qnap Sensors
+                icon: mdi:rss-box
+                url: /api/rss_template/qnap

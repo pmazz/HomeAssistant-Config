@@ -1,0 +1,122 @@
+#++++++++++++++++++++++++++
+#+++++ VIEW -> Events +++++
+#++++++++++++++++++++++++++
+path: events
+title: Events
+icon: mdi:calendar-clock
+panel: true
+cards:
+  - id: events.container
+    type: custom:layout-card  #https://github.com/thomasloven/lovelace-layout-card
+    layout: vertical
+    max_columns: 3
+    cards:
+      - id: events.today
+        type: entities  #https://www.home-assistant.io/lovelace/entities
+        title: Today
+        show_header_toggle: false
+        entities:
+          - entity: sensor.date
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: Date/Time
+            show_state: false
+            entities:
+              - entity: sensor.weekday
+                name: Weekday
+              - entity: sensor.date
+                name: Date
+              - entity: sensor.time
+                name: Time
+          - entity: binary_sensor.workday
+            state_color: true
+      - id: events.contarina
+        type: custom:auto-entities
+        card:
+          type: entities  #https://www.home-assistant.io/lovelace/entities
+          title: Contarina
+          show_header_toggle: false
+        filter:
+          include:
+            - entity_id: "sensor.ics_*"
+              options:
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                secondary_info:
+                  attribute: remaining
+                  name: tra
+                  unit: gg
+        sort:
+          method: attribute
+          attribute: remaining
+          numeric: true
+      - id: events.sono_le_ore
+        type: entities  #https://www.home-assistant.io/lovelace/entities
+        title: Avviso Orario
+        show_header_toggle: false
+        entities:
+          - entity: input_boolean.event_sonoleore
+            state_color: true
+          - input_number.event_volume_sonoleore
+      - break
+      - id: events.ale
+        type: entities  #https://www.home-assistant.io/lovelace/entities
+        title: Avvisi per Ale
+        show_header_toggle: false
+        entities:
+          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+            head:
+              type: section
+              label: Ale a letto
+            open: true
+            items:
+              - entity: switch.event_ale_letto
+                state_color: true
+              - input_datetime.event_ale_letto
+              - input_text.event_ale_letto
+              - input_number.event_volume_ale_letto
+              - input_select.event_daytype_ale_letto
+              - input_select.event_homemode_ale_letto
+          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+            head:
+              type: section
+              label: Ale a scuola
+            open: true
+            items:
+              - entity: switch.event_ale_scuola
+                state_color: true
+              - input_datetime.event_ale_scuola
+              - input_text.event_ale_scuola
+              - input_number.event_volume_ale_scuola
+              - input_select.event_daytype_ale_scuola
+              - input_select.event_homemode_ale_scuola
+      - break
+      - id: events.sveglie
+        type: entities  #https://www.home-assistant.io/lovelace/entities
+        title: Sveglie
+        show_header_toggle: false
+        entities:
+          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+            head:
+              type: section
+              label: Sveglia 1
+            open: true
+            items:
+              - entity: switch.event_sveglia_1
+                state_color: true
+              - input_datetime.event_sveglia_1
+              - input_text.event_sveglia_1
+              - input_number.event_volume_sveglia_1
+              - input_select.event_daytype_sveglia_1
+              - input_select.event_homemode_sveglia_1
+          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+            head:
+              type: section
+              label: Sveglia 2
+            open: true
+            items:
+              - entity: switch.event_sveglia_2
+                state_color: true
+              - input_datetime.event_sveglia_2
+              - input_text.event_sveglia_2
+              - input_number.event_volume_sveglia_2
+              - input_select.event_daytype_sveglia_2
+              - input_select.event_homemode_sveglia_2

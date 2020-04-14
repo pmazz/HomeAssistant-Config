@@ -1,0 +1,44 @@
+#https://www.home-assistant.io/components/input_text
+
+#dummy_text_2:
+#  name: Text 2
+#  min: 5
+#  max: 10
+#dummy_text_3:
+#  name: Text 3
+#  pattern: "[a-fA-F0-9]*"
+#dummy_text_4:
+#  name: Text 4
+#  mode: password
+
+event_ale_letto:
+  name: Avviso
+  icon: mdi:comment-alert-outline
+
+event_ale_scuola:
+  name: Avviso
+  icon: mdi:comment-alert-outline
+
+event_sveglia_1:
+  name: Avviso
+  icon: mdi:comment-alert-outline
+
+event_sveglia_2:
+  name: Avviso
+  icon: mdi:comment-alert-outline
+
+speak_generic_msg:
+  name: Messaggio
+  icon: mdi:comment-text-outline
+
+tts_last_sentence:
+  name: Last TTS message
+  icon: mdi:comment-text-outline
+
+webhook_last_script:
+  name: Last script (via webhook)
+  icon: mdi:script-text-outline
+
+mqtt_last_service:
+  name: Last service (via MQTT)
+  icon: mdi:script-text-outline

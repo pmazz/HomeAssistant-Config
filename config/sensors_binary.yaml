@@ -1,0 +1,184 @@
+#https://www.home-assistant.io/components/binary_sensor
+
+- platform: template  #https://www.home-assistant.io/components/binary_sensor.template
+  sensors:
+    online_adguard:
+      friendly_name: AdGuard
+      icon_template: mdi:shield-half-full
+      device_class: connectivity
+      entity_id: sensor.adguard_dns_queries
+      value_template: "{{ not is_state('sensor.adguard_dns_queries', 'unavailable') and states.sensor.adguard_dns_queries != None }}"
+    online_sonoff_basic_1:
+      friendly_name: Sonoff Basic 1
+      icon_template: mdi:power-plug
+      device_class: connectivity
+      entity_id: switch.sonoff_basic_1
+      value_template: "{{ not is_state('switch.sonoff_basic_1', 'unavailable') and states.switch.sonoff_basic_1 != None }}"
+    online_sonoff_basic_2:
+      friendly_name: Sonoff Basic 2
+      icon_template: mdi:power-plug
+      device_class: connectivity
+      entity_id: switch.sonoff_basic_2
+      value_template: "{{ not is_state('switch.sonoff_basic_2', 'unavailable') and states.switch.sonoff_basic_2 != None }}"
+    online_sonoff_basic_3:
+      friendly_name: Sonoff Basic 3
+      icon_template: mdi:power-plug
+      device_class: connectivity
+      entity_id: switch.sonoff_basic_3
+      value_template: "{{ not is_state('switch.sonoff_basic_3', 'unavailable') and states.switch.sonoff_basic_3 != None }}"
+    online_sonoff_dual_1:
+      friendly_name: Sonoff Dual
+      icon_template: mdi:power-plug
+      device_class: connectivity
+      entity_id: switch.sonoff_dual_1
+      value_template: "{{ not is_state('switch.sonoff_dual_1', 'unavailable') and states.switch.sonoff_dual_1 != None }}"
+    online_sonoff_4ch_1:
+      friendly_name: Sonoff 4CH Pro
+      icon_template: mdi:power-plug
+      device_class: connectivity
+      entity_id: switch.sonoff_4ch_1
+      value_template: "{{ not is_state('switch.sonoff_4ch_1', 'unavailable') and states.switch.sonoff_4ch_1 != None }}"
+    online_smartplug_1:
+      friendly_name: Smart Plug 1
+      icon_template: mdi:power-plug
+      device_class: connectivity
+      entity_id: switch.smartplug_1
+      value_template: "{{ not is_state('switch.smartplug_1', 'unavailable') and states.switch.smartplug_1 != None }}"
+    online_smartplug_2:
+      friendly_name: Smart Plug 2
+      icon_template: mdi:power-plug
+      device_class: connectivity
+      entity_id: switch.smartplug_2
+      value_template: "{{ not is_state('switch.smartplug_2', 'unavailable') and states.switch.smartplug_2 != None }}"
+    online_smartplug_3:
+      friendly_name: Smart Plug 3
+      icon_template: mdi:power-plug
+      device_class: connectivity
+      entity_id: switch.smartplug_3
+      value_template: "{{ not is_state('switch.smartplug_3', 'unavailable') and states.switch.smartplug_3 != None }}"
+    online_smartplug_4:
+      friendly_name: Smart Plug 4
+      icon_template: mdi:power-plug
+      device_class: connectivity
+      entity_id: switch.smartplug_4
+      value_template: "{{ not is_state('switch.smartplug_4', 'unavailable') and states.switch.smartplug_4 != None }}"
+    online_smartplug_5:
+      friendly_name: Smart Plug 5
+      icon_template: mdi:power-plug
+      device_class: connectivity
+      entity_id: switch.smartplug_5
+      value_template: "{{ not is_state('switch.smartplug_5', 'unavailable') and states.switch.smartplug_5 != None }}"
+    online_smartplug_6:
+      friendly_name: Smart Plug 6
+      icon_template: mdi:power-plug
+      device_class: connectivity
+      entity_id: switch.smartplug_6
+      value_template: "{{ not is_state('switch.smartplug_6', 'unavailable') and states.switch.smartplug_6 != None }}"
+    online_smartplug_7:
+      friendly_name: Smart Plug 7
+      icon_template: mdi:power-plug
+      device_class: connectivity
+      entity_id: switch.smartplug_7
+      value_template: "{{ not is_state('switch.smartplug_7', 'unavailable') and states.switch.smartplug_7 != None }}"
+    online_smartplug_8:
+      friendly_name: Smart Plug 8
+      icon_template: mdi:power-plug
+      device_class: connectivity
+      entity_id: switch.smartplug_8
+      value_template: "{{ not is_state('switch.smartplug_8', 'unavailable') and states.switch.smartplug_8 != None }}"
+    home_contarina_pick_tomorrow:
+      entity_id: sensor.time
+      icon_template: mdi:delete-empty
+      value_template: "{{ is_state_attr('sensor.ics_1', 'remaining', 1) or  is_state_attr('sensor.ics_2', 'remaining', 1) or  is_state_attr('sensor.ics_3', 'remaining', 1) or is_state_attr('sensor.ics_4', 'remaining', 1) or is_state_attr('sensor.ics_5', 'remaining', 1) }}"
+    home_anyone_in:
+      friendly_name: "Anyone @ Home"
+      icon_template: "{% if states.device_tracker.cell_paolo.state == 'home' or states.device_tracker.cell_silvia.state == 'home' %}mdi:home-account{% else %}mdi:home-alert{% endif %}"
+      value_template: "{{ states.device_tracker.cell_paolo.state == 'home' or states.device_tracker.cell_silvia.state == 'home' }}"
+
+- platform: mqtt  #https://www.home-assistant.io/integrations/binary_sensor.mqtt
+  name: online_pzem_004t
+  state_topic: "home/pzem_004t/tele/LWT"
+  payload_on: "Online"
+  payload_off: "Offline"
+
+- platform: ping  #https://www.home-assistant.io/components/binary_sensor.ping
+  host: !secret samsung_tv_ip
+  name: online_samsung_tv
+  count: 2
+  scan_interval: 30
+
+- platform: ping  #https://www.home-assistant.io/components/binary_sensor.ping
+  host: !secret nas_ip
+  name: online_nas_qnap
+  count: 2
+  scan_interval: 30
+
+- platform: ping  #https://www.home-assistant.io/components/binary_sensor.ping
+  host: !secret router_fritzbox_ip
+  name: online_router_fritzbox
+  count: 2
+  scan_interval: 30
+
+- platform: ping  #https://www.home-assistant.io/components/binary_sensor.ping
+  host: !secret cell_paolo_ip
+  name: online_cell_paolo
+  count: 2
+  scan_interval: 30
+
+- platform: ping  #https://www.home-assistant.io/components/binary_sensor.ping
+  host: !secret cell_silvia_ip
+  name: online_cell_silvia
+  count: 2
+  scan_interval: 30
+
+- platform: ping  #https://www.home-assistant.io/components/binary_sensor.ping
+  host: !secret tablet_ale1_ip
+  name: online_tablet_ale1
+  count: 2
+  scan_interval: 30
+
+- platform: ping  #https://www.home-assistant.io/components/binary_sensor.ping
+  host: !secret tablet_ale2_ip
+  name: online_tablet_ale2
+  count: 2
+  scan_interval: 30
+
+- platform: ping  #https://www.home-assistant.io/components/binary_sensor.ping
+  host: !secret tablet_paolo_ip
+  name: online_tablet_paolo
+  count: 2
+  scan_interval: 30
+
+- platform: ping  #https://www.home-assistant.io/components/binary_sensor.ping
+  host: !secret google_home_ip
+  name: online_google_home
+  count: 2
+  scan_interval: 30
+
+- platform: ping  #https://www.home-assistant.io/components/binary_sensor.ping
+  host: !secret google_chromecast_ip
+  name: online_google_chromecast
+  count: 2
+  scan_interval: 30
+
+- platform: ping  #https://www.home-assistant.io/components/binary_sensor.ping
+  host: !secret xiaomi_gateway_ip
+  name: online_xiaomi_gateway
+  count: 2
+  scan_interval: 30
+
+- platform: ping  #https://www.home-assistant.io/components/binary_sensor.ping
+  host: !secret epson_printer_ip
+  name: online_epson_printer
+  count: 2
+  scan_interval: 30
+
+- platform: ping  #https://www.home-assistant.io/components/binary_sensor.ping
+  host: !secret prusa_3d_printer_ip
+  name: online_prusa_3d_printer
+  count: 2
+  scan_interval: 30
+
+- platform: workday  #https://www.home-assistant.io/components/binary_sensor.workday
+  name: workday
+  country: IT

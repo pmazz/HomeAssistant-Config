@@ -1,0 +1,133 @@
+#++++++++++++++++++++++++++
+#+++++ VIEW -> System +++++
+#++++++++++++++++++++++++++
+path: system
+title: System
+icon: mdi:settings
+panel: true
+cards:
+  - id: system.container
+    type: custom:layout-card  #https://github.com/thomasloven/lovelace-layout-card
+    layout: vertical
+    max_columns: 3
+    cards:
+      - id: system.server
+        type: entities  #https://www.home-assistant.io/lovelace/entities
+        title: Server
+        show_header_toggle: false
+        entities:
+          - sensor.last_boot_verbose
+          - sensor.cpu_temperature
+          - sensor.processor_use
+          - entity: sensor.memory_use
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            state_header: MB
+            unit: " "
+            entities:
+              - entity: sensor.memory_use_percent
+                name: "%"
+                unit: " "
+          - sensor.memory_free
+          - sensor.hass_ip_address
+          - type: section
+          - entity: script.hass_server_reboot
+            type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
+            users: Paolo
+          - entity: script.hass_server_shutdown
+            type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
+            users: Paolo
+      - id: system.broker_mqtt
+        type: entities  #https://www.home-assistant.io/lovelace/entities
+        title: Broker MQTT
+        show_header_toggle: false
+        entities:
+          - entity: sensor.mqtt_broker_version
+            name: Broker
+          - entity: sensor.mqtt_broker_uptime_verbose
+            name: Last boot
+          - entity: sensor.mqtt_broker_clients_total
+            name: Clients
+            state_header: Connected
+          - entity: sensor.mqtt_broker_messages_received
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: Messages
+            state_header: Received
+            entities:
+              - entity: sensor.mqtt_broker_messages_retained
+                name: Retained
+              - entity: sensor.mqtt_broker_messages_sent
+                name: Sent
+          - entity: sensor.mqtt_broker_bytes_received
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: Byte
+            state_header: Received
+            entities:
+              - entity: sensor.mqtt_broker_bytes_sent
+                name: Sent
+      - break
+      - id: system.hass
+        type: entities  #https://www.home-assistant.io/lovelace/entities
+        title: Home Assistant
+        show_header_toggle: false
+        entities:
+          - entity: sensor.hass_available_version
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: HASS Version
+            state_header: Available
+            entities:
+              - entity: sensor.hass_installed_version
+                name: Installed
+          - entity: sensor.hacs
+            name: HACS Components
+          - entity: sensor.hass_db_filesize
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: HASS Database
+            state_header: Size
+            entities:
+              - entity: sensor.hass_db_states_count
+                name: "States"
+              - entity: sensor.hass_db_events_count
+                name: "Events"
+          - type: section
+          - entity: script.hass_reload_themes
+            type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
+            users: Paolo
+          - entity: script.hass_reload_customize
+            type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
+            users: Paolo
+          - entity: script.hass_reload_scripts
+            type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
+            users: Paolo
+          - entity: script.hass_reload_automations
+            type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
+            users: Paolo
+          - entity: script.hass_restart
+            type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
+            users: Paolo
+          - entity: script.hass_stop
+            type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
+            users: Paolo
+          - entity: script.hass_recorder_purge
+            type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
+            users: Paolo
+      - break
+      - id: system.configuration
+        type: entities  #https://www.home-assistant.io/lovelace/entities
+        title: Configuration
+        show_header_toggle: false
+        entities:
+          - entity: binary_sensor.home_anyone_in
+            state_color: true
+          - entity: script.config_commit_to_git
+            type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
+            users: Paolo
+          - entity: script.snapshot_full_create
+            type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
+            users: Paolo
+      - id: system.ui
+        type: entities  #https://www.home-assistant.io/lovelace/entities
+        title: Commands
+        show_header_toggle: false
+        entities:
+          - input_select.home_mode
+          - input_select.hass_selected_theme

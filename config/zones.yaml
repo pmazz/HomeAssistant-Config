@@ -1,0 +1,23 @@
+#- name: Casa
+#  latitude: 45.70894
+#  longitude: 12.214576
+#  radius: 100
+#  icon: mdi:home-circle
+
+- name: Altitudo
+  latitude: 45.695916
+  longitude: 12.252379
+  radius: 100
+  icon: mdi:briefcase
+
+- name: Benetton
+  latitude: 45.709782
+  longitude: 12.218661
+  radius: 100
+  icon: mdi:briefcase
+
+- name: Nonni
+  latitude: 45.707812
+  longitude: 12.224229
+  radius: 100
+  icon: mdi:account-multiple

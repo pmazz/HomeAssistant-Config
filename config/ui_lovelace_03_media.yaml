@@ -1,0 +1,272 @@
+#+++++++++++++++++++++++++
+#+++++ VIEW -> Media +++++
+#+++++++++++++++++++++++++
+path: media
+title: Media
+icon: mdi:animation-play
+panel: true
+cards:
+  - id: media.container
+    type: custom:layout-card  #https://github.com/thomasloven/lovelace-layout-card
+    layout: vertical
+    max_columns: 3
+    cards:
+      - id: media.google_home_player
+        type: conditional  #https://www.home-assistant.io/lovelace/conditional
+        conditions:
+          - entity: binary_sensor.online_google_home
+            state: "on"
+        card:
+          type: media-control  #https://www.home-assistant.io/lovelace/media-control
+          entity: media_player.salotto
+      - id: media.google_home
+        type: conditional  #https://www.home-assistant.io/lovelace/conditional
+        conditions:
+          - entity: binary_sensor.online_google_home
+            state: "on"
+        card:
+          type: entities  #https://www.home-assistant.io/lovelace/entities
+          title: Google Home
+          show_header_toggle: false
+          entities:
+            - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+              head:
+                type: section
+                label: Imposta il volume
+              open: true
+              items:
+                - input_number.google_home_volume
+                - type: custom:hui-horizontal-stack-card  #https://www.home-assistant.io/lovelace/horizontal-stack
+                  cards:
+                    - type: custom:button-card  #https://github.com/custom-cards/button-card
+                      color_type: blank-card
+                    - type: custom:button-card  #https://github.com/custom-cards/button-card
+                      color_type: blank-card
+                    - type: custom:button-card  #https://github.com/custom-cards/button-card
+                      color_type: icon
+                      template: media_button
+                      icon: mdi:volume-plus
+                      template: media_button
+                      tap_action:
+                        action: call-service
+                        service: media_player.volume_up
+                        service_data:
+                          entity_id: media_player.salotto
+                    - type: custom:button-card  #https://github.com/custom-cards/button-card
+                      color_type: icon
+                      template: media_button
+                      icon: mdi:volume-minus
+                      tap_action:
+                        action: call-service
+                        service: media_player.volume_down
+                        service_data:
+                          entity_id: media_player.salotto
+                    - type: custom:button-card  #https://github.com/custom-cards/button-card
+                      color_type: blank-card
+                    - type: custom:button-card  #https://github.com/custom-cards/button-card
+                      color_type: blank-card
+            - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+              head:
+                type: section
+                label: Pronuncia il testo
+              open: true
+              items:
+                - input_text.speak_generic_msg
+                - script.speak_generic
+            - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+              head:
+                type: section
+                label: Ascolta la radio
+              open: true
+              items:
+                - input_select.radio_station
+                - type: custom:hui-vertical-stack-card  #https://github.com/custom-cards/vertical-stack-in-card
+                  cards:
+                    - type: custom:hui-horizontal-stack-card  #https://www.home-assistant.io/lovelace/horizontal-stack
+                      cards:
+                        - type: custom:button-card  #https://github.com/custom-cards/button-card
+                          color_type: icon
+                          template: media_button
+                          icon: mdi:numeric-1
+                          tap_action:
+                            action: call-service
+                            service: input_select.select_option
+                            service_data:
+                              entity_id: input_select.radio_station
+                              option: "Radio Rai 1"
+                        - type: custom:button-card  #https://github.com/custom-cards/button-card
+                          color_type: icon
+                          template: media_button
+                          icon: mdi:numeric-2
+                          tap_action:
+                            action: call-service
+                            service: input_select.select_option
+                            service_data:
+                              entity_id: input_select.radio_station
+                              option: "Radio Deejay"
+                        - type: custom:button-card  #https://github.com/custom-cards/button-card
+                          color_type: icon
+                          template: media_button
+                          icon: mdi:numeric-3
+                          tap_action:
+                            action: call-service
+                            service: input_select.select_option
+                            service_data:
+                              entity_id: input_select.radio_station
+                              option: "RDS"
+                        - type: custom:button-card  #https://github.com/custom-cards/button-card
+                          color_type: icon
+                          template: media_button
+                          icon: mdi:numeric-4
+                          tap_action:
+                            action: call-service
+                            service: input_select.select_option
+                            service_data:
+                              entity_id: input_select.radio_station
+                              option: "Radio 101"
+                        - type: custom:button-card  #https://github.com/custom-cards/button-card
+                          color_type: icon
+                          template: media_button
+                          icon: mdi:numeric-5
+                          tap_action:
+                            action: call-service
+                            service: input_select.select_option
+                            service_data:
+                              entity_id: input_select.radio_station
+                              option: "Radio 105"
+                    - type: custom:hui-horizontal-stack-card  #https://www.home-assistant.io/lovelace/horizontal-stack
+                      cards:
+                        - type: custom:button-card  #https://github.com/custom-cards/button-card
+                          color_type: icon
+                          template: media_button
+                          icon: mdi:numeric-6
+                          tap_action:
+                            action: call-service
+                            service: input_select.select_option
+                            service_data:
+                              entity_id: input_select.radio_station
+                              option: "Virgin Radio"
+                        - type: custom:button-card  #https://github.com/custom-cards/button-card
+                          color_type: icon
+                          template: media_button
+                          icon: mdi:numeric-7
+                          tap_action:
+                            action: call-service
+                            service: input_select.select_option
+                            service_data:
+                              entity_id: input_select.radio_station
+                              option: "Radio Capital"
+                        - type: custom:button-card  #https://github.com/custom-cards/button-card
+                          color_type: icon
+                          template: media_button
+                          icon: mdi:numeric-8
+                          tap_action:
+                            action: call-service
+                            service: input_select.select_option
+                            service_data:
+                              entity_id: input_select.radio_station
+                              option: "George Michael"
+                        - type: custom:button-card  #https://github.com/custom-cards/button-card
+                          color_type: blank-card
+                        - type: custom:button-card  #https://github.com/custom-cards/button-card
+                          color_type: icon
+                          template: media_button
+                          icon: mdi:power
+                          tap_action:
+                            action: call-service
+                            service: input_select.select_option
+                            service_data:
+                              entity_id: input_select.radio_station
+                              option: "-Off-"
+      - break
+      - id: media.samsung_tv_player
+        type: conditional  #https://www.home-assistant.io/lovelace/conditional
+        conditions:
+          - entity: binary_sensor.online_samsung_tv
+            state: "on"
+        card:
+          type: media-control  #https://www.home-assistant.io/lovelace/media-control
+          entity: media_player.samsung_tv
+      - id: media.tv
+        type: conditional  #https://www.home-assistant.io/lovelace/conditional
+        conditions:
+          - entity: binary_sensor.online_samsung_tv
+            state: "on"
+        card:
+          type: entities  #https://www.home-assistant.io/lovelace/entities
+          title: TV
+          show_header_toggle: false
+          entities:
+            - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+              head:
+                type: section
+                label: Telecomando
+              open: true
+              items:
+                - input_number.tv_remote_channel
+                - type: custom:hui-horizontal-stack-card  #https://www.home-assistant.io/lovelace/horizontal-stack
+                  cards:
+                    - type: custom:button-card  #https://github.com/custom-cards/button-card
+                      color_type: icon
+                      template: media_button
+                      icon: mdi:power
+                      tap_action:
+                        action: call-service
+                        service: media_player.turn_off
+                        service_data:
+                          entity_id: media_player.samsung_tv
+                    - type: custom:button-card  #https://github.com/custom-cards/button-card
+                      color_type: icon
+                      template: media_button
+                      icon: mdi:chevron-up
+                      tap_action:
+                        action: call-service
+                        service: input_number.increment
+                        service_data:
+                          entity_id: input_number.tv_remote_channel
+                    - type: custom:button-card  #https://github.com/custom-cards/button-card
+                      color_type: icon
+                      template: media_button
+                      icon: mdi:chevron-down
+                      tap_action:
+                        action: call-service
+                        service: input_number.decrement
+                        service_data:
+                          entity_id: input_number.tv_remote_channel
+                    - type: custom:button-card  #https://github.com/custom-cards/button-card
+                      color_type: icon
+                      template: media_button
+                      icon: mdi:volume-plus
+                      tap_action:
+                        action: call-service
+                        service: media_player.volume_up
+                        service_data:
+                          entity_id: media_player.samsung_tv
+                    - type: custom:button-card  #https://github.com/custom-cards/button-card
+                      color_type: icon
+                      template: media_button
+                      icon: mdi:volume-minus
+                      tap_action:
+                        action: call-service
+                        service: media_player.volume_down
+                        service_data:
+                          entity_id: media_player.samsung_tv
+                    - type: custom:button-card  #https://github.com/custom-cards/button-card
+                      color_type: icon
+                      template: media_button
+                      icon: mdi:volume-off
+                      tap_action:
+                        action: call-service
+                        service: media_player.volume_mute
+                        service_data:
+                          entity_id: media_player.samsung_tv
+                          is_volume_muted: true
+      - break
+      - id: media.google_chromecast_player
+        type: conditional  #https://www.home-assistant.io/lovelace/conditional
+        conditions:
+          - entity: binary_sensor.online_google_chromecast
+            state: "on"
+        card:
+          type: media-control  #https://www.home-assistant.io/lovelace/media-control
+          entity: media_player.chromecast1100

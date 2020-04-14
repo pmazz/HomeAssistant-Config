@@ -1,0 +1,21 @@
+# Overview
+
+This folder contains custom components and plugins, mainly installed through [Home Assistant Community Store](https://hacs.xyz/) (**HACS**).
+
+## Items
+
+| Items | Description |
+|:------|:------------|
+| **[Auto Entities](lovelace-auto-entities)**<BR>Automatically populate lovelace cards with entities matching certain criteria. | <https://github.com/thomasloven/lovelace-auto-entities> (version: 16) |
+| **[Button Card](button-card)**<BR>Lovelace button-card for Home Assistant. | <https://github.com/custom-cards/button-card> (version: 3.2.3) |
+| **[card-mod](lovelace-card-mod)**<BR>Add CSS styles to (almost) any lovelace card. | <https://github.com/thomasloven/lovelace-card-mod> (version: 13) |
+| **[Card Tools](lovelace-card-tools)**<BR>A collection of tools to simplify creating custom cards for Home Assistant. | <https://github.com/thomasloven/lovelace-card-tools> (version: 10) |
+| **[Custom Header](custom-header)**<BR>Adds enhancements and customization options to Home Assistant's Lovelace header. | <https://github.com/maykar/custom-header> (version: 1.3.8) |
+| **[Fold Entity Row](lovelace-fold-entity-row)**<BR>A foldable row for entities card, containing other rows. | <https://github.com/thomasloven/lovelace-fold-entity-row> (version: 15) |
+| **[Layout Card](lovelace-layout-card)**<BR>This card takes other cards and place them in different layouts. | <https://github.com/thomasloven/lovelace-layout-card> (version: 13) |
+| **[Mini Graph Card](mini-graph-card)**<BR>Minimalistic graph card for Lovelace UI. | <https://github.com/kalkih/mini-graph-card> (version: 0.9.3) |
+| **[Multiple Entity Row](lovelace-multiple-entity-row)**<BR>Show multiple entity states on entity rows in Home Assistant's Lovelace UI. | <https://github.com/benct/lovelace-multiple-entity-row> (version: 3.1.1) |
+| **[State Switch](lovelace-state-switch)**<BR>This card allows to switch in a card based on a dictionary of entity states. | <https://github.com/thomasloven/lovelace-state-switch> (version: 6) |
+| **[Template Entity Row](lovelace-template-entity-row)**<BR>Display whatever you want in an entities card row. | <https://github.com/thomasloven/lovelace-template-entity-row> (commit: db82838) |
+| **[Toggle Lock Entity Row](lovelace-toggle-lock-entity-row)**<BR>Avoid toggling entities by mistake in Lovelace. | <https://github.com/thomasloven/lovelace-toggle-lock-entity-row> (commit: 7b63c55) |
+| **[Vertical Stack In Card](vertical-stack-in-card)**<BR>Similar to vertical-stack but removes card borders. | <https://github.com/custom-cards/vertical-stack-in-card> (version: 0.2.1) |

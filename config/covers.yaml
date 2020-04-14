@@ -1,0 +1,20 @@
+- platform: template  #https://www.home-assistant.io/components/cover
+  covers:
+    home_cover:
+      friendly_name: "Serrande"
+      device_class: shutter
+      position_template: 50  # Fixed value (to leave up/down arrows alway enabled)
+      open_cover:
+        - service: script.home_cover_up
+      close_cover:
+        - service: script.home_cover_down
+      stop_cover:
+        - service: script.home_cover_stop
+      icon_template: >-
+        {% if states('switch.sonoff_dual_1') == 'on' %}
+          mdi:arrow-up-bold-box
+        {% elif states('switch.sonoff_dual_2') == 'on' %}
+          mdi:arrow-down-bold-box
+        {% else %}
+          mdi:window-open
+        {% endif %}

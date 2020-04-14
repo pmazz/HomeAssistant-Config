@@ -1,0 +1,1456 @@
+#++++++++++++++++++++++++++++++++++++++
+#+++++ System related automations +++++
+#++++++++++++++++++++++++++++++++++++++
+- id: autohide_notification_NewDevicesDiscovered
+  #Nasconde la notifica 'New devices discovered' se attiva
+  alias: autohide_notification_NewDevicesDiscovered
+  trigger:
+    - platform: state
+      entity_id: persistent_notification.config_entry_discovery
+      to: "notifying"
+  action:
+    #Hide 'New devices discovered' notification
+    - service: persistent_notification.dismiss
+      data:
+        notification_id: "config_entry_discovery"
+
+- id: bot_notify_ha_started
+  #Notifica avvio Home Assistant
+  alias: bot_notify_ha_started
+  trigger:
+    - platform: homeassistant
+      event: start
+  action:
+    #Notifica Pannello Chiudi
+    - service: persistent_notification.dismiss
+      data:
+        notification_id: "9975-Restart"
+    #Notifica Telegram
+    - service: notify.telegram_paolo
+      data:
+        message: "\U0001F44D Home Assistant avviato."
+
+- id: bot_notify_ha_newrelease
+  #Notifica agg.to Home Assistant rilasciato
+  alias: bot_notify_ha_newrelease
+  trigger:
+    - platform: state
+      entity_id: sensor.hass_available_version
+  condition:
+    - condition: template
+      value_template: "{{ states.sensor.hass_available_version.state != 'unavailable' and states.sensor.hass_available_version.state != states.sensor.hass_installed_version.state }}"
+  action:
+    #Notifica Telegram
+    - service: notify.telegram_paolo
+      data_template: 
+        title: "\U0001F389 Home Assistant Update"
+        message: "Version *{{states.sensor.hass_available_version.state}}* is now available (installed: {{states.sensor.hass_installed_version.state}})."
+
+- id: bot_notify_hacs_updates
+  #Notifica agg.ti HACS
+  alias: bot_notify_hacs_updates
+  trigger:
+    - platform: state
+      entity_id: sensor.hacs
+  condition:
+    - condition: template
+      value_template: "{{ trigger.from_state.state != trigger.to_state.state and (states.sensor.hacs.state | int) > 0 }}"
+  action:
+    #Notifica Telegram
+    - service: telegram_bot.send_message
+      data_template:
+        title: "\U0001F389 HACS Updates"
+        message: >
+          *{{states.sensor.hacs.state}}* update{% if (states.sensor.hacs.state | int) > 1 %}s{% endif %} available{{":"}}
+          {% for rep in states.sensor.hacs.attributes.repositories %}
+          {{- "\r- [" ~ rep.name.split('/')[1] ~ "](https://github.com/" ~ rep.name ~ ")\r  " ~ rep['installed version'] ~ " -> " ~ rep['available version'] }}
+          {{- "\r  [Commits](https://github.com/" ~ rep.name ~ "/commits) - [Releases](https://github.com/" ~ rep.name ~ "/releases)" }}
+          {% endfor %}
+        disable_web_page_preview: true
+        target:
+          - !secret telegram_chatid_paolo
+
+- id: system_ha_restart_each_night
+  #Riavvia Home Assistant ogni notte
+  alias: system_ha_restart_each_night
+  trigger:
+    - platform: time
+      at: "03:00:00"
+  action:
+    #Invoke Script
+    - service: script.hass_restart
+
+- id: mediaplayer_reset_volume
+  #Ripristina il volume dopo play o TTS
+  alias: mediaplayer_reset_volume
+  trigger:
+    - platform: state
+      entity_id: media_player.salotto
+      from: "playing"
+      to: "idle"
+  action:
+    #Reset volume after playing
+    - service: media_player.volume_set
+      data_template:
+        entity_id: media_player.salotto
+        volume_level: "{{ states.input_number.google_home_volume.state }}"
+
+- id: system_execute_script_via_webhook
+  #Esegue script tramite webhook trigger
+  #- Post su http://hassio:8123/api/webhook/exec_script_webhook
+  #- Header -> Content-Type: application/json
+  #- Body -> {"script":"<nome script senza domain>"}
+  alias: system_execute_script_via_webhook
+  trigger:
+    - platform: webhook  #https://www.home-assistant.io/docs/automation/trigger/#webhook-trigger
+      webhook_id: exec_script_webhook
+  action:
+    #Notifica Telegram
+    - service: notify.telegram_paolo
+      data_template:
+        message: "Esecuzione '[script.{{trigger.json.script}}]' da webhook"
+    #Invoke Script
+    - service_template: "script.{{trigger.json.script}}"
+    #Store last executed script
+    - service: input_text.set_value
+      data_template:
+        entity_id: input_text.webhook_last_script
+        value: "script.{{trigger.json.script}}"
+    #Store last executed script time
+    - service: input_datetime.set_datetime
+      data_template:
+        entity_id: input_datetime.webhook_last_script_exec
+        date: "{{ now().strftime('%Y-%m-%d') }}"
+        time: "{{ now().strftime('%H:%M:%S') }}"
+
+- id: system_update_all_tasmota
+  #Aggiorna lo stato dei dispositivi Tasmota all'avvio
+  alias: system_update_all_tasmota
+  trigger:
+    - platform: homeassistant
+      event: start
+  action:
+    #Update request for all connected Tasmota devices
+    - service: mqtt.publish
+      data:
+        topic: "home/sonoffs/cmnd/POWER"
+        payload: ""
+    #Status request for all connected Tasmota devices (for boot count, RSSI, etc)
+    - service: mqtt.publish
+      data:
+        topic: "home/sonoffs/cmnd/STATUS"
+        payload: "0"
+
+- id: system_update_connected_tasmota
+  #Aggiorna lo stato del dispositivo Tasmota appena connesso
+  alias: system_update_connected_tasmota
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.online_sonoff_basic_1, binary_sensor.online_sonoff_basic_2, binary_sensor.online_sonoff_basic_3, binary_sensor.online_smartplug_1, binary_sensor.online_smartplug_2, binary_sensor.online_smartplug_3, binary_sensor.online_smartplug_4, binary_sensor.online_smartplug_5, binary_sensor.online_smartplug_6, binary_sensor.online_smartplug_7, binary_sensor.online_smartplug_8
+      from: "off"
+      to: "on"
+  action:
+    #Status request for the Tasmota device (for boot count, RSSI, etc)
+    - service: mqtt.publish
+      data_template:
+        topic: "home/{{ trigger.entity_id|replace('binary_sensor.online_', '')|replace('smartplug', 'smart_plug') }}/cmnd/STATUS"
+        payload: "0"
+
+
+#++++++++++++++++++++++++++++++++++
+#+++++ UI related automations +++++
+#++++++++++++++++++++++++++++++++++
+- id: ui_persistent_notification_dismiss
+  #Chiude il pannello delle notifiche dopo qualche secondo
+  #NB: Agisce solo sulle notifiche con notification_id: "9975"
+  alias: ui_persistent_notification_dismiss
+  trigger:
+    - platform: state
+      entity_id: persistent_notification.9975
+      to: "notifying"
+  action:
+    #Dismiss the notification panel after few seconds
+    - service: script.persistent_notification_dismiss
+
+- id: theme_set
+  #Selezione tema
+  alias: theme_set
+  trigger:
+    - platform: state
+      entity_id: input_select.hass_selected_theme
+  action:
+    #Set Theme
+    - service: frontend.set_theme
+      data_template:
+        name: "{{ states.input_select.hass_selected_theme.state }}"
+
+
+#++++++++++++++++++++++++++++++++++
+#+++++ TV related automations +++++
+#++++++++++++++++++++++++++++++++++
+- id: bot_notify_tv_on
+  #Notifica TV accesa quando non c'è nessuno in casa
+  alias: bot_notify_tv_on
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.online_samsung_tv
+      from: "off"
+      to: "on"
+  condition:
+    - condition: state
+      entity_id: binary_sensor.home_anyone_in
+      state: "off"
+  action:
+    #Notifica Telegram
+    - service: notify.telegram_paolo
+      data_template:
+        title: "Attenzione:"
+        message: "\U0001F4FA TV Accesa in casa!"
+
+- id: tv_remote_set_channel
+  #Telecomando TV - Cambia canale
+  alias: tv_remote_set_channel
+  trigger:
+    - platform: state
+      entity_id: input_number.tv_remote_channel
+  action:
+    #Set tv channel
+    - service: media_player.play_media
+      data_template:
+        entity_id: media_player.samsung_tv
+        media_content_id: "{{ states.input_number.tv_remote_channel.state | int }}"
+        media_content_type: channel
+
+
+#+++++++++++++++++++++++++++++++++++++
+#+++++ Media related automations +++++
+#+++++++++++++++++++++++++++++++++++++
+- id: google_home_set_volume
+  #Imposta volume Google Home via UI
+  alias: google_home_set_volume
+  trigger:
+    - platform: state
+      entity_id: input_number.google_home_volume
+  action:
+    #Set volume
+    - service: media_player.volume_set
+      data_template:
+        entity_id: media_player.salotto
+        volume_level: "{{ states.input_number.google_home_volume.state }}"
+
+- id: google_home_update_volume
+  #Aggiorna volume nel sensore se modificato via Google Home (es: comando vocale)
+  alias: google_home_update_volume
+  trigger:
+    - platform: state
+      entity_id: media_player.salotto
+  condition:
+    - condition: template
+      value_template: "{{ (trigger.from_state.attributes.volume_level | round(1)) != (trigger.to_state.attributes.volume_level | round(1)) }}"
+  action:
+    #Set volume
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.google_home_volume
+        value: "{{ trigger.to_state.attributes.volume_level | round(1) }}"
+
+- id: google_home_stream_radio
+  #Avvia streaming radio
+  alias: google_home_stream_radio
+  trigger:
+    - platform: state
+      entity_id: input_select.radio_station
+  action:
+    #Set volume before streaming
+    - service: media_player.volume_set
+      data_template:
+        entity_id: media_player.salotto
+        volume_level: "0.2"
+    #Stream Radio - Play
+    - service: media_player.play_media
+      data_template:
+        entity_id: media_player.salotto
+        media_content_id: >
+          {% if is_state("input_select.radio_station", "Radio24") %}
+            http://radio24-lh.akamaihd.net/i/radio24_1@99307/index_1_a-p.m3u8
+          {% elif is_state("input_select.radio_station", "Radio Rai 1") %}
+            http://icestreaming.rai.it/1.mp3
+          {% elif is_state("input_select.radio_station", "Radio Deejay") %}
+            http://radiodeejay-lh.akamaihd.net/i/RadioDeejay_Live_1@189857/master.m3u8
+          {% elif is_state("input_select.radio_station", "RDS") %}
+            http://stream1.rds.it:8000/rds64k
+          {% elif is_state("input_select.radio_station", "Radio 101") %}
+            http://icecast.unitedradio.it/r101
+          {% elif is_state("input_select.radio_station", "RTL 102.5") %}
+            https://rtl-radio-stream-thron.akamaized.net/live/radio1/radio1/chunklist.m3u8
+          {% elif is_state("input_select.radio_station", "Radio 105") %}
+            http://icecast.unitedradio.it/Radio105.mp3
+          {% elif is_state("input_select.radio_station", "Virgin Radio") %}
+            http://icecast.unitedradio.it/Virgin.mp3
+          {% elif is_state("input_select.radio_station", "Radio Capital") %}
+            http://radiocapital-lh.akamaihd.net/i/RadioCapital_Live_1@196312/master.m3u8
+          {% elif is_state("input_select.radio_station", "George Michael") %}
+          	http://icy.unitedradio.it/MusicStarPrince.mp3
+          {% else %}
+            none
+          {% endif %}
+        media_content_type: "audio/mp4"
+    #Wait before force playing (some radio need it)
+    - delay: "00:00:01"
+    #Force pause
+    - service: media_player.media_pause
+      data_template:
+        entity_id: media_player.salotto
+    #Wait before force playing (some radio need it)
+    - delay: "00:00:01"
+    #Force play (or stop)
+    - service_template: >
+        {% if is_state("input_select.radio_station", "-Off-") %}media_player.media_stop{% else %}media_player.media_play{% endif %}
+      data_template:
+        entity_id: media_player.salotto
+
+
+#++++++++++++++++++++++++++++++++++++++++
+#+++++ Telegram related automations +++++
+#++++++++++++++++++++++++++++++++++++++++
+- id: bot_cmd_start
+  #Bot - Comando /start
+  alias: bot_cmd_start
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: "/start"
+  action:
+    #Messaggio Telegram
+    - service: telegram_bot.send_message
+      data_template:
+        message: "Ciao {{ trigger.event.data.from_first }}, scegli un comando:"
+        disable_notification: true
+        inline_keyboard:
+          - "\U0001F4CA Sensors:/sensors, \U0001F39B Plugs/Switches:/switches"
+          - "\U0001F30D Where are we?:/wherearewe"
+          - "\U00002699 Configuration:/config, \U000026A1 System Commands:/systemcommands"
+
+- id: bot_cmd_goback_start
+  #Bot - Comando /goback_main
+  alias: bot_cmd_goback_start
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/goback_main"
+  action:
+    #Menu Telegram
+    - service: telegram_bot.edit_replymarkup
+      data_template:
+        message_id: "last"
+        chat_id: "{{ trigger.event.data.chat_id }}"
+        inline_keyboard:
+          - "\U0001F4CA Sensors:/sensors, \U0001F39B Plugs/Switches:/switches"
+          - "\U0001F30D Where are we?:/wherearewe"
+          - "\U00002699 Configuration:/config, \U000026A1 System Commands:/systemcommands"
+
+- id: bot_cmd_system
+  #Bot - Comando /systemcommands
+  alias: bot_cmd_system
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/systemcommands"
+  action:
+    #Menu Telegram
+    - service: telegram_bot.edit_replymarkup
+      data_template:
+        message_id: "last"
+        chat_id: "{{ trigger.event.data.chat_id }}"
+        inline_keyboard:
+          - "\U000026A1 Reload Scripts:/ha_reload_scripts, \U000026A1 Reload Automations:/ha_reload_automations"
+          - "\U000026A1 Reload Customize:/ha_reload_customize"
+          - "\U0001F503 Reboot Host:/ho_reboot, \U0001F501 Restart HA:/ha_restart"
+          - "\U0001F50C Shutdown Host:/ho_shutdown, \U000023F9 Stop HA:/ha_stop"
+#TODO CANCELLARE IL TEST
+#        - "\U0001F5E3 Speak:/speak_generic"
+          - "\U0001F519 Go back:/goback_main"
+
+- id: bot_cmd_sensors
+  #Bot - Comando /sensors
+  alias: bot_cmd_sensors
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/sensors"
+  action:
+    #Menu Telegram
+    - service: telegram_bot.edit_replymarkup
+      data_template:
+        message_id: "last"
+        chat_id: "{{ trigger.event.data.chat_id }}"
+        inline_keyboard:
+          - "\U00000030\U000020E3 Home:/sensors_home"
+          - "\U00000031\U000020E3 Devices:/sensors_devices, \U00000032\U000020E3 Mobile Dev.:/sensors_mobiledevices"
+          - "\U00000033\U000020E3 Raspberry PI:/sensors_raspberry, \U00000034\U000020E3 Router (FritzBox):/sensors_router"
+          - "\U00000035\U000020E3 AdGuard:/sensors_adguard, \U00000036\U000020E3 NAS (Qnap):/sensors_nas"
+          - "\U0001F519 Go back:/goback_main"
+
+- id: bot_cmd_sensors_home
+  #Bot - Comando /sensors_home
+  alias: bot_cmd_sensors_home
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/sensors_home"
+  action:
+    #Home sensors
+    - service: telegram_bot.edit_message
+      data_template:
+        message_id: "last"
+        chat_id: "{{ trigger.event.data.user_id }}"
+        message: >
+          *- Home -*
+            *Modalità:* {%- if states.input_select.home_mode.state == "notte" %}{{"\U0001F303"}}{% else %}{{"\U00002600"}}{% endif %}{{states.input_select.home_mode.state}}
+            *{{states.binary_sensor.home_anyone_in.attributes.friendly_name}}:* {{states.binary_sensor.home_anyone_in.state}}
+            *Elettricità:*
+              *Consumo attuale:* {% if states.binary_sensor.online_pzem_004t.state == 'on' %}{{ states.sensor.pzem_power.state }} {{states.sensor.pzem_power.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
+              *Consumo oggi:* {% if states.binary_sensor.online_pzem_004t.state == 'on' %}{{ states.sensor.pzem_energy_today.state.replace(".", ",") }} {{states.sensor.pzem_energy_today.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
+              *Consumo ieri:* {% if states.binary_sensor.online_pzem_004t.state == 'on' %}{{ states.sensor.pzem_energy_yesterday.state.replace(".", ",") }} {{states.sensor.pzem_energy_yesterday.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
+        inline_keyboard:
+          - "Imposta modalità {% if states.input_select.home_mode.state == 'giorno' %}notte{% else %}giorno{% endif %}:/sensors_home_mode_toggle"
+          - "\U0001F4AB Refresh:/sensors_home, \U0001F519 Go back:/sensors"
+
+- id: bot_cmd_sensors_home_mode_toggle
+  #Bot - Comando /sensors_home_mode_toggle
+  alias: bot_cmd_sensors_home_mode_toggle
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/sensors_home_mode_toggle"
+  action:
+    #Toggle the home mode
+    - service: script.toggle_home_mode
+    #Notifica Telegram
+    - service: notify.telegram_paolo
+      data_template:
+        message: >
+          Impostata modalità {{states.input_select.home_mode.state}}
+        inline_keyboard:
+          - "Imposta modalità {% if states.input_select.home_mode.state == 'giorno' %}notte{% else %}giorno{% endif %}:/sensors_home_mode_toggle"
+          - "\U0001F4AB Refresh:/sensors_home, \U0001F519 Go back:/goback_main"
+
+- id: bot_cmd_switches
+  #Bot - Comando /switches
+  alias: bot_cmd_switches
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/switches"
+  action:
+    #Switches
+    - service: telegram_bot.edit_message
+      data_template:
+        message_id: "last"
+        chat_id: "{{ trigger.event.data.user_id }}"
+        message: >
+          *- Plugs & Switches -*
+            *{% if states.switch.smartplug_1 %}{{states.switch.smartplug_1.attributes.friendly_name}}{% else %}Smart Plug 1{% endif %}:*
+            {%- if states.switch.smartplug_1.state == "unavailable" %} {{""}} Disconnected{% elif states.switch.smartplug_1.state == "on" %} {{"\U00002705"}} On{% elif states.switch.smartplug_1.state == "off" %} {{"\U0000274C"}} Off{% endif %}
+            *{% if states.switch.smartplug_2 %}{{states.switch.smartplug_2.attributes.friendly_name}}{% else %}Smart Plug 2{% endif %}:*
+            {%- if states.switch.smartplug_2.state == "unavailable" %} {{""}} Disconnected{% elif states.switch.smartplug_2.state == "on" %} {{"\U00002705"}} On{% elif states.switch.smartplug_2.state == "off" %} {{"\U0000274C"}} Off{% endif %}
+            *{% if states.switch.smartplug_3 %}{{states.switch.smartplug_3.attributes.friendly_name}}{% else %}Smart Plug 3{% endif %}:*
+            {%- if states.switch.smartplug_3.state == "unavailable" %} {{""}} Disconnected{% elif states.switch.smartplug_3.state == "on" %} {{"\U00002705"}} On{% elif states.switch.smartplug_3.state == "off" %} {{"\U0000274C"}} Off{% endif %}
+            *{% if states.switch.sonoff_basic_1 %}{{states.switch.sonoff_basic_1.attributes.friendly_name}}{% else %}Sonoff Basic 1{% endif %}:*
+            {%- if states.switch.sonoff_basic_1.state == "unavailable" %} {{""}} Disconnected{% elif states.switch.sonoff_basic_1.state == "on" %} {{"\U00002705"}} On{% elif states.switch.sonoff_basic_1.state == "off" %} {{"\U0000274C"}} Off{% endif %}
+            *{% if states.switch.sonoff_basic_2 %}{{states.switch.sonoff_basic_2.attributes.friendly_name}}{% else %}Sonoff Basic 2{% endif %}:*
+            {%- if states.switch.sonoff_basic_2.state == "unavailable" %} {{""}} Disconnected{% elif states.switch.sonoff_basic_2.state == "on" %} {{"\U00002705"}} On{% elif states.switch.sonoff_basic_2.state == "off" %} {{"\U0000274C"}} Off{% endif %}
+            *{% if states.switch.sonoff_basic_3 %}{{states.switch.sonoff_basic_3.attributes.friendly_name}}{% else %}Sonoff Basic 3{% endif %}:*
+            {%- if states.switch.sonoff_basic_3.state == "unavailable" %} {{""}} Disconnected{% elif states.switch.sonoff_basic_3.state == "on" %} {{"\U00002705"}} On{% elif states.switch.sonoff_basic_3.state == "off" %} {{"\U0000274C"}} Off{% endif %}
+            *{% if states.switch.sonoff_dual_1 %}{{states.switch.sonoff_dual_1.attributes.friendly_name}}{% else %}Sonoff Dual 1{% endif %}:*
+            {%- if states.switch.sonoff_dual_1.state == "unavailable" %} {{""}} Disconnected{% elif states.switch.sonoff_dual_1.state == "on" %} {{"\U00002705"}} On{% elif states.switch.sonoff_dual_1.state == "off" %} {{"\U0000274C"}} Off{% endif %}
+            *{% if states.switch.sonoff_dual_2 %}{{states.switch.sonoff_dual_2.attributes.friendly_name}}{% else %}Sonoff Dual 2{% endif %}:*
+            {%- if states.switch.sonoff_dual_2.state == "unavailable" %} {{""}} Disconnected{% elif states.switch.sonoff_dual_2.state == "on" %} {{"\U00002705"}} On{% elif states.switch.sonoff_dual_2.state == "off" %} {{"\U0000274C"}} Off{% endif %}
+            *{% if states.switch.sonoff_4ch_1 %}{{states.switch.sonoff_4ch_1.attributes.friendly_name}}{% else %}Sonoff 4ch 1{% endif %}:*
+            {%- if states.switch.sonoff_4ch_1.state == "unavailable" %} {{""}} Disconnected{% elif states.switch.sonoff_4ch_1.state == "on" %} {{"\U00002705"}} On{% elif states.switch.sonoff_4ch_1.state == "off" %} {{"\U0000274C"}} Off{% endif %}
+            *{% if states.switch.sonoff_4ch_2 %}{{states.switch.sonoff_4ch_2.attributes.friendly_name}}{% else %}Sonoff 4ch 2{% endif %}:*
+            {%- if states.switch.sonoff_4ch_2.state == "unavailable" %} {{""}} Disconnected{% elif states.switch.sonoff_4ch_2.state == "on" %} {{"\U00002705"}} On{% elif states.switch.sonoff_4ch_2.state == "off" %} {{"\U0000274C"}} Off{% endif %}
+            *{% if states.switch.sonoff_4ch_3 %}{{states.switch.sonoff_4ch_3.attributes.friendly_name}}{% else %}Sonoff 4ch 3{% endif %}:*
+            {%- if states.switch.sonoff_4ch_3.state == "unavailable" %} {{""}} Disconnected{% elif states.switch.sonoff_4ch_3.state == "on" %} {{"\U00002705"}} On{% elif states.switch.sonoff_4ch_3.state == "off" %} {{"\U0000274C"}} Off{% endif %}
+            *{% if states.switch.sonoff_4ch_4 %}{{states.switch.sonoff_4ch_4.attributes.friendly_name}}{% else %}Sonoff 4ch 4{% endif %}:*
+            {%- if states.switch.sonoff_4ch_4.state == "unavailable" %} {{""}} Disconnected{% elif states.switch.sonoff_4ch_4.state == "on" %} {{"\U00002705"}} On{% elif states.switch.sonoff_4ch_4.state == "off" %} {{"\U0000274C"}} Off{% endif %}
+        inline_keyboard:
+          - "\U0001F50C Plug 1:/switches_toggle_plug1, \U0001F50C Plug 2:/switches_toggle_plug2, \U0001F50C Plug 3:/switches_toggle_plug3"
+          - "\U0001F50C Sonoff 1:/switches_toggle_sonoff_basic_1, \U0001F50C Sonoff 2:/switches_toggle_sonoff_basic_2, \U0001F50C Sonoff 3:/switches_toggle_sonoff_basic_3"
+          - "\U0001F53C Cover Up:/switches_cover_up, \U000023F9 Stop:/switches_cover_stop, \U0001F53D Cover Down:/switches_cover_down"
+          - "\U0001F4AB Refresh:/switches, \U0001F519 Go back:/goback_main"
+
+- id: bot_cmd_switches_toggle_plug1
+  #Bot - Comando /switches_toggle_plug1
+  alias: bot_cmd_switches_toggle_plug1
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/switches_toggle_plug1"
+  action:
+    #Toggle the plug
+    - service: switch.toggle
+      data:
+        entity_id: switch.smartplug_1
+    #Notifica Telegram
+    - service: notify.telegram_paolo
+      data_template:
+        message: >
+          {% if states.switch.smartplug_1.state == "unavailable" %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({{states.switch.smartplug_1.state | upper()}}).{% endif %}
+
+- id: bot_cmd_switches_toggle_plug2
+  #Bot - Comando /switches_toggle_plug2
+  alias: bot_cmd_switches_toggle_plug2
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/switches_toggle_plug2"
+  action:
+    #Toggle the plug
+    - service: switch.toggle
+      data:
+        entity_id: switch.smartplug_2
+    #Notifica Telegram
+    - service: notify.telegram_paolo
+      data_template:
+        message: >
+          {% if states.switch.smartplug_2.state == "unavailable" %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({{states.switch.smartplug_2.state | upper()}}).{% endif %}
+
+- id: bot_cmd_switches_toggle_plug3
+  #Bot - Comando /switches_toggle_plug3
+  alias: bot_cmd_switches_toggle_plug3
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/switches_toggle_plug3"
+  action:
+    #Toggle the plug
+    - service: switch.toggle
+      data:
+        entity_id: switch.smartplug_3
+    #Notifica Telegram
+    - service: notify.telegram_paolo
+      data_template:
+        message: >
+          {% if states.switch.smartplug_3.state == "unavailable" %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({{states.switch.smartplug_3.state | upper()}}).{% endif %}
+
+- id: bot_cmd_switches_toggle_sonoff_basic_1
+  #Bot - Comando /switches_toggle_sonoff_basic_1
+  alias: bot_cmd_switches_toggle_sonoff_basic_1
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/switches_toggle_sonoff_basic_1"
+  action:
+    #Toggle the plug
+    - service: switch.toggle
+      data:
+        entity_id: switch.sonoff_basic_1
+    #Notifica Telegram
+    - service: notify.telegram_paolo
+      data_template:
+        message: >
+          {% if states.switch.sonoff_basic_1.state == "unavailable" %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({% if states.switch.sonoff_basic_1.state == "on" %}OFF{% else %}ON{% endif %}).{% endif %}
+
+- id: bot_cmd_switches_toggle_sonoff_basic_2
+  #Bot - Comando /switches_toggle_sonoff_basic_2
+  alias: bot_cmd_switches_toggle_sonoff_basic_2
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/switches_toggle_sonoff_basic_2"
+  action:
+    #Toggle the plug
+    - service: switch.toggle
+      data:
+        entity_id: switch.sonoff_basic_2
+    #Notifica Telegram
+    - service: notify.telegram_paolo
+      data_template:
+        message: >
+          {% if states.switch.sonoff_basic_2.state == "unavailable" %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({% if states.switch.sonoff_basic_2.state == "on" %}OFF{% else %}ON{% endif %}).{% endif %}
+
+- id: bot_cmd_switches_toggle_sonoff_basic_3
+  #Bot - Comando /switches_toggle_sonoff_basic_3
+  alias: bot_cmd_switches_toggle_sonoff_basic_3
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/switches_toggle_sonoff_basic_3"
+  action:
+    #Toggle the plug
+    - service: switch.toggle
+      data:
+        entity_id: switch.sonoff_basic_3
+    #Notifica Telegram
+    - service: notify.telegram_paolo
+      data_template:
+        message: >
+          {% if states.switch.sonoff_basic_3.state == "unavailable" %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({% if states.switch.sonoff_basic_3.state == "on" %}OFF{% else %}ON{% endif %}).{% endif %}
+
+- id: bot_cmd_switches_cover_up
+  #Bot - Comando /switches_cover_up
+  alias: bot_cmd_switches_cover_up
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/switches_cover_up"
+  action:
+    - service: script.home_cover_up
+    #Notifica Telegram
+    - service: notify.telegram_paolo
+      data_template:
+        message: >
+          {% if states.switch.sonoff_dual_1.state == "unavailable" %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F53C"}} Cover up.{% endif %}
+
+- id: bot_cmd_switches_cover_down
+  #Bot - Comando /switches_cover_down
+  alias: bot_cmd_switches_cover_down
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/switches_cover_down"
+  action:
+    - service: script.home_cover_down
+    #Notifica Telegram
+    - service: notify.telegram_paolo
+      data_template:
+        message: >
+          {% if states.switch.sonoff_dual_2.state == "unavailable" %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F53D"}} Cover down.{% endif %}
+
+- id: bot_cmd_switches_cover_stop
+  #Bot - Comando /switches_cover_stop
+  alias: bot_cmd_switches_cover_stop
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/switches_cover_stop"
+  action:
+    - service: script.home_cover_stop
+    #Notifica Telegram
+    - service: notify.telegram_paolo
+      data_template:
+        message: >
+          {{"\U000023F9"}} Cover stopped.
+
+- id: bot_cmd_config
+  #Bot - Comando /config
+  alias: bot_cmd_config
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/config"
+  action:
+    #Menu Telegram
+    - service: telegram_bot.edit_replymarkup
+      data_template:
+        message_id: "last"
+        chat_id: "{{ trigger.event.data.chat_id }}"
+        inline_keyboard:
+          - "\U0001F4BE Commit config to Git:/config_commit_git"
+          - "\U0001F4F7 Create full snapshot:/snapshot_full_create"
+          - "\U0001F519 Go back:/goback_main"
+
+- id: bot_cmd_config_commit_git
+  #Bot - Comando /config_commit_git
+  alias: bot_cmd_config_commit_git
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/config_commit_git"
+  action:
+    #Messaggio Telegram
+    - service: telegram_bot.send_message
+      data_template:
+        message: "Confermi l'operazione?"
+        disable_notification: true
+        inline_keyboard:
+          - "\U0001F44D Yes:/config_commit_git_confirm, \U0001F44E No:/config_commit_git_cancel"
+
+- id: bot_cmd_config_commit_git_confirm
+  #Bot - Comando /config_commit_git_confirm
+  alias: bot_cmd_config_commit_git_confirm
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/config_commit_git_confirm"
+  action:
+    #Messaggio Telegram
+    - service: telegram_bot.delete_message
+      data_template:
+        message_id: "last"
+        chat_id: "{{ trigger.event.data.chat_id }}"
+    #Invoke Script
+    - service: script.config_commit_to_git
+
+- id: bot_cmd_config_commit_git_cancel
+  #Bot - Comando /config_commit_git_cancel
+  alias: bot_cmd_config_commit_git_cancel
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/config_commit_git_cancel"
+  action:
+    #Messaggio Telegram
+    - service: telegram_bot.delete_message
+      data_template:
+        message_id: "last"
+        chat_id: "{{ trigger.event.data.chat_id }}"
+
+- id: bot_cmd_config_snapshot_full
+  #Bot - Comando /snapshot_full_create
+  alias: bot_cmd_config_snapshot_full
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/snapshot_full_create"
+  action:
+    #Messaggio Telegram
+    - service: telegram_bot.send_message
+      data_template:
+        message: "Confermi l'operazione?"
+        disable_notification: true
+        inline_keyboard:
+          - "\U0001F44D Yes:/snapshot_full_create_confirm, \U0001F44E No:/snapshot_full_create_cancel"
+
+- id: bot_cmd_config_snapshot_full_confirm
+  #Bot - Comando /snapshot_full_create_confirm
+  alias: bot_cmd_config_snapshot_full_confirm
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/snapshot_full_create_confirm"
+  action:
+    #Messaggio Telegram
+    - service: telegram_bot.delete_message
+      data_template:
+        message_id: "last"
+        chat_id: "{{ trigger.event.data.chat_id }}"
+    #Invoke Script
+    - service: script.snapshot_full_create
+
+- id: bot_cmd_config_snapshot_full_cancel
+  #Bot - Comando /snapshot_full_create_cancel
+  alias: bot_cmd_config_snapshot_full_cancel
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/snapshot_full_create_cancel"
+  action:
+    #Messaggio Telegram
+    - service: telegram_bot.delete_message
+      data_template:
+        message_id: "last"
+        chat_id: "{{ trigger.event.data.chat_id }}"
+
+- id: bot_cmd_wherearewe
+  #Bot - Comando /wherearewe
+  alias: bot_cmd_wherearewe
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/wherearewe"
+  action:
+    #Menu Telegram
+    - service: telegram_bot.edit_replymarkup
+      data_template:
+        message_id: "last"
+        chat_id: "{{ trigger.event.data.chat_id }}"
+        inline_keyboard:
+          - "\U00000031\U000020E3 Paolo:/wherearewe_paolo, \U00000032\U000020E3 Silvia:/wherearewe_silvia"
+          - "\U0001F519 Go back:/goback_main"
+
+- id: bot_cmd_wherearewe_paolo
+  #Bot - Comando /wherearewe_paolo
+  alias: bot_cmd_wherearewe_paolo
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/wherearewe_paolo"
+  action:
+    #Where is Paolo
+    - service: telegram_bot.edit_message
+      data_template:
+        message_id: "last"
+        chat_id: "{{ trigger.event.data.user_id }}"
+        message: >
+          *- Where is Paolo? -*
+            *{{states.device_tracker.cell_paolo.attributes.friendly_name}}:* {{states.device_tracker.cell_paolo.state | replace("not_home","away")}}
+            *{{states.sensor.cell_paolo_lat.attributes.friendly_name}}:* {{states.sensor.cell_paolo_lat.state}}
+            *{{states.sensor.cell_paolo_long.attributes.friendly_name}}:* {{states.sensor.cell_paolo_long.state}}
+            *{{states.sensor.cell_paolo_accuracy.attributes.friendly_name}}:* {{states.sensor.cell_paolo_accuracy.state}} {{states.sensor.cell_paolo_accuracy.attributes.unit_of_measurement}}
+            *{{states.sensor.cell_paolo_lastupdate.attributes.friendly_name}}:* {{states.sensor.cell_paolo_lastupdate.state}}
+            *{{states.sensor.cell_paolo_address.attributes.friendly_name}}:* {{states.sensor.cell_paolo_address.state}}
+            *{{states.sensor.cell_paolo_address_confidence.attributes.friendly_name}}:* {{states.sensor.cell_paolo_address_confidence.state}}
+            *{{states.sensor.cell_paolo_distance_home.attributes.friendly_name}}:* {{states.sensor.cell_paolo_distance_home.state}} {{states.sensor.cell_paolo_distance_home.attributes.unit_of_measurement}}
+            *{{states.sensor.cell_paolo_distance_silvia.attributes.friendly_name}}:* {{states.sensor.cell_paolo_distance_silvia.state}} {{states.sensor.cell_paolo_distance_silvia.attributes.unit_of_measurement}}
+            [Map](https://dev.virtualearth.net/REST/V1/Imagery/Map/Road/{{states.sensor.cell_paolo_latlong.state}}/16?mapSize=400,300&format=png&pushpin={{states.sensor.cell_paolo_latlong.state}};66;P&key={{states.sensor.maps_api_key.state}})
+        inline_keyboard:
+          - "\U0001F4AB Refresh:/wherearewe_paolo, \U0001F519 Go back:/wherearewe"
+
+- id: bot_cmd_wherearewe_silvia
+  #Bot - Comando /wherearewe_silvia
+  alias: bot_cmd_wherearewe_silvia
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/wherearewe_silvia"
+  action:
+    #Where is Silvia
+    - service: telegram_bot.edit_message
+      data_template:
+        message_id: "last"
+        chat_id: "{{ trigger.event.data.user_id }}"
+        message: >
+          *- Where is Silvia? -*
+            *{{states.device_tracker.cell_silvia.attributes.friendly_name}}:* {{states.device_tracker.cell_silvia.state | replace("not_home","away")}}
+            *{{states.sensor.cell_silvia_lat.attributes.friendly_name}}:* {{states.sensor.cell_silvia_lat.state}}
+            *{{states.sensor.cell_silvia_long.attributes.friendly_name}}:* {{states.sensor.cell_silvia_long.state}}
+            *{{states.sensor.cell_silvia_accuracy.attributes.friendly_name}}:* {{states.sensor.cell_silvia_accuracy.state}} {{states.sensor.cell_silvia_accuracy.attributes.unit_of_measurement}}
+            *{{states.sensor.cell_silvia_lastupdate.attributes.friendly_name}}:* {{states.sensor.cell_silvia_lastupdate.state}}
+            *{{states.sensor.cell_silvia_address.attributes.friendly_name}}:* {{states.sensor.cell_silvia_address.state}}
+            *{{states.sensor.cell_silvia_address_confidence.attributes.friendly_name}}:* {{states.sensor.cell_silvia_address_confidence.state}}
+            *{{states.sensor.cell_silvia_distance_home.attributes.friendly_name}}:* {{states.sensor.cell_silvia_distance_home.state}} {{states.sensor.cell_silvia_distance_home.attributes.unit_of_measurement}}
+            *{{states.sensor.cell_silvia_distance_paolo.attributes.friendly_name}}:* {{states.sensor.cell_silvia_distance_paolo.state}} {{states.sensor.cell_silvia_distance_paolo.attributes.unit_of_measurement}}
+            [Map](https://dev.virtualearth.net/REST/V1/Imagery/Map/Road/{{states.sensor.cell_silvia_latlong.state}}/16?mapSize=400,300&format=png&pushpin={{states.sensor.cell_silvia_latlong.state}};64;S&key={{states.sensor.maps_api_key.state}})
+        inline_keyboard:
+          - "\U0001F4AB Refresh:/wherearewe_silvia, \U0001F519 Go back:/wherearewe"
+
+- id: bot_cmd_system_ha_reload_customize
+  #Bot - Comando /ha_reload_customize
+  alias: bot_cmd_system_ha_reload_customize
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/ha_reload_customize"
+  action:
+    #Invoke Script
+    - service: script.hass_reload_customize
+
+- id: bot_cmd_system_ha_reload_scripts
+  #Bot - Comando /ha_reload_scripts
+  alias: bot_cmd_system_ha_reload_scripts
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/ha_reload_scripts"
+  action:
+    #Invoke Script
+    - service: script.hass_reload_scripts
+
+- id: bot_cmd_system_ha_reload_automations
+  #Bot - Comando /ha_reload_automations
+  alias: bot_cmd_system_ha_reload_automations
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/ha_reload_automations"
+  action:
+    #Invoke Script
+    - service: script.hass_reload_automations
+
+- id: bot_cmd_system_ha_restart
+  #Bot - Comando /ha_restart
+  alias: bot_cmd_system_ha_restart
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/ha_restart"
+  action:
+    #Messaggio Telegram
+    - service: telegram_bot.send_message
+      data_template:
+        message: "Confermi l'operazione?"
+        disable_notification: true
+        inline_keyboard:
+          - "\U0001F44D Yes:/ha_restart_confirm, \U0001F44E No:/ha_restart_cancel"
+
+- id: bot_cmd_system_ha_restart_confirm
+  #Bot - Comando /ha_restart_confirm
+  alias: bot_cmd_system_ha_restart_confirm
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/ha_restart_confirm"
+  action:
+    #Messaggio Telegram
+    - service: telegram_bot.delete_message
+      data_template:
+        message_id: "last"
+        chat_id: "{{ trigger.event.data.chat_id }}"
+    #Invoke Script
+    - service: script.hass_restart
+
+- id: bot_cmd_system_ha_restart_cancel
+  #Bot - Comando /ha_restart_cancel
+  alias: bot_cmd_system_ha_restart_cancel
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/ha_restart_cancel"
+  action:
+    #Messaggio Telegram
+    - service: telegram_bot.delete_message
+      data_template:
+        message_id: "last"
+        chat_id: "{{ trigger.event.data.chat_id }}"
+
+- id: bot_cmd_system_ha_stop
+  #Bot - Comando /ha_stop
+  alias: bot_cmd_system_ha_stop
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/ha_stop"
+  action:
+    #Messaggio Telegram
+    - service: telegram_bot.send_message
+      data_template:
+        message: "Confermi l'operazione?"
+        disable_notification: true
+        inline_keyboard:
+          - "\U0001F44D Yes:/ha_stop_confirm, \U0001F44E No:/ha_stop_cancel"
+
+- id: bot_cmd_system_ha_stop_confirm
+  #Bot - Comando /ha_stop_confirm
+  alias: bot_cmd_system_ha_stop_confirm
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/ha_stop_confirm"
+  action:
+    #Messaggio Telegram
+    - service: telegram_bot.delete_message
+      data_template:
+        message_id: "last"
+        chat_id: "{{ trigger.event.data.chat_id }}"
+    #Invoke Script
+    - service: script.hass_stop
+
+- id: bot_cmd_system_ha_stop_cancel
+  #Bot - Comando /ha_stop_cancel
+  alias: bot_cmd_system_ha_stop_cancel
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/ha_stop_cancel"
+  action:
+    #Messaggio Telegram
+    - service: telegram_bot.delete_message
+      data_template:
+        message_id: "last"
+        chat_id: "{{ trigger.event.data.chat_id }}"
+
+- id: bot_cmd_system_ho_shutdown
+  #Bot - Comando /ho_shutdown
+  alias: bot_cmd_system_ho_shutdown
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/ho_shutdown"
+  action:
+    #Messaggio Telegram
+    - service: telegram_bot.send_message
+      data_template:
+        message: "Confermi l'operazione?"
+        disable_notification: true
+        inline_keyboard:
+          - "\U0001F44D Yes:/ho_shutdown_confirm, \U0001F44E No:/ho_shutdown_cancel"
+
+- id: bot_cmd_system_ho_shutdown_confirm
+  #Bot - Comando /ho_shutdown_confirm
+  alias: bot_cmd_system_ho_shutdown_confirm
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/ho_shutdown_confirm"
+  action:
+    #Messaggio Telegram
+    - service: telegram_bot.delete_message
+      data_template:
+        message_id: "last"
+        chat_id: "{{ trigger.event.data.chat_id }}"
+    #Invoke Script
+    - service: script.hass_server_shutdown
+
+- id: bot_cmd_system_ho_shutdown_cancel
+  #Bot - Comando /ho_shutdown_cancel
+  alias: bot_cmd_system_ho_shutdown_cancel
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/ho_shutdown_cancel"
+  action:
+    #Messaggio Telegram
+    - service: telegram_bot.delete_message
+      data_template:
+        message_id: "last"
+        chat_id: "{{ trigger.event.data.chat_id }}"
+
+- id: bot_cmd_system_ho_reboot
+  #Bot - Comando /ho_reboot
+  alias: bot_cmd_system_ho_reboot
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/ho_reboot"
+  action:
+    #Messaggio Telegram
+    - service: telegram_bot.send_message
+      data_template:
+        message: "Confermi l'operazione?"
+        disable_notification: true
+        inline_keyboard:
+          - "\U0001F44D Yes:/ho_reboot_confirm, \U0001F44E No:/ho_reboot_cancel"
+
+- id: bot_cmd_system_ho_reboot_confirm
+  #Bot - Comando /ho_reboot_confirm
+  alias: bot_cmd_system_ho_reboot_confirm
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/ho_reboot_confirm"
+  action:
+    #Messaggio Telegram
+    - service: telegram_bot.delete_message
+      data_template:
+        message_id: "last"
+        chat_id: "{{ trigger.event.data.chat_id }}"
+    #Invoke Script
+    - service: script.hass_server_reboot
+
+- id: bot_cmd_system_ho_reboot_cancel
+  #Bot - Comando /ho_reboot_cancel
+  alias: bot_cmd_system_ho_reboot_cancel
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/ho_reboot_cancel"
+  action:
+    #Messaggio Telegram
+    - service: telegram_bot.delete_message
+      data_template:
+        message_id: "last"
+        chat_id: "{{ trigger.event.data.chat_id }}"
+
+- id: bot_cmd_sensors_router
+  #Bot - Comando /sensors_router
+  alias: bot_cmd_sensors_router
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/sensors_router"
+  action:
+    #Sensori FritzBox
+    - service: telegram_bot.edit_message
+      data_template:
+        message_id: "last"
+        chat_id: "{{ trigger.event.data.user_id }}"
+        message: >
+          *- FritzBox sensors -*{% if states.binary_sensor.online_router_fritzbox and states.binary_sensor.online_router_fritzbox.state == "on"%}
+            *Status:* {% if states.sensor.fritz_netmonitor %}{{states.sensor.fritz_netmonitor.state}}{% else %}N/A{% endif %}
+            *Uptime:* {% if states.sensor.fritz_attr_uptime %}{{states.sensor.fritz_attr_uptime.state}} {{states.sensor.fritz_attr_uptime.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
+            *External IP:* {% if states.sensor.fritz_attr_external_ip %}{{states.sensor.fritz_attr_external_ip.state}}{% else %}N/A{% endif %}
+            *Connection*
+              *Linked to provider:* {% if states.sensor.fritz_attr_is_linked %}{{states.sensor.fritz_attr_is_linked.state}}{% else %}N/A{% endif %}
+              *Internet connected:* {% if states.sensor.fritz_attr_is_connected %}{{states.sensor.fritz_attr_is_connected.state}}{% else %}N/A{% endif %}
+              *Wan access type:* {% if states.sensor.fritz_attr_wan_access_type %}{{states.sensor.fritz_attr_wan_access_type.state}}{% else %}N/A{% endif %}
+              *Sent:* {% if states.sensor.fritz_attr_sent_mb %}{{states.sensor.fritz_attr_sent_mb.state}} {{states.sensor.fritz_attr_sent_mb.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
+              *Received:* {% if states.sensor.fritz_attr_received_mb %}{{states.sensor.fritz_attr_received_mb.state}} {{states.sensor.fritz_attr_received_mb.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
+              *Upstream:* {% if states.sensor.fritz_attr_transmission_rate_up %}{{states.sensor.fritz_attr_transmission_rate_up.state}} {{states.sensor.fritz_attr_transmission_rate_up.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
+              *Downstream:* {% if states.sensor.fritz_attr_transmission_rate_down %}{{states.sensor.fritz_attr_transmission_rate_down.state}} {{states.sensor.fritz_attr_transmission_rate_down.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
+            {% else %}
+            {{"\U0000274C"}} This device is OFF or not connected.
+            {% endif %}
+        inline_keyboard:
+          - "\U0001F4AB Refresh:/sensors_router, \U0001F519 Go back:/sensors"
+
+- id: bot_cmd_sensors_raspberry
+  #Bot - Comando /sensors_raspberry
+  alias: bot_cmd_sensors_raspberry
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/sensors_raspberry"
+  action:
+    #Sensori Raspberry
+    - service: telegram_bot.edit_message
+      data_template:
+        message_id: "last"
+        chat_id: "{{ trigger.event.data.user_id }}"
+        message: >
+          *- Raspberry sensors -*
+            {% if states.sensor.last_boot_verbose -%}
+              *{{states.sensor.last_boot_verbose.attributes.friendly_name}}:*
+              {{states.sensor.last_boot_verbose.state}} {{states.sensor.last_boot_verbose.attributes.unit_of_measurement}}
+            {% endif -%}
+            *CPU temperature:* {% if states.sensor.cpu_temperature and states.sensor.cpu_temperature.state != "unknown" %}{{states.sensor.cpu_temperature.state}} {{states.sensor.cpu_temperature.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
+            *Processor use:* {% if states.sensor.processor_use %}{{states.sensor.processor_use.state}} {{states.sensor.processor_use.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
+            *Memory*
+              *Used:* {% if states.sensor.memory_use %}{{states.sensor.memory_use.state}} {{states.sensor.memory_use.attributes.unit_of_measurement}}{% else %}N/A{% endif %} ({% if states.sensor.memory_use_percent %}{{states.sensor.memory_use_percent.state}} {{states.sensor.memory_use_percent.attributes.unit_of_measurement}}{% else %}N/A{% endif %})
+              *Free:* {% if states.sensor.memory_free %}{{states.sensor.memory_free.state}} {{states.sensor.memory_free.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
+            *HASS*
+              *DB Size:* {% if states.sensor.hass_db_filesize %}{{states.sensor.hass_db_filesize.state}} {{states.sensor.hass_db_filesize.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
+              *Inst. version:* {{ states.sensor.hass_installed_version.state }}
+              *Avail. version:* {{ states.sensor.hass_available_version.state }}
+              *HACS updates:* {{ states.sensor.hacs.state }}
+            *Internal IPs:*
+              {% if states.sensor.hass_ip_address %}{{states.sensor.hass_ip_address.state | replace("\n","\n    ")}}{% else %}N/A{% endif %}
+        inline_keyboard:
+          - "\U0001F4AB Refresh:/sensors_raspberry, \U0001F519 Go back:/sensors"
+
+- id: bot_cmd_sensors_devices
+  #Bot - Comando /sensors_devices
+  alias: bot_cmd_sensors_devices
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/sensors_devices"
+  action:
+    #Devices
+    - service: telegram_bot.edit_message
+      data_template:
+        message_id: "last"
+        chat_id: "{{ trigger.event.data.user_id }}"
+        message: >
+          *- Connected devices -*
+            {%- for state in states.binary_sensor if state.object_id.startswith("online_") %}
+            *{% if state %}{{state.attributes.friendly_name}}{% else %}N/A{% endif %}:*
+            {%- if state.state == "on" %} {{"\U00002705"}} On{% elif state.state == "off" %} {{"\U0000274C"}} Off{% endif %}
+            {%- endfor %}
+        inline_keyboard:
+          - "\U0001F4AB Refresh:/sensors_devices, \U0001F519 Go back:/sensors"
+
+- id: bot_cmd_sensors_mobiledevices
+  #Bot - Comando /sensors_mobiledevices
+  alias: bot_cmd_sensors_mobiledevices
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/sensors_mobiledevices"
+  action:
+    #Mobile Devices
+    - service: telegram_bot.edit_message
+      data_template:
+        message_id: "last"
+        chat_id: "{{ trigger.event.data.user_id }}"
+        message: >
+          *- Mobile devices -*
+            {{"\U0001F4F1"}} *Cell. Paolo*
+              *{% if states.sensor.cell_paolo_battery %}{{states.sensor.cell_paolo_battery.attributes.friendly_name}}{% else %}Battery{% endif %}:* {{states.sensor.cell_paolo_battery.state}} {{states.sensor.cell_paolo_battery.attributes.unit_of_measurement}} {% if states.sensor.cell_paolo_charging.state == "True"%} {{"\U0001F50C"}}{% endif %}
+              *{% if states.sensor.cell_paolo_lastupdate %}{{states.sensor.cell_paolo_lastupdate.attributes.friendly_name}}{% else %}Last update{% endif %}:* {{states.sensor.cell_paolo_lastupdate.state}} {{states.sensor.cell_paolo_lastupdate.attributes.unit_of_measurement}}
+            
+            {{"\U0001F4BB"}} *Tablet Paolo*
+              *{% if states.sensor.tablet_paolo_battery %}{{states.sensor.tablet_paolo_battery.attributes.friendly_name}}{% else %}Battery{% endif %}:* {{states.sensor.tablet_paolo_battery.state}} {{states.sensor.tablet_paolo_battery.attributes.unit_of_measurement}} {% if states.sensor.tablet_paolo_charging.state == "True"%} {{"\U0001F50C"}}{% endif %}
+              *{% if states.sensor.tablet_paolo_lastupdate %}{{states.sensor.tablet_paolo_lastupdate.attributes.friendly_name}}{% else %}Last update{% endif %}:* {{states.sensor.tablet_paolo_lastupdate.state}} {{states.sensor.tablet_paolo_lastupdate.attributes.unit_of_measurement}}
+            
+            {{"\U0001F4F1"}} *Cell. Silvia*
+              *{% if states.sensor.cell_silvia_battery %}{{states.sensor.cell_silvia_battery.attributes.friendly_name}}{% else %}Battery{% endif %}:* {{states.sensor.cell_silvia_battery.state}} {{states.sensor.cell_silvia_battery.attributes.unit_of_measurement}} {% if states.sensor.cell_silvia_charging.state == "True"%} {{"\U0001F50C"}}{% endif %}
+              *{% if states.sensor.cell_silvia_lastupdate %}{{states.sensor.cell_silvia_lastupdate.attributes.friendly_name}}{% else %}Last update{% endif %}:* {{states.sensor.cell_silvia_lastupdate.state}} {{states.sensor.cell_silvia_lastupdate.attributes.unit_of_measurement}}
+        inline_keyboard:
+          - "\U0001F4AB Refresh:/sensors_mobiledevices, \U0001F519 Go back:/sensors"
+
+- id: bot_cmd_sensors_nas
+  #Bot - Comando /sensors_nas
+  alias: bot_cmd_sensors_nas
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/sensors_nas"
+  action:
+    #Sensori Qnap
+    - service: telegram_bot.edit_message
+      data_template:
+        message_id: "last"
+        chat_id: "{{ trigger.event.data.user_id }}"
+        message: >
+          *- Qnap sensors -*{% if states.binary_sensor.online_nas_qnap and states.binary_sensor.online_nas_qnap.state == "on"%}
+            *Model:* {% if states.sensor.nas_attr_model %}{{states.sensor.nas_attr_model.state}}{% else %}N/A{% endif %}
+            *Uptime:* {% if states.sensor.nas_attr_uptime %}{{states.sensor.nas_attr_uptime.state}}{% else %}N/A{% endif %}
+            *Temperature*
+              *System:* {% if states.sensor.nas_system_temperature %}{{states.sensor.nas_system_temperature.state}} {{states.sensor.nas_system_temperature.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
+              *Drive 1:* {% if states.sensor.nas_temperature_drive_0_1 %}{{states.sensor.nas_temperature_drive_0_1.state}} {{states.sensor.nas_temperature_drive_0_1.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
+              *Drive 2:* {% if states.sensor.nas_temperature_drive_0_2 %}{{states.sensor.nas_temperature_drive_0_2.state}} {{states.sensor.nas_temperature_drive_0_2.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
+            *Memory*
+              *Used memory:* {% if states.sensor.nas_memory_used %}{{states.sensor.nas_memory_used.state}} {{states.sensor.nas_memory_used.attributes.unit_of_measurement}}{% else %}N/A{% endif %} ({% if states.sensor.nas_memory_usage %}{{states.sensor.nas_memory_usage.state}} {{states.sensor.nas_memory_usage.attributes.unit_of_measurement}}{% else %}N/A{% endif %})
+              *Available memory:* {% if states.sensor.nas_memory_available %}{{states.sensor.nas_memory_available.state}} {{states.sensor.nas_memory_available.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
+            *Usage*
+              *CPU:* {% if states.sensor.nas_cpu_usage %}{{states.sensor.nas_cpu_usage.state}} {{states.sensor.nas_cpu_usage.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
+              *Used space:* {% if states.sensor.nas_used_space_volume1 %}{{states.sensor.nas_used_space_volume1.state}} {{states.sensor.nas_used_space_volume1.attributes.unit_of_measurement}}{% else %}N/A{% endif %} ({% if states.sensor.nas_volume_used_volume1 %}{{states.sensor.nas_volume_used_volume1.state}}{{states.sensor.nas_volume_used_volume1.attributes.unit_of_measurement}}%{% else %}N/A{% endif %})
+              *Free space:* {% if states.sensor.nas_free_space_volume1 %}{{states.sensor.nas_free_space_volume1.state}} {{states.sensor.nas_free_space_volume1.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
+            *Health*
+              *System:* {% if states.sensor.nas_status %}{{states.sensor.nas_status.state}}{% else %}N/A{% endif %}
+              *Drive 1 (SMART):* {% if states.sensor.nas_smart_status_drive_0_1 %}{{states.sensor.nas_smart_status_drive_0_1.state}}{% else %}N/A{% endif %}
+              *Drive 2 (SMART):* {% if states.sensor.nas_smart_status_drive_0_2 %}{{states.sensor.nas_smart_status_drive_0_2.state}}{% else %}N/A{% endif %}
+            {% else %}
+            {{"\U0000274C"}} This device is OFF or not connected.
+            {% endif %}
+        inline_keyboard:
+          - "\U0001F4AB Refresh:/sensors_nas, \U0001F519 Go back:/sensors"
+
+- id: bot_cmd_sensors_adguard
+  #Bot - Comando /sensors_adguard
+  alias: bot_cmd_sensors_adguard
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/sensors_adguard"
+  action:
+    #Sensori AdGuard
+    - service: telegram_bot.edit_message
+      data_template:
+        message_id: "last"
+        chat_id: "{{ trigger.event.data.user_id }}"
+        message: >
+          *- AdGuard sensors -*{% if states.binary_sensor.online_adguard and states.binary_sensor.online_adguard.state == "on"%}
+            *DNS queries:*
+              *Total:* {% if states.sensor.adguard_dns_queries %}{{states.sensor.adguard_dns_queries.state}}{% else %}N/A{% endif %}
+              *Blocked:* {% if states.sensor.adguard_dns_queries_blocked %}{{states.sensor.adguard_dns_queries_blocked.state}}{% else %}N/A{% endif %} ({% if states.sensor.adguard_dns_queries_blocked_ratio %}{{states.sensor.adguard_dns_queries_blocked_ratio.state}} {{states.sensor.adguard_dns_queries_blocked_ratio.attributes.unit_of_measurement}}{% else %}N/A{% endif %})
+            *Blocked Requests:*
+              *Parental Control:* {% if states.sensor.adguard_parental_control_blocked %}{{states.sensor.adguard_parental_control_blocked.state}}{% else %}N/A{% endif %}
+              *Safe Browsing:* {% if states.sensor.adguard_safe_browsing_blocked %}{{states.sensor.adguard_safe_browsing_blocked.state}}{% else %}N/A{% endif %}
+            *Rules Count:* {% if states.sensor.adguard_rules_count %}{{states.sensor.adguard_rules_count.state}}{% else %}N/A{% endif %}
+            {% else %}
+            {{"\U0000274C"}} This device is OFF or not connected.
+            {% endif %}
+        inline_keyboard:
+          - "\U0001F4AB Refresh:/sensors_adguard, \U0001F519 Go back:/sensors"
+
+##TODO DA COMPLETARE e VERIFICARE CON GOOGLE HOME MINI
+#- id: telegram_speak_generic
+##Bot - Comando /speak_generic
+#alias: Respond to /speak_generic command
+#trigger:
+#  platform: event
+#  event_type: telegram_callback
+#  event_data:
+#    data: "/speak_generic"
+#action:
+#  #TTS Speak
+#  - service: script.tts_speak
+#    data_template:
+#      message2say: >
+#        {{ states.input_text.speak_generic_msg.state }}
+##      message2say: Ciao
+#      volume: "0.6"
+#  #Menu Telegram
+#  - service: telegram_bot.edit_message
+#    data_template:
+#      message_id: "last"
+#      chat_id: "{{ trigger.event.data.user_id }}"
+#      message: "\U0001F197 FATTO"
+#      inline_keyboard:
+#        - "\U0001F519 Go back:/goback_main"
+
+
+#++++++++++++++++++++++++++++++++++++++++++++++
+#+++++ Mobile devices related automations +++++
+#++++++++++++++++++++++++++++++++++++++++++++++
+- id: tablet_ale_warn_wifi_connected
+  #Avvisa quando il tablet di Ale è connesso a WiFi
+  alias: tablet_ale_warn_wifi_connected
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.online_tablet_ale1
+      from: "off"
+      to: "on"
+    - platform: state
+      entity_id: binary_sensor.online_tablet_ale2
+      from: "off"
+      to: "on"
+  condition:
+    - condition: state
+      entity_id: input_select.home_mode
+      state: "giorno"
+  action:
+    #TTS Speak
+    - service: script.tts_speak
+      data_template:
+        message2say: >
+          Il tablet {% if trigger.entity_id == 'binary_sensor.online_tablet_ale1' %}blu{% elif trigger.entity_id == 'binary_sensor.online_tablet_ale2' %}nero{% endif %} di Àle, è connesso!
+        volume: "0.5"
+    #Notifica Telegram
+    - service: notify.telegram_paolo
+      data_template:
+        message: >
+            {{'\U000026A0'}} Il tablet {% if trigger.entity_id == 'binary_sensor.online_tablet_ale1' %}blu{% elif trigger.entity_id == 'binary_sensor.online_tablet_ale2' %}nero{% endif %} di Ale è connesso!
+
+- id: xiaomi_hub_warn_wifi_change_connection
+  #Avvisa quando il gateway xiaomi si connette/disconnette a/da WiFi
+  alias: xiaomi_hub_warn_wifi_change_connection
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.online_xiaomi_gateway
+      from: "on"
+      to: "off"
+    - platform: state
+      entity_id: binary_sensor.online_xiaomi_gateway
+      from: "off"
+      to: "on"
+  condition:
+    - condition: state
+      entity_id: input_select.home_mode
+      state: "giorno"
+  action:
+    #TTS Speak
+    - service: script.tts_speak
+      data_template:
+        message2say: >
+          {% if (trigger.to_state.state == 'on') %}
+            Il gateway Xiaomi, è connesso!
+          {% elif (trigger.to_state.state == 'off') %}
+            Il gateway Xiaomi, è disconnesso!
+          {% endif %}
+        volume: "0.4"
+    #Notifica Telegram
+    - service: notify.telegram_paolo
+      data_template:
+        message: >
+          {% if (trigger.to_state.state == 'on') %}
+            {{'\U0001F44D'}} Il gateway Xiaomi è connesso!
+          {% elif (trigger.to_state.state == 'off') %}
+            {{'\U000026A0'}} Il gateway Xiaomi è disconnesso!
+          {% endif %}
+
+- id: nas_warn_wifi_change_connection
+  #Avvisa quando il Nas si connette/disconnette a/da WiFi
+  alias: nas_warn_wifi_change_connection
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.online_nas_qnap
+      from: "on"
+      to: "off"
+    - platform: state
+      entity_id: binary_sensor.online_nas_qnap
+      from: "off"
+      to: "on"
+  condition:
+    - condition: state
+      entity_id: input_select.home_mode
+      state: "giorno"
+  action:
+    #TTS Speak
+    - service: script.tts_speak
+      data_template:
+        message2say: >
+          {% if (trigger.to_state.state == 'on') %}
+            Il Nas, è connesso!
+          {% elif (trigger.to_state.state == 'off') %}
+            Il Nas, è disconnesso!
+          {% endif %}
+        volume: "0.3"
+    #Notifica Telegram
+    - service: notify.telegram_paolo
+      data_template:
+        message: >
+          {% if (trigger.to_state.state == 'on') %}
+            {{'\U0001F44D'}} Il Nas è connesso!
+          {% elif (trigger.to_state.state == 'off') %}
+            {{'\U000026A0'}} Il Nas è disconnesso!
+          {% endif %}
+
+
+#++++++++++++++++++++++++++++++++++++
+#+++++ Time related automations +++++
+#++++++++++++++++++++++++++++++++++++
+- id: silvia_warn_time_work
+  #Avvisa Silvia quando deve tornare a lavoro
+  alias: silvia_warn_time_work
+  trigger:
+    - platform: state
+      entity_id: device_tracker.cell_silvia
+      from: "not_home"
+      to: "home"
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: binary_sensor.workday
+        state: "on"
+      - condition: state
+        entity_id: input_select.home_mode
+        state: "giorno"
+      - condition: template
+        value_template: "{{ (states.sensor.time.state.split(':')[0] | int) == 13 or (states.sensor.time.state.split(':')[0] | int) == 14 }}"
+  action:
+    #Wait before tts
+    - delay: "00:40:00"
+    #TTS Speak
+    - service: script.tts_speak
+      data_template:
+        message2say: Silvia. È quasi ora di tornare in ufficio.
+        volume: "0.6"
+
+
+#+++++++++++++++++++++++++++++++++++++++++
+#+++++ Energy monitoring automations +++++
+#+++++++++++++++++++++++++++++++++++++++++
+- id: pzem_warn_wifi_change_connection
+  #Avvisa quando il Pzem si connette/disconnette a/da WiFi
+  alias: pzem_warn_wifi_change_connection
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.online_pzem_004t
+      from: "on"
+      to: "off"
+    - platform: state
+      entity_id: binary_sensor.online_pzem_004t
+      from: "off"
+      to: "on"
+  action:
+    #Notifica Telegram
+    - service: notify.telegram_paolo
+      data_template:
+        message: >
+          {% if (trigger.to_state.state == 'on') %}
+            {{'\U00002705'}} Il Pzem è connesso!
+          {% elif (trigger.to_state.state == 'off') %}
+            {{'\U0000274C'}} Il Pzem è disconnesso!
+          {% endif %}
