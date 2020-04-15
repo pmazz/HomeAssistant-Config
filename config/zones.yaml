@@ -1,23 +1,23 @@
-#- name: Casa
-#  latitude: 45.70894
-#  longitude: 12.214576
-#  radius: 100
-#  icon: mdi:home-circle
+- name: !secret zone_home_name
+  latitude: !secret zone_home_lat
+  longitude: !secret zone_home_long
+  radius: 100
+  icon: mdi:home-circle
 
-- name: Altitudo
-  latitude: 45.695916
-  longitude: 12.252379
+- name: !secret zone_workpaolo_name
+  latitude: !secret zone_workpaolo_lat
+  longitude: !secret zone_workpaolo_long
   radius: 100
   icon: mdi:briefcase
 
-- name: Benetton
-  latitude: 45.709782
-  longitude: 12.218661
+- name: !secret zone_worksilvia_name
+  latitude: !secret zone_worksilvia_lat
+  longitude: !secret zone_worksilvia_long
   radius: 100
   icon: mdi:briefcase
 
-- name: Nonni
-  latitude: 45.707812
-  longitude: 12.224229
+- name: !secret zone_grandparents_name
+  latitude: !secret zone_grandparents_lat
+  longitude: !secret zone_grandparents_long
   radius: 100
   icon: mdi:account-multiple
