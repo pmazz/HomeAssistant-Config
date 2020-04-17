@@ -222,19 +222,7 @@ shell_command: !include shell_commands.yaml
 
 cover: !include covers.yaml
 
-camera:
-  - platform: generic  #https://www.home-assistant.io/components/camera.generic
-    name: Weather Map (Ponzano)
-    still_image_url: https://www.yr.no/place/Italy/Veneto/Ponzano_Veneto/meteogram.svg
-    content_type: "image/svg+xml"
-  - platform: generic
-    name: Map Paolo  #https://www.home-assistant.io/components/camera.generic
-    still_image_url: https://dev.virtualearth.net/REST/V1/Imagery/Map/Road/{{states.sensor.cell_paolo_latlong.state}}/13?mapSize=400,300&format=png&pushpin={{states.sensor.cell_paolo_latlong.state}};66;P&key={{states.sensor.maps_api_key.state}}
-    limit_refetch_to_url_change: true
-  - platform: generic
-    name: Map Silvia  #https://www.home-assistant.io/components/camera.generic
-    still_image_url: https://dev.virtualearth.net/REST/V1/Imagery/Map/Road/{{states.sensor.cell_silvia_latlong.state}}/13?mapSize=400,300&format=png&pushpin={{states.sensor.cell_silvia_latlong.state}};64;S&key={{states.sensor.maps_api_key.state}}
-    limit_refetch_to_url_change: true
+camera: !include cameras.yaml
 
 tuya:  #https://www.home-assistant.io/components/tuya
   country_code: !secret tuya_country_code
