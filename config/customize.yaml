@@ -346,3 +346,12 @@ sensor.ics_4:
   entity_picture: /local/ico/rifiuti/carta.png
 sensor.ics_5:
   entity_picture: /local/ico/rifiuti/vegetale.png
+
+
+#++++++++++++++++++++++++++
+#+++++ GitHub sensors +++++
+#++++++++++++++++++++++++++
+sensor.github_1:
+  icon: mdi:git
+sensor.github_2:
+  icon: mdi:git

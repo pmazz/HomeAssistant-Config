@@ -1096,7 +1096,6 @@
             *Connection*
               *Linked to provider:* {% if states.sensor.fritz_attr_is_linked %}{{states.sensor.fritz_attr_is_linked.state}}{% else %}N/A{% endif %}
               *Internet connected:* {% if states.sensor.fritz_attr_is_connected %}{{states.sensor.fritz_attr_is_connected.state}}{% else %}N/A{% endif %}
-              *Wan access type:* {% if states.sensor.fritz_attr_wan_access_type %}{{states.sensor.fritz_attr_wan_access_type.state}}{% else %}N/A{% endif %}
               *Sent:* {% if states.sensor.fritz_attr_sent_mb %}{{states.sensor.fritz_attr_sent_mb.state}} {{states.sensor.fritz_attr_sent_mb.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
               *Received:* {% if states.sensor.fritz_attr_received_mb %}{{states.sensor.fritz_attr_received_mb.state}} {{states.sensor.fritz_attr_received_mb.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
               *Upstream:* {% if states.sensor.fritz_attr_transmission_rate_up %}{{states.sensor.fritz_attr_transmission_rate_up.state}} {{states.sensor.fritz_attr_transmission_rate_up.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
