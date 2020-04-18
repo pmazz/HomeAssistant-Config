@@ -39,7 +39,8 @@ These are the physical devices currently in use.
 
 ![Raspberry Pi 3B](.images/devices/raspberry-pi-3b.jpg "Raspberry Pi 3B")
 
-Single-board computer with wireless LAN and Bluetooth.
+Single-board computer with wireless LAN and Bluetooth.  
+How many: 1 (plus a 3B+ used for various projects)
 
 * <https://www.raspberrypi.org/products/raspberry-pi-3-model-b>
 
@@ -47,7 +48,8 @@ Single-board computer with wireless LAN and Bluetooth.
 
 ![Fritz!Box 3390](.images/devices/fritzbox-3390.png "Fritz!Box 3390")
 
-ADSL modem router.
+ADSL modem router.  
+How many: 1
 
 * <https://en.avm.de/service/fritzbox/fritzbox-3390>
 
@@ -55,7 +57,8 @@ ADSL modem router.
 
 ![Qnap TS-251B](.images/devices/qnap-ts-251b.jpg "Nas Qnap TS-251B")
 
-Home/SOHO Intel dual-core NAS.
+Home/SOHO Intel dual-core NAS.  
+How many: 1
 
 * <https://www.qnap.com/en-us/product/ts-251b>
 
@@ -67,7 +70,9 @@ Home/SOHO Intel dual-core NAS.
 
 ![Epson WF-3620](.images/devices/epson-wf-3620.jpg "Epson WF-3620")
 
-Epson WorkForce WF-3620 All-in-One Printer
+Epson WorkForce WF-3620 All-in-One Printer.  
+Used mainly to scan documents.  
+How many: 1
 
 * <https://epson.com/For-Work/Printers/Inkjet/Epson-WorkForce-WF-3620-All-in-One-Printer/p/C11CD19201>
 
@@ -75,7 +80,8 @@ Epson WorkForce WF-3620 All-in-One Printer
 
 ![Prusa Mini](.images/devices/prusa-mini.jpg "Prusa Mini")
 
-Prusa 3D compact printer.
+Prusa 3D compact printer.  
+How many: 1
 
 * <https://www.prusa3d.com/original-prusa-mini>
 
@@ -87,11 +93,14 @@ Prusa 3D compact printer.
 
 ![Samsung UE46ES7000](.images/devices/samsung-ue46es7000.jpg "Samsung UE46ES7000")
 
-Samsung smart TV 47'.
+Samsung smart TV 47'.  
+How many: 1
 
 * <https://www.samsung.com/it/support/model/UE46ES7000QXZT>
 
 #### Google Home Mini
+
+How many: 1
 
 ![Google Home Mini](.images/devices/google-home-mini.jpg "Google Home Mini")
 
@@ -101,7 +110,8 @@ Samsung smart TV 47'.
 
 ![Google Chromecast](.images/devices/google-chromecast.jpg "Google Chromecast")
 
-Google Chromecast (3rd generation)
+Google Chromecast (3rd generation).  
+How many: 1
 
 * <https://store.google.com/us/product/chromecast>
 
@@ -114,7 +124,8 @@ Google Chromecast (3rd generation)
 ![Sonoff 4CH Pro R2](.images/devices/sonoff-4ch.jpg "Sonoff 4CH Pro R2")
 
 Smart switch, 4 channels (10A). Used for watering the garden.  
-Flashed with [Tasmota](https://github.com/arendst/Sonoff-Tasmota).
+Flashed with [Tasmota](https://github.com/arendst/Sonoff-Tasmota).  
+How many: 1
 
 * <https://www.itead.cc/sonoff-4ch-pro.html>
 
@@ -123,7 +134,8 @@ Flashed with [Tasmota](https://github.com/arendst/Sonoff-Tasmota).
 ![Sonoff Dual](.images/devices/sonoff-dual.jpg "Sonoff Dual")
 
 Smart switch, dual channel (10A). Used for shutter opening/closing.  
-Flashed with [Tasmota](https://github.com/arendst/Sonoff-Tasmota).
+Flashed with [Tasmota](https://github.com/arendst/Sonoff-Tasmota).  
+How many: 1
 
 * <https://www.itead.cc/sonoff-dual.html>
 
@@ -132,7 +144,8 @@ Flashed with [Tasmota](https://github.com/arendst/Sonoff-Tasmota).
 ![Sonoff Basic](.images/devices/sonoff-basic.jpg "Sonoff Basic")
 
 Smart switch, single channel (10A).  
-Flashed with [Tasmota](https://github.com/arendst/Sonoff-Tasmota).
+Flashed with [Tasmota](https://github.com/arendst/Sonoff-Tasmota).  
+How many: 3
 
 * <https://www.itead.cc/sonoff-wifi-wireless-switch-1.html>
 
@@ -142,7 +155,8 @@ Flashed with [Tasmota](https://github.com/arendst/Sonoff-Tasmota).
 
 Smart plug (10A) with Schuko socket and 2 USB connections.  
 Originally handled by Tuya / Smart Life apps.  
-Flashed with [Tasmota](https://github.com/arendst/Sonoff-Tasmota) and [Tuya-Convert](https://github.com/ct-Open-Source/tuya-convert).
+Flashed with [Tasmota](https://github.com/arendst/Sonoff-Tasmota) and [Tuya-Convert](https://github.com/ct-Open-Source/tuya-convert).  
+How many: 2
 
 * Tasmota Template
 
@@ -156,7 +170,8 @@ Flashed with [Tasmota](https://github.com/arendst/Sonoff-Tasmota) and [Tuya-Conv
 
 Smart plug (16A) with Schuko socket.  
 Originally handled by Tuya / Smart Life apps.  
-Flashed with [Tasmota](https://github.com/arendst/Sonoff-Tasmota) and [Tuya-Convert](https://github.com/ct-Open-Source/tuya-convert).
+Flashed with [Tasmota](https://github.com/arendst/Sonoff-Tasmota) and [Tuya-Convert](https://github.com/ct-Open-Source/tuya-convert).  
+How many: 2
 
 * Tasmota Template
 
@@ -170,7 +185,8 @@ Flashed with [Tasmota](https://github.com/arendst/Sonoff-Tasmota) and [Tuya-Conv
 
 Smart plug (16A) with Schuko socket.  
 Originally handled by Tuya / Smart Life apps.  
-Flashed with [Tasmota](https://github.com/arendst/Sonoff-Tasmota) and [Tuya-Convert](https://github.com/ct-Open-Source/tuya-convert).
+Flashed with [Tasmota](https://github.com/arendst/Sonoff-Tasmota) and [Tuya-Convert](https://github.com/ct-Open-Source/tuya-convert).  
+How many: 4
 
 * Tasmota Template
 
@@ -187,7 +203,8 @@ Flashed with [Tasmota](https://github.com/arendst/Sonoff-Tasmota) and [Tuya-Conv
 ![Xiaomi Gateway](.images/devices/xiaomi-gateway.jpg "Xiaomi Gateway")
 
 Xiaomi Mi Smart Home Gateway.  
-Zigbee wireless hub for Xiaomi sensors and devices.
+Zigbee wireless hub for Xiaomi sensors and devices.  
+How many: 1
 
 * <https://xiaomi-mi.com/sockets-and-sensors/xiaomi-mi-gateway-2>
 
@@ -195,7 +212,8 @@ Zigbee wireless hub for Xiaomi sensors and devices.
 
 ![Xiaomi Temperature and Humidity sensors](.images/devices/xiaomi-temp-humid.jpg "Xiaomi Temperature and Humidity sensors")
 
-Zigbee sensor to detect temperature and humidity.
+Zigbee sensor to detect temperature and humidity.  
+How many: 1 (more soon...)
 
 * <https://xiaomi-mi.com/sockets-and-sensors/xiaomi-mi-temperature-humidity-sensor>
 
@@ -203,7 +221,8 @@ Zigbee sensor to detect temperature and humidity.
 
 ![Xiaomi Human Body sensors](.images/devices/xiaomi-human-body.jpg "Xiaomi Human Body sensors")
 
-Zigbee infrared motion sensor.
+Zigbee infrared motion sensor.  
+How many: 2 (more soon...)
 
 * <https://xiaomi-mi.com/sockets-and-sensors/xiaomi-mi-occupancy-sensor>
 
@@ -211,7 +230,8 @@ Zigbee infrared motion sensor.
 
 ![Xiaomi Door Window sensors](.images/devices/xiaomi-door-window.jpg "Xiaomi Door Window sensors")
 
-Zigbee sensor to detect opening/closing of doors and windows.
+Zigbee sensor to detect opening/closing of doors and windows.  
+How many: 1 (more soon...)
 
 * <https://xiaomi-mi.com/sockets-and-sensors/xiaomi-mi-door-window-sensors>
 
@@ -219,7 +239,8 @@ Zigbee sensor to detect opening/closing of doors and windows.
 
 ![Sonoff GK-200MP2-B](.images/devices/sonoff-gk-200mp2-b.jpg "Sonoff GK-200MP2-B")
 
-Wireless IP security camera.
+Wireless IP security camera.  
+How many: 1 (more soon...)
 
 * <https://www.itead.cc/sonoff-gk-200mp2-b-wi-fi-wireless-ip-security-camera.html>
 
@@ -231,7 +252,8 @@ Wireless IP security camera.
 
 ![Tecnoware ERA PLUS STRIP 800](.images/devices/era-plus-strip-800.jpg "Tecnoware ERA PLUS STRIP 800")
 
-UPS Line interactive 800VA/560W
+UPS Line interactive 800VA/560W.  
+How many: 1
 
 * <https://www.tecnoware.com/en-US/Prodotti/FGCERAPLST800/ups-era-plus-strip-800.aspx>
 

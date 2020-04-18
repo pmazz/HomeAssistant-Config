@@ -58,3 +58,10 @@ Here some screenshots of my UI (some labels are in Italian, sorry :pray:).
 
 * [Physical Devices](devices.md)
 * [Installed Addons](addons.md)
+
+***
+
+## To Do
+
+* [ ] Better and more detailed documentation
+* [ ] Include Node-Red flows & automations
