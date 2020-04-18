@@ -325,52 +325,115 @@ config_commit_to_git:
 #++++++++++++++++++++++++++++++++++
 #+++++ Router related scripts +++++
 #++++++++++++++++++++++++++++++++++
-guest_wifi_start:
+wifi_guest_start:
   #Router - Start Guest Wifi
-  alias: Guest Wifi - Start
+  alias: Wifi Guest - Start
   description: "Start the Guest WiFi."
   sequence:
     #TTS Speak
     - service: script.tts_speak
       data_template:
         message2say: Stò avviando la rete ospiti
-        volume: "0.3"
+        volume: "0.5"
     #Start the guest wifi network
     - service: switch.turn_on
       data:
-        entity_id: switch.fritz_box_guest_wifi
+        entity_id: switch.fritzbox_guest_wifi
     #Wait for the switch to power on
     - delay: '00:00:10'
     #Notifica Telegram
     - service: notify.telegram_paolo
-      data:
-        message: "\U00002705 Rete ospiti attivata."
+      data_template:
+        message: >
+          {{"\U00002705"}} Wifi Guest attivata.
+            Password: *12341234*
     #TTS Speak
     - service: script.tts_speak
       data_template:
-        message2say: Rete ospiti attivata. La password è 1,2,3,4,a,b,c,d
-        volume: "0.3"
-
-guest_wifi_stop:
+        message2say: Rete ospiti attivata. La password è... 1, 2, 3, 4, 1, 2, 3, 4
+        volume: "0.5"
+wifi_guest_stop:
   #Router - Stop Guest Wifi
-  alias: Guest Wifi - Stop
+  alias: Wifi Guest - Stop
   description: "Stop the Guest WiFi."
   sequence:
     #Start the guest wifi network
     - service: switch.turn_off
       data:
-        entity_id: switch.fritz_box_guest_wifi
+        entity_id: switch.fritzbox_guest_wifi
     #Wait for the switch to power on
     - delay: '00:00:10'
     #Notifica Telegram
     - service: notify.telegram_paolo
-      data:
-        message: "\U0000274C Rete ospiti disattivata."
+      data_template:
+        message: "\U0000274C Wifi Guest disattivata."
     #TTS Speak
     - service: script.tts_speak
       data_template:
         message2say: Rete ospiti disattivata.
-        volume: "0.3"
+        volume: "0.5"
+
+wifi_24ghz_start:
+  #Router - Start 2.4 GHz Wifi
+  alias: Wifi 2.4 GHz - Start
+  description: "Start the 2.4 GHz WiFi."
+  sequence:
+    #Start the guest wifi network
+    - service: switch.turn_on
+      data:
+        entity_id: switch.fritzbox_wifi
+    #Wait for the switch to power on
+    - delay: '00:00:10'
+    #Notifica Telegram
+    - service: notify.telegram_paolo
+      data_template:
+        message: "\U00002705 Wifi 2.4 GHz attivata."
+wifi_24ghz_stop:
+  #Router - Stop 2.4 GHz Wifi
+  alias: Wifi 2.4 GHz - Stop
+  description: "Stop the 2.4 GHz WiFi."
+  sequence:
+    #Start the guest wifi network
+    - service: switch.turn_off
+      data:
+        entity_id: switch.fritzbox_wifi
+    #Wait for the switch to power on
+    - delay: '00:00:10'
+    #Notifica Telegram
+    - service: notify.telegram_paolo
+      data_template:
+        message: "\U0000274C Wifi 2.4 GHz disattivata."
+
+wifi_5ghz_start:
+  #Router - Start 5 GHz Wifi
+  alias: Wifi 5 GHz - Start
+  description: "Start the 5 GHz WiFi."
+  sequence:
+    #Start the guest wifi network
+    - service: switch.turn_on
+      data:
+        entity_id: switch.fritzbox_wifi_5ghz
+    #Wait for the switch to power on
+    - delay: '00:00:10'
+    #Notifica Telegram
+    - service: notify.telegram_paolo
+      data_template:
+        message: "\U00002705 Wifi 5 GHz attivata."
+wifi_5ghz_stop:
+  #Router - Stop 5 GHz Wifi
+  alias: Wifi 5 GHz - Stop
+  description: "Stop the 5 GHz WiFi."
+  sequence:
+    #Start the guest wifi network
+    - service: switch.turn_off
+      data:
+        entity_id: switch.fritzbox_wifi_5ghz
+    #Wait for the switch to power on
+    - delay: '00:00:10'
+    #Notifica Telegram
+    - service: notify.telegram_paolo
+      data_template:
+        message: "\U0000274C Wifi 5 GHz disattivata."
 
 
 #+++++++++++++++++++++++++++++++

@@ -48,11 +48,24 @@ cards:
                 - entity: sensor.fritz_attr_transmission_rate_up
                   name: Up
                   unit: " "
-            - type: section
-            - entity: switch.guest_wifi
-              type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
-              state_color: true
-              users: Paolo
+            - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+              head:
+                type: section
+                label: Switches
+              open: true
+              items:
+                - entity: switch.wifi_24ghz
+                  type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
+                  state_color: true
+                  users: Paolo
+                - entity: switch.wifi_5ghz
+                  type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
+                  state_color: true
+                  users: Paolo
+                - entity: switch.wifi_guest
+                  type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
+                  state_color: true
+                  users: Paolo
       - break
       - id: devices.adguard
         type: conditional  #https://www.home-assistant.io/lovelace/conditional

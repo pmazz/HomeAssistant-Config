@@ -17,11 +17,23 @@ cards:
         show_header_toggle: false
         entities:
           - entity: binary_sensor.online_router_fritzbox
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
             name: Router
             state_color: true
+            entities:
+              - icon: mdi:open-in-new
+                tap_action: 
+                  action: url
+                  url_path: http://fritz.box
           - entity: binary_sensor.online_nas_qnap
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
             name: NAS
             state_color: true
+            entities:
+              - icon: mdi:open-in-new
+                tap_action: 
+                  action: url
+                  url_path: http://nas:8080
           - entity: binary_sensor.online_adguard
             state_color: true
           - entity: binary_sensor.online_google_home
@@ -37,21 +49,47 @@ cards:
           - entity: binary_sensor.online_epson_printer
             state_color: true
           - entity: binary_sensor.online_prusa_3d_printer
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
             state_color: true
+            entities:
+              - icon: mdi:open-in-new
+                tap_action: 
+                  action: url
+                  url_path: http://prusa-mini.local
           - entity: binary_sensor.online_pzem_004t
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
             state_color: true
+            entities:
+              - icon: mdi:open-in-new
+                tap_action: 
+                  action: url
+                  url_path: http://pzem-004t.local
+          - entity: binary_sensor.online_sonoff_dual_1
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: Serrande
+            state_color: true
+            icon: mdi:window-open
+            entities:
+              - icon: mdi:open-in-new
+                tap_action: 
+                  action: url
+                  url_path: http://sonoff-dual-1.local
+          - entity: binary_sensor.online_sonoff_4ch_1
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: Irrigazione
+            state_color: true
+            icon: mdi:sprinkler-variant
+            entities:
+              - icon: mdi:open-in-new
+                tap_action: 
+                  action: url
+                  url_path: http://sonoff-4ch.local
           - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
             head:
               type: section
               label: Smart Plugs & Switches
             open: true
             items:
-              - entity: binary_sensor.online_sonoff_dual_1
-                name: Sonoff Dual (Serrande)
-                state_color: true
-              - entity: binary_sensor.online_sonoff_4ch_1
-                name: Sonoff 4CH (Irrigazione)
-                state_color: true
               - entity: binary_sensor.online_sonoff_basic_1
                 state_color: true
               - entity: binary_sensor.online_sonoff_basic_2
@@ -144,20 +182,6 @@ cards:
           - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
             head:
               type: section
-              label: Home Devices
-            open: true
-            items:
-              - type: weblink
-                name: Router
-                icon: mdi:router-wireless
-                url: http://fritz.box
-              - type: weblink
-                name: NAS
-                icon: mdi:nas
-                url: http://nas:8080
-          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-            head:
-              type: section
               label: Hass.io Addons
             open: true
             items:
@@ -181,7 +205,7 @@ cards:
             head:
               type: section
               label: RSS Links
-            open: false
+            open: true
             items:
               - type: weblink
                 name: Raspberry Sensors

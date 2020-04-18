@@ -108,14 +108,33 @@
 #+++++++++++++++++++++++++++
 - platform: template  #https://www.home-assistant.io/components/switch.template
   switches:
-    guest_wifi:
-      friendly_name: Guest Wifi
-      icon_template: mdi:wifi
-      value_template: "{{ is_state('switch.fritz_box_guest_wifi', 'on') }}"
+    wifi_guest:
+      friendly_name: Wifi Guest
+      icon_template: "{% if is_state('switch.fritzbox_guest_wifi', 'on') %}mdi:wifi{% else %}mdi:wifi-off{% endif %}"
+      availability_template: "{{ states.switch.fritzbox_guest_wifi != None and not is_state('switch.fritzbox_guest_wifi', 'unavailable') }}"
+      value_template: "{{ is_state('switch.fritzbox_guest_wifi', 'on') }}"
       turn_on:
-        service: script.guest_wifi_start
+        service: script.wifi_guest_start
       turn_off:
-        service: script.guest_wifi_stop
+        service: script.wifi_guest_stop
+    wifi_24ghz:
+      friendly_name: Wifi 2.4 GHz
+      icon_template: "{% if is_state('switch.fritzbox_wifi', 'on') %}mdi:wifi{% else %}mdi:wifi-off{% endif %}"
+      availability_template: "{{ states.switch.fritzbox_wifi != None and not is_state('switch.fritzbox_wifi', 'unavailable') }}"
+      value_template: "{{ is_state('switch.fritzbox_wifi', 'on') }}"
+      turn_on:
+        service: script.wifi_24ghz_start
+      turn_off:
+        service: script.wifi_24ghz_stop
+    wifi_5ghz:
+      friendly_name: Wifi 5 GHz
+      icon_template: "{% if is_state('switch.fritzbox_wifi_5ghz', 'on') %}mdi:wifi{% else %}mdi:wifi-off{% endif %}"
+      availability_template: "{{ states.switch.fritzbox_wifi_5ghz != None and not is_state('switch.fritzbox_wifi_5ghz', 'unavailable') }}"
+      value_template: "{{ is_state('switch.fritzbox_wifi_5ghz', 'on') }}"
+      turn_on:
+        service: script.wifi_5ghz_start
+      turn_off:
+        service: script.wifi_5ghz_stop
 
 
 #++++++++++++++++++++++++++++

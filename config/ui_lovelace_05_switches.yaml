@@ -33,10 +33,16 @@ cards:
                     type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                     name: Telemetria
                     icon: mdi:cogs
-                    state_header: "Boot #"
+                    show_state: false
                     entities:
+                      - icon: mdi:open-in-new
+                        tap_action: 
+                          action: url
+                          url_path: http://sonoff-basic-1.local
                       - entity: sensor.sonoff_basic_1_wifi_rssi
                         name: Wifi
+                      - entity: sensor.sonoff_basic_1_boot_count
+                        name: "Boot #"
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
                 head: 
                   entity: switch.sonoff_basic_2
@@ -48,10 +54,16 @@ cards:
                     type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                     name: Telemetria
                     icon: mdi:cogs
-                    state_header: "Boot #"
+                    show_state: false
                     entities:
+                      - icon: mdi:open-in-new
+                        tap_action: 
+                          action: url
+                          url_path: http://sonoff-basic-2.local
                       - entity: sensor.sonoff_basic_2_wifi_rssi
                         name: Wifi
+                      - entity: sensor.sonoff_basic_2_boot_count
+                        name: "Boot #"
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
                 head: 
                   entity: switch.sonoff_basic_3
@@ -65,10 +77,16 @@ cards:
                     type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                     name: Telemetria
                     icon: mdi:cogs
-                    state_header: "Boot #"
+                    show_state: false
                     entities:
+                      - icon: mdi:open-in-new
+                        tap_action: 
+                          action: url
+                          url_path: http://sonoff-basic-3.local
                       - entity: sensor.sonoff_basic_3_wifi_rssi
                         name: Wifi
+                      - entity: sensor.sonoff_basic_3_boot_count
+                        name: "Boot #"
           - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
             head:
               type: section
@@ -86,10 +104,16 @@ cards:
                     type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                     name: Telemetria
                     icon: mdi:cogs
-                    state_header: "Boot #"
+                    show_state: false
                     entities:
+                      - icon: mdi:open-in-new
+                        tap_action: 
+                          action: url
+                          url_path: http://smart-plug-1.local
                       - entity: sensor.smart_plug_1_wifi_rssi
                         name: Wifi
+                      - entity: sensor.smart_plug_1_boot_count
+                        name: "Boot #"
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
                 head: 
                   entity: switch.smartplug_2
@@ -99,10 +123,16 @@ cards:
                     type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                     name: Telemetria
                     icon: mdi:cogs
-                    state_header: "Boot #"
+                    show_state: false
                     entities:
+                      - icon: mdi:open-in-new
+                        tap_action: 
+                          action: url
+                          url_path: http://smart-plug-2.local
                       - entity: sensor.smart_plug_2_wifi_rssi
                         name: Wifi
+                      - entity: sensor.smart_plug_2_boot_count
+                        name: "Boot #"
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
                 head: 
                   entity: switch.smartplug_3
@@ -112,10 +142,16 @@ cards:
                     type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                     name: Telemetria
                     icon: mdi:cogs
-                    state_header: "Boot #"
+                    show_state: false
                     entities:
+                      - icon: mdi:open-in-new
+                        tap_action: 
+                          action: url
+                          url_path: http://smart-plug-3.local
                       - entity: sensor.smart_plug_3_wifi_rssi
                         name: Wifi
+                      - entity: sensor.smart_plug_3_boot_count
+                        name: "Boot #"
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
                 head: 
                   entity: switch.smartplug_4
@@ -125,10 +161,16 @@ cards:
                     type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                     name: Telemetria
                     icon: mdi:cogs
-                    state_header: "Boot #"
+                    show_state: false
                     entities:
+                      - icon: mdi:open-in-new
+                        tap_action: 
+                          action: url
+                          url_path: http://smart-plug-4.local
                       - entity: sensor.smart_plug_4_wifi_rssi
                         name: Wifi
+                      - entity: sensor.smart_plug_4_boot_count
+                        name: "Boot #"
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
                 head: 
                   entity: switch.smartplug_5
@@ -138,10 +180,16 @@ cards:
                     type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                     name: Telemetria
                     icon: mdi:cogs
-                    state_header: "Boot #"
+                    show_state: false
                     entities:
+                      - icon: mdi:open-in-new
+                        tap_action: 
+                          action: url
+                          url_path: http://smart-plug-5.local
                       - entity: sensor.smart_plug_5_wifi_rssi
                         name: Wifi
+                      - entity: sensor.smart_plug_5_boot_count
+                        name: "Boot #"
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
                 head: 
                   entity: switch.smartplug_6
@@ -151,10 +199,16 @@ cards:
                     type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                     name: Telemetria
                     icon: mdi:cogs
-                    state_header: "Boot #"
+                    show_state: false
                     entities:
+                      - icon: mdi:open-in-new
+                        tap_action: 
+                          action: url
+                          url_path: http://smart-plug-6.local
                       - entity: sensor.smart_plug_6_wifi_rssi
                         name: Wifi
+                      - entity: sensor.smart_plug_6_boot_count
+                        name: "Boot #"
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
                 head: 
                   entity: switch.smartplug_7
@@ -164,10 +218,16 @@ cards:
                     type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                     name: Telemetria
                     icon: mdi:cogs
-                    state_header: "Boot #"
+                    show_state: false
                     entities:
+                      - icon: mdi:open-in-new
+                        tap_action: 
+                          action: url
+                          url_path: http://smart-plug-7.local
                       - entity: sensor.smart_plug_7_wifi_rssi
                         name: Wifi
+                      - entity: sensor.smart_plug_7_boot_count
+                        name: "Boot #"
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
                 head: 
                   entity: switch.smartplug_8
@@ -177,10 +237,16 @@ cards:
                     type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                     name: Telemetria
                     icon: mdi:cogs
-                    state_header: "Boot #"
+                    show_state: false
                     entities:
+                      - icon: mdi:open-in-new
+                        tap_action: 
+                          action: url
+                          url_path: http://smart-plug-8.local
                       - entity: sensor.smart_plug_8_wifi_rssi
                         name: Wifi
+                      - entity: sensor.smart_plug_8_boot_count
+                        name: "Boot #"
       - break
       - id: events.cover
         type: conditional  #https://www.home-assistant.io/lovelace/conditional
