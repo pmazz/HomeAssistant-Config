@@ -39,8 +39,6 @@ fritzbox:
     description: "{% if states.sensor.fritz_attr_is_linked %}{{states.sensor.fritz_attr_is_linked.state}}{% else %}N/A{% endif %}"
   - title: "{% if states.sensor.fritz_attr_is_connected %}{{states.sensor.fritz_attr_is_connected.attributes.friendly_name}}{% else %}Internet-connection established{% endif %}"
     description: "{% if states.sensor.fritz_attr_is_connected %}{{states.sensor.fritz_attr_is_connected.state}}{% else %}N/A{% endif %}"
-  - title: "{% if states.sensor.fritz_attr_wan_access_type %}{{states.sensor.fritz_attr_wan_access_type.attributes.friendly_name}}{% else %}Wan access type{% endif %}"
-    description: "{% if states.sensor.fritz_attr_wan_access_type %}{{states.sensor.fritz_attr_wan_access_type.state}}{% else %}N/A{% endif %}"
   - title: "{% if states.sensor.fritz_attr_sent_mb %}{{states.sensor.fritz_attr_sent_mb.attributes.friendly_name}}{% else %}Sent (MB){% endif %}"
     description: "{% if states.sensor.fritz_attr_sent_mb %}{{states.sensor.fritz_attr_sent_mb.state}} {{states.sensor.fritz_attr_sent_mb.attributes.unit_of_measurement}}{% else %}N/A{% endif %}"
   - title: "{% if states.sensor.fritz_attr_received_mb %}{{states.sensor.fritz_attr_received_mb.attributes.friendly_name}}{% else %}Received (MB){% endif %}"

@@ -260,11 +260,6 @@
       friendly_name: Internet connected
       entity_id: sensor.fritz_netmonitor
       value_template: "{% if states.sensor.fritz_netmonitor %}{{states.sensor.fritz_netmonitor.attributes.is_connected}}{% else %}N/A{% endif %}"
-    fritz_attr_wan_access_type: #Connection-type, can be DSL or Cable
-      icon_template: mdi:network
-      friendly_name: Wan access type
-      entity_id: sensor.fritz_netmonitor
-      value_template: "{% if states.sensor.fritz_netmonitor %}{{states.sensor.fritz_netmonitor.attributes.wan_access_type}}{% else %}N/A{% endif %}"
     fritz_attr_sent_mb: #Bytes sent
       icon_template: mdi:call-made
       friendly_name: Sent
@@ -975,3 +970,39 @@
   startswith: Vegetale
   timeformat: "%A, %d-%m-%Y"
   show_remaining: false
+
+
+#++++++++++++++++++++++++++
+#+++++ GitHub sensors +++++
+#++++++++++++++++++++++++++
+- platform: rest  #https://www.home-assistant.io/components/sensor.rest
+  name: github_1
+  resource: https://api.github.com/repos/pmazz/HomeAssistant-Config
+  value_template: "{{ value_json.name }}"
+  json_attributes:
+    - id
+    - html_url
+    - created_at
+    - updated_at
+    - pushed_at
+    - stargazers_count
+    - forks_count
+    - open_issues_count
+    - subscribers_count
+  scan_interval: 3600
+
+- platform: rest  #https://www.home-assistant.io/components/sensor.rest
+  name: github_2
+  resource: https://api.github.com/repos/pmazz/ps_hassio_entities
+  value_template: "{{ value_json.name }}"
+  json_attributes:
+    - id
+    - html_url
+    - created_at
+    - updated_at
+    - pushed_at
+    - stargazers_count
+    - forks_count
+    - open_issues_count
+    - subscribers_count
+  scan_interval: 3600

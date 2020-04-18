@@ -30,7 +30,6 @@ cards:
               entities:
                 - entity: sensor.fritz_attr_is_linked
                   name: Provider
-            - sensor.fritz_attr_wan_access_type
             - entity: sensor.fritz_attr_received_mb
               type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
               name: Data Volume (MB)

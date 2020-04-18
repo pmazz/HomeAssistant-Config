@@ -124,10 +124,43 @@ cards:
           - entity: script.snapshot_full_create
             type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
             users: Paolo
-      - id: system.ui
+      - id: system.commands
         type: entities  #https://www.home-assistant.io/lovelace/entities
         title: Commands
         show_header_toggle: false
         entities:
           - input_select.home_mode
           - input_select.hass_selected_theme
+      - id: system.github
+        type: entities  #https://www.home-assistant.io/lovelace/entities
+        title: GitHub Repos
+        show_header_toggle: false
+        entities:
+          - entity: sensor.github_1
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: HomeAssistant-Config
+            show_state: false
+            entities:
+              - attribute: html_url
+                icon: mdi:open-in-new
+                tap_action:
+                  action: url
+                  url_path: https://github.com/pmazz/HomeAssistant-Config
+              - attribute: stargazers_count
+                name: Stars
+              - attribute: forks_count
+                name: Forks
+          - entity: sensor.github_2
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: ps_hassio_entities
+            show_state: false
+            entities:
+              - attribute: html_url
+                icon: mdi:open-in-new
+                tap_action:
+                  action: url
+                  url_path: https://github.com/pmazz/ps_hassio_entities
+              - attribute: stargazers_count
+                name: Stars
+              - attribute: forks_count
+                name: Forks
