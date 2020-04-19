@@ -45,6 +45,10 @@ cards:
               name: Telemetria Pzem
               state_header: "Boot #"
               entities:
+                - icon: mdi:open-in-new
+                  tap_action: 
+                    action: url
+                    url_path: http://pzem-004t.local
                 - entity: sensor.pzem_wifi_rssi
                   name: Wifi
             - type: section
