@@ -67,6 +67,8 @@ elif action.lower() == "exec_ha_service":
     service_data = string2json(service_data_str)
     del service_data["ha_domain"]
     del service_data["ha_service"]
+    if "ha_notify" in service_data:
+      del service_data["ha_notify"]
     #Execute the service
     log_info(logger, data, "  Service to execute: '{}.{}'".format(domain, service))
     log_info(logger, data, "    Service data: {}".format(service_data))

@@ -120,6 +120,7 @@ cards:
             state_color: true
           - entity: script.config_commit_to_git
             type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
+            name: Commit config to Git
             users: Paolo
           - entity: script.snapshot_full_create
             type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
