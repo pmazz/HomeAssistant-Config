@@ -120,7 +120,7 @@ cards:
             state_color: true
           - entity: script.config_commit_to_git
             type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
-            name: Commit config to Git
+            name: Commit config to Git (HA-Config-Live)
             users: Paolo
           - entity: script.snapshot_full_create
             type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
@@ -147,6 +147,8 @@ cards:
                 tap_action:
                   action: url
                   url_path: https://github.com/pmazz/HomeAssistant-Config
+              - entity: sensor.github_1_commits
+                name: Commits
               - attribute: stargazers_count
                 name: Stars
               - attribute: forks_count
@@ -161,6 +163,8 @@ cards:
                 tap_action:
                   action: url
                   url_path: https://github.com/pmazz/ps_hassio_entities
+              - entity: sensor.github_2_commits
+                name: Commits
               - attribute: stargazers_count
                 name: Stars
               - attribute: forks_count

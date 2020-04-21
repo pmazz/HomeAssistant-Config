@@ -990,6 +990,11 @@
     - open_issues_count
     - subscribers_count
   scan_interval: 3600
+- platform: rest  #https://www.home-assistant.io/components/sensor.rest
+  name: github_1_commits
+  resource: https://api.github.com/repos/pmazz/HomeAssistant-Config/contributors
+  value_template: "{{ value_json|sum(attribute='contributions') }}"
+  scan_interval: 3600
 
 - platform: rest  #https://www.home-assistant.io/components/sensor.rest
   name: github_2
@@ -1005,4 +1010,9 @@
     - forks_count
     - open_issues_count
     - subscribers_count
+  scan_interval: 3600
+- platform: rest  #https://www.home-assistant.io/components/sensor.rest
+  name: github_2_commits
+  resource: https://api.github.com/repos/pmazz/ps_hassio_entities/contributors
+  value_template: "{{ value_json|sum(attribute='contributions') }}"
   scan_interval: 3600
