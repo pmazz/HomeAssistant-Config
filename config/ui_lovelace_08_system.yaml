@@ -88,6 +88,20 @@ cards:
                 name: "States"
               - entity: sensor.hass_db_events_count
                 name: "Events"
+          - entity: sensor.hass_sensor_count
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: HASS Sensors 1/2
+            state_header: Sensors
+            entities:
+              - sensor.hass_switch_count
+              - sensor.hass_lights_count
+          - entity: sensor.hass_automation_count
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: HASS Sensors 2/2
+            state_header: Automations
+            entities:
+              - sensor.hass_input_count
+              - sensor.hass_script_count
           - type: section
           - entity: script.hass_reload_themes
             type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
