@@ -235,6 +235,12 @@ openuv:  #https://www.home-assistant.io/components/openuv
 
 uilogs:  #https://github.com/custom-components/uilogs
 
+octoprint:  #https://www.home-assistant.io/integrations/octoprint
+  host: !secret octoprint_host
+  api_key: !secret octoprint_api_key
+  bed: true
+  number_of_tools: 1
+
 fritzbox_tools:  #https://github.com/mammuth/ha-fritzbox-tools
   host: !secret router_fritzbox_ip
   username: !secret router_fritzbox_user

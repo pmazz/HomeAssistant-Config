@@ -101,28 +101,84 @@ cards:
                   unit: " "
             - entity: sensor.adguard_rules_count
               name: Rules Count
-            - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-              head:
-                type: section
-                label: Switches
-              open: true
-              items:
-                - entity: switch.adguard_protection
-                  state_color: true
-                - entity: switch.adguard_filtering
-                  name: "Filtering"
-                  state_color: true
-                - entity: switch.adguard_parental_control
-                  name: "Parental Control"
-                  state_color: true
-                # - switch.adguard_query_log
-                #   state_color: true
-                - entity: switch.adguard_safe_browsing
-                  name: "Safe Browsing"
-                  state_color: true
-                - entity: switch.adguard_safe_search
-                  name: "Safe Search"
-                  state_color: true
+            - entity: switch.adguard_protection
+              type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
+              state_color: true
+              users: Paolo
+      - id: devices.prusamini
+        type: conditional  #https://www.home-assistant.io/lovelace/conditional
+        conditions:
+          # - entity: binary_sensor.online_prusa_3d_printer
+          #   state: "on"
+          - entity: sensor.octoprint_current_state
+            state_not: "unknown"
+        card:
+          type: entities  #https://www.home-assistant.io/lovelace/entities
+          title: Prusa Mini (Octoprint)
+          show_header_toggle: false
+          entities:
+            - entity: sensor.octoprint_current_state
+              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+              name: Current Status
+              state_header: Status
+              entities:
+                - attribute: html_url
+                  icon: mdi:cloud-print-outline
+                  tap_action:
+                    action: url
+                    url_path: http://octoprint.local
+                - attribute: html_url
+                  icon: mdi:printer-3d
+                  tap_action:
+                    action: url
+                    url_path: http://prusamini.local
+            - entity: sensor.octoprint_job_percentage
+              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+              name: Current Job
+              show_state: false
+              entities:
+                - entity: sensor.octoprint_job_percentage
+                  name: Job %
+                  unit: " "
+                - entity: sensor.octoprint_time_elapsed
+                  name: Elapsed
+                - entity: sensor.octoprint_time_remaining
+                  name: Remaining
+            - entity: binary_sensor.octoprint_printing
+              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+              name: Printing Status
+              show_state: false
+              state_color: true
+              icon: mdi:printer-3d-nozzle-alert
+              entities:
+                - entity: binary_sensor.octoprint_printing
+                  name: Printing
+                - entity: binary_sensor.octoprint_printing_error
+                  name: Printing Error
+            - entity: sensor.octoprint_actual_bed_temp
+              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+              name: Bed Temperature
+              show_state: false
+              icon: mdi:thermometer
+              entities:
+                - entity: sensor.octoprint_actual_bed_temp
+                  name: Actual °C
+                  unit: " "
+                - entity: sensor.octoprint_target_bed_temp
+                  name: Target °C
+                  unit: " "
+            - entity: sensor.octoprint_actual_tool0_temp
+              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+              name: Nozzle Temperature
+              show_state: false
+              icon: mdi:thermometer
+              entities:
+                - entity: sensor.octoprint_actual_tool0_temp
+                  name: Actual °C
+                  unit: " "
+                - entity: sensor.octoprint_target_tool0_temp
+                  name: Target °C
+                  unit: " "
       - break
       - id: devices.ups
         type: conditional  #https://www.home-assistant.io/lovelace/conditional

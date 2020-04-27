@@ -33,7 +33,7 @@ cards:
               - icon: mdi:open-in-new
                 tap_action: 
                   action: url
-                  url_path: http://nas:8080
+                  url_path: http://nas.local:8080
           - entity: binary_sensor.online_adguard
             state_color: true
           - entity: binary_sensor.online_google_home
