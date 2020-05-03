@@ -38,7 +38,7 @@ cards:
             users: Paolo
       - id: system.broker_mqtt
         type: entities  #https://www.home-assistant.io/lovelace/entities
-        title: Broker MQTT
+        title: MQTT Broker
         show_header_toggle: false
         entities:
           - entity: sensor.mqtt_broker_version

@@ -357,13 +357,13 @@
       icon_template: mdi:call-made
       friendly_name: Sent
       entity_id: sensor.fritz_netmonitor
-      value_template: "{% if states.sensor.fritz_netmonitor %}{{states.sensor.fritz_netmonitor.attributes.bytes_sent // 1024}}{% else %}N/A{% endif %}"
+      value_template: "{% if states.sensor.fritz_netmonitor %}{{states.sensor.fritz_netmonitor.attributes.bytes_sent // 1024 // 1024}}{% else %}N/A{% endif %}"
       unit_of_measurement: MB
     fritz_attr_received_mb: #Bytes received
       icon_template: mdi:call-received
       friendly_name: Received
       entity_id: sensor.fritz_netmonitor
-      value_template: "{% if states.sensor.fritz_netmonitor %}{{states.sensor.fritz_netmonitor.attributes.bytes_received // 1024}}{% else %}N/A{% endif %}"
+      value_template: "{% if states.sensor.fritz_netmonitor %}{{states.sensor.fritz_netmonitor.attributes.bytes_received // 1024 // 1024}}{% else %}N/A{% endif %}"
       unit_of_measurement: MB
     fritz_attr_transmission_rate_up: #Current upstream speed in bytes/s
       icon_template: mdi:upload-network
@@ -916,22 +916,22 @@
 - platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
   name: mqtt_broker_bytes_received
   state_topic: "$SYS/broker/bytes/received"
-  value_template: "{{ '{:,}'.format(value | int) | replace(',', '.') }}"
+  value_template: "{{ '{:,}'.format(value | int) }}"
   icon: mdi:cloud-sync-outline
 - platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
   name: mqtt_broker_bytes_sent
   state_topic: "$SYS/broker/bytes/sent"
-  value_template: "{{ '{:,}'.format(value | int) | replace(',', '.') }}"
+  value_template: "{{ '{:,}'.format(value | int) }}"
   icon: mdi:cloud-sync-outline
 - platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
   name: mqtt_broker_messages_received
   state_topic: "$SYS/broker/messages/received"
-  value_template: "{{ '{:,}'.format(value | int) | replace(',', '.') }}"
+  value_template: "{{ '{:,}'.format(value | int) }}"
   icon: mdi:message-text
 - platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
   name: mqtt_broker_messages_sent
   state_topic: "$SYS/broker/messages/sent"
-  value_template: "{{ '{:,}'.format(value | int) | replace(',', '.') }}"
+  value_template: "{{ '{:,}'.format(value | int) }}"
   icon: mdi:message-text
 - platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
   name: mqtt_broker_messages_retained
