@@ -121,58 +121,58 @@ cards:
         title: Mobile Devices
         show_header_toggle: false
         entities:
-          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-            head:
-              type: section
-              label: Phones & Tablets
-            open: true
-            items:
-              - entity: binary_sensor.online_cell_paolo
-                state_color: true
-              - entity: binary_sensor.online_cell_silvia
-                state_color: true
-              - entity: binary_sensor.online_tablet_paolo
-                state_color: true
-              - entity: binary_sensor.online_tablet_ale1
-                name: Tablet Ale Blu
-                state_color: true
-              - entity: binary_sensor.online_tablet_ale2
-                name: Tablet Ale Nero
-                state_color: true
-          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-            head:
-              type: section
-              label: Batteries
-            open: true
-            items:
-              - entity: sensor.cell_paolo_battery
-                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-                name: Paolo's Phone
-                state_header: Battery
-                entities:
-                  - sensor.cell_paolo_charging
-                secondary_info:
-                  entity: sensor.cell_paolo_lastupdate
-                  name: "Update:"
-              - entity: sensor.cell_silvia_battery
-                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-                name: Silvia's Phone
-                state_header: Battery
-                entities:
-                  - sensor.cell_silvia_charging
-                secondary_info:
-                  entity: sensor.cell_silvia_lastupdate
-                  name: "Update:"
-
-              - entity: sensor.tablet_paolo_battery
-                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-                name: Paolo's Tablet
-                state_header: Battery
-                entities:
-                  - sensor.tablet_paolo_charging
-                secondary_info:
-                  entity: sensor.tablet_paolo_lastupdate
-                  name: "Update:"
+          - entity: binary_sensor.online_cell_paolo
+            state_color: true
+          - entity: binary_sensor.online_cell_silvia
+            state_color: true
+          - entity: binary_sensor.online_tablet_paolo
+            state_color: true
+          - entity: binary_sensor.online_tablet_ale1
+            name: Tablet Ale Blu
+            state_color: true
+          - entity: binary_sensor.online_tablet_ale2
+            name: Tablet Ale Nero
+            state_color: true
+      - id: main.batteries
+        type: custom:battery-state-card
+        name: Batteries
+        entities:
+          - entity: sensor.cell_paolo_battery
+            name: Paolo's Phone
+            charging_state:
+              entity_id: sensor.cell_paolo_charging
+              state: "True"
+              color: var(--paper-item-icon-active-color)
+          - entity: sensor.cell_silvia_battery
+            name: Silvia's Phone
+            charging_state:
+              entity_id: sensor.cell_silvia_charging
+              state: "True"
+              color: var(--paper-item-icon-active-color)
+          - entity: sensor.tablet_paolo_battery
+            name: Paolo's Tablet
+            charging_state:
+              entity_id: sensor.tablet_paolo_charging
+              state: "True"
+              color: var(--paper-item-icon-active-color)
+          - entity: sensor.xiaomi_attr_battery_door_window_1
+            name: Door/Window
+          - entity: sensor.xiaomi_attr_battery_motion_1
+            name: Motion 1
+          - entity: sensor.xiaomi_attr_battery_motion_2
+            name: Motion 2
+          - entity: sensor.xiaomi_attr_battery_temperature_1
+            name: Temperature
+        color_thresholds:
+          - value: 15
+            color: Crimson
+          - value: 30
+            color: Gold
+          - value: 100
+            color: var(--paper-item-icon-color)
+        collapse: 3
+        tap_action:
+          action: more-info
       - break
       - id: main.tools
         type: entities  #https://www.home-assistant.io/lovelace/entities
