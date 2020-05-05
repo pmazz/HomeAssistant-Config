@@ -56,8 +56,9 @@ Here some screenshots of my UI (some labels are in Italian, sorry :pray:).
 
 ## Additional Information
 
-* [Physical Devices](devices.md)
+* [Connected Devices](devices.md)
 * [Installed Addons](addons.md)
+* [Node-Red Automations](node-red.md)
 
 ***
 

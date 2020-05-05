@@ -1,15 +1,13 @@
 # About
 
-These are the Hass.io addons currently in use.
+These are the Home Assistant addons currently in use.
 
 ## Addons
 
 * [AdGuard Home](#adguard-home)
 * [Bitwarden RS](#bitwarden-rs)
 * [Dasshio](#dasshio)
-* [Duck DNS](#duck-dns)
 * [File Editor](#file-editor)
-* [Log Viewer](#log-viewer)
 * [Network UPS Tools](#network-ups-tools)
 * [Node-RED](#node-red)
 * [Samba share](#samba-share)
@@ -21,6 +19,8 @@ These are the Hass.io addons currently in use.
 
 ### AdGuard Home
 
+![AdGuard Home](.images/addons/adguard.png "AdGuard Home")
+
 Network-wide ads & trackers blocking DNS server.
 
 * <https://github.com/hassio-addons/addon-adguard-home>
@@ -30,6 +30,8 @@ Network-wide ads & trackers blocking DNS server.
 ***
 
 ### Bitwarden RS
+
+![Bitwarden RS](.images/addons/bitwarden.png "Bitwarden RS")
 
 Open source password management solution.
 
@@ -47,28 +49,13 @@ Addon to easily use Amazon Dash Buttons with Home Assistant.
 
 ***
 
-### Duck DNS
-
-Free Dynamic DNS service with [Let's Encrypt](https://letsencrypt.org) support.
-
-* <https://www.duckdns.org>
-* <https://www.home-assistant.io/addons/duckdns>
-
-***
-
 ### File Editor
+
+![File Editor](.images/addons/file-editor.png "File Editor")
 
 Simple browser-based file editor for Home Assistant.
 
 * <https://github.com/home-assistant/hassio-addons/blob/master/configurator/README.md>
-
-***
-
-### Log Viewer
-
-Browser-based log utility for Hass.io.
-
-* <https://github.com/hassio-addons/addon-log-viewer>
 
 ***
 
@@ -83,16 +70,21 @@ This addon provides the necessary daemon to make use of the Home Assistant NUT S
 
 ### Node-RED
 
+![Node-RED](.images/addons/node-red.png "Node-RED")
+
 Flow-based programming for the Internet of Things.
 
 * <https://github.com/hassio-addons/addon-node-red>
 * <https://nodered.org>
+* [Check my Node-Red flows](node-red.md)
 
 ***
 
 ### Samba share
 
-Expose Hass.io folders with SMB/CIFS.
+![Samba share](.images/addons/samba-share.png "Samba share")
+
+Expose Home Assistant folders with SMB/CIFS.
 
 * <https://www.home-assistant.io/addons/samba>
 
@@ -100,13 +92,17 @@ Expose Hass.io folders with SMB/CIFS.
 
 ### SQLite Web
 
-Explore the Home-Assistant database from web browser.
+![SQLite Web](.images/addons/sqlite-web.png "SQLite Web")
+
+Explore the Home Assistant database from web browser.
 
 * <https://github.com/hassio-addons/addon-sqlite-web>
 
 ***
 
 ### SSH & Web Terminal
+
+![SSH & Web Terminal](.images/addons/ssh-web-terminal.png "SSH & Web Terminal")
 
 SSH & Web Terminal access to your Home Assistant instance.
 
@@ -116,6 +112,8 @@ SSH & Web Terminal access to your Home Assistant instance.
 ***
 
 ### TasmoAdmin
+
+![TasmoAdmin](.images/addons/tasmoadmin.png "TasmoAdmin")
 
 Centrally manage all your Sonoff-Tasmota devices.
 

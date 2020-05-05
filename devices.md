@@ -30,6 +30,7 @@ These are the physical devices currently in use.
   * [Sonoff GK-200MP2-B](#sonoff-gk-200mp2-b)
 * **[Energy](#energy)**
   * [Tecnoware ERA PLUS STRIP 800](#tecnoware-era-plus-strip-800)
+  * [PZEM-004T](#pzem-004t)
 
 ***
 
@@ -100,9 +101,9 @@ How many: 1
 
 #### Google Home Mini
 
-How many: 1
-
 ![Google Home Mini](.images/devices/google-home-mini.jpg "Google Home Mini")
+
+How many: 1
 
 * <https://store.google.com/product/google_home_mini>
 
@@ -256,5 +257,13 @@ UPS Line interactive 800VA/560W.
 How many: 1
 
 * <https://www.tecnoware.com/en-US/Prodotti/FGCERAPLST800/ups-era-plus-strip-800.aspx>
+
+#### PZEM-004T
+
+![PZEM-004T](.images/devices/pzem-004t.jpg "PZEM-004T")
+
+DIY device for monitoring of house energy consumption.  
+Built with a Wemos D1, flashed with [Tasmota](https://github.com/arendst/Sonoff-Tasmota).  
+How many: 1
 
 ***
