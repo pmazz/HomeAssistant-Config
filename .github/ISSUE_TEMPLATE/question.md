@@ -1,6 +1,6 @@
 ---
 name: Question
-about: Ask for help or clarification on the described configuration
+about: Ask for help or clarification on the described configuration.
 title: ''
 labels: question
 assignees: ''
@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 **What is your question**
-A clear and concise question here.
+Write your question here (clear and concise pls).
 
 **Configuration file reference**
 If applicable, place here a reference on my configuration.
