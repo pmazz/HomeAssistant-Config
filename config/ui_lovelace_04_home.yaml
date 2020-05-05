@@ -180,22 +180,25 @@ cards:
                 label: Irrigazione
               open: true
               items:
-                - entity: sensor.irrigation_status
-                  name: Stato Irrigazione
+                - entity: binary_sensor.irrigation_status
+                  state_color: true
                 - entity: switch.sonoff_4ch_1
                   name: Zona 1
                   type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
                   icon: mdi:sprinkler-variant
+                  state_color: true
                   users: Paolo
                 - entity: switch.sonoff_4ch_2
                   name: Zona 2
                   type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
                   icon: mdi:sprinkler-variant
+                  state_color: true
                   users: Paolo
                 - entity: switch.sonoff_4ch_3
                   name: Zona 3
                   type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
                   icon: mdi:sprinkler-variant
+                  state_color: true
                   users: Paolo
             - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
               head:
@@ -203,7 +206,8 @@ cards:
                 label: Avvia Irrigazione
               open: true
               items:
-                - switch.irrigation_active
+                - entity: switch.irrigation_active
+                  state_color: true
                 - entity: input_datetime.irrigation_start_date
                   name: Giorno Inizio
                 - entity: input_datetime.irrigation_start_time

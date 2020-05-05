@@ -507,12 +507,6 @@
       friendly_name: Last rainy day
       value_template: "{{ states.input_datetime.rain_last_occurred.state.split(' ')[0] }}"
       icon_template: mdi:weather-rainy
-- platform: template  #https://www.home-assistant.io/components/sensor.template
-  sensors:
-    irrigation_status:
-      friendly_name: Stato
-      value_template: "{% if is_state('switch.sonoff_4ch_1', 'on') or is_state('switch.sonoff_4ch_2', 'on') or is_state('switch.sonoff_4ch_3', 'on') %}On{% else %}Off{% endif %}"
-      icon_template: "{% if is_state('switch.sonoff_4ch_1', 'on') or is_state('switch.sonoff_4ch_2', 'on') or is_state('switch.sonoff_4ch_3', 'on') %}mdi:water-pump{% else %}mdi:water-pump-off{% endif %}"
 
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++

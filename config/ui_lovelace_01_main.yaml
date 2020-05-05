@@ -186,10 +186,6 @@ cards:
             open: true
             items:
               - type: weblink
-                name: IDE
-                icon: mdi:file-document
-                url: http://hassio:8321
-              - type: weblink
                 name: SQLite Web
                 icon: mdi:database-search
                 url: http://hassio:6210
