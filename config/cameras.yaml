@@ -11,9 +11,9 @@
 #+++++++++++++++++++++++
 - platform: generic  #https://www.home-assistant.io/integrations/generic_ip_camera
   name: Map Paolo
-  still_image_url: https://dev.virtualearth.net/REST/V1/Imagery/Map/Road/{{states.sensor.cell_paolo_latlong.state}}/13?mapSize=400,300&format=png&pushpin={{states.sensor.cell_paolo_latlong.state}};66;P&key={{states.sensor.maps_api_key.state}}
+  still_image_url: https://dev.virtualearth.net/REST/V1/Imagery/Map/Road/{{states('sensor.cell_paolo_latlong')}}/13?mapSize=400,300&format=png&pushpin={{states('sensor.cell_paolo_latlong')}};66;P&key={{states('sensor.maps_api_key')}}
   limit_refetch_to_url_change: true
 - platform: generic  #https://www.home-assistant.io/integrations/generic_ip_camera
   name: Map Silvia
-  still_image_url: https://dev.virtualearth.net/REST/V1/Imagery/Map/Road/{{states.sensor.cell_silvia_latlong.state}}/13?mapSize=400,300&format=png&pushpin={{states.sensor.cell_silvia_latlong.state}};64;S&key={{states.sensor.maps_api_key.state}}
+  still_image_url: https://dev.virtualearth.net/REST/V1/Imagery/Map/Road/{{states('sensor.cell_silvia_latlong')}}/13?mapSize=400,300&format=png&pushpin={{states('sensor.cell_silvia_latlong')}};64;S&key={{states('sensor.maps_api_key')}}
   limit_refetch_to_url_change: true

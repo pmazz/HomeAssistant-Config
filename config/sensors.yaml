@@ -15,11 +15,11 @@
     sun_next_dawn:
       friendly_name: Prossima Alba
       icon_template: mdi:weather-sunset-up
-      value_template: "{{ as_timestamp(states.sun.sun.attributes.next_dawn) | timestamp_custom('%H:%M') }}"
+      value_template: "{{ as_timestamp(state_attr('sun.sun', 'next_dawn')) | timestamp_custom('%H:%M') }}"
     sun_next_setting:
       friendly_name: Prossimo Tramonto
       icon_template: mdi:weather-sunset-down
-      value_template: "{{ as_timestamp(states.sun.sun.attributes.next_setting) | timestamp_custom('%H:%M') }}"
+      value_template: "{{ as_timestamp(state_attr('sun.sun', 'next_setting')) | timestamp_custom('%H:%M') }}"
     maps_api_key:
       icon_template: mdi:alert
       value_template: !secret maps_api_key
@@ -32,14 +32,14 @@
         - input_number.event_afterdawn_cover_up
         - sensor.sun_next_dawn
       value_template: >
-        {%- set today_start = as_timestamp(now()) | timestamp_custom('%Y-%m-%d') +' '+ states.input_datetime.event_time_cover_up.state %}
+        {%- set today_start = as_timestamp(now()) | timestamp_custom('%Y-%m-%d') +' '+ states('input_datetime.event_time_cover_up') %}
         {%- set today_start_ts = as_timestamp(today_start) %}
-        {%- if states.input_select.event_starttype_cover_up.state == 'Orario' %}
+        {%- if is_state('input_select.event_starttype_cover_up', 'Orario') %}
           {%- set cover_start_ts = today_start_ts %}
         {%- else %}
-          {%- set dawn = states.sun.sun.attributes.next_dawn %}
+          {%- set dawn = state_attr('sun.sun', 'next_dawn') %}
           {%- set dawn_ts = as_timestamp(dawn) %}
-          {%- set cover_start_ts = dawn_ts + (states.input_number.event_afterdawn_cover_up.state | int) * 60 %}
+          {%- set cover_start_ts = dawn_ts + (states('input_number.event_afterdawn_cover_up') | int) * 60 %}
         {%- endif %}
         {%- set cover_start = cover_start_ts | timestamp_custom('%H:%M') %}
         {{- cover_start }}
@@ -52,14 +52,14 @@
         - input_number.event_aftersunset_cover_down
         - sensor.sun_next_setting
       value_template: >
-        {%- set today_start = as_timestamp(now()) | timestamp_custom('%Y-%m-%d') +' '+ states.input_datetime.event_time_cover_down.state %}
+        {%- set today_start = as_timestamp(now()) | timestamp_custom('%Y-%m-%d') +' '+ states('input_datetime.event_time_cover_down') %}
         {%- set today_start_ts = as_timestamp(today_start) %}
-        {%- if states.input_select.event_starttype_cover_down.state == 'Orario' %}
+        {%- if is_state('input_select.event_starttype_cover_down', 'Orario') %}
           {%- set cover_start_ts = today_start_ts %}
         {%- else %}
-          {%- set dawn = states.sun.sun.attributes.next_setting %}
+          {%- set dawn = state_attr('sun.sun', 'next_setting') %}
           {%- set dawn_ts = as_timestamp(dawn) %}
-          {%- set cover_start_ts = dawn_ts + (states.input_number.event_aftersunset_cover_down.state | int) * 60 %}
+          {%- set cover_start_ts = dawn_ts + (states('input_number.event_aftersunset_cover_down') | int) * 60 %}
         {%- endif %}
         {%- set cover_start = cover_start_ts | timestamp_custom('%H:%M') %}
         {{- cover_start }}
@@ -132,8 +132,8 @@
       unit_of_measurement: ago
       entity_id: sensor.last_boot
       value_template: >-
-        {%- if states.sensor.last_boot -%}
-          {% set delta_sec = as_timestamp(now()) - as_timestamp(states.sensor.last_boot.state) %}
+        {%- if not is_state('sensor.last_boot', 'unknown') -%}
+          {% set delta_sec = as_timestamp(now()) - as_timestamp(states('sensor.last_boot')) %}
           {%- set days = (delta_sec / (60 * 60 * 24)) | int %}
           {%- set delta_sec = (delta_sec % (60 * 60 * 24)) %}
           {%- set hours = (delta_sec / (60 * 60)) | int %}
@@ -318,12 +318,12 @@
     nas_attr_model:
       friendly_name: Model
       entity_id: sensor.nas_status
-      value_template: "{% if states.sensor.nas_status %}{{states.sensor.nas_status.attributes['Model']}}{% else %}N/A{% endif %}"
+      value_template: "{% if not is_state('sensor.nas_status', 'unknown') %}{{state_attr('sensor.nas_status', 'Model')}}{% else %}N/A{% endif %}"
     nas_attr_uptime:
       icon_template: mdi:clock
       friendly_name: Uptime
       entity_id: sensor.nas_status
-      value_template: "{% if states.sensor.nas_status %}{{states.sensor.nas_status.attributes['Uptime']}}{% else %}N/A{% endif %}"
+      value_template: "{% if not is_state('sensor.nas_status', 'unknown') %}{{state_attr('sensor.nas_status', 'Uptime')}}{% else %}N/A{% endif %}"
 
 
 #++++++++++++++++++++++++++
@@ -336,46 +336,46 @@
       icon_template: mdi:clock
       friendly_name: Uptime
       entity_id: sensor.fritz_netmonitor
-      value_template: "{% if states.sensor.fritz_netmonitor %}{{states.sensor.fritz_netmonitor.attributes.uptime // 60}}{% else %}N/A{% endif %}"
+      value_template: "{% if not is_state('sensor.fritz_netmonitor', 'unknown') %}{{state_attr('sensor.fritz_netmonitor', 'uptime') // 60}}{% else %}N/A{% endif %}"
       unit_of_measurement: minutes
     fritz_attr_external_ip: #External ip address
       icon_template: mdi:earth
       friendly_name: External IP
       entity_id: sensor.fritz_netmonitor
-      value_template: "{% if states.sensor.fritz_netmonitor %}{{states.sensor.fritz_netmonitor.attributes.external_ip}}{% else %}N/A{% endif %}"
+      value_template: "{% if not is_state('sensor.fritz_netmonitor', 'unknown') %}{{state_attr('sensor.fritz_netmonitor', 'external_ip')}}{% else %}N/A{% endif %}"
     fritz_attr_is_linked: #True if the FritzBox is physically linked to the provider
-      icon_template: "{% if states.sensor.fritz_netmonitor and states.sensor.fritz_netmonitor.attributes.is_linked %}mdi:ethernet-cable{% else %}mdi:ethernet-cable-off{% endif %}"
+      icon_template: "{% if not is_state('sensor.fritz_netmonitor', 'unknown') and state_attr('sensor.fritz_netmonitor', 'is_linked') %}mdi:ethernet-cable{% else %}mdi:ethernet-cable-off{% endif %}"
       friendly_name: Linked to provider
       entity_id: sensor.fritz_netmonitor
-      value_template: "{% if states.sensor.fritz_netmonitor %}{{states.sensor.fritz_netmonitor.attributes.is_linked}}{% else %}N/A{% endif %}"
+      value_template: "{% if not is_state('sensor.fritz_netmonitor', 'unknown') %}{{state_attr('sensor.fritz_netmonitor', 'is_linked')}}{% else %}N/A{% endif %}"
     fritz_attr_is_connected: #True if the FritzBox has established an internet-connection
-      icon_template: "{% if states.sensor.fritz_netmonitor and states.sensor.fritz_netmonitor.attributes.is_connected %}mdi:ethernet-cable{% else %}mdi:ethernet-cable-off{% endif %}"
+      icon_template: "{% if not is_state('sensor.fritz_netmonitor', 'unknown') and state_attr('sensor.fritz_netmonitor', 'is_connected') %}mdi:ethernet-cable{% else %}mdi:ethernet-cable-off{% endif %}"
       friendly_name: Internet connected
       entity_id: sensor.fritz_netmonitor
-      value_template: "{% if states.sensor.fritz_netmonitor %}{{states.sensor.fritz_netmonitor.attributes.is_connected}}{% else %}N/A{% endif %}"
+      value_template: "{% if not is_state('sensor.fritz_netmonitor', 'unknown') %}{{state_attr('sensor.fritz_netmonitor', 'is_connected')}}{% else %}N/A{% endif %}"
     fritz_attr_sent_mb: #Bytes sent
       icon_template: mdi:call-made
       friendly_name: Sent
       entity_id: sensor.fritz_netmonitor
-      value_template: "{% if states.sensor.fritz_netmonitor %}{{states.sensor.fritz_netmonitor.attributes.bytes_sent // 1024 // 1024}}{% else %}N/A{% endif %}"
+      value_template: "{% if not is_state('sensor.fritz_netmonitor', 'unknown') %}{{state_attr('sensor.fritz_netmonitor', 'bytes_sent') // 1024 // 1024}}{% else %}N/A{% endif %}"
       unit_of_measurement: MB
     fritz_attr_received_mb: #Bytes received
       icon_template: mdi:call-received
       friendly_name: Received
       entity_id: sensor.fritz_netmonitor
-      value_template: "{% if states.sensor.fritz_netmonitor %}{{states.sensor.fritz_netmonitor.attributes.bytes_received // 1024 // 1024}}{% else %}N/A{% endif %}"
+      value_template: "{% if not is_state('sensor.fritz_netmonitor', 'unknown') %}{{state_attr('sensor.fritz_netmonitor', 'bytes_received') // 1024 // 1024}}{% else %}N/A{% endif %}"
       unit_of_measurement: MB
     fritz_attr_transmission_rate_up: #Current upstream speed in bytes/s
       icon_template: mdi:upload-network
       friendly_name: Current upstream
       entity_id: sensor.fritz_netmonitor
-      value_template: "{% if states.sensor.fritz_netmonitor %}{{states.sensor.fritz_netmonitor.attributes.transmission_rate_up}}{% else %}N/A{% endif %}"
+      value_template: "{% if not is_state('sensor.fritz_netmonitor', 'unknown') %}{{state_attr('sensor.fritz_netmonitor', 'transmission_rate_up')}}{% else %}N/A{% endif %}"
       unit_of_measurement: bytes/sec
     fritz_attr_transmission_rate_down: #Current downstream speed in bytes/s
       icon_template: mdi:download-network
       friendly_name: Current downstream
       entity_id: sensor.fritz_netmonitor
-      value_template: "{% if states.sensor.fritz_netmonitor %}{{states.sensor.fritz_netmonitor.attributes.transmission_rate_down}}{% else %}N/A{% endif %}"
+      value_template: "{% if not is_state('sensor.fritz_netmonitor', 'unknown') %}{{state_attr('sensor.fritz_netmonitor', 'transmission_rate_down')}}{% else %}N/A{% endif %}"
       unit_of_measurement: bytes/sec
 
 
@@ -426,11 +426,11 @@
     dark_sky_summary_custom:
       friendly_name: Summary
       value_template: "{{ states('sensor.dark_sky_summary') }}"
-      entity_picture_template: "{{ '/local/ico/weather/'+ states.sensor.dark_sky_icon.state +'.png'}}"
+      entity_picture_template: "{{ '/local/ico/weather/'+ states('sensor.dark_sky_icon') +'.png'}}"
     dark_sky_wind_dir:
       friendly_name: Wind Direction
       value_template: >-
-        {% set wind_dir = states.sensor.dark_sky_wind_bearing.state %}
+        {% set wind_dir = states('sensor.dark_sky_wind_bearing') %}
         {% if wind_dir | float<=23 %}N [Tramontana]
         {% elif wind_dir | float>338 %}N [Tramontana]
         {% elif 23 < (wind_dir|float) <=68 %}NE [Grecale]
@@ -445,7 +445,7 @@
     dark_sky_wind_dir_1d:
       friendly_name: Wind Direction
       value_template: >-
-        {% set wind_dir = states.sensor.dark_sky_wind_bearing_1d.state %}
+        {% set wind_dir = states('sensor.dark_sky_wind_bearing_1d') %}
         {% if wind_dir | float<=23 %}N [Tramontana]
         {% elif wind_dir | float>338 %}N [Tramontana]
         {% elif 23 < (wind_dir|float) <=68 %}NE [Grecale]
@@ -460,7 +460,7 @@
     dark_sky_wind_dir_2d:
       friendly_name: Wind Direction
       value_template: >-
-        {% set wind_dir = states.sensor.dark_sky_wind_bearing_2d.state %}
+        {% set wind_dir = states('sensor.dark_sky_wind_bearing_2d') %}
         {% if wind_dir | float<=23 %}N [Tramontana]
         {% elif wind_dir | float>338 %}N [Tramontana]
         {% elif 23 < (wind_dir|float) <=68 %}NE [Grecale]
@@ -475,7 +475,7 @@
     dark_sky_wind_dir_3d:
       friendly_name: Wind Direction
       value_template: >-
-        {% set wind_dir = states.sensor.dark_sky_wind_bearing_3d.state %}
+        {% set wind_dir = states('sensor.dark_sky_wind_bearing_3d') %}
         {% if wind_dir | float<=23 %}N [Tramontana]
         {% elif wind_dir | float>338 %}N [Tramontana]
         {% elif 23 < (wind_dir|float) <=68 %}NE [Grecale]
@@ -493,19 +493,19 @@
       icon_template: None
     dark_sky_forecast_1d:
       friendly_name_template: "{{ (as_timestamp(now()) + (1 * 86400)) | timestamp_custom('%A %d') }}"
-      value_template: "{{ states.sensor.dark_sky_daily_low_temperature_1d.state | round(0) }}° ~ {{ states.sensor.dark_sky_daily_high_temperature_1d.state | round(0) }}° | {{ states.sensor.dark_sky_precip_probability_1d.state | round(0) }}%"
-      entity_picture_template: "{{ '/local/ico/weather/'+ states.sensor.dark_sky_icon_1d.state +'.png'}}"
+      value_template: "{{ states('sensor.dark_sky_daily_low_temperature_1d') | round(0) }}° ~ {{ states('sensor.dark_sky_daily_high_temperature_1d') | round(0) }}° | {{ states('sensor.dark_sky_precip_probability_1d') | round(0) }}%"
+      entity_picture_template: "{{ '/local/ico/weather/'+ states('sensor.dark_sky_icon_1d') +'.png'}}"
     dark_sky_forecast_2d:
       friendly_name_template: "{{ (as_timestamp(now()) + (2 * 86400)) | timestamp_custom('%A %d') }}"
-      value_template: "{{ states.sensor.dark_sky_daily_low_temperature_2d.state | round(0) }}° ~ {{ states.sensor.dark_sky_daily_high_temperature_2d.state | round(0) }}° | {{ states.sensor.dark_sky_precip_probability_2d.state | round(0) }}%"
-      entity_picture_template: "{{ '/local/ico/weather/'+ states.sensor.dark_sky_icon_2d.state +'.png'}}"
+      value_template: "{{ states('sensor.dark_sky_daily_low_temperature_2d') | round(0) }}° ~ {{ states('sensor.dark_sky_daily_high_temperature_2d') | round(0) }}° | {{ states('sensor.dark_sky_precip_probability_2d') | round(0) }}%"
+      entity_picture_template: "{{ '/local/ico/weather/'+ states('sensor.dark_sky_icon_2d') +'.png'}}"
     dark_sky_forecast_3d:
       friendly_name_template: "{{ (as_timestamp(now()) + (3 * 86400)) | timestamp_custom('%A %d') }}"
-      value_template: "{{ states.sensor.dark_sky_daily_low_temperature_3d.state | round(0) }}° ~ {{ states.sensor.dark_sky_daily_high_temperature_3d.state | round(0) }}° | {{ states.sensor.dark_sky_precip_probability_3d.state | round(0) }}%"
-      entity_picture_template: "{{ '/local/ico/weather/'+ states.sensor.dark_sky_icon_3d.state +'.png'}}"
+      value_template: "{{ states('sensor.dark_sky_daily_low_temperature_3d') | round(0) }}° ~ {{ states('sensor.dark_sky_daily_high_temperature_3d') | round(0) }}° | {{ states('sensor.dark_sky_precip_probability_3d') | round(0) }}%"
+      entity_picture_template: "{{ '/local/ico/weather/'+ states('sensor.dark_sky_icon_3d') +'.png'}}"
     rain_last_occurred:
       friendly_name: Last rainy day
-      value_template: "{{ states.input_datetime.rain_last_occurred.state.split(' ')[0] }}"
+      value_template: "{{ states('input_datetime.rain_last_occurred').split(' ')[0] }}"
       icon_template: mdi:weather-rainy
 
 
@@ -528,29 +528,34 @@
   state_topic: "mobile/cell-paolo"
   value_template: "{{ value_json.charge }}"
   icon: mdi:power-plug-off
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: cell_paolo_trigger
+  state_topic: "mobile/cell-paolo"
+  value_template: "{% if value_json.trigger %}{{value_json.trigger}}{% else %}unknown{% endif %}"
+  icon: mdi:clock-start
 - platform: template  #https://www.home-assistant.io/components/sensor.template
   sensors:
     cell_paolo_lat:
      icon_template: mdi:map-marker
      friendly_name: Latitude
      entity_id: device_tracker.cell_paolo
-     value_template: "{% if states.device_tracker.cell_paolo %}{{states.device_tracker.cell_paolo.attributes.latitude}}{% else %}N/A{% endif %}"
+     value_template: "{% if not is_state('device_tracker.cell_paolo', 'unknown') %}{{state_attr('device_tracker.cell_paolo', 'latitude')}}{% else %}N/A{% endif %}"
     cell_paolo_long:
      icon_template: mdi:map-marker
      friendly_name: Longitude
      entity_id: device_tracker.cell_paolo
-     value_template: "{% if states.device_tracker.cell_paolo %}{{states.device_tracker.cell_paolo.attributes.longitude}}{% else %}N/A{% endif %}"
+     value_template: "{% if not is_state('device_tracker.cell_paolo', 'unknown') %}{{state_attr('device_tracker.cell_paolo', 'longitude')}}{% else %}N/A{% endif %}"
     cell_paolo_latlong:
       icon_template: mdi:map-marker
       friendly_name: Lat./Long.
       entity_id: device_tracker.cell_paolo
-      value_template: "{% if states.device_tracker.cell_paolo %}{{states.device_tracker.cell_paolo.attributes.latitude}},{{states.device_tracker.cell_paolo.attributes.longitude}}{% else %}N/A{% endif %}"
+      value_template: "{% if not is_state('device_tracker.cell_paolo', 'unknown') %}{{state_attr('device_tracker.cell_paolo', 'latitude')}},{{state_attr('device_tracker.cell_paolo', 'longitude')}}{% else %}N/A{% endif %}"
     cell_paolo_accuracy:
       icon_template: mdi:map-marker-radius
       friendly_name: GPS accuracy
       unit_of_measurement: mt
       entity_id: device_tracker.cell_paolo
-      value_template: "{% if states.device_tracker.cell_paolo %}{{states.device_tracker.cell_paolo.attributes.gps_accuracy}}{% else %}N/A{% endif %}"
+      value_template: "{% if not is_state('device_tracker.cell_paolo', 'unknown') %}{{state_attr('device_tracker.cell_paolo', 'gps_accuracy')}}{% else %}N/A{% endif %}"
     cell_paolo_address:
       friendly_name: Address
       icon_template: mdi:compass-outline
@@ -563,7 +568,7 @@
       friendly_name: Distanza da casa
       entity_id: device_tracker.cell_paolo
       icon_template: mdi:math-compass
-      value_template: "{{ distance(states.device_tracker.cell_paolo, states.zone.home) | round(0) }}"
+      value_template: "{{ distance('device_tracker.cell_paolo', 'zone.home') | round(0) }}"
       unit_of_measurement: Km
     cell_paolo_distance_silvia:
       friendly_name: Distanza da Silvia
@@ -571,13 +576,13 @@
         - device_tracker.cell_paolo
         - device_tracker.cell_silvia
       icon_template: mdi:ruler-square-compass
-      value_template: "{{ distance(states.device_tracker.cell_paolo, states.device_tracker.cell_silvia) | round(0) }}"
+      value_template: "{{ distance('device_tracker.cell_paolo', 'device_tracker.cell_silvia') | round(0) }}"
       unit_of_measurement: Km
     zone_paolo_last_changed:
       friendly_name: Current zone since
       entity_id: input_datetime.zone_paolo_last_changed
       icon_template: mdi:map-clock-outline
-      value_template: "{{ states.input_datetime.zone_paolo_last_changed.state }}"
+      value_template: "{{ states('input_datetime.zone_paolo_last_changed') }}"
 
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -599,29 +604,34 @@
   state_topic: "mobile/cell-silvia"
   value_template: "{{ value_json.charge }}"
   icon: mdi:power-plug-off
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: cell_silvia_trigger
+  state_topic: "mobile/cell-silvia"
+  value_template: "{% if value_json.trigger %}{{value_json.trigger}}{% else %}unknown{% endif %}"
+  icon: mdi:clock-start
 - platform: template  #https://www.home-assistant.io/components/sensor.template
   sensors:
     cell_silvia_lat:
      icon_template: mdi:map-marker
      friendly_name: Latitude
      entity_id: device_tracker.cell_silvia
-     value_template: "{% if states.device_tracker.cell_silvia %}{{states.device_tracker.cell_silvia.attributes.latitude}}{% else %}N/A{% endif %}"
+     value_template: "{% if not is_state('device_tracker.cell_silvia', 'unknown') %}{{state_attr('device_tracker.cell_silvia', 'latitude')}}{% else %}N/A{% endif %}"
     cell_silvia_long:
      icon_template: mdi:map-marker
      friendly_name: Longitude
      entity_id: device_tracker.cell_silvia
-     value_template: "{% if states.device_tracker.cell_silvia %}{{states.device_tracker.cell_silvia.attributes.longitude}}{% else %}N/A{% endif %}"
+     value_template: "{% if not is_state('device_tracker.cell_silvia', 'unknown') %}{{state_attr('device_tracker.cell_silvia', 'longitude')}}{% else %}N/A{% endif %}"
     cell_silvia_latlong:
       icon_template: mdi:map-marker
       friendly_name: Lat./Long.
       entity_id: device_tracker.cell_silvia
-      value_template: "{% if states.device_tracker.cell_silvia %}{{states.device_tracker.cell_silvia.attributes.latitude}},{{states.device_tracker.cell_silvia.attributes.longitude}}{% else %}N/A{% endif %}"
+      value_template: "{% if not is_state('device_tracker.cell_silvia', 'unknown') %}{{state_attr('device_tracker.cell_silvia', 'latitude')}},{{state_attr('device_tracker.cell_silvia', 'longitude')}}{% else %}N/A{% endif %}"
     cell_silvia_accuracy:
       icon_template: mdi:map-marker-radius
       friendly_name: GPS accuracy
       unit_of_measurement: mt
       entity_id: device_tracker.cell_silvia
-      value_template: "{% if states.device_tracker.cell_silvia %}{{states.device_tracker.cell_silvia.attributes.gps_accuracy}}{% else %}N/A{% endif %}"
+      value_template: "{% if not is_state('device_tracker.cell_silvia', 'unknown') %}{{state_attr('device_tracker.cell_silvia', 'gps_accuracy')}}{% else %}N/A{% endif %}"
     cell_silvia_address:
       friendly_name: Address
       icon_template: mdi:compass-outline
@@ -634,7 +644,7 @@
       friendly_name: Distanza da casa
       entity_id: device_tracker.cell_silvia
       icon_template: mdi:math-compass
-      value_template: "{{ distance(states.device_tracker.cell_silvia, states.zone.home) | round(0) }}"
+      value_template: "{{ distance('device_tracker.cell_silvia', 'zone.home') | round(0) }}"
       unit_of_measurement: Km
     cell_silvia_distance_paolo:
       friendly_name: Distanza da Paolo
@@ -642,13 +652,13 @@
         - device_tracker.cell_paolo
         - device_tracker.cell_silvia
       icon_template: mdi:ruler-square-compass
-      value_template: "{{ distance(states.device_tracker.cell_silvia, states.device_tracker.cell_paolo) | round(0) }}"
+      value_template: "{{ distance('device_tracker.cell_silvia', 'device_tracker.cell_paolo') | round(0) }}"
       unit_of_measurement: Km
     zone_silvia_last_changed:
       friendly_name: Current zone since
       entity_id: input_datetime.zone_silvia_last_changed
       icon_template: mdi:map-clock-outline
-      value_template: "{{ states.input_datetime.zone_silvia_last_changed.state }}"
+      value_template: "{{ states('input_datetime.zone_silvia_last_changed') }}"
 
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -670,29 +680,34 @@
   state_topic: "mobile/tablet-paolo"
   value_template: "{{ value_json.charge }}"
   icon: mdi:power-plug-off
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: tablet_paolo_trigger
+  state_topic: "mobile/tablet-paolo"
+  value_template: "{% if value_json.trigger %}{{value_json.trigger}}{% else %}unknown{% endif %}"
+  icon: mdi:clock-start
 - platform: template  #https://www.home-assistant.io/components/sensor.template
   sensors:
     tablet_paolo_lat:
      icon_template: mdi:map-marker
      friendly_name: Latitude
      entity_id: device_tracker.tablet_paolo
-     value_template: "{% if states.device_tracker.tablet_paolo %}{{states.device_tracker.tablet_paolo.attributes.latitude}}{% else %}N/A{% endif %}"
+     value_template: "{% if not is_state('device_tracker.tablet_paolo', 'unknown') %}{{state_attr('device_tracker.tablet_paolo', 'latitude')}}{% else %}N/A{% endif %}"
     tablet_paolo_long:
      icon_template: mdi:map-marker
      friendly_name: Longitude
      entity_id: device_tracker.tablet_paolo
-     value_template: "{% if states.device_tracker.tablet_paolo %}{{states.device_tracker.tablet_paolo.attributes.longitude}}{% else %}N/A{% endif %}"
+     value_template: "{% if not is_state('device_tracker.tablet_paolo', 'unknown') %}{{state_attr('device_tracker.tablet_paolo', 'longitude')}}{% else %}N/A{% endif %}"
     tablet_paolo_latlong:
       icon_template: mdi:map-marker
       friendly_name: Lat./Long.
       entity_id: device_tracker.tablet_paolo
-      value_template: "{% if states.device_tracker.tablet_paolo %}{{states.device_tracker.tablet_paolo.attributes.latitude}},{{states.device_tracker.tablet_paolo.attributes.longitude}}{% else %}N/A{% endif %}"
+      value_template: "{% if not is_state('device_tracker.tablet_paolo', 'unknown') %}{{state_attr('device_tracker.tablet_paolo', 'latitude')}},{{state_attr('device_tracker.tablet_paolo', 'longitude')}}{% else %}N/A{% endif %}"
     tablet_paolo_accuracy:
       icon_template: mdi:map-marker-radius
       friendly_name: GPS accuracy
       unit_of_measurement: mt
       entity_id: device_tracker.tablet_paolo
-      value_template: "{% if states.device_tracker.tablet_paolo %}{{states.device_tracker.tablet_paolo.attributes.gps_accuracy}}{% else %}N/A{% endif %}"
+      value_template: "{% if not is_state('device_tracker.tablet_paolo', 'unknown') %}{{state_attr('device_tracker.tablet_paolo', 'gps_accuracy')}}{% else %}N/A{% endif %}"
     tablet_paolo_address:
       friendly_name: Address
       icon_template: mdi:compass-outline
@@ -949,7 +964,7 @@
       entity_id: sensor.mqtt_broker_uptime
       unit_of_measurement: ago
       value_template: >-
-        {% set uptime_sec = states.sensor.mqtt_broker_uptime.state.split(" ")[0]|int %}
+        {% set uptime_sec = states('sensor.mqtt_broker_uptime').split(" ")[0]|int %}
         {%- set days = (uptime_sec / (60 * 60 * 24)) | int %}
         {%- set uptime_sec = (uptime_sec % (60 * 60 * 24)) %}
         {%- set hours = (uptime_sec / (60 * 60)) | int %}
@@ -998,25 +1013,25 @@
       unit_of_measurement: "%"
       friendly_name: Battery
       entity_id: sensor.xiaomi_temperature_1
-      value_template: "{% if states.sensor.xiaomi_temperature_1 %}{{states.sensor.xiaomi_temperature_1.attributes['battery_level']}}{% else %}N/A{% endif %}"
+      value_template: "{% if not is_state('sensor.xiaomi_temperature_1', 'unknown') %}{{state_attr('sensor.xiaomi_temperature_1', 'battery_level')}}{% else %}N/A{% endif %}"
     xiaomi_attr_battery_door_window_1:
       device_class: battery
       unit_of_measurement: "%"
       friendly_name: Battery
       entity_id: binary_sensor.xiaomi_door_window_1
-      value_template: "{% if states.binary_sensor.xiaomi_door_window_1 %}{{states.binary_sensor.xiaomi_door_window_1.attributes['battery_level']}}{% else %}N/A{% endif %}"
+      value_template: "{% if not is_state('binary_sensor.xiaomi_door_window_1', 'unknown') %}{{state_attr('binary_sensor.xiaomi_door_window_1', 'battery_level')}}{% else %}N/A{% endif %}"
     xiaomi_attr_battery_motion_1:
       device_class: battery
       unit_of_measurement: "%"
       friendly_name: Battery
       entity_id: binary_sensor.xiaomi_motion_1
-      value_template: "{% if states.binary_sensor.xiaomi_motion_1 %}{{states.binary_sensor.xiaomi_motion_1.attributes['battery_level']}}{% else %}N/A{% endif %}"
+      value_template: "{% if not is_state('binary_sensor.xiaomi_motion_1', 'unknown') %}{{state_attr('binary_sensor.xiaomi_motion_1', 'battery_level')}}{% else %}N/A{% endif %}"
     xiaomi_attr_battery_motion_2:
       device_class: battery
       unit_of_measurement: "%"
       friendly_name: Battery
       entity_id: binary_sensor.xiaomi_motion_2
-      value_template: "{% if states.binary_sensor.xiaomi_motion_2 %}{{states.binary_sensor.xiaomi_motion_2.attributes['battery_level']}}{% else %}N/A{% endif %}"
+      value_template: "{% if not is_state('binary_sensor.xiaomi_motion_2', 'unknown') %}{{state_attr('binary_sensor.xiaomi_motion_2', 'battery_level')}}{% else %}N/A{% endif %}"
 
 
 #++++++++++++++++++++++++++++

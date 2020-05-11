@@ -471,7 +471,7 @@ tts_speak:
     - service: tts.google_say
       entity_id: media_player.salotto
       data_template:
-        message: "{{ states.input_text.tts_last_sentence.state }}"
+        message: "{{ states('input_text.tts_last_sentence') }}"
 
 speak_generic:
   #Pronuncia il testo specificato
@@ -482,8 +482,8 @@ speak_generic:
     #TTS Speak
     - service: script.tts_speak
       data_template:
-        message2say: "{{ states.input_text.speak_generic_msg.state }}"
-        volume: "{{ states.input_number.google_home_volume.state }}"
+        message2say: "{{ states('input_text.speak_generic_msg') }}"
+        volume: "{{ states('input_number.google_home_volume') }}"
 
 
 #++++++++++++++++++++++++++++++
@@ -584,24 +584,24 @@ say_goodmorning:
           {% set dd = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica"] %}
           Buongiorno. Oggi è {{ dd[now.weekday()] }} {{ now.day | int }}, e sono le {{ now.strftime('%I') | int }} e {{ now.strftime('%M') | int }}.
         volume: "0.5"
-    - wait_template: "{{ states.media_player.salotto.state != 'playing' }}"
+    - wait_template: "{{ states('media_player.salotto') != 'playing' }}"
     #TTS sentence 2
     - service: script.tts_speak
       data_template:
         message2say: >
-          Fuori ci sono {{ states.sensor.dark_sky_temperature.state | round }} gradi.
-          Il tempo previsto è: {{ states.sensor.dark_sky_summary.state }}.
-          {% if (states.sensor.dark_sky_precip_probability.state | int) > 0 %}
+          Fuori ci sono {{ states('sensor.dark_sky_temperature') | round }} gradi.
+          Il tempo previsto è: {{ states('sensor.dark_sky_summary') }}.
+          {% if (states('sensor.dark_sky_precip_probability') | int) > 0 %}
           Attenzione: Oggi potrebbe piovere!
           {% endif %}
         volume: "0.5"
-    - wait_template: "{{ states.media_player.salotto.state != 'playing' }}"
+    - wait_template: "{{ states('media_player.salotto') != 'playing' }}"
     #TTS sentence 3
     - service: script.tts_speak
       data_template:
         message2say: Ecco le ultime notizie.
         volume: "0.5"
-    - wait_template: "{{ states.media_player.salotto.state != 'playing' }}"
+    - wait_template: "{{ states('media_player.salotto') != 'playing' }}"
     #Set volume before playing media
     - service: media_player.volume_set
       data_template:
@@ -629,7 +629,7 @@ set_home_mode_night:
       data_template:
         message2say: Verifica che il cancello e la porta di ingresso siano chiuse.
         volume: "0.3"
-    - wait_template: "{{ states.media_player.salotto.state != 'playing' }}"
+    - wait_template: "{{ states('media_player.salotto') != 'playing' }}"
     #TTS sentence 2
     - service: script.tts_speak
       data_template:
@@ -643,7 +643,7 @@ toggle_home_mode:
   sequence:
     #Toggle home mode
     - service_template: >
-        {% if states.input_select.home_mode.state == 'giorno' %}
+        {% if is_state('input_select.home_mode', 'giorno') %}
           script.set_home_mode_night
         {% else %}
           script.set_home_mode_day
@@ -675,7 +675,7 @@ home_contarina_pick_tomorrow:
     #Notifica Telegram
     - service: notify.telegram_paolo
       data_template:
-        message: "{{'\U0000267B'}} {{ states.input_text.tts_last_sentence.state }}"
+        message: "{{'\U0000267B'}} {{ states('input_text.tts_last_sentence') }}"
 
 home_cover_up:
   #Alza le serrande per un determinato periodo (secondi)
@@ -746,7 +746,7 @@ say_next_cover_down:
     - service: script.tts_speak
       data_template:
         message2say: >
-          Serrande giù: {% if '{:02}'.format(now().hour) ~ '{:02}'.format(now().minute) > states.sensor.cover_down_start.state.replace(":", "") %}domani,{% endif %} alle {{ states.sensor.cover_down_start.state.replace(":", " e ") }}
+          Serrande giù: {% if '{:02}'.format(now().hour) ~ '{:02}'.format(now().minute) > states('sensor.cover_down_start').replace(":", "") %}domani,{% endif %} alle {{ states('sensor.cover_down_start').replace(":", " e ") }}
         volume: "0.3"
 
 say_energy_consumption:
@@ -758,8 +758,8 @@ say_energy_consumption:
     - service: script.tts_speak
       data_template:
         message2say: >
-          {% if states.binary_sensor.online_pzem_004t.state == 'on' %}
-          Il consumo attuale è di {{ states.sensor.pzem_power.state }} watt
+          {% if is_state('binary_sensor.online_pzem_004t', 'on') %}
+          Il consumo attuale è di {{ states('sensor.pzem_power') }} watt
           {% else %}
           Il consumo attuale non è disponibile
           {% endif %}
@@ -772,7 +772,7 @@ bed_cover_on:
   sequence:
     #Switch on the plug
     - service_template: >-
-        {% if states.binary_sensor.online_sonoff_basic_1.state == 'on' %}
+        {% if is_state('binary_sensor.online_sonoff_basic_1', 'on') %}
           switch.turn_on
         {% else %}
           switch.turn_off
@@ -783,7 +783,7 @@ bed_cover_on:
     - service: script.tts_speak
       data_template:
         message2say: >-
-          {% if states.binary_sensor.online_sonoff_basic_1.state == 'on' %}
+          {% if is_state('binary_sensor.online_sonoff_basic_1', 'on') %}
           Coperta accesa
           {% else %}
           La presa non è collegata
@@ -803,7 +803,7 @@ bed_cover_off:
     - service: script.tts_speak
       data_template:
         message2say: >-
-          {% if states.binary_sensor.online_sonoff_basic_1.state == 'on' %}
+          {% if is_state('binary_sensor.online_sonoff_basic_1', 'on') %}
           Coperta spenta
           {% else %}
           La presa non è collegata

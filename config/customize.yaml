@@ -251,6 +251,8 @@ sensor.cell_paolo_battery:
   friendly_name: Battery
 sensor.cell_paolo_charging:
   friendly_name: Charging
+sensor.cell_paolo_trigger:
+  friendly_name: Trigger event
 
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -262,6 +264,8 @@ sensor.cell_silvia_battery:
   friendly_name: Battery
 sensor.cell_silvia_charging:
   friendly_name: Charging
+sensor.cell_silvia_trigger:
+  friendly_name: Trigger event
 
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -273,6 +277,8 @@ sensor.tablet_paolo_battery:
   friendly_name: Battery
 sensor.tablet_paolo_charging:
   friendly_name: Charging
+sensor.tablet_paolo_trigger:
+  friendly_name: Trigger event
 
 
 #++++++++++++++++++++++++++++

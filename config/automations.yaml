@@ -38,13 +38,13 @@
       entity_id: sensor.hass_available_version
   condition:
     - condition: template
-      value_template: "{{ states.sensor.hass_available_version.state != 'unavailable' and states.sensor.hass_available_version.state != states.sensor.hass_installed_version.state }}"
+      value_template: "{{ not is_state('sensor.hass_available_version', 'unavailable') and states('sensor.hass_available_version') != states('sensor.hass_installed_version') }}"
   action:
     #Notifica Telegram
     - service: notify.telegram_paolo
       data_template: 
         title: "\U0001F389 Home Assistant Update"
-        message: "Version *{{states.sensor.hass_available_version.state}}* is now available (installed: {{states.sensor.hass_installed_version.state}})."
+        message: "Version *{{states('sensor.hass_available_version')}}* is now available (installed: {{states('sensor.hass_installed_version')}})."
 
 - id: bot_notify_hacs_updates
   #Notifica agg.ti HACS
@@ -54,15 +54,15 @@
       entity_id: sensor.hacs
   condition:
     - condition: template
-      value_template: "{{ trigger.from_state.state != trigger.to_state.state and (states.sensor.hacs.state | int) > 0 }}"
+      value_template: "{{ trigger.from_state.state != trigger.to_state.state and (states('sensor.hacs') | int) > 0 }}"
   action:
     #Notifica Telegram
     - service: telegram_bot.send_message
       data_template:
         title: "\U0001F389 HACS Updates"
         message: >
-          *{{states.sensor.hacs.state}}* update{% if (states.sensor.hacs.state | int) > 1 %}s{% endif %} available{{":"}}
-          {% for rep in states.sensor.hacs.attributes.repositories %}
+          *{{states('sensor.hacs')}}* update{% if (states('sensor.hacs') | int) > 1 %}s{% endif %} available{{":"}}
+          {% for rep in state_attr('sensor.hacs', 'repositories') %}
           {{- "\r- [" ~ rep.name.split('/')[1] ~ "](https://github.com/" ~ rep.name ~ ")\r  " ~ rep['installed version'] ~ " -> " ~ rep['available version'] }}
           {{- "\r  [Commits](https://github.com/" ~ rep.name ~ "/commits) - [Releases](https://github.com/" ~ rep.name ~ "/releases)" }}
           {% endfor %}
@@ -93,7 +93,7 @@
     - service: media_player.volume_set
       data_template:
         entity_id: media_player.salotto
-        volume_level: "{{ states.input_number.google_home_volume.state }}"
+        volume_level: "{{ states('input_number.google_home_volume') }}"
 
 - id: system_execute_script_via_webhook
   #Esegue script tramite webhook trigger
@@ -182,7 +182,7 @@
     #Set Theme
     - service: frontend.set_theme
       data_template:
-        name: "{{ states.input_select.hass_selected_theme.state }}"
+        name: "{{ states('input_select.hass_selected_theme') }}"
 
 
 #++++++++++++++++++++++++++++++++++
@@ -218,7 +218,7 @@
     - service: media_player.play_media
       data_template:
         entity_id: media_player.samsung_tv
-        media_content_id: "{{ states.input_number.tv_remote_channel.state | int }}"
+        media_content_id: "{{ states('input_number.tv_remote_channel') | int }}"
         media_content_type: channel
 
 
@@ -236,7 +236,7 @@
     - service: media_player.volume_set
       data_template:
         entity_id: media_player.salotto
-        volume_level: "{{ states.input_number.google_home_volume.state }}"
+        volume_level: "{{ states('input_number.google_home_volume') }}"
 
 - id: google_home_update_volume
   #Aggiorna volume nel sensore se modificato via Google Home (es: comando vocale)
@@ -411,14 +411,14 @@
         chat_id: "{{ trigger.event.data.user_id }}"
         message: >
           *- Home -*
-            *Modalità:* {%- if states.input_select.home_mode.state == "notte" %}{{"\U0001F303"}}{% else %}{{"\U00002600"}}{% endif %}{{states.input_select.home_mode.state}}
-            *{{states.binary_sensor.home_anyone_in.attributes.friendly_name}}:* {{states.binary_sensor.home_anyone_in.state}}
+            *Modalità:* {%- if is_state('input_select.home_mode', 'notte') %}{{"\U0001F303"}}{% else %}{{"\U00002600"}}{% endif %}{{states('input_select.home_mode')}}
+            *{{state_attr('binary_sensor.home_anyone_in', 'friendly_name')}}:* {{states('binary_sensor.home_anyone_in')}}
             *Elettricità:*
-              *Consumo attuale:* {% if states.binary_sensor.online_pzem_004t.state == 'on' %}{{ states.sensor.pzem_power.state }} {{states.sensor.pzem_power.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
-              *Consumo oggi:* {% if states.binary_sensor.online_pzem_004t.state == 'on' %}{{ states.sensor.pzem_energy_today.state.replace(".", ",") }} {{states.sensor.pzem_energy_today.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
-              *Consumo ieri:* {% if states.binary_sensor.online_pzem_004t.state == 'on' %}{{ states.sensor.pzem_energy_yesterday.state.replace(".", ",") }} {{states.sensor.pzem_energy_yesterday.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
+              *Consumo attuale:* {% if is_state('binary_sensor.online_pzem_004t', 'on') %}{{ states('sensor.pzem_power') }} {{state_attr('sensor.pzem_power', 'unit_of_measurement')}}{% else %}N/A{% endif %}
+              *Consumo oggi:* {% if is_state('binary_sensor.online_pzem_004t', 'on') %}{{ states('sensor.pzem_energy_today').replace(".", ",") }} {{state_attr('sensor.pzem_energy_today', 'unit_of_measurement')}}{% else %}N/A{% endif %}
+              *Consumo ieri:* {% if is_state('binary_sensor.online_pzem_004t', 'on') %}{{ states('sensor.pzem_energy_yesterday').replace(".", ",") }} {{state_attr('sensor.pzem_energy_yesterday', 'unit_of_measurement')}}{% else %}N/A{% endif %}
         inline_keyboard:
-          - "Imposta modalità {% if states.input_select.home_mode.state == 'giorno' %}notte{% else %}giorno{% endif %}:/sensors_home_mode_toggle"
+          - "Imposta modalità {% if is_state('input_select.home_mode', 'giorno') %}notte{% else %}giorno{% endif %}:/sensors_home_mode_toggle"
           - "\U0001F4AB Refresh:/sensors_home, \U0001F519 Go back:/sensors"
 
 - id: bot_cmd_sensors_home_mode_toggle
@@ -436,9 +436,9 @@
     - service: notify.telegram_paolo
       data_template:
         message: >
-          Impostata modalità {{states.input_select.home_mode.state}}
+          Impostata modalità {{states('input_select.home_mode')}}
         inline_keyboard:
-          - "Imposta modalità {% if states.input_select.home_mode.state == 'giorno' %}notte{% else %}giorno{% endif %}:/sensors_home_mode_toggle"
+          - "Imposta modalità {% if is_state('input_select.home_mode', 'giorno') %}notte{% else %}giorno{% endif %}:/sensors_home_mode_toggle"
           - "\U0001F4AB Refresh:/sensors_home, \U0001F519 Go back:/goback_main"
 
 - id: bot_cmd_switches
@@ -457,30 +457,30 @@
         chat_id: "{{ trigger.event.data.user_id }}"
         message: >
           *- Plugs & Switches -*
-            *{% if states.switch.smartplug_1 %}{{states.switch.smartplug_1.attributes.friendly_name}}{% else %}Smart Plug 1{% endif %}:*
-            {%- if states.switch.smartplug_1.state == "unavailable" %} {{""}} Disconnected{% elif states.switch.smartplug_1.state == "on" %} {{"\U00002705"}} On{% elif states.switch.smartplug_1.state == "off" %} {{"\U0000274C"}} Off{% endif %}
-            *{% if states.switch.smartplug_2 %}{{states.switch.smartplug_2.attributes.friendly_name}}{% else %}Smart Plug 2{% endif %}:*
-            {%- if states.switch.smartplug_2.state == "unavailable" %} {{""}} Disconnected{% elif states.switch.smartplug_2.state == "on" %} {{"\U00002705"}} On{% elif states.switch.smartplug_2.state == "off" %} {{"\U0000274C"}} Off{% endif %}
-            *{% if states.switch.smartplug_3 %}{{states.switch.smartplug_3.attributes.friendly_name}}{% else %}Smart Plug 3{% endif %}:*
-            {%- if states.switch.smartplug_3.state == "unavailable" %} {{""}} Disconnected{% elif states.switch.smartplug_3.state == "on" %} {{"\U00002705"}} On{% elif states.switch.smartplug_3.state == "off" %} {{"\U0000274C"}} Off{% endif %}
-            *{% if states.switch.sonoff_basic_1 %}{{states.switch.sonoff_basic_1.attributes.friendly_name}}{% else %}Sonoff Basic 1{% endif %}:*
-            {%- if states.switch.sonoff_basic_1.state == "unavailable" %} {{""}} Disconnected{% elif states.switch.sonoff_basic_1.state == "on" %} {{"\U00002705"}} On{% elif states.switch.sonoff_basic_1.state == "off" %} {{"\U0000274C"}} Off{% endif %}
-            *{% if states.switch.sonoff_basic_2 %}{{states.switch.sonoff_basic_2.attributes.friendly_name}}{% else %}Sonoff Basic 2{% endif %}:*
-            {%- if states.switch.sonoff_basic_2.state == "unavailable" %} {{""}} Disconnected{% elif states.switch.sonoff_basic_2.state == "on" %} {{"\U00002705"}} On{% elif states.switch.sonoff_basic_2.state == "off" %} {{"\U0000274C"}} Off{% endif %}
-            *{% if states.switch.sonoff_basic_3 %}{{states.switch.sonoff_basic_3.attributes.friendly_name}}{% else %}Sonoff Basic 3{% endif %}:*
-            {%- if states.switch.sonoff_basic_3.state == "unavailable" %} {{""}} Disconnected{% elif states.switch.sonoff_basic_3.state == "on" %} {{"\U00002705"}} On{% elif states.switch.sonoff_basic_3.state == "off" %} {{"\U0000274C"}} Off{% endif %}
-            *{% if states.switch.sonoff_dual_1 %}{{states.switch.sonoff_dual_1.attributes.friendly_name}}{% else %}Sonoff Dual 1{% endif %}:*
-            {%- if states.switch.sonoff_dual_1.state == "unavailable" %} {{""}} Disconnected{% elif states.switch.sonoff_dual_1.state == "on" %} {{"\U00002705"}} On{% elif states.switch.sonoff_dual_1.state == "off" %} {{"\U0000274C"}} Off{% endif %}
-            *{% if states.switch.sonoff_dual_2 %}{{states.switch.sonoff_dual_2.attributes.friendly_name}}{% else %}Sonoff Dual 2{% endif %}:*
-            {%- if states.switch.sonoff_dual_2.state == "unavailable" %} {{""}} Disconnected{% elif states.switch.sonoff_dual_2.state == "on" %} {{"\U00002705"}} On{% elif states.switch.sonoff_dual_2.state == "off" %} {{"\U0000274C"}} Off{% endif %}
-            *{% if states.switch.sonoff_4ch_1 %}{{states.switch.sonoff_4ch_1.attributes.friendly_name}}{% else %}Sonoff 4ch 1{% endif %}:*
-            {%- if states.switch.sonoff_4ch_1.state == "unavailable" %} {{""}} Disconnected{% elif states.switch.sonoff_4ch_1.state == "on" %} {{"\U00002705"}} On{% elif states.switch.sonoff_4ch_1.state == "off" %} {{"\U0000274C"}} Off{% endif %}
-            *{% if states.switch.sonoff_4ch_2 %}{{states.switch.sonoff_4ch_2.attributes.friendly_name}}{% else %}Sonoff 4ch 2{% endif %}:*
-            {%- if states.switch.sonoff_4ch_2.state == "unavailable" %} {{""}} Disconnected{% elif states.switch.sonoff_4ch_2.state == "on" %} {{"\U00002705"}} On{% elif states.switch.sonoff_4ch_2.state == "off" %} {{"\U0000274C"}} Off{% endif %}
-            *{% if states.switch.sonoff_4ch_3 %}{{states.switch.sonoff_4ch_3.attributes.friendly_name}}{% else %}Sonoff 4ch 3{% endif %}:*
-            {%- if states.switch.sonoff_4ch_3.state == "unavailable" %} {{""}} Disconnected{% elif states.switch.sonoff_4ch_3.state == "on" %} {{"\U00002705"}} On{% elif states.switch.sonoff_4ch_3.state == "off" %} {{"\U0000274C"}} Off{% endif %}
-            *{% if states.switch.sonoff_4ch_4 %}{{states.switch.sonoff_4ch_4.attributes.friendly_name}}{% else %}Sonoff 4ch 4{% endif %}:*
-            {%- if states.switch.sonoff_4ch_4.state == "unavailable" %} {{""}} Disconnected{% elif states.switch.sonoff_4ch_4.state == "on" %} {{"\U00002705"}} On{% elif states.switch.sonoff_4ch_4.state == "off" %} {{"\U0000274C"}} Off{% endif %}
+            *{% if not is_state('switch.smartplug_1', 'unknown') %}{{state_attr('switch.smartplug_1', 'friendly_name')}}{% else %}Smart Plug 1{% endif %}:*
+            {%- if is_state('switch.smartplug_1', 'unavailable') %} {{""}} Disconnected{% elif is_state('switch.smartplug_1', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.smartplug_1', 'off') %} {{"\U0000274C"}} Off{% endif %}
+            *{% if not is_state('switch.smartplug_2', 'unknown') %}{{state_attr('switch.smartplug_2', 'friendly_name')}}{% else %}Smart Plug 2{% endif %}:*
+            {%- if is_state('switch.smartplug_2', 'unavailable') %} {{""}} Disconnected{% elif is_state('switch.smartplug_2', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.smartplug_2', 'off') %} {{"\U0000274C"}} Off{% endif %}
+            *{% if not is_state('switch.smartplug_3', 'unknown') %}{{state_attr('switch.smartplug_3', 'friendly_name')}}{% else %}Smart Plug 3{% endif %}:*
+            {%- if is_state('switch.smartplug_3', 'unavailable') %} {{""}} Disconnected{% elif is_state('switch.smartplug_3', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.smartplug_3', 'off') %} {{"\U0000274C"}} Off{% endif %}
+            *{% if not is_state('switch.sonoff_basic_1', 'unknown') %}{{state_attr('switch.sonoff_basic_1', 'friendly_name')}}{% else %}Sonoff Basic 1{% endif %}:*
+            {%- if is_state('switch.sonoff_basic_1', 'unavailable') %} {{""}} Disconnected{% elif is_state('switch.sonoff_basic_1', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.sonoff_basic_1', 'off') %} {{"\U0000274C"}} Off{% endif %}
+            *{% if not is_state('switch.sonoff_basic_2', 'unknown') %}{{state_attr('switch.sonoff_basic_2', 'friendly_name')}}{% else %}Sonoff Basic 2{% endif %}:*
+            {%- if is_state('switch.sonoff_basic_2', 'unavailable') %} {{""}} Disconnected{% elif is_state('switch.sonoff_basic_2', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.sonoff_basic_2', 'off') %} {{"\U0000274C"}} Off{% endif %}
+            *{% if not is_state('switch.sonoff_basic_3', 'unknown') %}{{state_attr('switch.sonoff_basic_3', 'friendly_name')}}{% else %}Sonoff Basic 3{% endif %}:*
+            {%- if is_state('switch.sonoff_basic_3', 'unavailable') %} {{""}} Disconnected{% elif is_state('switch.sonoff_basic_3', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.sonoff_basic_3', 'off') %} {{"\U0000274C"}} Off{% endif %}
+            *{% if not is_state('switch.sonoff_dual_1', 'unknown') %}{{state_attr('switch.sonoff_dual_1', 'friendly_name')}}{% else %}Sonoff Dual 1{% endif %}:*
+            {%- if is_state('switch.sonoff_dual_1', 'unavailable') %} {{""}} Disconnected{% elif is_state('switch.sonoff_dual_1', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.sonoff_dual_1', 'off') %} {{"\U0000274C"}} Off{% endif %}
+            *{% if not is_state('switch.sonoff_dual_2', 'unknown') %}{{state_attr('switch.sonoff_dual_2', 'friendly_name')}}{% else %}Sonoff Dual 2{% endif %}:*
+            {%- if is_state('switch.sonoff_dual_2', 'unavailable') %} {{""}} Disconnected{% elif is_state('switch.sonoff_dual_2', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.sonoff_dual_2', 'off') %} {{"\U0000274C"}} Off{% endif %}
+            *{% if not is_state('switch.sonoff_4ch_1', 'unknown') %}{{state_attr('switch.sonoff_4ch_1', 'friendly_name')}}{% else %}Sonoff 4ch 1{% endif %}:*
+            {%- if is_state('switch.sonoff_4ch_1', 'unavailable') %} {{""}} Disconnected{% elif is_state('switch.sonoff_4ch_1', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.sonoff_4ch_1', 'off') %} {{"\U0000274C"}} Off{% endif %}
+            *{% if not is_state('switch.sonoff_4ch_2', 'unknown') %}{{state_attr('switch.sonoff_4ch_2', 'friendly_name')}}{% else %}Sonoff 4ch 2{% endif %}:*
+            {%- if is_state('switch.sonoff_4ch_2', 'unavailable') %} {{""}} Disconnected{% elif is_state('switch.sonoff_4ch_2', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.sonoff_4ch_2', 'off') %} {{"\U0000274C"}} Off{% endif %}
+            *{% if not is_state('switch.sonoff_4ch_3', 'unknown') %}{{state_attr('switch.sonoff_4ch_3', 'friendly_name')}}{% else %}Sonoff 4ch 3{% endif %}:*
+            {%- if is_state('switch.sonoff_4ch_3', 'unavailable') %} {{""}} Disconnected{% elif is_state('switch.sonoff_4ch_3', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.sonoff_4ch_3', 'off') %} {{"\U0000274C"}} Off{% endif %}
+            *{% if not is_state('switch.sonoff_4ch_4', 'unknown') %}{{state_attr('switch.sonoff_4ch_4', 'friendly_name')}}{% else %}Sonoff 4ch 4{% endif %}:*
+            {%- if is_state('switch.sonoff_4ch_4', 'unavailable') %} {{""}} Disconnected{% elif is_state('switch.sonoff_4ch_4', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.sonoff_4ch_4', 'off') %} {{"\U0000274C"}} Off{% endif %}
         inline_keyboard:
           - "\U0001F50C Plug 1:/switches_toggle_plug1, \U0001F50C Plug 2:/switches_toggle_plug2, \U0001F50C Plug 3:/switches_toggle_plug3"
           - "\U0001F50C Sonoff 1:/switches_toggle_sonoff_basic_1, \U0001F50C Sonoff 2:/switches_toggle_sonoff_basic_2, \U0001F50C Sonoff 3:/switches_toggle_sonoff_basic_3"
@@ -504,7 +504,7 @@
     - service: notify.telegram_paolo
       data_template:
         message: >
-          {% if states.switch.smartplug_1.state == "unavailable" %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({{states.switch.smartplug_1.state | upper()}}).{% endif %}
+          {% if is_state('switch.smartplug_1', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({{states('switch.smartplug_1') | upper()}}).{% endif %}
 
 - id: bot_cmd_switches_toggle_plug2
   #Bot - Comando /switches_toggle_plug2
@@ -523,7 +523,7 @@
     - service: notify.telegram_paolo
       data_template:
         message: >
-          {% if states.switch.smartplug_2.state == "unavailable" %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({{states.switch.smartplug_2.state | upper()}}).{% endif %}
+          {% if is_state('switch.smartplug_2', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({{states('switch.smartplug_2') | upper()}}).{% endif %}
 
 - id: bot_cmd_switches_toggle_plug3
   #Bot - Comando /switches_toggle_plug3
@@ -542,7 +542,7 @@
     - service: notify.telegram_paolo
       data_template:
         message: >
-          {% if states.switch.smartplug_3.state == "unavailable" %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({{states.switch.smartplug_3.state | upper()}}).{% endif %}
+          {% if is_state('switch.smartplug_3', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({{states('switch.smartplug_3') | upper()}}).{% endif %}
 
 - id: bot_cmd_switches_toggle_sonoff_basic_1
   #Bot - Comando /switches_toggle_sonoff_basic_1
@@ -561,7 +561,7 @@
     - service: notify.telegram_paolo
       data_template:
         message: >
-          {% if states.switch.sonoff_basic_1.state == "unavailable" %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({% if states.switch.sonoff_basic_1.state == "on" %}OFF{% else %}ON{% endif %}).{% endif %}
+          {% if is_state('switch.sonoff_basic_1', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({% if is_state('switch.sonoff_basic_1', 'on') %}OFF{% else %}ON{% endif %}).{% endif %}
 
 - id: bot_cmd_switches_toggle_sonoff_basic_2
   #Bot - Comando /switches_toggle_sonoff_basic_2
@@ -580,7 +580,7 @@
     - service: notify.telegram_paolo
       data_template:
         message: >
-          {% if states.switch.sonoff_basic_2.state == "unavailable" %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({% if states.switch.sonoff_basic_2.state == "on" %}OFF{% else %}ON{% endif %}).{% endif %}
+          {% if is_state('switch.sonoff_basic_2', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({% if is_state('switch.sonoff_basic_2', 'on') %}OFF{% else %}ON{% endif %}).{% endif %}
 
 - id: bot_cmd_switches_toggle_sonoff_basic_3
   #Bot - Comando /switches_toggle_sonoff_basic_3
@@ -599,7 +599,7 @@
     - service: notify.telegram_paolo
       data_template:
         message: >
-          {% if states.switch.sonoff_basic_3.state == "unavailable" %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({% if states.switch.sonoff_basic_3.state == "on" %}OFF{% else %}ON{% endif %}).{% endif %}
+          {% if is_state('switch.sonoff_basic_3', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({% if is_state('switch.sonoff_basic_3', 'on') %}OFF{% else %}ON{% endif %}).{% endif %}
 
 - id: bot_cmd_switches_cover_up
   #Bot - Comando /switches_cover_up
@@ -615,7 +615,7 @@
     - service: notify.telegram_paolo
       data_template:
         message: >
-          {% if states.switch.sonoff_dual_1.state == "unavailable" %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F53C"}} Cover up.{% endif %}
+          {% if is_state('switch.sonoff_dual_1', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F53C"}} Cover up.{% endif %}
 
 - id: bot_cmd_switches_cover_down
   #Bot - Comando /switches_cover_down
@@ -631,7 +631,7 @@
     - service: notify.telegram_paolo
       data_template:
         message: >
-          {% if states.switch.sonoff_dual_2.state == "unavailable" %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F53D"}} Cover down.{% endif %}
+          {% if is_state('switch.sonoff_dual_2', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F53D"}} Cover down.{% endif %}
 
 - id: bot_cmd_switches_cover_stop
   #Bot - Comando /switches_cover_stop
@@ -800,16 +800,16 @@
         chat_id: "{{ trigger.event.data.user_id }}"
         message: >
           *- Where is Paolo? -*
-            *{{states.device_tracker.cell_paolo.attributes.friendly_name}}:* {{states.device_tracker.cell_paolo.state | replace("not_home","away")}}
-            *{{states.sensor.cell_paolo_lat.attributes.friendly_name}}:* {{states.sensor.cell_paolo_lat.state}}
-            *{{states.sensor.cell_paolo_long.attributes.friendly_name}}:* {{states.sensor.cell_paolo_long.state}}
-            *{{states.sensor.cell_paolo_accuracy.attributes.friendly_name}}:* {{states.sensor.cell_paolo_accuracy.state}} {{states.sensor.cell_paolo_accuracy.attributes.unit_of_measurement}}
-            *{{states.sensor.cell_paolo_lastupdate.attributes.friendly_name}}:* {{states.sensor.cell_paolo_lastupdate.state}}
-            *{{states.sensor.cell_paolo_address.attributes.friendly_name}}:* {{states.sensor.cell_paolo_address.state}}
-            *{{states.sensor.cell_paolo_address_confidence.attributes.friendly_name}}:* {{states.sensor.cell_paolo_address_confidence.state}}
-            *{{states.sensor.cell_paolo_distance_home.attributes.friendly_name}}:* {{states.sensor.cell_paolo_distance_home.state}} {{states.sensor.cell_paolo_distance_home.attributes.unit_of_measurement}}
-            *{{states.sensor.cell_paolo_distance_silvia.attributes.friendly_name}}:* {{states.sensor.cell_paolo_distance_silvia.state}} {{states.sensor.cell_paolo_distance_silvia.attributes.unit_of_measurement}}
-            [Map](https://dev.virtualearth.net/REST/V1/Imagery/Map/Road/{{states.sensor.cell_paolo_latlong.state}}/16?mapSize=400,300&format=png&pushpin={{states.sensor.cell_paolo_latlong.state}};66;P&key={{states.sensor.maps_api_key.state}})
+            *{{state_attr('device_tracker.cell_paolo', 'friendly_name')}}:* {{states('device_tracker.cell_paolo') | replace("not_home","away")}}
+            *{{state_attr('sensor.cell_paolo_lat', 'friendly_name')}}:* {{states('sensor.cell_paolo_lat')}}
+            *{{state_attr('sensor.cell_paolo_long', 'friendly_name')}}:* {{states('sensor.cell_paolo_long')}}
+            *{{state_attr('sensor.cell_paolo_accuracy', 'friendly_name')}}:* {{states('sensor.cell_paolo_accuracy')}} {{state_attr('sensor.cell_paolo_accuracy', 'unit_of_measurement')}}
+            *{{state_attr('sensor.cell_paolo_lastupdate', 'friendly_name')}}:* {{states('sensor.cell_paolo_lastupdate')}}
+            *{{state_attr('sensor.cell_paolo_address', 'friendly_name')}}:* {{states('sensor.cell_paolo_address')}}
+            *{{state_attr('sensor.cell_paolo_address_confidence', 'friendly_name')}}:* {{states('sensor.cell_paolo_address_confidence')}}
+            *{{state_attr('sensor.cell_paolo_distance_home', 'friendly_name')}}:* {{states('sensor.cell_paolo_distance_home')}} {{state_attr('sensor.cell_paolo_distance_home', 'unit_of_measurement')}}
+            *{{state_attr('sensor.cell_paolo_distance_silvia', 'friendly_name')}}:* {{states('sensor.cell_paolo_distance_silvia')}} {{state_attr('sensor.cell_paolo_distance_silvia', 'unit_of_measurement')}}
+            [Map](https://dev.virtualearth.net/REST/V1/Imagery/Map/Road/{{states('sensor.cell_paolo_latlong')}}/16?mapSize=400,300&format=png&pushpin={{states('sensor.cell_paolo_latlong')}};66;P&key={{states('sensor.maps_api_key')}})
         inline_keyboard:
           - "\U0001F4AB Refresh:/wherearewe_paolo, \U0001F519 Go back:/wherearewe"
 
@@ -829,16 +829,16 @@
         chat_id: "{{ trigger.event.data.user_id }}"
         message: >
           *- Where is Silvia? -*
-            *{{states.device_tracker.cell_silvia.attributes.friendly_name}}:* {{states.device_tracker.cell_silvia.state | replace("not_home","away")}}
-            *{{states.sensor.cell_silvia_lat.attributes.friendly_name}}:* {{states.sensor.cell_silvia_lat.state}}
-            *{{states.sensor.cell_silvia_long.attributes.friendly_name}}:* {{states.sensor.cell_silvia_long.state}}
-            *{{states.sensor.cell_silvia_accuracy.attributes.friendly_name}}:* {{states.sensor.cell_silvia_accuracy.state}} {{states.sensor.cell_silvia_accuracy.attributes.unit_of_measurement}}
-            *{{states.sensor.cell_silvia_lastupdate.attributes.friendly_name}}:* {{states.sensor.cell_silvia_lastupdate.state}}
-            *{{states.sensor.cell_silvia_address.attributes.friendly_name}}:* {{states.sensor.cell_silvia_address.state}}
-            *{{states.sensor.cell_silvia_address_confidence.attributes.friendly_name}}:* {{states.sensor.cell_silvia_address_confidence.state}}
-            *{{states.sensor.cell_silvia_distance_home.attributes.friendly_name}}:* {{states.sensor.cell_silvia_distance_home.state}} {{states.sensor.cell_silvia_distance_home.attributes.unit_of_measurement}}
-            *{{states.sensor.cell_silvia_distance_paolo.attributes.friendly_name}}:* {{states.sensor.cell_silvia_distance_paolo.state}} {{states.sensor.cell_silvia_distance_paolo.attributes.unit_of_measurement}}
-            [Map](https://dev.virtualearth.net/REST/V1/Imagery/Map/Road/{{states.sensor.cell_silvia_latlong.state}}/16?mapSize=400,300&format=png&pushpin={{states.sensor.cell_silvia_latlong.state}};64;S&key={{states.sensor.maps_api_key.state}})
+            *{{state_attr('device_tracker.cell_silvia', 'friendly_name')}}:* {{states('device_tracker.cell_silvia') | replace("not_home","away")}}
+            *{{state_attr('sensor.cell_silvia_lat', 'friendly_name')}}:* {{states('sensor.cell_silvia_lat')}}
+            *{{state_attr('sensor.cell_silvia_long', 'friendly_name')}}:* {{states('sensor.cell_silvia_long')}}
+            *{{state_attr('sensor.cell_silvia_accuracy', 'friendly_name')}}:* {{states('sensor.cell_silvia_accuracy')}} {{state_attr('sensor.cell_silvia_accuracy', 'unit_of_measurement')}}
+            *{{state_attr('sensor.cell_silvia_lastupdate', 'friendly_name')}}:* {{states('sensor.cell_silvia_lastupdate')}}
+            *{{state_attr('sensor.cell_silvia_address', 'friendly_name')}}:* {{states('sensor.cell_silvia_address')}}
+            *{{state_attr('sensor.cell_silvia_address_confidence', 'friendly_name')}}:* {{states('sensor.cell_silvia_address_confidence')}}
+            *{{state_attr('sensor.cell_silvia_distance_home', 'friendly_name')}}:* {{states('sensor.cell_silvia_distance_home')}} {{state_attr('sensor.cell_silvia_distance_home', 'unit_of_measurement')}}
+            *{{state_attr('sensor.cell_silvia_distance_paolo', 'friendly_name')}}:* {{states('sensor.cell_silvia_distance_paolo')}} {{state_attr('sensor.cell_silvia_distance_paolo', 'unit_of_measurement')}}
+            [Map](https://dev.virtualearth.net/REST/V1/Imagery/Map/Road/{{states('sensor.cell_silvia_latlong')}}/16?mapSize=400,300&format=png&pushpin={{states('sensor.cell_silvia_latlong')}};64;S&key={{states('sensor.maps_api_key')}})
         inline_keyboard:
           - "\U0001F4AB Refresh:/wherearewe_silvia, \U0001F519 Go back:/wherearewe"
 
@@ -1089,17 +1089,17 @@
         message_id: "last"
         chat_id: "{{ trigger.event.data.user_id }}"
         message: >
-          *- FritzBox sensors -*{% if states.binary_sensor.online_router_fritzbox and states.binary_sensor.online_router_fritzbox.state == "on"%}
-            *Status:* {% if states.sensor.fritz_netmonitor %}{{states.sensor.fritz_netmonitor.state}}{% else %}N/A{% endif %}
-            *Uptime:* {% if states.sensor.fritz_attr_uptime %}{{states.sensor.fritz_attr_uptime.state}} {{states.sensor.fritz_attr_uptime.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
-            *External IP:* {% if states.sensor.fritz_attr_external_ip %}{{states.sensor.fritz_attr_external_ip.state}}{% else %}N/A{% endif %}
+          *- FritzBox sensors -*{% if not is_state('binary_sensor.online_router_fritzbox', 'unknown') and is_state('binary_sensor.online_router_fritzbox', 'on')%}
+            *Status:* {% if not is_state('sensor.fritz_netmonitor', 'unknown') %}{{states('sensor.fritz_netmonitor')}}{% else %}N/A{% endif %}
+            *Uptime:* {% if not is_state('sensor.fritz_attr_uptime', 'unknown') %}{{states('sensor.fritz_attr_uptime')}} {{state_attr('sensor.fritz_attr_uptime', 'unit_of_measurement')}}{% else %}N/A{% endif %}
+            *External IP:* {% if not is_state('sensor.fritz_attr_external_ip', 'unknown') %}{{states('sensor.fritz_attr_external_ip')}}{% else %}N/A{% endif %}
             *Connection*
-              *Linked to provider:* {% if states.sensor.fritz_attr_is_linked %}{{states.sensor.fritz_attr_is_linked.state}}{% else %}N/A{% endif %}
-              *Internet connected:* {% if states.sensor.fritz_attr_is_connected %}{{states.sensor.fritz_attr_is_connected.state}}{% else %}N/A{% endif %}
-              *Sent:* {% if states.sensor.fritz_attr_sent_mb %}{{states.sensor.fritz_attr_sent_mb.state}} {{states.sensor.fritz_attr_sent_mb.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
-              *Received:* {% if states.sensor.fritz_attr_received_mb %}{{states.sensor.fritz_attr_received_mb.state}} {{states.sensor.fritz_attr_received_mb.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
-              *Upstream:* {% if states.sensor.fritz_attr_transmission_rate_up %}{{states.sensor.fritz_attr_transmission_rate_up.state}} {{states.sensor.fritz_attr_transmission_rate_up.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
-              *Downstream:* {% if states.sensor.fritz_attr_transmission_rate_down %}{{states.sensor.fritz_attr_transmission_rate_down.state}} {{states.sensor.fritz_attr_transmission_rate_down.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
+              *Linked to provider:* {% if not is_state('sensor.fritz_attr_is_linked', 'unknown') %}{{states('sensor.fritz_attr_is_linked')}}{% else %}N/A{% endif %}
+              *Internet connected:* {% if not is_state('sensor.fritz_attr_is_connected', 'unknown') %}{{states('sensor.fritz_attr_is_connected')}}{% else %}N/A{% endif %}
+              *Sent:* {% if not is_state('sensor.fritz_attr_sent_mb', 'unknown') %}{{states('sensor.fritz_attr_sent_mb')}} {{state_attr('sensor.fritz_attr_sent_mb', 'unit_of_measurement')}}{% else %}N/A{% endif %}
+              *Received:* {% if not is_state('sensor.fritz_attr_received_mb', 'unknown') %}{{states('sensor.fritz_attr_received_mb')}} {{state_attr('sensor.fritz_attr_received_mb', 'unit_of_measurement')}}{% else %}N/A{% endif %}
+              *Upstream:* {% if not is_state('sensor.fritz_attr_transmission_rate_up', 'unknown') %}{{states('sensor.fritz_attr_transmission_rate_up')}} {{state_attr('sensor.fritz_attr_transmission_rate_up', 'unit_of_measurement')}}{% else %}N/A{% endif %}
+              *Downstream:* {% if not is_state('sensor.fritz_attr_transmission_rate_down', 'unknown') %}{{states('sensor.fritz_attr_transmission_rate_down')}} {{state_attr('sensor.fritz_attr_transmission_rate_down', 'unit_of_measurement')}}{% else %}N/A{% endif %}
             {% else %}
             {{"\U0000274C"}} This device is OFF or not connected.
             {% endif %}
@@ -1122,22 +1122,22 @@
         chat_id: "{{ trigger.event.data.user_id }}"
         message: >
           *- Raspberry sensors -*
-            {% if states.sensor.last_boot_verbose -%}
-              *{{states.sensor.last_boot_verbose.attributes.friendly_name}}:*
-              {{states.sensor.last_boot_verbose.state}} {{states.sensor.last_boot_verbose.attributes.unit_of_measurement}}
+            {% if not is_state('sensor.last_boot_verbose', 'unknown') -%}
+              *{{state_attr('sensor.last_boot_verbose', 'friendly_name')}}:*
+              {{states('sensor.last_boot_verbose')}} {{state_attr('sensor.last_boot_verbose', 'unit_of_measurement')}}
             {% endif -%}
-            *CPU temperature:* {% if states.sensor.cpu_temperature and states.sensor.cpu_temperature.state != "unknown" %}{{states.sensor.cpu_temperature.state}} {{states.sensor.cpu_temperature.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
-            *Processor use:* {% if states.sensor.processor_use %}{{states.sensor.processor_use.state}} {{states.sensor.processor_use.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
+            *CPU temperature:* {% if not is_state('sensor.cpu_temperature', 'unknown') and not is_state('sensor.cpu_temperature', 'unknown') %}{{states('sensor.cpu_temperature')}} {{state_attr('sensor.cpu_temperature', 'unit_of_measurement')}}{% else %}N/A{% endif %}
+            *Processor use:* {% if not is_state('sensor.processor_use', 'unknown') %}{{states('sensor.processor_use')}} {{state_attr('sensor.processor_use', 'unit_of_measurement')}}{% else %}N/A{% endif %}
             *Memory*
-              *Used:* {% if states.sensor.memory_use %}{{states.sensor.memory_use.state}} {{states.sensor.memory_use.attributes.unit_of_measurement}}{% else %}N/A{% endif %} ({% if states.sensor.memory_use_percent %}{{states.sensor.memory_use_percent.state}} {{states.sensor.memory_use_percent.attributes.unit_of_measurement}}{% else %}N/A{% endif %})
-              *Free:* {% if states.sensor.memory_free %}{{states.sensor.memory_free.state}} {{states.sensor.memory_free.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
+              *Used:* {% if not is_state('sensor.memory_use', 'unknown') %}{{states('sensor.memory_use')}} {{state_attr('sensor.memory_use', 'unit_of_measurement')}}{% else %}N/A{% endif %} ({% if not is_state('sensor.memory_use_percent', 'unknown') %}{{states('sensor.memory_use_percent')}} {{state_attr('sensor.memory_use_percent', 'unit_of_measurement')}}{% else %}N/A{% endif %})
+              *Free:* {% if not is_state('sensor.memory_free', 'unknown') %}{{states('sensor.memory_free')}} {{state_attr('sensor.memory_free', 'unit_of_measurement')}}{% else %}N/A{% endif %}
             *HASS*
-              *DB Size:* {% if states.sensor.hass_db_filesize %}{{states.sensor.hass_db_filesize.state}} {{states.sensor.hass_db_filesize.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
-              *Inst. version:* {{ states.sensor.hass_installed_version.state }}
-              *Avail. version:* {{ states.sensor.hass_available_version.state }}
-              *HACS updates:* {{ states.sensor.hacs.state }}
+              *DB Size:* {% if not is_state('sensor.hass_db_filesize', 'unknown') %}{{states('sensor.hass_db_filesize')}} {{state_attr('sensor.hass_db_filesize', 'unit_of_measurement')}}{% else %}N/A{% endif %}
+              *Inst. version:* {{ states('sensor.hass_installed_version') }}
+              *Avail. version:* {{ states('sensor.hass_available_version') }}
+              *HACS updates:* {{ states('sensor.hacs') }}
             *Internal IPs:*
-              {% if states.sensor.hass_ip_address %}{{states.sensor.hass_ip_address.state | replace("\n","\n    ")}}{% else %}N/A{% endif %}
+              {% if not is_state('sensor.hass_ip_address', 'unknown') %}{{states('sensor.hass_ip_address') | replace("\n","\n    ")}}{% else %}N/A{% endif %}
         inline_keyboard:
           - "\U0001F4AB Refresh:/sensors_raspberry, \U0001F519 Go back:/sensors"
 
@@ -1159,7 +1159,7 @@
           *- Connected devices -*
             {%- for state in states.binary_sensor if state.object_id.startswith("online_") %}
             *{% if state %}{{state.attributes.friendly_name}}{% else %}N/A{% endif %}:*
-            {%- if state.state == "on" %} {{"\U00002705"}} On{% elif state.state == "off" %} {{"\U0000274C"}} Off{% endif %}
+            {%- if state.state == 'on' %} {{"\U00002705"}} On{% elif state.state == 'off' %} {{"\U0000274C"}} Off{% endif %}
             {%- endfor %}
         inline_keyboard:
           - "\U0001F4AB Refresh:/sensors_devices, \U0001F519 Go back:/sensors"
@@ -1181,16 +1181,16 @@
         message: >
           *- Mobile devices -*
             {{"\U0001F4F1"}} *Cell. Paolo*
-              *{% if states.sensor.cell_paolo_battery %}{{states.sensor.cell_paolo_battery.attributes.friendly_name}}{% else %}Battery{% endif %}:* {{states.sensor.cell_paolo_battery.state}} {{states.sensor.cell_paolo_battery.attributes.unit_of_measurement}} {% if states.sensor.cell_paolo_charging.state == "True"%} {{"\U0001F50C"}}{% endif %}
-              *{% if states.sensor.cell_paolo_lastupdate %}{{states.sensor.cell_paolo_lastupdate.attributes.friendly_name}}{% else %}Last update{% endif %}:* {{states.sensor.cell_paolo_lastupdate.state}} {{states.sensor.cell_paolo_lastupdate.attributes.unit_of_measurement}}
+              *{% if not is_state('sensor.cell_paolo_battery', 'unknown') %}{{state_attr('sensor.cell_paolo_battery', 'friendly_name')}}{% else %}Battery{% endif %}:* {{states('sensor.cell_paolo_battery')}} {{state_attr('sensor.cell_paolo_battery', 'unit_of_measurement')}} {% if is_state('sensor.cell_paolo_charging', 'True')%} {{"\U0001F50C"}}{% endif %}
+              *{% if not is_state('sensor.cell_paolo_lastupdate', 'unknown') %}{{state_attr('sensor.cell_paolo_lastupdate', 'friendly_name')}}{% else %}Last update{% endif %}:* {{states('sensor.cell_paolo_lastupdate')}} {{state_attr('sensor.cell_paolo_lastupdate', 'unit_of_measurement')}}
             
             {{"\U0001F4BB"}} *Tablet Paolo*
-              *{% if states.sensor.tablet_paolo_battery %}{{states.sensor.tablet_paolo_battery.attributes.friendly_name}}{% else %}Battery{% endif %}:* {{states.sensor.tablet_paolo_battery.state}} {{states.sensor.tablet_paolo_battery.attributes.unit_of_measurement}} {% if states.sensor.tablet_paolo_charging.state == "True"%} {{"\U0001F50C"}}{% endif %}
-              *{% if states.sensor.tablet_paolo_lastupdate %}{{states.sensor.tablet_paolo_lastupdate.attributes.friendly_name}}{% else %}Last update{% endif %}:* {{states.sensor.tablet_paolo_lastupdate.state}} {{states.sensor.tablet_paolo_lastupdate.attributes.unit_of_measurement}}
+              *{% if not is_state('sensor.tablet_paolo_battery', 'unknown') %}{{state_attr('sensor.tablet_paolo_battery', 'friendly_name')}}{% else %}Battery{% endif %}:* {{states('sensor.tablet_paolo_battery')}} {{state_attr('sensor.tablet_paolo_battery', 'unit_of_measurement')}} {% if is_state('sensor.tablet_paolo_charging', 'True')%} {{"\U0001F50C"}}{% endif %}
+              *{% if not is_state('sensor.tablet_paolo_lastupdate', 'unknown') %}{{state_attr('sensor.tablet_paolo_lastupdate', 'friendly_name')}}{% else %}Last update{% endif %}:* {{states('sensor.tablet_paolo_lastupdate')}} {{state_attr('sensor.tablet_paolo_lastupdate', 'unit_of_measurement')}}
             
             {{"\U0001F4F1"}} *Cell. Silvia*
-              *{% if states.sensor.cell_silvia_battery %}{{states.sensor.cell_silvia_battery.attributes.friendly_name}}{% else %}Battery{% endif %}:* {{states.sensor.cell_silvia_battery.state}} {{states.sensor.cell_silvia_battery.attributes.unit_of_measurement}} {% if states.sensor.cell_silvia_charging.state == "True"%} {{"\U0001F50C"}}{% endif %}
-              *{% if states.sensor.cell_silvia_lastupdate %}{{states.sensor.cell_silvia_lastupdate.attributes.friendly_name}}{% else %}Last update{% endif %}:* {{states.sensor.cell_silvia_lastupdate.state}} {{states.sensor.cell_silvia_lastupdate.attributes.unit_of_measurement}}
+              *{% if not is_state('sensor.cell_silvia_battery', 'unknown') %}{{state_attr('sensor.cell_silvia_battery', 'friendly_name')}}{% else %}Battery{% endif %}:* {{states('sensor.cell_silvia_battery')}} {{state_attr('sensor.cell_silvia_battery', 'unit_of_measurement')}} {% if is_state('sensor.cell_silvia_charging', 'True')%} {{"\U0001F50C"}}{% endif %}
+              *{% if not is_state('sensor.cell_silvia_lastupdate', 'unknown') %}{{state_attr('sensor.cell_silvia_lastupdate', 'friendly_name')}}{% else %}Last update{% endif %}:* {{states('sensor.cell_silvia_lastupdate')}} {{state_attr('sensor.cell_silvia_lastupdate', 'unit_of_measurement')}}
         inline_keyboard:
           - "\U0001F4AB Refresh:/sensors_mobiledevices, \U0001F519 Go back:/sensors"
 
@@ -1209,24 +1209,24 @@
         message_id: "last"
         chat_id: "{{ trigger.event.data.user_id }}"
         message: >
-          *- Qnap sensors -*{% if states.binary_sensor.online_nas_qnap and states.binary_sensor.online_nas_qnap.state == "on"%}
-            *Model:* {% if states.sensor.nas_attr_model %}{{states.sensor.nas_attr_model.state}}{% else %}N/A{% endif %}
-            *Uptime:* {% if states.sensor.nas_attr_uptime %}{{states.sensor.nas_attr_uptime.state}}{% else %}N/A{% endif %}
+          *- Qnap sensors -*{% if not is_state('binary_sensor.online_nas_qnap', 'unknown') and is_state('binary_sensor.online_nas_qnap', 'on')%}
+            *Model:* {% if not is_state('sensor.nas_attr_model', 'unknown') %}{{states('sensor.nas_attr_model')}}{% else %}N/A{% endif %}
+            *Uptime:* {% if not is_state('sensor.nas_attr_uptime', 'unknown') %}{{states('sensor.nas_attr_uptime')}}{% else %}N/A{% endif %}
             *Temperature*
-              *System:* {% if states.sensor.nas_system_temperature %}{{states.sensor.nas_system_temperature.state}} {{states.sensor.nas_system_temperature.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
-              *Drive 1:* {% if states.sensor.nas_temperature_drive_0_1 %}{{states.sensor.nas_temperature_drive_0_1.state}} {{states.sensor.nas_temperature_drive_0_1.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
-              *Drive 2:* {% if states.sensor.nas_temperature_drive_0_2 %}{{states.sensor.nas_temperature_drive_0_2.state}} {{states.sensor.nas_temperature_drive_0_2.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
+              *System:* {% if not is_state('sensor.nas_system_temperature', 'unknown') %}{{states('sensor.nas_system_temperature')}} {{state_attr('sensor.nas_system_temperature', 'unit_of_measurement')}}{% else %}N/A{% endif %}
+              *Drive 1:* {% if not is_state('sensor.nas_temperature_drive_0_1', 'unknown') %}{{states('sensor.nas_temperature_drive_0_1')}} {{state_attr('sensor.nas_temperature_drive_0_1', 'unit_of_measurement')}}{% else %}N/A{% endif %}
+              *Drive 2:* {% if not is_state('sensor.nas_temperature_drive_0_2', 'unknown') %}{{states('sensor.nas_temperature_drive_0_2')}} {{state_attr('sensor.nas_temperature_drive_0_2', 'unit_of_measurement')}}{% else %}N/A{% endif %}
             *Memory*
-              *Used memory:* {% if states.sensor.nas_memory_used %}{{states.sensor.nas_memory_used.state}} {{states.sensor.nas_memory_used.attributes.unit_of_measurement}}{% else %}N/A{% endif %} ({% if states.sensor.nas_memory_usage %}{{states.sensor.nas_memory_usage.state}} {{states.sensor.nas_memory_usage.attributes.unit_of_measurement}}{% else %}N/A{% endif %})
-              *Available memory:* {% if states.sensor.nas_memory_available %}{{states.sensor.nas_memory_available.state}} {{states.sensor.nas_memory_available.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
+              *Used memory:* {% if not is_state('sensor.nas_memory_used', 'unknown') %}{{states('sensor.nas_memory_used')}} {{state_attr('sensor.nas_memory_used', 'unit_of_measurement')}}{% else %}N/A{% endif %} ({% if not is_state('sensor.nas_memory_usage', 'unknown') %}{{states('sensor.nas_memory_usage')}} {{state_attr('sensor.nas_memory_usage', 'unit_of_measurement')}}{% else %}N/A{% endif %})
+              *Available memory:* {% if not is_state('sensor.nas_memory_available', 'unknown') %}{{states('sensor.nas_memory_available')}} {{state_attr('sensor.nas_memory_available', 'unit_of_measurement')}}{% else %}N/A{% endif %}
             *Usage*
-              *CPU:* {% if states.sensor.nas_cpu_usage %}{{states.sensor.nas_cpu_usage.state}} {{states.sensor.nas_cpu_usage.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
-              *Used space:* {% if states.sensor.nas_used_space_volume1 %}{{states.sensor.nas_used_space_volume1.state}} {{states.sensor.nas_used_space_volume1.attributes.unit_of_measurement}}{% else %}N/A{% endif %} ({% if states.sensor.nas_volume_used_volume1 %}{{states.sensor.nas_volume_used_volume1.state}}{{states.sensor.nas_volume_used_volume1.attributes.unit_of_measurement}}%{% else %}N/A{% endif %})
-              *Free space:* {% if states.sensor.nas_free_space_volume1 %}{{states.sensor.nas_free_space_volume1.state}} {{states.sensor.nas_free_space_volume1.attributes.unit_of_measurement}}{% else %}N/A{% endif %}
+              *CPU:* {% if not is_state('sensor.nas_cpu_usage', 'unknown') %}{{states('sensor.nas_cpu_usage')}} {{state_attr('sensor.nas_cpu_usage', 'unit_of_measurement')}}{% else %}N/A{% endif %}
+              *Used space:* {% if not is_state('sensor.nas_used_space_volume1', 'unknown') %}{{states('sensor.nas_used_space_volume1')}} {{state_attr('sensor.nas_used_space_volume1', 'unit_of_measurement')}}{% else %}N/A{% endif %} ({% if not is_state('sensor.nas_volume_used_volume1', 'unknown') %}{{states('sensor.nas_volume_used_volume1')}}{{state_attr('sensor.nas_volume_used_volume1', 'unit_of_measurement')}}%{% else %}N/A{% endif %})
+              *Free space:* {% if not is_state('sensor.nas_free_space_volume1', 'unknown') %}{{states('sensor.nas_free_space_volume1')}} {{state_attr('sensor.nas_free_space_volume1', 'unit_of_measurement')}}{% else %}N/A{% endif %}
             *Health*
-              *System:* {% if states.sensor.nas_status %}{{states.sensor.nas_status.state}}{% else %}N/A{% endif %}
-              *Drive 1 (SMART):* {% if states.sensor.nas_smart_status_drive_0_1 %}{{states.sensor.nas_smart_status_drive_0_1.state}}{% else %}N/A{% endif %}
-              *Drive 2 (SMART):* {% if states.sensor.nas_smart_status_drive_0_2 %}{{states.sensor.nas_smart_status_drive_0_2.state}}{% else %}N/A{% endif %}
+              *System:* {% if not is_state('sensor.nas_status', 'unknown') %}{{states('sensor.nas_status')}}{% else %}N/A{% endif %}
+              *Drive 1 (SMART):* {% if not is_state('sensor.nas_smart_status_drive_0_1', 'unknown') %}{{states('sensor.nas_smart_status_drive_0_1')}}{% else %}N/A{% endif %}
+              *Drive 2 (SMART):* {% if not is_state('sensor.nas_smart_status_drive_0_2', 'unknown') %}{{states('sensor.nas_smart_status_drive_0_2')}}{% else %}N/A{% endif %}
             {% else %}
             {{"\U0000274C"}} This device is OFF or not connected.
             {% endif %}
@@ -1248,14 +1248,14 @@
         message_id: "last"
         chat_id: "{{ trigger.event.data.user_id }}"
         message: >
-          *- AdGuard sensors -*{% if states.binary_sensor.online_adguard and states.binary_sensor.online_adguard.state == "on"%}
+          *- AdGuard sensors -*{% if not is_state('binary_sensor.online_adguard', 'unknown') and is_state('binary_sensor.online_adguard', 'on')%}
             *DNS queries:*
-              *Total:* {% if states.sensor.adguard_dns_queries %}{{states.sensor.adguard_dns_queries.state}}{% else %}N/A{% endif %}
-              *Blocked:* {% if states.sensor.adguard_dns_queries_blocked %}{{states.sensor.adguard_dns_queries_blocked.state}}{% else %}N/A{% endif %} ({% if states.sensor.adguard_dns_queries_blocked_ratio %}{{states.sensor.adguard_dns_queries_blocked_ratio.state}} {{states.sensor.adguard_dns_queries_blocked_ratio.attributes.unit_of_measurement}}{% else %}N/A{% endif %})
+              *Total:* {% if not is_state('sensor.adguard_dns_queries', 'unknown') %}{{states('sensor.adguard_dns_queries')}}{% else %}N/A{% endif %}
+              *Blocked:* {% if not is_state('sensor.adguard_dns_queries_blocked', 'unknown') %}{{states('sensor.adguard_dns_queries_blocked')}}{% else %}N/A{% endif %} ({% if not is_state('sensor.adguard_dns_queries_blocked_ratio', 'unknown') %}{{states('sensor.adguard_dns_queries_blocked_ratio')}} {{state_attr('sensor.adguard_dns_queries_blocked_ratio', 'unit_of_measurement')}}{% else %}N/A{% endif %})
             *Blocked Requests:*
-              *Parental Control:* {% if states.sensor.adguard_parental_control_blocked %}{{states.sensor.adguard_parental_control_blocked.state}}{% else %}N/A{% endif %}
-              *Safe Browsing:* {% if states.sensor.adguard_safe_browsing_blocked %}{{states.sensor.adguard_safe_browsing_blocked.state}}{% else %}N/A{% endif %}
-            *Rules Count:* {% if states.sensor.adguard_rules_count %}{{states.sensor.adguard_rules_count.state}}{% else %}N/A{% endif %}
+              *Parental Control:* {% if not is_state('sensor.adguard_parental_control_blocked', 'unknown') %}{{states('sensor.adguard_parental_control_blocked')}}{% else %}N/A{% endif %}
+              *Safe Browsing:* {% if not is_state('sensor.adguard_safe_browsing_blocked', 'unknown') %}{{states('sensor.adguard_safe_browsing_blocked')}}{% else %}N/A{% endif %}
+            *Rules Count:* {% if not is_state('sensor.adguard_rules_count', 'unknown') %}{{states('sensor.adguard_rules_count')}}{% else %}N/A{% endif %}
             {% else %}
             {{"\U0000274C"}} This device is OFF or not connected.
             {% endif %}
@@ -1276,7 +1276,7 @@
 #  - service: script.tts_speak
 #    data_template:
 #      message2say: >
-#        {{ states.input_text.speak_generic_msg.state }}
+#        {{ states('input_text.speak_generic_msg') }}
 ##      message2say: Ciao
 #      volume: "0.6"
 #  #Menu Telegram
@@ -1417,7 +1417,7 @@
         entity_id: input_select.home_mode
         state: "giorno"
       - condition: template
-        value_template: "{{ (states.sensor.time.state.split(':')[0] | int) == 13 or (states.sensor.time.state.split(':')[0] | int) == 14 }}"
+        value_template: "{{ (states('sensor.time').split(':')[0] | int) == 13 or (states('sensor.time').split(':')[0] | int) == 14 }}"
   action:
     #Wait before tts
     - delay: "00:40:00"
