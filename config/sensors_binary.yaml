@@ -99,6 +99,14 @@
       icon_template: "{% if is_state('switch.sonoff_4ch_1', 'on') or is_state('switch.sonoff_4ch_2', 'on') or is_state('switch.sonoff_4ch_3', 'on') %}mdi:water-pump{% else %}mdi:water-pump-off{% endif %}"
       value_template: "{{ is_state('switch.sonoff_4ch_1', 'on') or is_state('switch.sonoff_4ch_2', 'on') or is_state('switch.sonoff_4ch_3', 'on') }}"
 
+    hacs_updates:
+      friendly_name: HACS Updates
+      icon_template: hacs:hacs
+      entity_id: sensor.hacs
+      value_template: "{{ (states('sensor.hacs') | int) > 0 }}"
+      attribute_templates:
+        updates_count: "{{states('sensor.hacs') | int}}"
+
 - platform: mqtt  #https://www.home-assistant.io/integrations/binary_sensor.mqtt
   name: online_pzem_004t
   state_topic: "home/pzem_004t/tele/LWT"

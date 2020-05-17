@@ -8,7 +8,7 @@ This folder contains custom components and plugins, mainly installed through [Ho
 |:------|:------------|
 | **[Auto Entities](lovelace-auto-entities)**<BR>Automatically populate lovelace cards with entities matching certain criteria. | <https://github.com/thomasloven/lovelace-auto-entities> (version: 16) |
 | **[Battery State Card](battery-state-card)**<BR>Battery state card for Home Assistant. | <https://github.com/maxwroc/battery-state-card> (version: 1.2.1) |
-| **[Button Card](button-card)**<BR>Lovelace button-card for Home Assistant. | <https://github.com/custom-cards/button-card> (version: 3.3.3) |
+| **[Button Card](button-card)**<BR>Lovelace button-card for Home Assistant. | <https://github.com/custom-cards/button-card> (version: 3.3.4) |
 | **[card-mod](lovelace-card-mod)**<BR>Add CSS styles to (almost) any lovelace card. | <https://github.com/thomasloven/lovelace-card-mod> (version: 14) |
 | **[Card Tools](lovelace-card-tools)**<BR>A collection of tools to simplify creating custom cards for Home Assistant. | <https://github.com/thomasloven/lovelace-card-tools> (version: 10) |
 | **[Custom Header](custom-header)**<BR>Adds enhancements and customization options to Home Assistant's Lovelace header. | <https://github.com/maykar/custom-header> (version: 1.3.8) |

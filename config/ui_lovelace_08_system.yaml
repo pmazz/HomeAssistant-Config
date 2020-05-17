@@ -77,8 +77,16 @@ cards:
             entities:
               - entity: sensor.hass_installed_version
                 name: Installed
-          - entity: sensor.hacs
+          - entity: binary_sensor.hacs_updates
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
             name: HACS Components
+            show_state: false
+            state_color: true
+            entities:
+              - entity: binary_sensor.hacs_updates
+                attribute: updates_count
+                unit: pending update(s)
+                name: " "
           - entity: sensor.hass_db_filesize
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
             name: HASS Database
