@@ -2,11 +2,13 @@
 
 These are the physical devices currently in use.
 
-## Devices
+## My Devices
 
 * **[Hosting & Networking](#hosting-networking)**
+  * [Beelink X45](#beelink-x45)
   * [Raspberry Pi 3B](#raspberry-pi-3b)
-  * [Fritz!Box 3390](#fritzbox-3390)
+  * [Fritz!Box 7530](#fritzbox-7530)
+  * [Fritz!Repeater 1200](#fritzrepeater-1200)
   * [Qnap TS-251B](#qnap-ts-251b)
 * **[Printers](#printers)**
   * [Epson WF-3620](#epson-wf-3620)
@@ -27,6 +29,8 @@ These are the physical devices currently in use.
   * [Xiaomi Temperature and Humidity sensors](#xiaomi-temperature-and-humidity-sensors)
   * [Xiaomi Human Body sensors](#xiaomi-human-body-sensors)
   * [Xiaomi Door Window sensors](#xiaomi-window-door-sensors)
+* **[IP Cameras](#ip-cameras)**
+  * [YYZ100SS-XF+](#yyz100ss-xf)
   * [Sonoff GK-200MP2-B](#sonoff-gk-200mp2-b)
 * **[Energy](#energy)**
   * [Tecnoware ERA PLUS STRIP 800](#tecnoware-era-plus-strip-800)
@@ -35,6 +39,16 @@ These are the physical devices currently in use.
 ***
 
 ### Hosting & Networking
+
+#### Beelink X45
+
+![Beelink X45](.images/devices/beelink-x45.jpg "Beelink X45")
+
+Mini PC: Intel Gemini Lake Celeron J4105, 8GB LPDDR4/128GB SSD, 2.4/5.8 G Wi-Fi, 4K, LAN 1000 Mbps, 2 x HDMI, BT 4.0.  
+Proxmox VE installed as operating system.  
+How many: 1
+
+* <http://www.bee-link.com/portal.php?mod=view&aid=113>
 
 #### Raspberry Pi 3B
 
@@ -45,14 +59,23 @@ How many: 1 (plus a 3B+ used for various projects)
 
 * <https://www.raspberrypi.org/products/raspberry-pi-3-model-b>
 
-#### Fritz!Box 3390
+#### Fritz!Box 7530
 
-![Fritz!Box 3390](.images/devices/fritzbox-3390.png "Fritz!Box 3390")
+![Fritz!Box 7530](.images/devices/fritzbox-7530.png "Fritz!Box 7530")
 
-ADSL modem router.  
+ADSL/VDSL modem router.  
 How many: 1
 
-* <https://en.avm.de/service/fritzbox/fritzbox-3390>
+* <https://en.avm.de/service/fritzbox/fritzbox-7530>
+
+#### Fritz!Repeater 1200
+
+![Fritz!Repeater 1200](.images/devices/fritzrepeater-1200.png "Fritz!Repeater 1200")
+
+Mesh WiFi repeater.  
+How many: 1
+
+* <https://en.avm.de/products/fritzwlan/fritzrepeater-1200>
 
 #### Qnap TS-251B
 
@@ -187,7 +210,7 @@ How many: 2
 Smart plug (16A) with Schuko socket.  
 Originally handled by Tuya / Smart Life apps.  
 Flashed with [Tasmota](https://github.com/arendst/Sonoff-Tasmota) and [Tuya-Convert](https://github.com/ct-Open-Source/tuya-convert).  
-How many: 4
+                                      How many: 4
 
 * Tasmota Template
 
@@ -235,6 +258,19 @@ Zigbee sensor to detect opening/closing of doors and windows.
 How many: 1 (more soon...)
 
 * <https://xiaomi-mi.com/sockets-and-sensors/xiaomi-mi-door-window-sensors>
+
+***
+
+### IP Cameras
+
+#### YYZ100SS-XF+
+
+![YYZ100SS-XF+](.images/devices/yyz100ss-xf.jpg "YYZ100SS-XF+")
+
+Wireless IP security camera.  
+How many: 1
+
+* <https://www.itead.cc/sonoff-gk-200mp2-b-wi-fi-wireless-ip-security-camera.html>
 
 #### Sonoff GK-200MP2-B
 

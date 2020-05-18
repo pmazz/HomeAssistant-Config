@@ -8,6 +8,7 @@ These are the Home Assistant addons currently in use.
 * [Bitwarden RS](#bitwarden-rs)
 * [Dasshio](#dasshio)
 * [File Editor](#file-editor)
+* [MotionEye](#motioneye)
 * [Network UPS Tools](#network-ups-tools)
 * [Node-RED](#node-red)
 * [Samba share](#samba-share)
@@ -56,6 +57,17 @@ Addon to easily use Amazon Dash Buttons with Home Assistant.
 Simple browser-based file editor for Home Assistant.
 
 * <https://github.com/home-assistant/hassio-addons/blob/master/configurator/README.md>
+
+***
+
+### MotionEye
+
+![MotionEye](.images/addons/motioneye.png "MotionEye")
+
+Simple, elegant and feature-rich CCTV/NVR for your cameras.
+
+* <https://github.com/hassio-addons/addon-motioneye>
+* <https://github.com/ccrisan/motioneye>
 
 ***
 
