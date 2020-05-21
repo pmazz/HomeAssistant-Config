@@ -166,8 +166,6 @@ cards:
         color_thresholds:
           - value: 15
             color: Crimson
-          - value: 30
-            color: Gold
           - value: 100
             color: var(--paper-item-icon-color)
         collapse: 3
