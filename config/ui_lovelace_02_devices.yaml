@@ -51,7 +51,7 @@ cards:
             - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
               head:
                 type: section
-                label: Switches
+                label: Wifi Networks
               open: true
               items:
                 - entity: switch.wifi_24ghz
@@ -66,6 +66,20 @@ cards:
                   type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
                   state_color: true
                   users: Paolo
+            - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+              head:
+                type: section
+                label: Parental Control
+              open: true
+              items:
+                - entity: switch.fritzbox_profile_tablet_amazon_ale1
+                  name: Tablet Ale Blu - Internet
+                  icon: mdi:tablet-android
+                  state_color: true
+                - entity: switch.fritzbox_profile_tablet_amazon_ale2
+                  name: Tablet Ale Nero - Internet
+                  icon: mdi:tablet-android
+                  state_color: true
       - break
       - id: devices.adguard
         type: conditional  #https://www.home-assistant.io/lovelace/conditional

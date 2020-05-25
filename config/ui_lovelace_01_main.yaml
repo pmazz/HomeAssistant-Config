@@ -25,6 +25,15 @@ cards:
                 tap_action: 
                   action: url
                   url_path: http://fritz.box
+          - entity: binary_sensor.online_repeater_fritzbox
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: Repeater
+            state_color: true
+            entities:
+              - icon: mdi:open-in-new
+                tap_action: 
+                  action: url
+                  url_path: http://fritz.box
           - entity: binary_sensor.online_nas_qnap
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
             name: NAS

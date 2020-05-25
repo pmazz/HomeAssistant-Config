@@ -126,8 +126,14 @@
   scan_interval: 30
 
 - platform: ping  #https://www.home-assistant.io/components/binary_sensor.ping
-  host: !secret router_fritzbox_ip
+  host: !secret fritzbox_router_ip
   name: online_router_fritzbox
+  count: 2
+  scan_interval: 30
+
+- platform: ping  #https://www.home-assistant.io/components/binary_sensor.ping
+  host: !secret fritzbox_repeater_ip
+  name: online_repeater_fritzbox
   count: 2
   scan_interval: 30
 

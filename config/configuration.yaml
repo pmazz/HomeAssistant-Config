@@ -41,14 +41,15 @@ logger:  #https://www.home-assistant.io/components/logger
   default: !secret log_default
   logs:
     #homeassistant.components.sensor: debug
-    homeassistant.components.automation: debug
+    #homeassistant.components.automation: debug
     homeassistant.components.python_script: debug
-    #homeassistant.components.shell_command: debug
-    #homeassistant.components.media_player: debug
     #homeassistant.components.script.tts_speak: debug
-    homeassistant.components.script: debug
+    #homeassistant.components.script: debug
     #homeassistant.components.recorder: debug
     #homeassistant.components.device_tracker: debug
+    #homeassistant.loader: debug
+    #custom_components.fritzbox_tools.switch: debug
+    #custom_components.fritzbox_tools: debug
 
 python_script:  #https://www.home-assistant.io/components/python_script
 
@@ -242,6 +243,11 @@ octoprint:  #https://www.home-assistant.io/integrations/octoprint
   number_of_tools: 1
 
 fritzbox_tools:  #https://github.com/mammuth/ha-fritzbox-tools
-  host: !secret router_fritzbox_ip
-  username: !secret router_fritzbox_user
-  password: !secret router_fritzbox_pwd
+  host: !secret fritzbox_router_ip
+  username: !secret fritzbox_router_user
+  password: !secret fritzbox_router_pwd
+  devices: #Needed if you want to control the profiles of your network devices
+    - "tablet-amazon-ale1"
+    - "tablet-amazon-ale2"
+  profile_on: "Ale-Restricted" #Needed if you want to switch between device profiles ("Access Profile")
+  profile_off: "Blocked"  #Needed if you want to switch between device profiles ("Access Profile")

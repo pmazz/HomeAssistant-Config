@@ -184,6 +184,10 @@ binary_sensor.online_router_fritzbox:
   friendly_name: Router (FritzBox)
   icon: mdi:router-wireless
   device_class: connectivity
+binary_sensor.online_repeater_fritzbox:
+  friendly_name: Repeater (FritzBox)
+  icon: mdi:router-wireless
+  device_class: connectivity
 binary_sensor.online_nas_qnap:
   friendly_name: NAS (Qnap)
   icon: mdi:nas
