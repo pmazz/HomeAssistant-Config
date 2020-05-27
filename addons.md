@@ -7,6 +7,7 @@ These are the Home Assistant addons currently in use.
 * [AdGuard Home](#adguard-home)
 * [Bitwarden RS](#bitwarden-rs)
 * [Dasshio](#dasshio)
+* [Duck DNS](#duck-dns)
 * [File Editor](#file-editor)
 * [MotionEye](#motioneye)
 * [Network UPS Tools](#network-ups-tools)
@@ -50,13 +51,24 @@ Addon to easily use Amazon Dash Buttons with Home Assistant.
 
 ***
 
+### Duck DNS
+
+![Duck DNS](.images/addons/duckdns.png "Duck DNS")
+
+Free Dynamic DNS service with [Let's Encrypt](https://letsencrypt.org) support.
+
+* <https://github.com/home-assistant/hassio-addons/blob/master/duckdns>
+* <https://www.duckdns.org>
+
+***
+
 ### File Editor
 
 ![File Editor](.images/addons/file-editor.png "File Editor")
 
 Simple browser-based file editor for Home Assistant.
 
-* <https://github.com/home-assistant/hassio-addons/blob/master/configurator/README.md>
+* <https://github.com/home-assistant/hassio-addons/blob/master/configurator>
 
 ***
 
@@ -88,7 +100,7 @@ Flow-based programming for the Internet of Things.
 
 * <https://github.com/hassio-addons/addon-node-red>
 * <https://nodered.org>
-* [Check my Node-Red flows](node-red.md)
+* [My Node-Red flows](node-red.md)
 
 ***
 
