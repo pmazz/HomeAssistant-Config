@@ -182,24 +182,27 @@ cards:
               items:
                 - entity: binary_sensor.irrigation_status
                   state_color: true
-                - entity: switch.sonoff_4ch_1
-                  name: Zona 1
-                  type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
-                  icon: mdi:sprinkler-variant
-                  state_color: true
-                  users: Paolo
-                - entity: switch.sonoff_4ch_2
-                  name: Zona 2
-                  type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
-                  icon: mdi:sprinkler-variant
-                  state_color: true
-                  users: Paolo
-                - entity: switch.sonoff_4ch_3
-                  name: Zona 3
-                  type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
-                  icon: mdi:sprinkler-variant
-                  state_color: true
-                  users: Paolo
+                - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
+                  row: true
+                  card:
+                    entity: switch.sonoff_4ch_1
+                    name: Zona 1
+                    icon: mdi:sprinkler-variant
+                    state_color: true
+                - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
+                  row: true
+                  card:
+                    entity: switch.sonoff_4ch_2
+                    name: Zona 2
+                    icon: mdi:sprinkler-variant
+                    state_color: true
+                - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
+                  row: true
+                  card:
+                    entity: switch.sonoff_4ch_3
+                    name: Zona 3
+                    icon: mdi:sprinkler-variant
+                    state_color: true
             - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
               head:
                 type: section

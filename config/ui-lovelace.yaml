@@ -11,9 +11,9 @@ resources:
   - url: /hacsfiles/lovelace-state-switch/state-switch.js
     #https://github.com/thomasloven/lovelace-state-switch
     type: js
-  - url: /hacsfiles/lovelace-toggle-lock-entity-row/toggle-lock-entity-row.js
-    #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
-    type: js
+  - url: /hacsfiles/restriction-card/restriction-card.js
+    #https://github.com/iantrich/restriction-card
+    type: module
   - url: /hacsfiles/lovelace-card-tools/card-tools.js
     #https://github.com/thomasloven/lovelace-card-tools
     type: module

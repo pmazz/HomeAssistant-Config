@@ -66,12 +66,13 @@ cards:
                         name: "Boot #"
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
                 head: 
-                  entity: switch.sonoff_basic_3
-                  name: Sonoff Basic 3 (NAS)
-                  type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
-                  icon: mdi:nas
-                  state_color: true
-                  users: Paolo
+                  type: custom:restriction-card  #https://github.com/iantrich/restriction-card
+                  row: true
+                  card:
+                    entity: switch.sonoff_basic_3
+                    name: Sonoff Basic 3 (NAS)
+                    icon: mdi:nas
+                    state_color: true
                 items:
                   - entity: sensor.sonoff_basic_3_boot_count
                     type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row

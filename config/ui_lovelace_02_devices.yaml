@@ -54,32 +54,41 @@ cards:
                 label: Wifi Networks
               open: true
               items:
-                - entity: switch.wifi_24ghz
-                  type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
-                  state_color: true
-                  users: Paolo
-                - entity: switch.wifi_5ghz
-                  type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
-                  state_color: true
-                  users: Paolo
-                - entity: switch.wifi_guest
-                  type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
-                  state_color: true
-                  users: Paolo
+                - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
+                  row: true
+                  card:
+                    entity: switch.wifi_24ghz
+                    state_color: true
+                - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
+                  row: true
+                  card:
+                    entity: switch.wifi_5ghz
+                    state_color: true
+                - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
+                  row: true
+                  card:
+                    entity: switch.wifi_guest
+                    state_color: true
             - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
               head:
                 type: section
                 label: Parental Control
               open: true
               items:
-                - entity: switch.fritzbox_profile_tablet_amazon_ale1
-                  name: Tablet Ale Blu - Internet
-                  icon: mdi:tablet-android
-                  state_color: true
-                - entity: switch.fritzbox_profile_tablet_amazon_ale2
-                  name: Tablet Ale Nero - Internet
-                  icon: mdi:tablet-android
-                  state_color: true
+                - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
+                  row: true
+                  card:
+                    entity: switch.fritzbox_profile_tablet_amazon_ale1
+                    name: Tablet Ale Blu - Internet
+                    icon: mdi:tablet-android
+                    state_color: true
+                - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
+                  row: true
+                  card:
+                    entity: switch.fritzbox_profile_tablet_amazon_ale2
+                    name: Tablet Ale Nero - Internet
+                    icon: mdi:tablet-android
+                    state_color: true
       - break
       - id: devices.adguard
         type: conditional  #https://www.home-assistant.io/lovelace/conditional
@@ -115,10 +124,11 @@ cards:
                   unit: " "
             - entity: sensor.adguard_rules_count
               name: Rules Count
-            - entity: switch.adguard_protection
-              type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
-              state_color: true
-              users: Paolo
+            - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
+              row: true
+              card:
+                entity: switch.adguard_protection
+                state_color: true
       - id: devices.prusamini
         type: conditional  #https://www.home-assistant.io/lovelace/conditional
         conditions:

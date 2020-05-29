@@ -26,6 +26,33 @@ sensor.hass_ip_address:
   icon: mdi:earth-off
 
 
+#+++++++++++++++++++++++++++
+#+++++ Script entities +++++
+#+++++++++++++++++++++++++++
+script.hass_server_reboot:
+  can_cancel: true
+script.hass_server_shutdown:
+  can_cancel: true
+script.hass_reload_themes:
+  can_cancel: true
+script.hass_reload_customize:
+  can_cancel: true
+script.hass_reload_scripts:
+  can_cancel: true
+script.hass_reload_automations:
+  can_cancel: true
+script.hass_restart:
+  can_cancel: true
+script.hass_stop:
+  can_cancel: true
+script.hass_recorder_purge:
+  can_cancel: true
+script.config_commit_to_git:
+  can_cancel: true
+script.snapshot_full_create:
+  can_cancel: true
+
+
 #++++++++++++++++++++++++++
 #+++++ Router sensors +++++
 #++++++++++++++++++++++++++

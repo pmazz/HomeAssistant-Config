@@ -30,12 +30,14 @@ cards:
           - sensor.memory_free
           - sensor.hass_ip_address
           - type: section
-          - entity: script.hass_server_reboot
-            type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
-            users: Paolo
-          - entity: script.hass_server_shutdown
-            type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
-            users: Paolo
+          - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
+            row: true
+            card:
+              entity: script.hass_server_reboot
+          - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
+            row: true
+            card:
+              entity: script.hass_server_shutdown
       - id: system.broker_mqtt
         type: entities  #https://www.home-assistant.io/lovelace/entities
         title: MQTT Broker
@@ -111,27 +113,30 @@ cards:
               - sensor.hass_input_count
               - sensor.hass_script_count
           - type: section
-          - entity: script.hass_reload_themes
-            type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
-            users: Paolo
-          - entity: script.hass_reload_customize
-            type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
-            users: Paolo
-          - entity: script.hass_reload_scripts
-            type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
-            users: Paolo
-          - entity: script.hass_reload_automations
-            type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
-            users: Paolo
-          - entity: script.hass_restart
-            type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
-            users: Paolo
-          - entity: script.hass_stop
-            type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
-            users: Paolo
-          - entity: script.hass_recorder_purge
-            type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
-            users: Paolo
+          - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
+            row: true
+            card:
+              entity: script.hass_reload_themes
+          - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
+            row: true
+            card:
+              entity: script.hass_reload_customize
+          - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
+            row: true
+            card:
+              entity: script.hass_reload_scripts
+          - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
+            row: true
+            card:
+              entity: script.hass_reload_automations
+          - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
+            row: true
+            card:
+              entity: script.hass_restart
+          - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
+            row: true
+            card:
+              entity: script.hass_stop
       - break
       - id: system.configuration
         type: entities  #https://www.home-assistant.io/lovelace/entities
@@ -140,13 +145,19 @@ cards:
         entities:
           - entity: binary_sensor.home_anyone_in
             state_color: true
-          - entity: script.config_commit_to_git
-            type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
-            name: Commit config to Git (HA-Config-Live)
-            users: Paolo
-          - entity: script.snapshot_full_create
-            type: custom:toggle-lock-entity-row  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
-            users: Paolo
+          - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
+            row: true
+            card:
+              entity: script.config_commit_to_git
+              name: Commit config to Git (HA-Config-Live)
+          - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
+            row: true
+            card:
+              entity: script.snapshot_full_create
+          - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
+            row: true
+            card:
+              entity: script.hass_recorder_purge
       - id: system.commands
         type: entities  #https://www.home-assistant.io/lovelace/entities
         title: Commands
