@@ -38,6 +38,9 @@ resources:
   - url: /hacsfiles/button-card/button-card.js
     #https://github.com/custom-cards/button-card
     type: module
+  - url: /hacsfiles/battery-state-card/battery-state-card.js
+    #https://github.com/maxwroc/battery-state-card
+    type: module
 #+++++ TEST COMPONENTS +++++
 
 custom_header:  #https://github.com/maykar/custom-header

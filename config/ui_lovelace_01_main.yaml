@@ -93,37 +93,6 @@ cards:
                 tap_action: 
                   action: url
                   url_path: http://sonoff-4ch.local
-          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-            head:
-              type: section
-              label: Smart Plugs & Switches
-            open: true
-            items:
-              - entity: binary_sensor.online_sonoff_basic_1
-                state_color: true
-              - entity: binary_sensor.online_sonoff_basic_2
-                name: Sonoff Basic 2 (Tablet Paolo)
-                state_color: true
-              - entity: binary_sensor.online_sonoff_basic_3
-                name: Sonoff Basic 3 (NAS)
-                state_color: true
-              - entity: binary_sensor.online_smartplug_1
-                name: Smart Plug 1 (Cell. Silvia)
-                state_color: true
-              - entity: binary_sensor.online_smartplug_2
-                state_color: true
-              - entity: binary_sensor.online_smartplug_3
-                state_color: true
-              - entity: binary_sensor.online_smartplug_4
-                state_color: true
-              - entity: binary_sensor.online_smartplug_5
-                state_color: true
-              - entity: binary_sensor.online_smartplug_6
-                state_color: true
-              - entity: binary_sensor.online_smartplug_7
-                state_color: true
-              - entity: binary_sensor.online_smartplug_8
-                state_color: true
       - break
       - id: main.mobile_devices
         type: entities  #https://www.home-assistant.io/lovelace/entities
@@ -143,8 +112,9 @@ cards:
             name: Tablet Ale Nero
             state_color: true
       - id: main.batteries
-        type: custom:battery-state-card
+        type: custom:battery-state-card  #https://github.com/maxwroc/battery-state-card
         name: Batteries
+        secondary_info: last_changed
         entities:
           - entity: sensor.cell_paolo_battery
             name: Paolo's Phone
