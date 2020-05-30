@@ -26,6 +26,9 @@ resources:
   - url: /hacsfiles/custom-header/custom-header.js
     #https://github.com/maykar/custom-header
     type: module
+  - url: /hacsfiles/vertical-stack-in-card/vertical-stack-in-card.js
+    #https://github.com/custom-cards/vertical-stack-in-card
+    type: js
   - url: /hacsfiles/mini-graph-card/mini-graph-card-bundle.js
     #https://github.com/kalkih/mini-graph-card
     type: module
@@ -34,6 +37,9 @@ resources:
     type: module
   - url: /hacsfiles/lovelace-template-entity-row/template-entity-row.js
     #https://github.com/thomasloven/lovelace-template-entity-row
+    type: module
+  - url: /hacsfiles/lovelace-card-mod/card-mod.js
+    #https://github.com/thomasloven/lovelace-card-mod
     type: module
   - url: /hacsfiles/button-card/button-card.js
     #https://github.com/custom-cards/button-card
