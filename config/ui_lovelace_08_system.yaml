@@ -72,13 +72,18 @@ cards:
         title: Home Assistant
         show_header_toggle: false
         entities:
-          - entity: sensor.hass_available_version
+          - entity: binary_sensor.updater
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
             name: HASS Version
-            state_header: Available
+            show_state: false
+            state_color: true
+            icon: mdi:home-assistant
             entities:
               - entity: sensor.hass_installed_version
                 name: Installed
+              - entity: binary_sensor.updater
+                attribute: newest_version
+                name: Available
           - entity: binary_sensor.hacs_updates
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
             name: HACS Components
@@ -89,6 +94,7 @@ cards:
                 attribute: updates_count
                 unit: pending update(s)
                 name: " "
+          - type: section
           - entity: sensor.hass_db_filesize
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
             name: HASS Database
@@ -174,6 +180,7 @@ cards:
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
             name: HomeAssistant-Config
             show_state: false
+            icon: mdi:github-circle
             entities:
               - attribute: html_url
                 icon: mdi:open-in-new
@@ -190,6 +197,7 @@ cards:
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
             name: ps_hassio_entities
             show_state: false
+            icon: mdi:github-circle
             entities:
               - attribute: html_url
                 icon: mdi:open-in-new

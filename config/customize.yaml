@@ -196,9 +196,6 @@ binary_sensor.workday:
 sensor.hass_installed_version:
   friendly_name: Installed Version
   icon: mdi:home-assistant
-sensor.hass_available_version:
-  friendly_name: Available Version
-  icon: mdi:home-assistant
 sensor.hass_db_filesize:
   friendly_name: DB Size
   icon: mdi:database

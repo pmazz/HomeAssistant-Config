@@ -7,10 +7,10 @@ title: Casa Mazzini
 resources:
   - url: /hacsfiles/lovelace-fold-entity-row/fold-entity-row.js
     #https://github.com/thomasloven/lovelace-fold-entity-row
-    type: js
+    type: module
   - url: /hacsfiles/lovelace-state-switch/state-switch.js
     #https://github.com/thomasloven/lovelace-state-switch
-    type: js
+    type: module
   - url: /hacsfiles/restriction-card/restriction-card.js
     #https://github.com/iantrich/restriction-card
     type: module
@@ -19,16 +19,16 @@ resources:
     type: module
   - url: /hacsfiles/lovelace-layout-card/layout-card.js
     #https://github.com/thomasloven/lovelace-layout-card
-    type: js
+    type: module
   - url: /hacsfiles/lovelace-multiple-entity-row/multiple-entity-row.js
     #https://github.com/benct/lovelace-multiple-entity-row
-    type: js
+    type: module
   - url: /hacsfiles/custom-header/custom-header.js
     #https://github.com/maykar/custom-header
     type: module
   - url: /hacsfiles/vertical-stack-in-card/vertical-stack-in-card.js
     #https://github.com/custom-cards/vertical-stack-in-card
-    type: js
+    type: module
   - url: /hacsfiles/mini-graph-card/mini-graph-card-bundle.js
     #https://github.com/kalkih/mini-graph-card
     type: module
@@ -58,6 +58,7 @@ custom_header:  #https://github.com/maykar/custom-header
   indicator_top: true
   hide_tabs: 'system'
   hidden_tab_redirect: true
+  chevron: false
   exceptions:
     - conditions:
         user: Paolo
@@ -83,42 +84,3 @@ views:
   - !include ui_lovelace_08_system.yaml
   - !include ui_lovelace_09_weather.yaml
   - !include ui_lovelace_10_other.yaml
-
-
-  #+++++++++++++++++++++++++++++++
-  #+++++ VIEW -> Test Xiaomi +++++
-  #+++++++++++++++++++++++++++++++
-  - path: test_xiaomi
-    title: Test Xiaomi
-    cards:
-      - id: test_xiaomi.container
-        type: custom:layout-card  #https://github.com/thomasloven/lovelace-layout-card
-        layout: vertical
-        max_columns: 1
-        cards:
-          - id: test_xiaomi.1
-            type: entities  #https://www.home-assistant.io/lovelace/entities
-            title: Xiaomi stuff
-            show_header_toggle: false
-            entities:
-              - entity: light.xiaomi_hub_light
-                secondary_info: last-changed
-              - entity: sensor.xiaomi_hub_illumination
-                secondary_info: last-changed
-              - type: section
-              - entity: sensor.xiaomi_humidity_1
-                secondary_info: last-changed
-              - entity: sensor.xiaomi_temperature_1
-                secondary_info: last-changed
-              - type: section
-              - entity: binary_sensor.xiaomi_door_window_1
-                secondary_info: last-changed
-              - type: section
-              - entity: binary_sensor.xiaomi_motion_1
-                secondary_info: last-changed
-              - entity: sensor.xiaomi_motion_1_illumination
-                secondary_info: last-changed
-              - entity: binary_sensor.xiaomi_motion_2
-                secondary_info: last-changed
-              - entity: sensor.xiaomi_motion_2_illumination
-                secondary_info: last-changed

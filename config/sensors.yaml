@@ -69,24 +69,14 @@
 #+++++ Home Assistant sensors +++++
 #++++++++++++++++++++++++++++++++++
 - platform: version  #https://www.home-assistant.io/components/sensor.version
-  #HA Installed Version
   name: hass_installed_version
 
-- platform: rest  #https://www.home-assistant.io/components/sensor.rest
-  #HA Last Version Available
-  name: hass_available_version
-  resource: https://pypi.python.org/pypi/homeassistant/json
-  value_template: "{{ value_json.info.version }}"
-  scan_interval: 3600
-
 - platform: command_line  #https://www.home-assistant.io/components/sensor.command_line
-  #Internal IP addresses
   name: hass_ip_address
   command: ifconfig | sed -n -e 's/:127\.0\.0\.1 //g' -e 's/ *inet addr:\([0-9.]\+\).*/\1/gp'
   scan_interval: 600
 
 - platform: command_line  #https://www.home-assistant.io/components/sensor.command_line
-  #DB File Size
   name: hass_db_filesize
   command: stat -c %s '/config/home-assistant_v2.db'
   unit_of_measurement: "MB"
@@ -94,7 +84,6 @@
   scan_interval: 600
 
 - platform: sql  #https://www.home-assistant.io/integrations/sql
-  #Nr of states/events in DB
   queries:
     - name: hass_db_states_count
       query: "SELECT COUNT(entity_id) AS states_count FROM states"
@@ -108,7 +97,6 @@
 #+++++ Raspberry sensors +++++
 #+++++++++++++++++++++++++++++
 - platform: systemmonitor  #https://www.home-assistant.io/components/sensor.systemmonitor
-  #Raspberry sensors
   resources:
     - type: processor_use
     - type: memory_use
@@ -124,7 +112,6 @@
     - type: last_boot
 
 - platform: template  #https://www.home-assistant.io/components/sensor.template
-  #Template sensors
   sensors:
     last_boot_verbose:
       icon_template: mdi:clock
@@ -175,12 +162,10 @@
         {%- endif -%}
 
 - platform: uptime  #https://www.home-assistant.io/components/sensor.uptime
-  #Hours since last_boot
   name: Time Online
   unit_of_measurement: minutes
 
 - platform: command_line  #https://www.home-assistant.io/components/sensor.command_line
-  #CPU Temperature
   name: CPU temperature
   #NB: Questo sensore (cpu_temperature) mostra sempre 'Unknown' quando HA gira su macchina virtuale
   command: "cat /sys/class/thermal/thermal_zone0/temp"
@@ -189,7 +174,6 @@
   scan_interval: 120
 
 - platform: time_date  #https://www.home-assistant.io/components/sensor.time_date
-  #Current date/time
   display_options:
     - date
     - time

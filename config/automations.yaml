@@ -35,16 +35,16 @@
   alias: bot_notify_ha_newrelease
   trigger:
     - platform: state
-      entity_id: sensor.hass_available_version
+      entity_id: binary_sensor.updater
   condition:
     - condition: template
-      value_template: "{{ not is_state('sensor.hass_available_version', 'unavailable') and states('sensor.hass_available_version') != states('sensor.hass_installed_version') }}"
+      value_template: "{{ is_state('binary_sensor.updater', 'on') and states('binary_sensor.updater') != states('sensor.hass_installed_version') }}"
   action:
     #Notifica Telegram
     - service: notify.telegram_paolo
       data_template: 
         title: "\U0001F389 Home Assistant Update"
-        message: "Version *{{states('sensor.hass_available_version')}}* is now available (installed: {{states('sensor.hass_installed_version')}})."
+        message: "Version *{{state_attr('binary_sensor.updater', 'newest_version')}}* is now available (installed: {{states('sensor.hass_installed_version')}})."
 
 - id: bot_notify_hacs_updates
   #Notifica agg.ti HACS
@@ -1134,7 +1134,7 @@
             *HASS*
               *DB Size:* {% if not is_state('sensor.hass_db_filesize', 'unknown') %}{{states('sensor.hass_db_filesize')}} {{state_attr('sensor.hass_db_filesize', 'unit_of_measurement')}}{% else %}N/A{% endif %}
               *Inst. version:* {{ states('sensor.hass_installed_version') }}
-              *Avail. version:* {{ states('sensor.hass_available_version') }}
+              *Avail. version:* {{ state_attr('binary_sensor.updater', 'newest_version') }}
               *HACS updates:* {{ states('sensor.hacs') }}
             *Internal IPs:*
               {% if not is_state('sensor.hass_ip_address', 'unknown') %}{{states('sensor.hass_ip_address') | replace("\n","\n    ")}}{% else %}N/A{% endif %}

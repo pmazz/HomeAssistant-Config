@@ -20,7 +20,7 @@ raspberry:
   - title: Installed HA version
     description: "{{ states('sensor.hass_installed_version') }}"
   - title: Available HA version
-    description: "{{ states('sensor.hass_available_version') }}"
+    description: "{{ state_attr('binary_sensor.updater', 'newest_version') }}"
   - title: "{% if not is_state('sensor.hass_ip_address', 'unknown') %}{{state_attr('sensor.hass_ip_address', 'friendly_name')}}{% else %}Internal IPs{% endif %}"
     description: "{% if not is_state('sensor.hass_ip_address', 'unknown') %}{{states('sensor.hass_ip_address') | replace('\n',', ')}}{% else %}N/A{% endif %}"
 
