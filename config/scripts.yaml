@@ -128,7 +128,8 @@ hass_reload_themes:
         message: "\U000023F3 Reload Themes in corso..."
     #Invoke Service
     - service: frontend.reload_themes
-    #Force themes reload in input_select.hass_selected_theme
+    - delay: '00:00:05' #Used to maintain switch toggled for a while
+    #Force themes reload in input_select.hass_theme_selected
     - event: pm_reload_themes
     #Notifica Telegram 2
     - service: telegram_bot.edit_message

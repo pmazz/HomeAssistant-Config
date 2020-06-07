@@ -131,6 +131,7 @@ recorder:  #https://www.home-assistant.io/components/recorder
       - input_text.webhook_last_script
       - sensor.pzem_power
       - sensor.pzem_energy_entire_day
+      - input_text.hass_theme_selected_saved
 
 #Enables a map showing the location of tracked devices
 #map:

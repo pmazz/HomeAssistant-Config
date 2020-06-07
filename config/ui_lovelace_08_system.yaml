@@ -170,7 +170,7 @@ cards:
         show_header_toggle: false
         entities:
           - input_select.home_mode
-          - input_select.hass_selected_theme
+          - input_select.hass_theme_selected
       - id: system.github
         type: entities  #https://www.home-assistant.io/lovelace/entities
         title: GitHub Repos

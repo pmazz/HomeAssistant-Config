@@ -11,6 +11,10 @@
 #  name: Text 4
 #  mode: password
 
+hass_theme_selected_saved:
+  name: Selected Theme
+  icon: mdi:theme-light-dark
+
 event_ale_letto:
   name: Avviso
   icon: mdi:comment-alert-outline

@@ -29,6 +29,10 @@
     - service: notify.telegram_paolo
       data:
         message: "\U0001F44D Home Assistant avviato."
+    #Wait for Node-Red addon to boot (and catch the event)
+    - delay: "00:00:15"
+    #Force themes reload in input_select.hass_theme_selected
+    - event: pm_reload_themes
 
 - id: bot_notify_ha_newrelease
   #Notifica agg.to Home Assistant rilasciato
@@ -173,16 +177,28 @@
     - service: script.persistent_notification_dismiss
 
 - id: theme_set
-  #Selezione tema
   alias: theme_set
   trigger:
     - platform: state
-      entity_id: input_select.hass_selected_theme
+      entity_id: input_select.hass_theme_selected
   action:
-    #Set Theme
+    - service: input_text.set_value
+      data_template:
+        entity_id: input_text.hass_theme_selected_saved
+        value: "{{ states('input_select.hass_theme_selected') }}"
     - service: frontend.set_theme
       data_template:
-        name: "{{ states('input_select.hass_selected_theme') }}"
+        name: "{{ states('input_select.hass_theme_selected') }}"
+
+# - id: hass_theme_selected_saved___changed
+#   alias: hass_theme_selected_saved changed
+#   trigger:
+#     - platform: state
+#       entity_id: input_text.hass_theme_selected_saved
+#   action:
+#     - service: notify.telegram_paolo
+#       data_template:
+#         message: "(HA) txt set\r hass\_theme\_selected: {{ states('input_select.hass_theme_selected') }}\r hass\_theme\_selected\_txt: {{ states('input_text.hass_theme_selected_saved') }}"
 
 
 #++++++++++++++++++++++++++++++++++

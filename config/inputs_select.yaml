@@ -1,13 +1,9 @@
 #https://www.home-assistant.io/components/input_select
 
-hass_selected_theme:
+hass_theme_selected:
   name: Select the theme to apply
   options:
     - default
-    - midnight
-    - dark_cyan
-    - dark_red
-  initial: default
   icon: mdi:theme-light-dark
 
 home_mode:
