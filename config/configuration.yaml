@@ -36,6 +36,8 @@ http:  #https://www.home-assistant.io/integrations/http
   login_attempts_threshold: 3
   ip_ban_enabled: false
 
+api:  #https://www.home-assistant.io/integrations/api
+
 logger:  #https://www.home-assistant.io/components/logger
   #Log Severities: notset, debug, info, warn, warning, error, fatal, critical
   default: !secret log_default

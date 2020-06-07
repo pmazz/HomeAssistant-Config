@@ -119,6 +119,17 @@ cards:
               - sensor.hass_input_count
               - sensor.hass_script_count
           - type: section
+          - entity: sensor.hass_config_check_result
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: Check Configuration
+            show_state: false
+            entities:
+              - entity: script.hass_config_check_result
+                toggle: true
+                name: []
+            secondary_info:
+              entity: sensor.hass_config_check_result
+              name: []
           - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
             row: true
             card:

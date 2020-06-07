@@ -31,6 +31,10 @@
         message: "\U0001F44D Home Assistant avviato."
     #Wait for Node-Red addon to boot (and catch the event)
     - delay: "00:00:15"
+    #Force switches custom configuration reload
+    - event: pm_init_switches
+    #Wait for the next event to raise
+    - delay: "00:00:05"
     #Force themes reload in input_select.hass_theme_selected
     - event: pm_reload_themes
 

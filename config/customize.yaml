@@ -51,6 +51,8 @@ script.config_commit_to_git:
   can_cancel: true
 script.snapshot_full_create:
   can_cancel: true
+script.hass_config_check_result:
+  can_cancel: true
 
 
 #++++++++++++++++++++++++++

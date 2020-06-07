@@ -17,6 +17,16 @@ persistent_notification_dismiss:
 #++++++++++++++++++++++++++++++++++
 #+++++ System related scripts +++++
 #++++++++++++++++++++++++++++++++++
+hass_config_check_result:
+  #Home Assistant - Reload Customize
+  alias: Check Configuration
+  icon: mdi:settings-box
+  description: "Check Home Assistant configuration files (via Node-Red)."
+  sequence:
+    #Invoke Service
+    - event: pm_check_config
+    - delay: '00:00:05' #Used to maintain switch toggled for a while
+
 hass_reload_customize:
   #Home Assistant - Reload Customize
   alias: Reload Customize

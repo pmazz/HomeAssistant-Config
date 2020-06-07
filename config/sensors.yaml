@@ -92,6 +92,15 @@
       query: "SELECT COUNT(event_id) AS events_count FROM events"
       column: events_count
 
+- platform: template  #https://www.home-assistant.io/components/sensor.template
+  sensors:
+    hass_config_check_result:
+      friendly_name: Check Config Result
+      icon_template: mdi:file-check-outline
+      value_template: ""
+      attribute_templates:
+        error: ""
+
 
 #+++++++++++++++++++++++++++++
 #+++++ Raspberry sensors +++++
