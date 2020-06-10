@@ -45,6 +45,15 @@ resources:
     #https://github.com/maxwroc/battery-state-card
     type: module
 #+++++ TEST COMPONENTS +++++
+  - url: /hacsfiles/lovelace-gui-sandbox/gui-sandbox.js
+    #https://github.com/thomasloven/lovelace-gui-sandbox
+    type: module
+  - url: /hacsfiles/lovelace-home-feed-card/lovelace-home-feed-card.js
+    #https://github.com/gadgetchnnel/lovelace-home-feed-card
+    type: module
+  - url: /hacsfiles/custom-cards/lovelace-theme-maker-master/theme-maker.js
+    #https://github.com/thomasloven/lovelace-theme-maker
+    type: module
 
 custom_header:  #https://github.com/maykar/custom-header
   # disabled_mode: true
@@ -81,3 +90,18 @@ views:
   - !include ui_lovelace_08_system.yaml
   - !include ui_lovelace_09_weather.yaml
   - !include ui_lovelace_10_other.yaml
+
+
+  #+++++++++++++++++++++++
+  #+++++ VIEW -> Lab +++++
+  #+++++++++++++++++++++++
+  - path: lab
+    title: LAB
+    cards:
+      - type: custom:gui-sandbox  #https://github.com/thomasloven/lovelace-gui-sandbox
+      - type: custom:home-feed-card  #https://github.com/gadgetchnnel/lovelace-home-feed-card
+        title: Notifications
+        show_empty: true
+        more_info_on_tap: true
+        # id_filter: ^home_feed_.*
+      - type: custom:theme-maker  #https://github.com/thomasloven/lovelace-theme-maker
