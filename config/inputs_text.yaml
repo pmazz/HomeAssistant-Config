@@ -46,3 +46,80 @@ webhook_last_script:
 mqtt_last_service:
   name: Last service (via MQTT)
   icon: mdi:script-text-outline
+
+switch_name_sonoff_basic_1:
+  name: Sonoff Basic 1 - Name
+  icon: mdi:dip-switch
+switch_icon_sonoff_basic_1:
+  name: Sonoff Basic 1 - Icon
+  icon: mdi:star-box
+
+switch_name_sonoff_basic_2:
+  name: Sonoff Basic 2 - Name
+  icon: mdi:dip-switch
+switch_icon_sonoff_basic_2:
+  name: Sonoff Basic 2 - Icon
+  icon: mdi:star-box
+
+switch_name_sonoff_basic_3:
+  name: Sonoff Basic 3 - Name
+  icon: mdi:dip-switch
+switch_icon_sonoff_basic_3:
+  name: Sonoff Basic 3 - Icon
+  icon: mdi:star-box
+
+switch_name_smartplug_1:
+  name: Smart Plug 1 - Name
+  icon: mdi:dip-switch
+switch_icon_smartplug_1:
+  name: Smart Plug 1 - Icon
+  icon: mdi:star-box
+
+switch_name_smartplug_2:
+  name: Smart Plug 2 - Name
+  icon: mdi:dip-switch
+switch_icon_smartplug_2:
+  name: Smart Plug 2 - Icon
+  icon: mdi:star-box
+
+switch_name_smartplug_3:
+  name: Smart Plug 3 - Name
+  icon: mdi:dip-switch
+switch_icon_smartplug_3:
+  name: Smart Plug 3 - Icon
+  icon: mdi:star-box
+
+switch_name_smartplug_4:
+  name: Smart Plug 4 - Name
+  icon: mdi:dip-switch
+switch_icon_smartplug_4:
+  name: Smart Plug 4 - Icon
+  icon: mdi:star-box
+
+switch_name_smartplug_5:
+  name: Smart Plug 5 - Name
+  icon: mdi:dip-switch
+switch_icon_smartplug_5:
+  name: Smart Plug 5 - Icon
+  icon: mdi:star-box
+
+switch_name_smartplug_6:
+  name: Smart Plug 6 - Name
+  icon: mdi:dip-switch
+switch_icon_smartplug_6:
+  name: Smart Plug 6 - Icon
+  icon: mdi:star-box
+
+switch_name_smartplug_7:
+  name: Smart Plug 7 - Name
+  icon: mdi:dip-switch
+switch_icon_smartplug_7:
+  name: Smart Plug 7 - Icon
+  icon: mdi:star-box
+
+switch_name_smartplug_8:
+  name: Smart Plug 8 - Name
+  icon: mdi:dip-switch
+switch_icon_smartplug_8:
+  name: Smart Plug 8 - Icon
+  icon: mdi:star-box

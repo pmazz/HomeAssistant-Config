@@ -477,33 +477,36 @@
         chat_id: "{{ trigger.event.data.user_id }}"
         message: >
           *- Plugs & Switches -*
-            *{% if not is_state('switch.smartplug_1', 'unknown') %}{{state_attr('switch.smartplug_1', 'friendly_name')}}{% else %}Smart Plug 1{% endif %}:*
-            {%- if is_state('switch.smartplug_1', 'unavailable') %} {{""}} Disconnected{% elif is_state('switch.smartplug_1', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.smartplug_1', 'off') %} {{"\U0000274C"}} Off{% endif %}
-            *{% if not is_state('switch.smartplug_2', 'unknown') %}{{state_attr('switch.smartplug_2', 'friendly_name')}}{% else %}Smart Plug 2{% endif %}:*
-            {%- if is_state('switch.smartplug_2', 'unavailable') %} {{""}} Disconnected{% elif is_state('switch.smartplug_2', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.smartplug_2', 'off') %} {{"\U0000274C"}} Off{% endif %}
-            *{% if not is_state('switch.smartplug_3', 'unknown') %}{{state_attr('switch.smartplug_3', 'friendly_name')}}{% else %}Smart Plug 3{% endif %}:*
-            {%- if is_state('switch.smartplug_3', 'unavailable') %} {{""}} Disconnected{% elif is_state('switch.smartplug_3', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.smartplug_3', 'off') %} {{"\U0000274C"}} Off{% endif %}
-            *{% if not is_state('switch.sonoff_basic_1', 'unknown') %}{{state_attr('switch.sonoff_basic_1', 'friendly_name')}}{% else %}Sonoff Basic 1{% endif %}:*
-            {%- if is_state('switch.sonoff_basic_1', 'unavailable') %} {{""}} Disconnected{% elif is_state('switch.sonoff_basic_1', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.sonoff_basic_1', 'off') %} {{"\U0000274C"}} Off{% endif %}
-            *{% if not is_state('switch.sonoff_basic_2', 'unknown') %}{{state_attr('switch.sonoff_basic_2', 'friendly_name')}}{% else %}Sonoff Basic 2{% endif %}:*
-            {%- if is_state('switch.sonoff_basic_2', 'unavailable') %} {{""}} Disconnected{% elif is_state('switch.sonoff_basic_2', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.sonoff_basic_2', 'off') %} {{"\U0000274C"}} Off{% endif %}
-            *{% if not is_state('switch.sonoff_basic_3', 'unknown') %}{{state_attr('switch.sonoff_basic_3', 'friendly_name')}}{% else %}Sonoff Basic 3{% endif %}:*
-            {%- if is_state('switch.sonoff_basic_3', 'unavailable') %} {{""}} Disconnected{% elif is_state('switch.sonoff_basic_3', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.sonoff_basic_3', 'off') %} {{"\U0000274C"}} Off{% endif %}
-            *{% if not is_state('switch.sonoff_dual_1', 'unknown') %}{{state_attr('switch.sonoff_dual_1', 'friendly_name')}}{% else %}Sonoff Dual 1{% endif %}:*
-            {%- if is_state('switch.sonoff_dual_1', 'unavailable') %} {{""}} Disconnected{% elif is_state('switch.sonoff_dual_1', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.sonoff_dual_1', 'off') %} {{"\U0000274C"}} Off{% endif %}
-            *{% if not is_state('switch.sonoff_dual_2', 'unknown') %}{{state_attr('switch.sonoff_dual_2', 'friendly_name')}}{% else %}Sonoff Dual 2{% endif %}:*
-            {%- if is_state('switch.sonoff_dual_2', 'unavailable') %} {{""}} Disconnected{% elif is_state('switch.sonoff_dual_2', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.sonoff_dual_2', 'off') %} {{"\U0000274C"}} Off{% endif %}
-            *{% if not is_state('switch.sonoff_4ch_1', 'unknown') %}{{state_attr('switch.sonoff_4ch_1', 'friendly_name')}}{% else %}Sonoff 4ch 1{% endif %}:*
-            {%- if is_state('switch.sonoff_4ch_1', 'unavailable') %} {{""}} Disconnected{% elif is_state('switch.sonoff_4ch_1', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.sonoff_4ch_1', 'off') %} {{"\U0000274C"}} Off{% endif %}
-            *{% if not is_state('switch.sonoff_4ch_2', 'unknown') %}{{state_attr('switch.sonoff_4ch_2', 'friendly_name')}}{% else %}Sonoff 4ch 2{% endif %}:*
-            {%- if is_state('switch.sonoff_4ch_2', 'unavailable') %} {{""}} Disconnected{% elif is_state('switch.sonoff_4ch_2', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.sonoff_4ch_2', 'off') %} {{"\U0000274C"}} Off{% endif %}
-            *{% if not is_state('switch.sonoff_4ch_3', 'unknown') %}{{state_attr('switch.sonoff_4ch_3', 'friendly_name')}}{% else %}Sonoff 4ch 3{% endif %}:*
-            {%- if is_state('switch.sonoff_4ch_3', 'unavailable') %} {{""}} Disconnected{% elif is_state('switch.sonoff_4ch_3', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.sonoff_4ch_3', 'off') %} {{"\U0000274C"}} Off{% endif %}
-            *{% if not is_state('switch.sonoff_4ch_4', 'unknown') %}{{state_attr('switch.sonoff_4ch_4', 'friendly_name')}}{% else %}Sonoff 4ch 4{% endif %}:*
-            {%- if is_state('switch.sonoff_4ch_4', 'unavailable') %} {{""}} Disconnected{% elif is_state('switch.sonoff_4ch_4', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.sonoff_4ch_4', 'off') %} {{"\U0000274C"}} Off{% endif %}
+            *Sonoff Basic*
+              *{% if not is_state('switch.sonoff_basic_1', 'unknown') %}{{state_attr('switch.sonoff_basic_1', 'friendly_name')}}{% else %}Sonoff Basic 1{% endif %}:*
+              {%- if is_state('switch.sonoff_basic_1', 'unavailable') %} {{"\U000026D4"}} Disconnected{% elif is_state('switch.sonoff_basic_1', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.sonoff_basic_1', 'off') %} {{"\U0000274C"}} Off{% endif %}
+              *{% if not is_state('switch.sonoff_basic_2', 'unknown') %}{{state_attr('switch.sonoff_basic_2', 'friendly_name')}}{% else %}Sonoff Basic 2{% endif %}:*
+              {%- if is_state('switch.sonoff_basic_2', 'unavailable') %} {{"\U000026D4"}} Disconnected{% elif is_state('switch.sonoff_basic_2', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.sonoff_basic_2', 'off') %} {{"\U0000274C"}} Off{% endif %}
+              *{% if not is_state('switch.sonoff_basic_3', 'unknown') %}{{state_attr('switch.sonoff_basic_3', 'friendly_name')}}{% else %}Sonoff Basic 3{% endif %}:*
+              {%- if is_state('switch.sonoff_basic_3', 'unavailable') %} {{"\U000026D4"}} Disconnected{% elif is_state('switch.sonoff_basic_3', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.sonoff_basic_3', 'off') %} {{"\U0000274C"}} Off{% endif %}
+            *Smart Plug*
+              *{% if not is_state('switch.smartplug_1', 'unknown') %}{{state_attr('switch.smartplug_1', 'friendly_name')}}{% else %}Smart Plug 1{% endif %}:*
+              {%- if is_state('switch.smartplug_1', 'unavailable') %} {{"\U000026D4"}} Disconnected{% elif is_state('switch.smartplug_1', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.smartplug_1', 'off') %} {{"\U0000274C"}} Off{% endif %}
+              *{% if not is_state('switch.smartplug_2', 'unknown') %}{{state_attr('switch.smartplug_2', 'friendly_name')}}{% else %}Smart Plug 2{% endif %}:*
+              {%- if is_state('switch.smartplug_2', 'unavailable') %} {{"\U000026D4"}} Disconnected{% elif is_state('switch.smartplug_2', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.smartplug_2', 'off') %} {{"\U0000274C"}} Off{% endif %}
+              *{% if not is_state('switch.smartplug_3', 'unknown') %}{{state_attr('switch.smartplug_3', 'friendly_name')}}{% else %}Smart Plug 3{% endif %}:*
+              {%- if is_state('switch.smartplug_3', 'unavailable') %} {{"\U000026D4"}} Disconnected{% elif is_state('switch.smartplug_3', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.smartplug_3', 'off') %} {{"\U0000274C"}} Off{% endif %}
+              *{% if not is_state('switch.smartplug_4', 'unknown') %}{{state_attr('switch.smartplug_4', 'friendly_name')}}{% else %}Smart Plug 3{% endif %}:*
+              {%- if is_state('switch.smartplug_4', 'unavailable') %} {{"\U000026D4"}} Disconnected{% elif is_state('switch.smartplug_4', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.smartplug_4', 'off') %} {{"\U0000274C"}} Off{% endif %}
+              *{% if not is_state('switch.smartplug_5', 'unknown') %}{{state_attr('switch.smartplug_5', 'friendly_name')}}{% else %}Smart Plug 3{% endif %}:*
+              {%- if is_state('switch.smartplug_5', 'unavailable') %} {{"\U000026D4"}} Disconnected{% elif is_state('switch.smartplug_5', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.smartplug_5', 'off') %} {{"\U0000274C"}} Off{% endif %}
+              *{% if not is_state('switch.smartplug_6', 'unknown') %}{{state_attr('switch.smartplug_6', 'friendly_name')}}{% else %}Smart Plug 3{% endif %}:*
+              {%- if is_state('switch.smartplug_6', 'unavailable') %} {{"\U000026D4"}} Disconnected{% elif is_state('switch.smartplug_6', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.smartplug_6', 'off') %} {{"\U0000274C"}} Off{% endif %}
+              *{% if not is_state('switch.smartplug_7', 'unknown') %}{{state_attr('switch.smartplug_7', 'friendly_name')}}{% else %}Smart Plug 3{% endif %}:*
+              {%- if is_state('switch.smartplug_7', 'unavailable') %} {{"\U000026D4"}} Disconnected{% elif is_state('switch.smartplug_7', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.smartplug_7', 'off') %} {{"\U0000274C"}} Off{% endif %}
+              *{% if not is_state('switch.smartplug_8', 'unknown') %}{{state_attr('switch.smartplug_8', 'friendly_name')}}{% else %}Smart Plug 3{% endif %}:*
+              {%- if is_state('switch.smartplug_8', 'unavailable') %} {{"\U000026D4"}} Disconnected{% elif is_state('switch.smartplug_8', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.smartplug_8', 'off') %} {{"\U0000274C"}} Off{% endif %}
         inline_keyboard:
-          - "\U0001F50C Plug 1:/switches_toggle_plug1, \U0001F50C Plug 2:/switches_toggle_plug2, \U0001F50C Plug 3:/switches_toggle_plug3"
-          - "\U0001F50C Sonoff 1:/switches_toggle_sonoff_basic_1, \U0001F50C Sonoff 2:/switches_toggle_sonoff_basic_2, \U0001F50C Sonoff 3:/switches_toggle_sonoff_basic_3"
+          - "{%- if is_state('switch.sonoff_basic_1', 'on') %}{{'\U0001F7E1'}}{% elif is_state('switch.sonoff_basic_1', 'off') %}{{'\U000026AB'}}{% else %}{{'\U000026D4'}}{% endif %} {{state_attr('switch.sonoff_basic_1', 'friendly_name')}}:/switches_toggle_sonoff_basic_1, {%- if is_state('switch.sonoff_basic_2', 'on') %}{{'\U0001F7E1'}}{% elif is_state('switch.sonoff_basic_2', 'off') %}{{'\U000026AB'}}{% else %}{{'\U000026D4'}}{% endif %} {{state_attr('switch.sonoff_basic_2', 'friendly_name')}}:/switches_toggle_sonoff_basic_2"
+          - "{%- if is_state('switch.smartplug_1', 'on') %}{{'\U0001F7E1'}}{% elif is_state('switch.smartplug_1', 'off') %}{{'\U000026AB'}}{% else %}{{'\U000026D4'}}{% endif %} {{state_attr('switch.smartplug_1', 'friendly_name')}}:/switches_toggle_plug1, {%- if is_state('switch.smartplug_2', 'on') %}{{'\U0001F7E1'}}{% elif is_state('switch.smartplug_2', 'off') %}{{'\U000026AB'}}{% else %}{{'\U000026D4'}}{% endif %} {{state_attr('switch.smartplug_2', 'friendly_name')}}:/switches_toggle_plug2"
+          - "{%- if is_state('switch.smartplug_3', 'on') %}{{'\U0001F7E1'}}{% elif is_state('switch.smartplug_3', 'off') %}{{'\U000026AB'}}{% else %}{{'\U000026D4'}}{% endif %} {{state_attr('switch.smartplug_3', 'friendly_name')}}:/switches_toggle_plug3, {%- if is_state('switch.smartplug_4', 'on') %}{{'\U0001F7E1'}}{% elif is_state('switch.smartplug_4', 'off') %}{{'\U000026AB'}}{% else %}{{'\U000026D4'}}{% endif %} {{state_attr('switch.smartplug_4', 'friendly_name')}}:/switches_toggle_plug4"
+          - "{%- if is_state('switch.smartplug_5', 'on') %}{{'\U0001F7E1'}}{% elif is_state('switch.smartplug_5', 'off') %}{{'\U000026AB'}}{% else %}{{'\U000026D4'}}{% endif %} {{state_attr('switch.smartplug_5', 'friendly_name')}}:/switches_toggle_plug5, {%- if is_state('switch.smartplug_6', 'on') %}{{'\U0001F7E1'}}{% elif is_state('switch.smartplug_6', 'off') %}{{'\U000026AB'}}{% else %}{{'\U000026D4'}}{% endif %} {{state_attr('switch.smartplug_6', 'friendly_name')}}:/switches_toggle_plug6"
+          - "{%- if is_state('switch.smartplug_7', 'on') %}{{'\U0001F7E1'}}{% elif is_state('switch.smartplug_7', 'off') %}{{'\U000026AB'}}{% else %}{{'\U000026D4'}}{% endif %} {{state_attr('switch.smartplug_7', 'friendly_name')}}:/switches_toggle_plug7, {%- if is_state('switch.smartplug_8', 'on') %}{{'\U0001F7E1'}}{% elif is_state('switch.smartplug_8', 'off') %}{{'\U000026AB'}}{% else %}{{'\U000026D4'}}{% endif %} {{state_attr('switch.smartplug_8', 'friendly_name')}}:/switches_toggle_plug8"
           - "\U0001F53C Cover Up:/switches_cover_up, \U000023F9 Stop:/switches_cover_stop, \U0001F53D Cover Down:/switches_cover_down"
           - "\U0001F4AB Refresh:/switches, \U0001F519 Go back:/goback_main"
 
@@ -564,6 +567,101 @@
         message: >
           {% if is_state('switch.smartplug_3', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({{states('switch.smartplug_3') | upper()}}).{% endif %}
 
+- id: bot_cmd_switches_toggle_plug4
+  #Bot - Comando /switches_toggle_plug4
+  alias: bot_cmd_switches_toggle_plug4
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/switches_toggle_plug4"
+  action:
+    #Toggle the plug
+    - service: switch.toggle
+      data:
+        entity_id: switch.smartplug_4
+    #Notifica Telegram
+    - service: notify.telegram_paolo
+      data_template:
+        message: >
+          {% if is_state('switch.smartplug_4', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({{states('switch.smartplug_4') | upper()}}).{% endif %}
+
+- id: bot_cmd_switches_toggle_plug5
+  #Bot - Comando /switches_toggle_plug5
+  alias: bot_cmd_switches_toggle_plug5
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/switches_toggle_plug5"
+  action:
+    #Toggle the plug
+    - service: switch.toggle
+      data:
+        entity_id: switch.smartplug_5
+    #Notifica Telegram
+    - service: notify.telegram_paolo
+      data_template:
+        message: >
+          {% if is_state('switch.smartplug_5', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({{states('switch.smartplug_5') | upper()}}).{% endif %}
+
+- id: bot_cmd_switches_toggle_plug6
+  #Bot - Comando /switches_toggle_plug6
+  alias: bot_cmd_switches_toggle_plug6
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/switches_toggle_plug6"
+  action:
+    #Toggle the plug
+    - service: switch.toggle
+      data:
+        entity_id: switch.smartplug_6
+    #Notifica Telegram
+    - service: notify.telegram_paolo
+      data_template:
+        message: >
+          {% if is_state('switch.smartplug_6', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({{states('switch.smartplug_6') | upper()}}).{% endif %}
+
+- id: bot_cmd_switches_toggle_plug7
+  #Bot - Comando /switches_toggle_plug7
+  alias: bot_cmd_switches_toggle_plug7
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/switches_toggle_plug7"
+  action:
+    #Toggle the plug
+    - service: switch.toggle
+      data:
+        entity_id: switch.smartplug_7
+    #Notifica Telegram
+    - service: notify.telegram_paolo
+      data_template:
+        message: >
+          {% if is_state('switch.smartplug_7', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({{states('switch.smartplug_7') | upper()}}).{% endif %}
+
+- id: bot_cmd_switches_toggle_plug8
+  #Bot - Comando /switches_toggle_plug8
+  alias: bot_cmd_switches_toggle_plug8
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: "/switches_toggle_plug8"
+  action:
+    #Toggle the plug
+    - service: switch.toggle
+      data:
+        entity_id: switch.smartplug_8
+    #Notifica Telegram
+    - service: notify.telegram_paolo
+      data_template:
+        message: >
+          {% if is_state('switch.smartplug_8', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({{states('switch.smartplug_8') | upper()}}).{% endif %}
+
 - id: bot_cmd_switches_toggle_sonoff_basic_1
   #Bot - Comando /switches_toggle_sonoff_basic_1
   alias: bot_cmd_switches_toggle_sonoff_basic_1
@@ -602,24 +700,24 @@
         message: >
           {% if is_state('switch.sonoff_basic_2', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({% if is_state('switch.sonoff_basic_2', 'on') %}OFF{% else %}ON{% endif %}).{% endif %}
 
-- id: bot_cmd_switches_toggle_sonoff_basic_3
-  #Bot - Comando /switches_toggle_sonoff_basic_3
-  alias: bot_cmd_switches_toggle_sonoff_basic_3
-  trigger:
-    platform: event
-    event_type: telegram_callback
-    event_data:
-      data: "/switches_toggle_sonoff_basic_3"
-  action:
-    #Toggle the plug
-    - service: switch.toggle
-      data:
-        entity_id: switch.sonoff_basic_3
-    #Notifica Telegram
-    - service: notify.telegram_paolo
-      data_template:
-        message: >
-          {% if is_state('switch.sonoff_basic_3', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({% if is_state('switch.sonoff_basic_3', 'on') %}OFF{% else %}ON{% endif %}).{% endif %}
+# - id: bot_cmd_switches_toggle_sonoff_basic_3
+#   #Bot - Comando /switches_toggle_sonoff_basic_3
+#   alias: bot_cmd_switches_toggle_sonoff_basic_3
+#   trigger:
+#     platform: event
+#     event_type: telegram_callback
+#     event_data:
+#       data: "/switches_toggle_sonoff_basic_3"
+#   action:
+#     #Toggle the plug
+#     - service: switch.toggle
+#       data:
+#         entity_id: switch.sonoff_basic_3
+#     #Notifica Telegram
+#     - service: notify.telegram_paolo
+#       data_template:
+#         message: >
+#           {% if is_state('switch.sonoff_basic_3', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({% if is_state('switch.sonoff_basic_3', 'on') %}OFF{% else %}ON{% endif %}).{% endif %}
 
 - id: bot_cmd_switches_cover_up
   #Bot - Comando /switches_cover_up

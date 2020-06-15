@@ -25,8 +25,6 @@ cards:
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
                 head: 
                   entity: switch.sonoff_basic_1
-                  name: Sonoff Basic 1 (Coperta Silvia)
-                  icon: mdi:bed-empty
                   state_color: true
                 items:
                   - entity: sensor.sonoff_basic_1_boot_count
@@ -43,11 +41,13 @@ cards:
                         name: Wifi
                       - entity: sensor.sonoff_basic_1_boot_count
                         name: "Boot #"
+                  - entity: input_text.switch_name_sonoff_basic_1
+                    name: Name
+                  - entity: input_text.switch_icon_sonoff_basic_1
+                    name: Icon
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
                 head: 
                   entity: switch.sonoff_basic_2
-                  name: Sonoff Basic 2 (Tablet Paolo)
-                  icon: mdi:tablet-android
                   state_color: true
                 items:
                   - entity: sensor.sonoff_basic_2_boot_count
@@ -64,14 +64,16 @@ cards:
                         name: Wifi
                       - entity: sensor.sonoff_basic_2_boot_count
                         name: "Boot #"
+                  - entity: input_text.switch_name_sonoff_basic_2
+                    name: Name
+                  - entity: input_text.switch_icon_sonoff_basic_2
+                    name: Icon
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
                 head: 
                   type: custom:restriction-card  #https://github.com/iantrich/restriction-card
                   row: true
                   card:
                     entity: switch.sonoff_basic_3
-                    name: Sonoff Basic 3 (NAS)
-                    icon: mdi:nas
                     state_color: true
                 items:
                   - entity: sensor.sonoff_basic_3_boot_count
@@ -88,6 +90,10 @@ cards:
                         name: Wifi
                       - entity: sensor.sonoff_basic_3_boot_count
                         name: "Boot #"
+                  - entity: input_text.switch_name_sonoff_basic_3
+                    name: Name
+                  - entity: input_text.switch_icon_sonoff_basic_3
+                    name: Icon
           - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
             head:
               type: section
@@ -97,8 +103,6 @@ cards:
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
                 head: 
                   entity: switch.smartplug_1
-                  name: Smart Plug 1 (Cell. Silvia)
-                  icon: mdi:cellphone
                   state_color: true
                 items:
                   - entity: sensor.smart_plug_1_boot_count
@@ -115,6 +119,10 @@ cards:
                         name: Wifi
                       - entity: sensor.smart_plug_1_boot_count
                         name: "Boot #"
+                  - entity: input_text.switch_name_smartplug_1
+                    name: Name
+                  - entity: input_text.switch_icon_smartplug_1
+                    name: Icon
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
                 head: 
                   entity: switch.smartplug_2
@@ -134,6 +142,10 @@ cards:
                         name: Wifi
                       - entity: sensor.smart_plug_2_boot_count
                         name: "Boot #"
+                  - entity: input_text.switch_name_smartplug_2
+                    name: Name
+                  - entity: input_text.switch_icon_smartplug_2
+                    name: Icon
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
                 head: 
                   entity: switch.smartplug_3
@@ -153,6 +165,10 @@ cards:
                         name: Wifi
                       - entity: sensor.smart_plug_3_boot_count
                         name: "Boot #"
+                  - entity: input_text.switch_name_smartplug_3
+                    name: Name
+                  - entity: input_text.switch_icon_smartplug_3
+                    name: Icon
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
                 head: 
                   entity: switch.smartplug_4
@@ -172,6 +188,10 @@ cards:
                         name: Wifi
                       - entity: sensor.smart_plug_4_boot_count
                         name: "Boot #"
+                  - entity: input_text.switch_name_smartplug_4
+                    name: Name
+                  - entity: input_text.switch_icon_smartplug_4
+                    name: Icon
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
                 head: 
                   entity: switch.smartplug_5
@@ -191,6 +211,11 @@ cards:
                         name: Wifi
                       - entity: sensor.smart_plug_5_boot_count
                         name: "Boot #"
+                  - type: section
+                  - entity: input_text.switch_name_smartplug_5
+                    name: Name
+                  - entity: input_text.switch_icon_smartplug_5
+                    name: Icon
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
                 head: 
                   entity: switch.smartplug_6
@@ -210,6 +235,10 @@ cards:
                         name: Wifi
                       - entity: sensor.smart_plug_6_boot_count
                         name: "Boot #"
+                  - entity: input_text.switch_name_smartplug_6
+                    name: Name
+                  - entity: input_text.switch_icon_smartplug_6
+                    name: Icon
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
                 head: 
                   entity: switch.smartplug_7
@@ -229,6 +258,10 @@ cards:
                         name: Wifi
                       - entity: sensor.smart_plug_7_boot_count
                         name: "Boot #"
+                  - entity: input_text.switch_name_smartplug_7
+                    name: Name
+                  - entity: input_text.switch_icon_smartplug_7
+                    name: Icon
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
                 head: 
                   entity: switch.smartplug_8
@@ -248,6 +281,10 @@ cards:
                         name: Wifi
                       - entity: sensor.smart_plug_8_boot_count
                         name: "Boot #"
+                  - entity: input_text.switch_name_smartplug_8
+                    name: Name
+                  - entity: input_text.switch_icon_smartplug_8
+                    name: Icon
       - break
       - id: events.cover
         type: conditional  #https://www.home-assistant.io/lovelace/conditional
@@ -358,7 +395,7 @@ cards:
                     - input_select.event_daytype_cover_down
       - break
       - type: custom:vertical-stack-in-card  #https://github.com/custom-cards/vertical-stack-in-card
-        title: Sonoff Switches
+        title: Switch Configuration
         cards:
           - id: events.toggle_sonoff_basic_1
             type: conditional  #https://www.home-assistant.io/lovelace/conditional
@@ -369,7 +406,7 @@ cards:
               type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
               head:
                 type: section
-                label: Sonoff Basic 1 (Coperta Silvia)
+                label: Sonoff Basic 1
               open: true
               items:
                 - input_select.event_starttype_sonoff_basic_1
@@ -452,7 +489,7 @@ cards:
               type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
               head:
                 type: section
-                label: Sonoff Basic 2 (Tablet Paolo)
+                label: Sonoff Basic 2
               open: true
               items:
                 - input_select.event_starttype_sonoff_basic_2
@@ -520,9 +557,6 @@ cards:
                       ha-card > hui-conditional-card > hui-section-row.head {
                         padding-left: 16px;
                       }
-      - type: custom:vertical-stack-in-card  #https://github.com/custom-cards/vertical-stack-in-card
-        title: Smart Plugs
-        cards:
           - id: events.toggle_smartplug_1
             type: conditional  #https://www.home-assistant.io/lovelace/conditional
             conditions:

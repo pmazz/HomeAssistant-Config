@@ -100,6 +100,8 @@
       value_template: ""
       attribute_templates:
         error: ""
+        error_type: ""
+        last_checked: ""
 
 
 #+++++++++++++++++++++++++++++
