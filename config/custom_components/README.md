@@ -7,6 +7,7 @@ This folder contains custom integrations, mainly installed through [Home Assista
 | Item | Description |
 |:-----|:------------|
 | **[FRITZ!Box Tools](fritzbox_tools)**<BR>Control guest wifi, port forwardings, device profiles, ... all from within Home Assistant. | <https://github.com/mammuth/ha-fritzbox-tools> (version: 1.9.1) |
-| **[HACS (Home Assistant Community Store)](hacs)**<BR>Manage (Install, track, upgrade) and discover custom elements for Home Assistant. | <https://github.com/hacs/integration> (version: 1.1.0) |
+| **[HACS (Home Assistant Community Store)](hacs)**<BR>Manage (Install, track, upgrade) and discover custom elements for Home Assistant. | <https://github.com/hacs/integration> (version: 1.1.1) |
 | **[ICS](ics)**<BR>Integration that displays the next event of an ics calendar. | <https://github.com/KoljaWindeler/ics> (version: 0.4) |
+| **[Landroid Cloud](landroid_cloud)**<BR>Integration to connect your cloud connected Worx Landroid mowers to Home Assistant. | <https://github.com/MTrab/landroid_cloud> (version: 1.6.2) |
 | **[UI Logs](uilogs)**<BR>Custom panel that show colorful logs for Home Assistant, its addons and the supervisor. | <https://github.com/custom-components/uilogs> (commit: 7e8f883) |

@@ -94,6 +94,99 @@
 
 - platform: template  #https://www.home-assistant.io/components/sensor.template
   sensors:
+    hass_sensor_count:
+      entity_id: []
+      friendly_name: Sensors
+      icon_template: mdi:cogs
+      value_template: >-
+        {%- set domains = ['sensor', 'binary_sensor'] -%}
+        {% set item_nr = namespace(value=0) %}
+        {%- for domain in domains -%}
+          {%- for item in states[domain] -%}
+            {% if loop.first %}
+              {% set item_nr.value = item_nr.value + loop.length %}
+            {% endif %}
+          {%- endfor -%}
+        {%- endfor -%}
+        {{item_nr.value}}
+    hass_automation_count:
+      entity_id: []
+      friendly_name: Automations
+      icon_template: mdi:cogs
+      value_template: >
+        {%- set domains = ['automation'] -%}
+        {% set item_nr = namespace(value=0) %}
+        {%- for domain in domains -%}
+          {%- for item in states[domain] -%}
+            {% if loop.first %}
+              {% set item_nr.value = item_nr.value + loop.length %}
+            {% endif %}
+          {%- endfor -%}
+        {%- endfor -%}
+        {{item_nr.value}}
+    hass_script_count:
+      entity_id: []
+      friendly_name: Scripts
+      icon_template: mdi:cogs
+      value_template: >
+        {%- set domains = ['script'] -%}
+        {% set item_nr = namespace(value=0) %}
+        {%- for domain in domains -%}
+          {%- for item in states[domain] -%}
+            {% if loop.first %}
+              {% set item_nr.value = item_nr.value + loop.length %}
+            {% endif %}
+          {%- endfor -%}
+        {%- endfor -%}
+        {{item_nr.value}}
+    hass_switch_count:
+      entity_id: []
+      friendly_name: Switches
+      icon_template: mdi:cogs
+      value_template: >
+        {%- set domains = ['switch'] -%}
+        {% set item_nr = namespace(value=0) %}
+        {%- for domain in domains -%}
+          {%- for item in states[domain] -%}
+            {% if loop.first %}
+              {% set item_nr.value = item_nr.value + loop.length %}
+            {% endif %}
+          {%- endfor -%}
+        {%- endfor -%}
+        {{item_nr.value}}
+    hass_lights_count:
+      entity_id: []
+      friendly_name: Lights
+      icon_template: mdi:cogs
+      value_template: >
+        {%- set domains = ['light'] -%}
+        {% set item_nr = namespace(value=0) %}
+        {%- for domain in domains -%}
+          {%- for item in states[domain] -%}
+            {% if loop.first %}
+              {% set item_nr.value = item_nr.value + loop.length %}
+            {% endif %}
+          {%- endfor -%}
+        {%- endfor -%}
+        {{item_nr.value}}
+    hass_input_count:
+      entity_id: []
+      friendly_name: Inputs
+      icon_template: mdi:cogs
+      value_template: >
+        {%- set domains = ['input_boolean', 'input_datetime', 'input_number', 'input_select', 'input_text'] -%}
+        {% set item_nr = namespace(value=0) %}
+        {%- for domain in domains -%}
+          {%- for item in states[domain] -%}
+            {% if loop.first %}
+              {% set item_nr.value = item_nr.value + loop.length %}
+            {% endif %}
+          {%- endfor -%}
+        {%- endfor -%}
+        {{item_nr.value}}
+
+- platform: template  #https://www.home-assistant.io/components/sensor.template
+  sensors:
     hass_config_check_result:
       friendly_name: Check Config Result
       icon_template: mdi:file-check-outline
@@ -188,99 +281,6 @@
   display_options:
     - date
     - time
-
-- platform: template  #https://www.home-assistant.io/components/sensor.template
-  sensors:
-    hass_sensor_count:
-      entity_id: []
-      friendly_name: Sensors
-      icon_template: mdi:cogs
-      value_template: >-
-        {%- set domains = ['sensor', 'binary_sensor'] -%}
-        {% set item_nr = namespace(value=0) %}
-        {%- for domain in domains -%}
-          {%- for item in states[domain] -%}
-            {% if loop.first %}
-              {% set item_nr.value = item_nr.value + loop.length %}
-            {% endif %}
-          {%- endfor -%}
-        {%- endfor -%}
-        {{item_nr.value}}
-    hass_automation_count:
-      entity_id: []
-      friendly_name: Automations
-      icon_template: mdi:cogs
-      value_template: >
-        {%- set domains = ['automation'] -%}
-        {% set item_nr = namespace(value=0) %}
-        {%- for domain in domains -%}
-          {%- for item in states[domain] -%}
-            {% if loop.first %}
-              {% set item_nr.value = item_nr.value + loop.length %}
-            {% endif %}
-          {%- endfor -%}
-        {%- endfor -%}
-        {{item_nr.value}}
-    hass_script_count:
-      entity_id: []
-      friendly_name: Scripts
-      icon_template: mdi:cogs
-      value_template: >
-        {%- set domains = ['script'] -%}
-        {% set item_nr = namespace(value=0) %}
-        {%- for domain in domains -%}
-          {%- for item in states[domain] -%}
-            {% if loop.first %}
-              {% set item_nr.value = item_nr.value + loop.length %}
-            {% endif %}
-          {%- endfor -%}
-        {%- endfor -%}
-        {{item_nr.value}}
-    hass_switch_count:
-      entity_id: []
-      friendly_name: Switches
-      icon_template: mdi:cogs
-      value_template: >
-        {%- set domains = ['switch'] -%}
-        {% set item_nr = namespace(value=0) %}
-        {%- for domain in domains -%}
-          {%- for item in states[domain] -%}
-            {% if loop.first %}
-              {% set item_nr.value = item_nr.value + loop.length %}
-            {% endif %}
-          {%- endfor -%}
-        {%- endfor -%}
-        {{item_nr.value}}
-    hass_lights_count:
-      entity_id: []
-      friendly_name: Lights
-      icon_template: mdi:cogs
-      value_template: >
-        {%- set domains = ['light'] -%}
-        {% set item_nr = namespace(value=0) %}
-        {%- for domain in domains -%}
-          {%- for item in states[domain] -%}
-            {% if loop.first %}
-              {% set item_nr.value = item_nr.value + loop.length %}
-            {% endif %}
-          {%- endfor -%}
-        {%- endfor -%}
-        {{item_nr.value}}
-    hass_input_count:
-      entity_id: []
-      friendly_name: Inputs
-      icon_template: mdi:cogs
-      value_template: >
-        {%- set domains = ['input_boolean', 'input_datetime', 'input_number', 'input_select', 'input_text'] -%}
-        {% set item_nr = namespace(value=0) %}
-        {%- for domain in domains -%}
-          {%- for item in states[domain] -%}
-            {% if loop.first %}
-              {% set item_nr.value = item_nr.value + loop.length %}
-            {% endif %}
-          {%- endfor -%}
-        {%- endfor -%}
-        {{item_nr.value}}
 
 
 #+++++++++++++++++++++++
