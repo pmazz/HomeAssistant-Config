@@ -105,11 +105,11 @@ cards:
             state_color: true
           - entity: binary_sensor.online_tablet_paolo
             state_color: true
-          - entity: binary_sensor.online_tablet_ale1
-            name: Tablet Ale Blu
+          - entity: binary_sensor.online_tablet_ale
+            name: Tablet Ale (Blu)
             state_color: true
-          - entity: binary_sensor.online_tablet_ale2
-            name: Tablet Ale Nero
+          - entity: binary_sensor.online_tablet_silvia
+            name: Tablet Silvia (Nero)
             state_color: true
       - id: main.batteries
         type: custom:battery-state-card  #https://github.com/maxwroc/battery-state-card
@@ -134,6 +134,12 @@ cards:
               entity_id: sensor.tablet_paolo_charging
               state: "True"
               color: var(--paper-item-icon-active-color)
+          - entity: sensor.tablet_silvia_battery
+            name: Silvia's Tablet
+            charging_state:
+              entity_id: sensor.tablet_silvia_charging
+              state: "True"
+              color: var(--paper-item-icon-active-color)
           - entity: sensor.xiaomi_attr_battery_door_window_1
             name: Door/Window
           - entity: sensor.xiaomi_attr_battery_motion_1
@@ -147,7 +153,7 @@ cards:
             color: Crimson
           - value: 100
             color: var(--paper-item-icon-color)
-        collapse: 3
+        collapse: 4
         tap_action:
           action: more-info
       - break

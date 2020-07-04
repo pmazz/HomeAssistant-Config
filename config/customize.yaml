@@ -234,12 +234,12 @@ binary_sensor.online_cell_silvia:
   friendly_name: Cell. Silvia
   icon: mdi:cellphone
   device_class: connectivity
-binary_sensor.online_tablet_ale1:
-  friendly_name: Tablet Ale 1
+binary_sensor.online_tablet_ale:
+  friendly_name: Tablet Ale
   icon: mdi:tablet-android
   device_class: connectivity
-binary_sensor.online_tablet_ale2:
-  friendly_name: Tablet Ale 2
+binary_sensor.online_tablet_silvia:
+  friendly_name: Tablet Silvia
   icon: mdi:tablet-android
   device_class: connectivity
 binary_sensor.online_tablet_paolo:
@@ -308,6 +308,19 @@ sensor.tablet_paolo_battery:
 sensor.tablet_paolo_charging:
   friendly_name: Charging
 sensor.tablet_paolo_trigger:
+  friendly_name: Trigger event
+
+
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#+++++ Tracking & telemetry sensors (Tablet Silvia) +++++
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+sensor.tablet_silvia_lastupdate:
+  friendly_name: Last update
+sensor.tablet_silvia_battery:
+  friendly_name: Battery
+sensor.tablet_silvia_charging:
+  friendly_name: Charging
+sensor.tablet_silvia_trigger:
   friendly_name: Trigger event
 
 

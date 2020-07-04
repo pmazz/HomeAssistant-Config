@@ -124,6 +124,7 @@ event_charge_device_smartplug_1:
     - cell_paolo_battery
     - cell_silvia_battery
     - tablet_paolo_battery
+    - tablet_silvia_battery
   icon: mdi:tablet-cellphone
 event_starttype_smartplug_1:
   name: Tipo Avvio
@@ -148,6 +149,7 @@ event_charge_device_smartplug_2:
     - cell_paolo_battery
     - cell_silvia_battery
     - tablet_paolo_battery
+    - tablet_silvia_battery
   icon: mdi:tablet-cellphone
 event_starttype_smartplug_2:
   name: Tipo Avvio
@@ -172,6 +174,7 @@ event_charge_device_smartplug_3:
     - cell_paolo_battery
     - cell_silvia_battery
     - tablet_paolo_battery
+    - tablet_silvia_battery
   icon: mdi:tablet-cellphone
 event_starttype_smartplug_3:
   name: Tipo Avvio
@@ -196,6 +199,7 @@ event_charge_device_smartplug_4:
     - cell_paolo_battery
     - cell_silvia_battery
     - tablet_paolo_battery
+    - tablet_silvia_battery
   icon: mdi:tablet-cellphone
 event_starttype_smartplug_4:
   name: Tipo Avvio
@@ -220,6 +224,7 @@ event_charge_device_smartplug_5:
     - cell_paolo_battery
     - cell_silvia_battery
     - tablet_paolo_battery
+    - tablet_silvia_battery
   icon: mdi:tablet-cellphone
 event_starttype_smartplug_5:
   name: Tipo Avvio
@@ -244,6 +249,7 @@ event_charge_device_smartplug_6:
     - cell_paolo_battery
     - cell_silvia_battery
     - tablet_paolo_battery
+    - tablet_silvia_battery
   icon: mdi:tablet-cellphone
 event_starttype_smartplug_6:
   name: Tipo Avvio
@@ -268,6 +274,7 @@ event_charge_device_smartplug_7:
     - cell_paolo_battery
     - cell_silvia_battery
     - tablet_paolo_battery
+    - tablet_silvia_battery
   icon: mdi:tablet-cellphone
 event_starttype_smartplug_7:
   name: Tipo Avvio
@@ -292,6 +299,7 @@ event_charge_device_smartplug_8:
     - cell_paolo_battery
     - cell_silvia_battery
     - tablet_paolo_battery
+    - tablet_silvia_battery
   icon: mdi:tablet-cellphone
 event_starttype_smartplug_8:
   name: Tipo Avvio
@@ -316,6 +324,7 @@ event_charge_device_sonoff_basic_1:
     - cell_paolo_battery
     - cell_silvia_battery
     - tablet_paolo_battery
+    - tablet_silvia_battery
   icon: mdi:tablet-cellphone
 event_starttype_sonoff_basic_1:
   name: Tipo Avvio
@@ -340,6 +349,7 @@ event_charge_device_sonoff_basic_2:
     - cell_paolo_battery
     - cell_silvia_battery
     - tablet_paolo_battery
+    - tablet_silvia_battery
   icon: mdi:tablet-cellphone
 event_starttype_sonoff_basic_2:
   name: Tipo Avvio

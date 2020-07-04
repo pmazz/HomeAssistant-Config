@@ -150,14 +150,14 @@
   scan_interval: 30
 
 - platform: ping  #https://www.home-assistant.io/components/binary_sensor.ping
-  host: !secret tablet_ale1_ip
-  name: online_tablet_ale1
+  host: !secret tablet_ale_ip
+  name: online_tablet_ale
   count: 2
   scan_interval: 30
 
 - platform: ping  #https://www.home-assistant.io/components/binary_sensor.ping
-  host: !secret tablet_ale2_ip
-  name: online_tablet_ale2
+  host: !secret tablet_silvia_ip
+  name: online_tablet_silvia
   count: 2
   scan_interval: 30
 

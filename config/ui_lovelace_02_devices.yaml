@@ -78,15 +78,15 @@ cards:
                 - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
                   row: true
                   card:
-                    entity: switch.fritzbox_profile_tablet_amazon_ale1
-                    name: Tablet Ale Blu - Internet
+                    entity: switch.fritzbox_profile_tablet_ale
+                    name: Tablet Ale (Blu) - Internet
                     icon: mdi:tablet-android
                     state_color: true
                 - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
                   row: true
                   card:
-                    entity: switch.fritzbox_profile_tablet_amazon_ale2
-                    name: Tablet Ale Nero - Internet
+                    entity: switch.fritzbox_profile_tablet_silvia
+                    name: Tablet Silvia (Nero) - Internet
                     icon: mdi:tablet-android
                     state_color: true
       - break

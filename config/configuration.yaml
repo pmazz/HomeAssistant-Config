@@ -250,7 +250,7 @@ fritzbox_tools:  #https://github.com/mammuth/ha-fritzbox-tools
   username: !secret fritzbox_router_user
   password: !secret fritzbox_router_pwd
   devices: #Needed if you want to control the profiles of your network devices
-    - "tablet-amazon-ale1"
-    - "tablet-amazon-ale2"
-  profile_on: "Ale-Restricted" #Needed if you want to switch between device profiles ("Access Profile")
+    - "tablet-ale"
+    - "tablet-silvia"
+  profile_on: "Standard" #Needed if you want to switch between device profiles ("Access Profile")
   profile_off: "Blocked"  #Needed if you want to switch between device profiles ("Access Profile")

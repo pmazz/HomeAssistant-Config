@@ -713,6 +713,63 @@
       value_template: N/A
 
 
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#+++++ Tracking & telemetry sensors (Tablet Silvia) +++++
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: tablet_silvia_lastupdate
+  state_topic: "mobile/tablet-silvia"
+  value_template: "{{ value_json.dt | timestamp_local }}"
+  icon: mdi:update
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: tablet_silvia_battery
+  unit_of_measurement: "%"
+  device_class: battery
+  state_topic: "mobile/tablet-silvia"
+  value_template: "{{ value_json.battery }}"
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: tablet_silvia_charging
+  state_topic: "mobile/tablet-silvia"
+  value_template: "{{ value_json.charge }}"
+  icon: mdi:power-plug-off
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: tablet_silvia_trigger
+  state_topic: "mobile/tablet-silvia"
+  value_template: "{% if value_json.trigger %}{{value_json.trigger}}{% else %}unknown{% endif %}"
+  icon: mdi:clock-start
+- platform: template  #https://www.home-assistant.io/components/sensor.template
+  sensors:
+    tablet_silvia_lat:
+     icon_template: mdi:map-marker
+     friendly_name: Latitude
+     entity_id: device_tracker.tablet_silvia
+     value_template: "{% if not is_state('device_tracker.tablet_silvia', 'unknown') %}{{state_attr('device_tracker.tablet_silvia', 'latitude')}}{% else %}N/A{% endif %}"
+    tablet_silvia_long:
+     icon_template: mdi:map-marker
+     friendly_name: Longitude
+     entity_id: device_tracker.tablet_silvia
+     value_template: "{% if not is_state('device_tracker.tablet_silvia', 'unknown') %}{{state_attr('device_tracker.tablet_silvia', 'longitude')}}{% else %}N/A{% endif %}"
+    tablet_silvia_latlong:
+      icon_template: mdi:map-marker
+      friendly_name: Lat./Long.
+      entity_id: device_tracker.tablet_silvia
+      value_template: "{% if not is_state('device_tracker.tablet_silvia', 'unknown') %}{{state_attr('device_tracker.tablet_silvia', 'latitude')}},{{state_attr('device_tracker.tablet_silvia', 'longitude')}}{% else %}N/A{% endif %}"
+    tablet_silvia_accuracy:
+      icon_template: mdi:map-marker-radius
+      friendly_name: GPS accuracy
+      unit_of_measurement: mt
+      entity_id: device_tracker.tablet_silvia
+      value_template: "{% if not is_state('device_tracker.tablet_silvia', 'unknown') %}{{state_attr('device_tracker.tablet_silvia', 'gps_accuracy')}}{% else %}N/A{% endif %}"
+    tablet_silvia_address:
+      friendly_name: Address
+      icon_template: mdi:compass-outline
+      value_template: N/A
+    tablet_silvia_address_confidence:
+      friendly_name: Confidence
+      icon_template: mdi:compass-outline
+      value_template: N/A
+
+
 #+++++++++++++++++++++++++++++++++++++++++++++++++
 #+++++ PZEM-004T sensors (Energy consumption) ++++
 #+++++++++++++++++++++++++++++++++++++++++++++++++

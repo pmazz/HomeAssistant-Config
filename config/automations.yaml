@@ -1309,6 +1309,10 @@
             {{"\U0001F4F1"}} *Cell. Silvia*
               *{% if not is_state('sensor.cell_silvia_battery', 'unknown') %}{{state_attr('sensor.cell_silvia_battery', 'friendly_name')}}{% else %}Battery{% endif %}:* {{states('sensor.cell_silvia_battery')}} {{state_attr('sensor.cell_silvia_battery', 'unit_of_measurement')}} {% if is_state('sensor.cell_silvia_charging', 'True')%} {{"\U0001F50C"}}{% endif %}
               *{% if not is_state('sensor.cell_silvia_lastupdate', 'unknown') %}{{state_attr('sensor.cell_silvia_lastupdate', 'friendly_name')}}{% else %}Last update{% endif %}:* {{states('sensor.cell_silvia_lastupdate')}} {{state_attr('sensor.cell_silvia_lastupdate', 'unit_of_measurement')}}
+            
+            {{"\U0001F4BB"}} *Tablet Silvia*
+              *{% if not is_state('sensor.tablet_silvia_battery', 'unknown') %}{{state_attr('sensor.tablet_silvia_battery', 'friendly_name')}}{% else %}Battery{% endif %}:* {{states('sensor.tablet_silvia_battery')}} {{state_attr('sensor.tablet_silvia_battery', 'unit_of_measurement')}} {% if is_state('sensor.tablet_silvia_charging', 'True')%} {{"\U0001F50C"}}{% endif %}
+              *{% if not is_state('sensor.tablet_silvia_lastupdate', 'unknown') %}{{state_attr('sensor.tablet_silvia_lastupdate', 'friendly_name')}}{% else %}Last update{% endif %}:* {{states('sensor.tablet_silvia_lastupdate')}} {{state_attr('sensor.tablet_silvia_lastupdate', 'unit_of_measurement')}}
         inline_keyboard:
           - "\U0001F4AB Refresh:/sensors_mobiledevices, \U0001F519 Go back:/sensors"
 
@@ -1410,35 +1414,6 @@
 #++++++++++++++++++++++++++++++++++++++++++++++
 #+++++ Mobile devices related automations +++++
 #++++++++++++++++++++++++++++++++++++++++++++++
-- id: tablet_ale_warn_wifi_connected
-  #Avvisa quando il tablet di Ale è connesso a WiFi
-  alias: tablet_ale_warn_wifi_connected
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.online_tablet_ale1
-      from: "off"
-      to: "on"
-    - platform: state
-      entity_id: binary_sensor.online_tablet_ale2
-      from: "off"
-      to: "on"
-  condition:
-    - condition: state
-      entity_id: input_select.home_mode
-      state: "giorno"
-  action:
-    #TTS Speak
-    - service: script.tts_speak
-      data_template:
-        message2say: >
-          Il tablet {% if trigger.entity_id == 'binary_sensor.online_tablet_ale1' %}blu{% elif trigger.entity_id == 'binary_sensor.online_tablet_ale2' %}nero{% endif %} di Àle, è connesso!
-        volume: "0.5"
-    #Notifica Telegram
-    - service: notify.telegram_paolo
-      data_template:
-        message: >
-            {{'\U000026A0'}} Il tablet {% if trigger.entity_id == 'binary_sensor.online_tablet_ale1' %}blu{% elif trigger.entity_id == 'binary_sensor.online_tablet_ale2' %}nero{% endif %} di Ale è connesso!
-
 - id: xiaomi_hub_warn_wifi_change_connection
   #Avvisa quando il gateway xiaomi si connette/disconnette a/da WiFi
   alias: xiaomi_hub_warn_wifi_change_connection
