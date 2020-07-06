@@ -10,7 +10,7 @@ dark_cyan:
   secondary-text-color: "#04a7bc"
 
   # Main Colors
-  paper-grey-paper-grey-200: "#191919"
+  paper-grey-200: "#191919"
   paper-grey-50: "var(--primary-text-color)"
 
   # Background
@@ -68,6 +68,5 @@ dark_cyan:
   sidebar-selected-icon-color: 'var(--accent-color)'
   sidebar-selected-text-color: 'var(--text-color)'
   paper-listbox-color: "#FFFFFF"
-  paper-listbox-background-color: 'var(--sidebar-background-color)'
   divider-color: "rgba(255, 255, 255, 0.12)"
   light-primary-color: 'var(--paper-card-background-color)'
