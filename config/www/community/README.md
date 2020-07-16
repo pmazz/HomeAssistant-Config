@@ -17,5 +17,5 @@ This folder contains custom components and plugins, mainly installed through [Ho
 | **[Mini Graph Card](mini-graph-card)**<BR>Minimalistic graph card for Lovelace UI. | <https://github.com/kalkih/mini-graph-card> (version: 0.9.4) |
 | **[Multiple Entity Row](lovelace-multiple-entity-row)**<BR>Show multiple entity states on entity rows in Home Assistant's Lovelace UI. | <https://github.com/benct/lovelace-multiple-entity-row> (version: 3.2.0) |
 | **[Template Entity Row](lovelace-template-entity-row)**<BR>Display whatever you want in an entities card row. | <https://github.com/thomasloven/lovelace-template-entity-row> (commit: db82838) |
-| **[Restriction Card](restriction-card)**<BR>A card to provide restrictions on Lovelace cards defined within. | <https://github.com/iantrich/restriction-card> (version: 1.2.5) |
+| **[Restriction Card](restriction-card)**<BR>A card to provide restrictions on Lovelace cards defined within. | <https://github.com/iantrich/restriction-card> (version: 1.2.6) |
 | **[Vertical Stack In Card](vertical-stack-in-card)**<BR>Similar to vertical-stack but removes card borders. | <https://github.com/custom-cards/vertical-stack-in-card> (version: 0.2.1) |
