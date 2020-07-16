@@ -1,6 +1,6 @@
 # About
 
-These are the Home Assistant addons currently in use.
+These are the Home Assistant addons I currently use.
 
 ## Addons
 
@@ -85,9 +85,11 @@ Simple, elegant and feature-rich CCTV/NVR for your cameras.
 
 ### Network UPS Tools
 
+![Network UPS Tools](.images/addons/nut.png "Network UPS Tools")
+
 This addon provides the necessary daemon to make use of the Home Assistant NUT Sensor.
 
-* <https://github.com/jumping2000/hassio-addons/tree/master/nut>
+* <https://github.com/hassio-addons/addon-nut>
 * <https://networkupstools.org>
 
 ***
