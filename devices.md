@@ -180,7 +180,7 @@ How many: 3
 
 ![Sonoff RE5V1C](.images/devices/sonoff-re5v1c.jpg "Sonoff RE5V1C")
 
-5V Wifi Inching/Selflock Relay Module (with Dry Contact)  
+5V Wifi Inching/Selflock Relay Module (with Dry Contact).  
 Flashed with [Tasmota](https://github.com/arendst/Sonoff-Tasmota).  
 How many: 4
 
@@ -323,7 +323,7 @@ How many: 1
 
 ![Landroid Wrox WR141E](.images/devices/landroid-wr141e.jpg "Landroid Wrox WR141E")
 
-Robotic lawn mower for gardens up to 500 m2.
+Robotic lawn mower for gardens up to 500 m2.  
 How many: 1
 
 * <https://www.worx-uk.com/shop/landroid-2019-en/worx-20v-robot-mower-landroid-m500-wr141e>
