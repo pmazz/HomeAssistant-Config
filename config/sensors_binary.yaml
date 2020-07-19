@@ -86,6 +86,12 @@
       device_class: connectivity
       entity_id: switch.smartplug_8
       value_template: "{{ not is_state('switch.smartplug_8', 'unavailable') and not is_state('switch.smartplug_8', 'unknown') }}"
+    online_sonoff_rele_1:
+      friendly_name: Sonoff RE5V1C 1
+      icon_template: mdi:power-plug
+      device_class: connectivity
+      entity_id: switch.sonoff_rele_1
+      value_template: "{{ not is_state('switch.sonoff_rele_1', 'unavailable') and not is_state('switch.sonoff_rele_1', 'unknown') }}"
     home_contarina_pick_tomorrow:
       entity_id: sensor.time
       icon_template: mdi:delete-empty
@@ -106,6 +112,43 @@
       value_template: "{{ (states('sensor.hacs') | int) > 0 }}"
       attribute_templates:
         updates_count: "{{states('sensor.hacs') | int}}"
+
+    hass_addon_updates:
+      friendly_name: Addon Updates
+      icon_template: mdi:cogs
+      entity_id: 
+        - sensor.addon_addon_adguard
+        - sensor.addon_addon_bitwarden
+        - sensor.addon_addon_dasshio
+        - sensor.addon_addon_duckdns
+        - sensor.addon_addon_configurator
+        - sensor.addon_addon_nut
+        - sensor.addon_addon_nodered
+        - sensor.addon_addon_samba
+        - sensor.addon_addon_sqliteweb
+        - sensor.addon_addon_ssh
+        - sensor.addon_addon_tasmoadmin
+        - sensor.addon_addon_motioneye
+      value_template: >
+        {%- set addon_upd = namespace(value=0) -%}
+        {%- for addon in states['sensor'] if addon.name.startswith("addon_") -%}
+          {% if state_attr(addon.entity_id, 'version') != state_attr(addon.entity_id, 'version_latest') %}
+            {% set addon_upd.value = addon_upd.value + 1 %}
+          {% endif %}
+        {%- endfor -%}
+        {{ (addon_upd.value | int) > 0 }}
+      attribute_templates:
+        updates_count: >
+          {%- set addon_upd = namespace(value=0) -%}
+          {%- for addon in states['sensor'] if addon.name.startswith("addon_") -%}
+            {% if state_attr(addon.entity_id, 'version') != state_attr(addon.entity_id, 'version_latest') %}
+              {% set addon_upd.value = addon_upd.value + 1 %}
+            {% endif %}
+          {%- endfor -%}
+          {{ addon_upd.value }}
+        # repositories: >
+        #   {% set jjj = [{"name":"hacs/integration", "display_name":"HACS", "installed_version":"1.1.0", "available_version":"1.1.1"}] %}
+        #   {{ jjj }}
 
 - platform: mqtt  #https://www.home-assistant.io/integrations/binary_sensor.mqtt
   name: online_pzem_004t

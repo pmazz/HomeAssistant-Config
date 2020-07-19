@@ -84,15 +84,25 @@ cards:
               - entity: binary_sensor.updater
                 attribute: newest_version
                 name: Available
+          - entity: binary_sensor.hass_addon_updates
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: Addon Updates
+            show_state: false
+            state_color: true
+            entities:
+              - entity: binary_sensor.hass_addon_updates
+                attribute: updates_count
+                unit: update(s)
+                name: " "
           - entity: binary_sensor.hacs_updates
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-            name: HACS Components
+            name: HACS Updates
             show_state: false
             state_color: true
             entities:
               - entity: binary_sensor.hacs_updates
                 attribute: updates_count
-                unit: pending update(s)
+                unit: update(s)
                 name: " "
           - type: section
           - entity: sensor.hass_db_filesize
@@ -118,6 +128,120 @@ cards:
             entities:
               - sensor.hass_input_count
               - sensor.hass_script_count
+          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+            head: 
+              entity: sensor.hass_addon_count
+              name: Addons
+              state_color: true
+            items:
+              - entity: sensor.addon_adguard
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: AdGuard Home
+                icon: mdi:cogs
+                entities:
+                  - icon: mdi:open-in-new
+                    tap_action: 
+                      action: url
+                      url_path: /hassio/addon/a0d7b954_adguard
+              - entity: sensor.addon_bitwarden
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: Bitwarden RS
+                icon: mdi:cogs
+                entities:
+                  - icon: mdi:open-in-new
+                    tap_action: 
+                      action: url
+                      url_path: /hassio/addon/a0d7b954_bitwarden
+              - entity: sensor.addon_configurator
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: File editor
+                icon: mdi:cogs
+                entities:
+                  - icon: mdi:open-in-new
+                    tap_action: 
+                      action: url
+                      url_path: /hassio/addon/core_configurator
+              - entity: sensor.addon_dasshio
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: Dasshio
+                icon: mdi:cogs
+                entities:
+                  - icon: mdi:open-in-new
+                    tap_action: 
+                      action: url
+                      url_path: /hassio/addon/03d23610_dasshio
+              - entity: sensor.addon_duckdns
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: Duck DNS
+                icon: mdi:cogs
+                entities:
+                  - icon: mdi:open-in-new
+                    tap_action: 
+                      action: url
+                      url_path: /hassio/addon/core_duckdns
+              - entity: sensor.addon_motioneye
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: motionEye
+                icon: mdi:cogs
+                entities:
+                  - icon: mdi:open-in-new
+                    tap_action: 
+                      action: url
+                      url_path: /hassio/addon/a0d7b954_motioneye
+              - entity: sensor.addon_nodered
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: Node-RED
+                icon: mdi:cogs
+                entities:
+                  - icon: mdi:open-in-new
+                    tap_action: 
+                      action: url
+                      url_path: /hassio/addon/a0d7b954_nodered
+              - entity: sensor.addon_nut
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: Network UPS Tools
+                icon: mdi:cogs
+                entities:
+                  - icon: mdi:open-in-new
+                    tap_action: 
+                      action: url
+                      url_path: /hassio/addon/a0d7b954_nut
+              - entity: sensor.addon_samba
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: Samba share
+                icon: mdi:cogs
+                entities:
+                  - icon: mdi:open-in-new
+                    tap_action: 
+                      action: url
+                      url_path: /hassio/addon/core_samba
+              - entity: sensor.addon_sqliteweb
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: SQLite Web
+                icon: mdi:cogs
+                entities:
+                  - icon: mdi:open-in-new
+                    tap_action: 
+                      action: url
+                      url_path: /hassio/addon/a0d7b954_sqlite-web
+              - entity: sensor.addon_ssh
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: SSH & Web Terminal
+                icon: mdi:cogs
+                entities:
+                  - icon: mdi:open-in-new
+                    tap_action: 
+                      action: url
+                      url_path: /hassio/addon/a0d7b954_ssh
+              - entity: sensor.addon_tasmoadmin
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: TasmoAdmin
+                icon: mdi:cogs
+                entities:
+                  - icon: mdi:open-in-new
+                    tap_action: 
+                      action: url
+                      url_path: /hassio/addon/a0d7b954_sonweb
           - type: section
           - entity: sensor.hass_config_check_result
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row

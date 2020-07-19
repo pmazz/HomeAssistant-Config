@@ -15,10 +15,12 @@
     sun_next_dawn:
       friendly_name: Prossima Alba
       icon_template: mdi:weather-sunset-up
+      entity_id: sun.sun
       value_template: "{{ as_timestamp(state_attr('sun.sun', 'next_dawn')) | timestamp_custom('%H:%M') }}"
     sun_next_setting:
       friendly_name: Prossimo Tramonto
       icon_template: mdi:weather-sunset-down
+      entity_id: sun.sun
       value_template: "{{ as_timestamp(state_attr('sun.sun', 'next_setting')) | timestamp_custom('%H:%M') }}"
     maps_api_key:
       icon_template: mdi:alert
@@ -190,11 +192,206 @@
     hass_config_check_result:
       friendly_name: Check Config Result
       icon_template: mdi:file-check-outline
+      entity_id: []
       value_template: ""
       attribute_templates:
-        error: ""
-        error_type: ""
         last_checked: ""
+        last_result: ""
+        last_error_msg: ""
+
+
+#++++++++++++++++++++++++++++++++++++++++
+#+++++ Home Assistant Addon sensors +++++
+#++++++++++++++++++++++++++++++++++++++++
+- platform: rest  #https://www.home-assistant.io/integrations/rest
+  name: addon_samba
+  resource: http://hassio:8123/api/hassio/addons/core_samba/info
+  headers:
+    Authorization: !secret hass_api_llt
+    Content-Type: application/json
+    # User-Agent: Home Assistant
+  value_template: "{{ value_json.data.state }}"
+  json_attributes_path: "$.data"
+  json_attributes:
+    - name
+    - slug
+    - version
+    - version_latest
+  scan_interval: 3600
+
+- platform: rest  #https://www.home-assistant.io/integrations/rest
+  name: addon_adguard
+  resource: http://hassio:8123/api/hassio/addons/a0d7b954_adguard/info
+  headers:
+    Authorization: !secret hass_api_llt
+    Content-Type: application/json
+  value_template: "{{ value_json.data.state }}"
+  json_attributes_path: "$.data"
+  json_attributes:
+    - name
+    - slug
+    - version
+    - version_latest
+  scan_interval: 3600
+
+- platform: rest  #https://www.home-assistant.io/integrations/rest
+  name: addon_bitwarden
+  resource: http://hassio:8123/api/hassio/addons/a0d7b954_bitwarden/info
+  headers:
+    Authorization: !secret hass_api_llt
+    Content-Type: application/json
+  value_template: "{{ value_json.data.state }}"
+  json_attributes_path: "$.data"
+  json_attributes:
+    - name
+    - slug
+    - version
+    - version_latest
+  scan_interval: 3600
+
+- platform: rest  #https://www.home-assistant.io/integrations/rest
+  name: addon_dasshio
+  resource: http://hassio:8123/api/hassio/addons/03d23610_dasshio/info
+  headers:
+    Authorization: !secret hass_api_llt
+    Content-Type: application/json
+  value_template: "{{ value_json.data.state }}"
+  json_attributes_path: "$.data"
+  json_attributes:
+    - name
+    - slug
+    - version
+    - version_latest
+  scan_interval: 3600
+
+- platform: rest  #https://www.home-assistant.io/integrations/rest
+  name: addon_duckdns
+  resource: http://hassio:8123/api/hassio/addons/core_duckdns/info
+  headers:
+    Authorization: !secret hass_api_llt
+    Content-Type: application/json
+  value_template: "{{ value_json.data.state }}"
+  json_attributes_path: "$.data"
+  json_attributes:
+    - name
+    - slug
+    - version
+    - version_latest
+  scan_interval: 3600
+
+- platform: rest  #https://www.home-assistant.io/integrations/rest
+  name: addon_configurator
+  resource: http://hassio:8123/api/hassio/addons/core_configurator/info
+  headers:
+    Authorization: !secret hass_api_llt
+    Content-Type: application/json
+  value_template: "{{ value_json.data.state }}"
+  json_attributes_path: "$.data"
+  json_attributes:
+    - name
+    - slug
+    - version
+    - version_latest
+  scan_interval: 3600
+
+- platform: rest  #https://www.home-assistant.io/integrations/rest
+  name: addon_nut
+  resource: http://hassio:8123/api/hassio/addons/a0d7b954_nut/info
+  headers:
+    Authorization: !secret hass_api_llt
+    Content-Type: application/json
+  value_template: "{{ value_json.data.state }}"
+  json_attributes_path: "$.data"
+  json_attributes:
+    - name
+    - slug
+    - version
+    - version_latest
+  scan_interval: 3600
+
+- platform: rest  #https://www.home-assistant.io/integrations/rest
+  name: addon_nodered
+  resource: http://hassio:8123/api/hassio/addons/a0d7b954_nodered/info
+  headers:
+    Authorization: !secret hass_api_llt
+    Content-Type: application/json
+  value_template: "{{ value_json.data.state }}"
+  json_attributes_path: "$.data"
+  json_attributes:
+    - name
+    - slug
+    - version
+    - version_latest
+  scan_interval: 3600
+
+- platform: rest  #https://www.home-assistant.io/integrations/rest
+  name: addon_sqliteweb
+  resource: http://hassio:8123/api/hassio/addons/a0d7b954_sqlite-web/info
+  headers:
+    Authorization: !secret hass_api_llt
+    Content-Type: application/json
+  value_template: "{{ value_json.data.state }}"
+  json_attributes_path: "$.data"
+  json_attributes:
+    - name
+    - slug
+    - version
+    - version_latest
+  scan_interval: 3600
+
+- platform: rest  #https://www.home-assistant.io/integrations/rest
+  name: addon_ssh
+  resource: http://hassio:8123/api/hassio/addons/a0d7b954_ssh/info
+  headers:
+    Authorization: !secret hass_api_llt
+    Content-Type: application/json
+  value_template: "{{ value_json.data.state }}"
+  json_attributes_path: "$.data"
+  json_attributes:
+    - name
+    - slug
+    - version
+    - version_latest
+  scan_interval: 3600
+
+- platform: rest  #https://www.home-assistant.io/integrations/rest
+  name: addon_tasmoadmin
+  resource: http://hassio:8123/api/hassio/addons/a0d7b954_sonweb/info
+  headers:
+    Authorization: !secret hass_api_llt
+    Content-Type: application/json
+  value_template: "{{ value_json.data.state }}"
+  json_attributes_path: "$.data"
+  json_attributes:
+    - name
+    - slug
+    - version
+    - version_latest
+  scan_interval: 3600
+
+- platform: rest  #https://www.home-assistant.io/integrations/rest
+  name: addon_motioneye
+  resource: http://hassio:8123/api/hassio/addons/a0d7b954_motioneye/info
+  headers:
+    Authorization: !secret hass_api_llt
+    Content-Type: application/json
+  value_template: "{{ value_json.data.state }}"
+  json_attributes_path: "$.data"
+  json_attributes:
+    - name
+    - slug
+    - version
+    - version_latest
+  scan_interval: 3600
+
+- platform: template  #https://www.home-assistant.io/components/sensor.template
+  sensors:
+    hass_addon_count:
+      entity_id: []
+      friendly_name: Addons
+      icon_template: mdi:cogs
+      value_template: >
+        {{ states.sensor | selectattr("entity_id", ">=", "sensor.addon_") | selectattr("entity_id", "<=", "sensor.addon_z") | list | count }}
 
 
 #+++++++++++++++++++++++++++++
@@ -420,10 +617,12 @@
   sensors:
     dark_sky_summary_custom:
       friendly_name: Summary
+      entity_id: sensor.dark_sky_summary
       value_template: "{{ states('sensor.dark_sky_summary') }}"
       entity_picture_template: "{{ '/local/ico/weather/'+ states('sensor.dark_sky_icon') +'.png'}}"
     dark_sky_wind_dir:
       friendly_name: Wind Direction
+      entity_id: sensor.dark_sky_wind_bearing
       value_template: >-
         {% set wind_dir = states('sensor.dark_sky_wind_bearing') %}
         {% if wind_dir | float<=23 %}N [Tramontana]
@@ -439,6 +638,7 @@
       icon_template: mdi:compass
     dark_sky_wind_dir_1d:
       friendly_name: Wind Direction
+      entity_id: sensor.dark_sky_wind_bearing_1d
       value_template: >-
         {% set wind_dir = states('sensor.dark_sky_wind_bearing_1d') %}
         {% if wind_dir | float<=23 %}N [Tramontana]
@@ -454,6 +654,7 @@
       icon_template: mdi:compass
     dark_sky_wind_dir_2d:
       friendly_name: Wind Direction
+      entity_id: sensor.dark_sky_wind_bearing_2d
       value_template: >-
         {% set wind_dir = states('sensor.dark_sky_wind_bearing_2d') %}
         {% if wind_dir | float<=23 %}N [Tramontana]
@@ -469,6 +670,7 @@
       icon_template: mdi:compass
     dark_sky_wind_dir_3d:
       friendly_name: Wind Direction
+      entity_id: sensor.dark_sky_wind_bearing_3d
       value_template: >-
         {% set wind_dir = states('sensor.dark_sky_wind_bearing_3d') %}
         {% if wind_dir | float<=23 %}N [Tramontana]
@@ -485,21 +687,35 @@
     dark_sky_forecast_header:
       friendly_name: Date
       value_template: Min ~ Max | Rain
+      entity_id: []
       icon_template: None
     dark_sky_forecast_1d:
       friendly_name_template: "{{ (as_timestamp(now()) + (1 * 86400)) | timestamp_custom('%A %d') }}"
       value_template: "{{ states('sensor.dark_sky_daily_low_temperature_1d') | round(0) }}° ~ {{ states('sensor.dark_sky_daily_high_temperature_1d') | round(0) }}° | {{ states('sensor.dark_sky_precip_probability_1d') | round(0) }}%"
+      entity_id:
+        - sensor.dark_sky_daily_low_temperature_1d
+        - sensor.dark_sky_daily_high_temperature_1d
+        - sensor.dark_sky_precip_probability_1d
       entity_picture_template: "{{ '/local/ico/weather/'+ states('sensor.dark_sky_icon_1d') +'.png'}}"
     dark_sky_forecast_2d:
       friendly_name_template: "{{ (as_timestamp(now()) + (2 * 86400)) | timestamp_custom('%A %d') }}"
       value_template: "{{ states('sensor.dark_sky_daily_low_temperature_2d') | round(0) }}° ~ {{ states('sensor.dark_sky_daily_high_temperature_2d') | round(0) }}° | {{ states('sensor.dark_sky_precip_probability_2d') | round(0) }}%"
+      entity_id:
+        - sensor.dark_sky_daily_low_temperature_2d
+        - sensor.dark_sky_daily_high_temperature_2d
+        - sensor.dark_sky_precip_probability_2d
       entity_picture_template: "{{ '/local/ico/weather/'+ states('sensor.dark_sky_icon_2d') +'.png'}}"
     dark_sky_forecast_3d:
       friendly_name_template: "{{ (as_timestamp(now()) + (3 * 86400)) | timestamp_custom('%A %d') }}"
       value_template: "{{ states('sensor.dark_sky_daily_low_temperature_3d') | round(0) }}° ~ {{ states('sensor.dark_sky_daily_high_temperature_3d') | round(0) }}° | {{ states('sensor.dark_sky_precip_probability_3d') | round(0) }}%"
+      entity_id:
+        - sensor.dark_sky_daily_low_temperature_3d
+        - sensor.dark_sky_daily_high_temperature_3d
+        - sensor.dark_sky_precip_probability_3d
       entity_picture_template: "{{ '/local/ico/weather/'+ states('sensor.dark_sky_icon_3d') +'.png'}}"
     rain_last_occurred:
       friendly_name: Last rainy day
+      entity_id: input_datetime.rain_last_occurred
       value_template: "{{ states('input_datetime.rain_last_occurred').split(' ')[0] }}"
       icon_template: mdi:weather-rainy
 
@@ -554,10 +770,12 @@
     cell_paolo_address:
       friendly_name: Address
       icon_template: mdi:compass-outline
+      entity_id: []
       value_template: N/A
     cell_paolo_address_confidence:
       friendly_name: Confidence
       icon_template: mdi:compass-outline
+      entity_id: []
       value_template: N/A
     cell_paolo_distance_home:
       friendly_name: Distanza da casa
@@ -630,10 +848,12 @@
     cell_silvia_address:
       friendly_name: Address
       icon_template: mdi:compass-outline
+      entity_id: []
       value_template: N/A
     cell_silvia_address_confidence:
       friendly_name: Confidence
       icon_template: mdi:compass-outline
+      entity_id: []
       value_template: N/A
     cell_silvia_distance_home:
       friendly_name: Distanza da casa
@@ -706,10 +926,12 @@
     tablet_paolo_address:
       friendly_name: Address
       icon_template: mdi:compass-outline
+      entity_id: []
       value_template: N/A
     tablet_paolo_address_confidence:
       friendly_name: Confidence
       icon_template: mdi:compass-outline
+      entity_id: []
       value_template: N/A
 
 
@@ -763,10 +985,12 @@
     tablet_silvia_address:
       friendly_name: Address
       icon_template: mdi:compass-outline
+      entity_id: []
       value_template: N/A
     tablet_silvia_address_confidence:
       friendly_name: Confidence
       icon_template: mdi:compass-outline
+      entity_id: []
       value_template: N/A
 
 
@@ -829,6 +1053,7 @@
     pzem_energy_entire_day:
       icon_template: mdi:calendar-today
       friendly_name: Consumi Giornata
+      entity_id: []
       value_template: "0"
 
 
@@ -963,6 +1188,16 @@
 - platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
   name: smart_plug_8_boot_count
   state_topic: "home/smart_plug_8/stat/STATUS1"
+  value_template: "{{ value_json['StatusPRM'].BootCount }}"
+  icon: mdi:restart-alert
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: sonoff_rele_1_wifi_rssi
+  state_topic: "home/sonoff_re5v1c_1/tele/STATE"
+  value_template: "{{ value_json['Wifi'].RSSI }}"
+  icon: mdi:wifi
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: sonoff_rele_1_boot_count
+  state_topic: "home/sonoff_re5v1c_1/stat/STATUS1"
   value_template: "{{ value_json['StatusPRM'].BootCount }}"
   icon: mdi:restart-alert
 

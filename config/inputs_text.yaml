@@ -123,3 +123,10 @@ switch_name_smartplug_8:
 switch_icon_smartplug_8:
   name: Smart Plug 8 - Icon
   icon: mdi:star-box
+
+switch_name_sonoff_rele_1:
+  name: Sonoff RE5V1C 1 - Name
+  icon: mdi:dip-switch
+switch_icon_sonoff_rele_1:
+  name: Sonoff RE5V1C 1 - Icon
+  icon: mdi:star-box

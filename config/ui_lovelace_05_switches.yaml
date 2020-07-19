@@ -97,6 +97,37 @@ cards:
           - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
             head:
               type: section
+              label: Sonoff Relays
+            open: true
+            items:
+              - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+                head: 
+                  entity: switch.sonoff_rele_1
+                  state_color: true
+                items:
+                  - entity: sensor.sonoff_rele_1_boot_count
+                    type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                    name: Telemetria
+                    icon: mdi:cogs
+                    show_state: false
+                    entities:
+                      - icon: mdi:open-in-new
+                        tap_action: 
+                          action: url
+                          url_path: http://sonoff-rele-1.local
+                      - entity: sensor.sonoff_rele_1_wifi_rssi
+                        name: Wifi
+                      - entity: sensor.sonoff_rele_1_boot_count
+                        name: "Boot #"
+                  - type: section
+                  - entity: input_text.switch_name_sonoff_rele_1
+                    name: Name
+                  - entity: input_text.switch_icon_sonoff_rele_1
+                    name: Icon
+                  - type: section
+          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+            head:
+              type: section
               label: Smart Plugs
             open: true
             items:

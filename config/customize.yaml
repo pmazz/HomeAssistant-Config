@@ -52,7 +52,7 @@ script.config_commit_to_git:
 script.snapshot_full_create:
   can_cancel: true
 script.hass_config_check_result:
-  can_cancel: true
+  can_cancel: false
 
 
 #++++++++++++++++++++++++++
@@ -361,6 +361,8 @@ switch.smartplug_7:
   friendly_name: Smart Plug 7
 switch.smartplug_8:
   friendly_name: Smart Plug 8
+switch.sonoff_rele_1:
+  friendly_name: Sonoff RE5V1C 1
 
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++

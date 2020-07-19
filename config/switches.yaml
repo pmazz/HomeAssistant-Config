@@ -327,3 +327,14 @@
   payload_not_available: "Offline"
   retain: false
   qos: 1
+- platform: mqtt  #https://www.home-assistant.io/components/switch.mqtt
+  name: sonoff_rele_1
+  command_topic: "home/sonoff_re5v1c_1/cmnd/POWER"
+  state_topic: "home/sonoff_re5v1c_1/stat/POWER"
+  state_on: "ON"
+  state_off: "OFF"
+  availability_topic: "home/sonoff_re5v1c_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+  qos: 1
