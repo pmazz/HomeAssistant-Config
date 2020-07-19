@@ -1,6 +1,6 @@
 # About
 
-These are the physical devices currently in use.
+These are the physical devices I currently use.
 
 ## My Devices
 
@@ -21,6 +21,7 @@ These are the physical devices currently in use.
   * [Sonoff 4CH Pro R2](#sonoff-4ch-pro-r2)
   * [Sonoff Dual](#sonoff-dual)
   * [Sonoff Basic](#sonoff-basic)
+  * [Sonoff RE5V1C](#sonoff-re5v1c)
   * [Estink C178](#estink-c178)
   * [Zoozee SE131](#zoozee-se131)
   * [Klas Remo SWA11](#klas-remo-swa11)
@@ -172,6 +173,16 @@ Flashed with [Tasmota](https://github.com/arendst/Sonoff-Tasmota).
 How many: 3
 
 * <https://www.itead.cc/sonoff-wifi-wireless-switch-1.html>
+
+#### Sonoff RE5V1C
+
+![Sonoff RE5V1C](.images/devices/sonoff-re5v1c.jpg "Sonoff RE5V1C")
+
+5V Wifi Inching/Selflock Relay Module (with Dry Contact)  
+Flashed with [Tasmota](https://github.com/arendst/Sonoff-Tasmota).  
+How many: 4
+
+* <https://www.itead.cc/sonoff-re5v1c.html>
 
 #### Estink C178
 
