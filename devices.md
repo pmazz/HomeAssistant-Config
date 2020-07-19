@@ -36,6 +36,8 @@ These are the physical devices I currently use.
 * **[Energy](#energy)**
   * [Tecnoware ERA PLUS STRIP 800](#tecnoware-era-plus-strip-800)
   * [PZEM-004T](#pzem-004t)
+* **[Other](#other)**
+  * [Landroid Wrox WR141E](#landroid-wrox-wr141e)
 
 ***
 
@@ -312,5 +314,18 @@ How many: 1
 DIY device for monitoring of house energy consumption.  
 Built with a Wemos D1, flashed with [Tasmota](https://github.com/arendst/Sonoff-Tasmota).  
 How many: 1
+
+***
+
+### Other
+
+#### Landroid Wrox WR141E
+
+![Landroid Wrox WR141E](.images/devices/landroid-wr141e.jpg "Landroid Wrox WR141E")
+
+Robotic lawn mower for gardens up to 500 m2.
+How many: 1
+
+* <https://www.worx-uk.com/shop/landroid-2019-en/worx-20v-robot-mower-landroid-m500-wr141e>
 
 ***
