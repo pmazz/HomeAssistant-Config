@@ -254,3 +254,7 @@ fritzbox_tools:  #https://github.com/mammuth/ha-fritzbox-tools
     - "tablet-silvia"
   profile_on: "Standard" #Needed if you want to switch between device profiles ("Access Profile")
   profile_off: "Blocked"  #Needed if you want to switch between device profiles ("Access Profile")
+
+landroid_cloud:  #https://github.com/MTrab/landroid_cloud
+  - email: !secret landroid_user
+    password: !secret landroid_pwd

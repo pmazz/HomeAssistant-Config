@@ -240,6 +240,12 @@
   count: 2
   scan_interval: 30
 
+- platform: ping  #https://www.home-assistant.io/components/binary_sensor.ping
+  host: !secret landroid_ip
+  name: online_landroid_m141
+  count: 2
+  scan_interval: 30
+
 - platform: workday  #https://www.home-assistant.io/components/binary_sensor.workday
   name: workday
   country: IT
