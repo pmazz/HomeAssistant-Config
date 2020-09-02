@@ -1,3 +1,6 @@
+#++++++++++++++++++++++++++++++++
+#+++++ Time related sensors +++++
+#++++++++++++++++++++++++++++++++
 - platform: moon  #https://www.home-assistant.io/components/sensor.moon
 
 - platform: season  #https://www.home-assistant.io/integrations/season
@@ -65,6 +68,19 @@
         {%- endif %}
         {%- set cover_start = cover_start_ts | timestamp_custom('%H:%M') %}
         {{- cover_start }}
+
+- platform: template  #https://www.home-assistant.io/components/sensor.template
+  sensors:
+    ale_internet_end:
+      friendly_name: Orario chiusura
+      icon_template: mdi:clock-alert-outline
+      entity_id: switch.fritzbox_profile_tablet_ale
+      value_template: >
+        {%- if is_state('switch.fritzbox_profile_tablet_ale', 'on') %}
+          {{ (as_timestamp(now()) + state_attr('input_datetime.ale_internet', 'timestamp')) | timestamp_custom('%H:%M:%S') }}
+        {%- else %}
+          -
+        {%- endif %}
 
 
 #++++++++++++++++++++++++++++++++++

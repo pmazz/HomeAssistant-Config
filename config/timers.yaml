@@ -1,0 +1,5 @@
+#https://www.home-assistant.io/integrations/timer
+
+ale_internet:
+  name: Ale - Internet Timer
+  icon: mdi:timer-outline

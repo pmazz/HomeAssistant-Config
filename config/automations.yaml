@@ -1520,6 +1520,46 @@
         message2say: Silvia. È quasi ora di tornare in ufficio.
         volume: "0.6"
 
+- id: ale_internet_timer_start
+  #Avvia il timer in attivazione dello switch per la connessione internet
+  alias: ale_internet_timer_start
+  trigger:
+    - platform: state
+      entity_id: switch.fritzbox_profile_tablet_ale
+      from: "off"
+      to: "on"
+  action:
+    - service: timer.start
+      data_template:
+        entity_id: timer.ale_internet
+        duration: >
+          {{states('input_datetime.ale_internet')}}
+
+- id: ale_internet_timer_stop
+  #Interrompe il timer in disattivazione dello switch per la connessione internet
+  alias: ale_internet_timer_stop
+  trigger:
+    - platform: state
+      entity_id: switch.fritzbox_profile_tablet_ale
+      from: "on"
+      to: "off"
+  action:
+    - service: timer.finish
+      data_template:
+        entity_id: timer.ale_internet
+
+- id: ale_internet_timer_complete
+  #Interrompe la connessione internet a scadenza del timer
+  alias: ale_internet_timer_complete
+  trigger:
+    - platform: event
+      event_type: timer.finished
+      event_data:
+        entity_id: timer.ale_internet
+  action:
+    - service: switch.turn_off
+      entity_id: switch.fritzbox_profile_tablet_ale
+
 
 #+++++++++++++++++++++++++++++++++++++++++
 #+++++ Energy monitoring automations +++++

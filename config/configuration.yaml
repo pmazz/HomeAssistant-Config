@@ -163,6 +163,8 @@ sensor: !include sensors.yaml
 binary_sensor: !include sensors_binary.yaml
 rss_feed_template: !include rss_feeds.yaml
 
+timer: !include timers.yaml
+
 hacs:
   token: !secret github_hacs
 

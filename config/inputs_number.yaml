@@ -162,7 +162,7 @@ event_afterdawn_cover_up:
   name: Dopo Alba
   icon: mdi:timer-sand
   unit_of_measurement: min.
-  min: 0
+  min: -60
   max: 120
   step: 1
   mode: box
@@ -170,7 +170,7 @@ event_aftersunset_cover_down:
   name: Dopo Tramonto
   icon: mdi:timer-sand
   unit_of_measurement: min.
-  min: 0
+  min: -60
   max: 120
   step: 1
   mode: box

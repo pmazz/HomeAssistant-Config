@@ -256,3 +256,9 @@ irrigation_start_time:
   icon: mdi:clock-check-outline
   has_date: false
   has_time: true
+
+ale_internet:
+  name: Durata
+  icon: mdi:web-clock
+  has_date: false
+  has_time: true
