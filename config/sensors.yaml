@@ -91,7 +91,7 @@
 
 - platform: command_line  #https://www.home-assistant.io/components/sensor.command_line
   name: hass_ip_address
-  command: ifconfig | sed -n -e 's/:127\.0\.0\.1 //g' -e 's/ *inet addr:\([0-9.]\+\).*/\1/gp'
+  command: ifconfig | sed -n -e 's/:127\.0\.0\.1 //g' -e 's/:172\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\} //g' -e 's/ *inet addr:\([0-9.]\+\).*/\1/gp'
   scan_interval: 600
 
 - platform: command_line  #https://www.home-assistant.io/components/sensor.command_line
@@ -221,7 +221,7 @@
 #++++++++++++++++++++++++++++++++++++++++
 - platform: rest  #https://www.home-assistant.io/integrations/rest
   name: addon_samba
-  resource: http://hassio:8123/api/hassio/addons/core_samba/info
+  resource: http://homeassistant:8123/api/hassio/addons/core_samba/info
   headers:
     Authorization: !secret hass_api_llt
     Content-Type: application/json
@@ -237,7 +237,7 @@
 
 - platform: rest  #https://www.home-assistant.io/integrations/rest
   name: addon_adguard
-  resource: http://hassio:8123/api/hassio/addons/a0d7b954_adguard/info
+  resource: http://homeassistant:8123/api/hassio/addons/a0d7b954_adguard/info
   headers:
     Authorization: !secret hass_api_llt
     Content-Type: application/json
@@ -252,7 +252,7 @@
 
 - platform: rest  #https://www.home-assistant.io/integrations/rest
   name: addon_bitwarden
-  resource: http://hassio:8123/api/hassio/addons/a0d7b954_bitwarden/info
+  resource: http://homeassistant:8123/api/hassio/addons/a0d7b954_bitwarden/info
   headers:
     Authorization: !secret hass_api_llt
     Content-Type: application/json
@@ -267,7 +267,7 @@
 
 - platform: rest  #https://www.home-assistant.io/integrations/rest
   name: addon_dasshio
-  resource: http://hassio:8123/api/hassio/addons/03d23610_dasshio/info
+  resource: http://homeassistant:8123/api/hassio/addons/03d23610_dasshio/info
   headers:
     Authorization: !secret hass_api_llt
     Content-Type: application/json
@@ -282,7 +282,7 @@
 
 - platform: rest  #https://www.home-assistant.io/integrations/rest
   name: addon_duckdns
-  resource: http://hassio:8123/api/hassio/addons/core_duckdns/info
+  resource: http://homeassistant:8123/api/hassio/addons/core_duckdns/info
   headers:
     Authorization: !secret hass_api_llt
     Content-Type: application/json
@@ -297,7 +297,7 @@
 
 - platform: rest  #https://www.home-assistant.io/integrations/rest
   name: addon_configurator
-  resource: http://hassio:8123/api/hassio/addons/core_configurator/info
+  resource: http://homeassistant:8123/api/hassio/addons/core_configurator/info
   headers:
     Authorization: !secret hass_api_llt
     Content-Type: application/json
@@ -312,7 +312,7 @@
 
 - platform: rest  #https://www.home-assistant.io/integrations/rest
   name: addon_nut
-  resource: http://hassio:8123/api/hassio/addons/a0d7b954_nut/info
+  resource: http://homeassistant:8123/api/hassio/addons/a0d7b954_nut/info
   headers:
     Authorization: !secret hass_api_llt
     Content-Type: application/json
@@ -327,7 +327,7 @@
 
 - platform: rest  #https://www.home-assistant.io/integrations/rest
   name: addon_nodered
-  resource: http://hassio:8123/api/hassio/addons/a0d7b954_nodered/info
+  resource: http://homeassistant:8123/api/hassio/addons/a0d7b954_nodered/info
   headers:
     Authorization: !secret hass_api_llt
     Content-Type: application/json
@@ -342,7 +342,7 @@
 
 - platform: rest  #https://www.home-assistant.io/integrations/rest
   name: addon_sqliteweb
-  resource: http://hassio:8123/api/hassio/addons/a0d7b954_sqlite-web/info
+  resource: http://homeassistant:8123/api/hassio/addons/a0d7b954_sqlite-web/info
   headers:
     Authorization: !secret hass_api_llt
     Content-Type: application/json
@@ -357,7 +357,7 @@
 
 - platform: rest  #https://www.home-assistant.io/integrations/rest
   name: addon_ssh
-  resource: http://hassio:8123/api/hassio/addons/a0d7b954_ssh/info
+  resource: http://homeassistant:8123/api/hassio/addons/a0d7b954_ssh/info
   headers:
     Authorization: !secret hass_api_llt
     Content-Type: application/json
@@ -372,7 +372,7 @@
 
 - platform: rest  #https://www.home-assistant.io/integrations/rest
   name: addon_tasmoadmin
-  resource: http://hassio:8123/api/hassio/addons/a0d7b954_sonweb/info
+  resource: http://homeassistant:8123/api/hassio/addons/a0d7b954_sonweb/info
   headers:
     Authorization: !secret hass_api_llt
     Content-Type: application/json
@@ -387,7 +387,7 @@
 
 - platform: rest  #https://www.home-assistant.io/integrations/rest
   name: addon_motioneye
-  resource: http://hassio:8123/api/hassio/addons/a0d7b954_motioneye/info
+  resource: http://homeassistant:8123/api/hassio/addons/a0d7b954_motioneye/info
   headers:
     Authorization: !secret hass_api_llt
     Content-Type: application/json
@@ -1342,35 +1342,35 @@
 #++++++++++++++++++++++++++++
 - platform: ics  #https://github.com/KoljaWindeler/ics
   id: 1
-  url: http://hassio:8123/local/calendars/contarina.ics
+  url: http://homeassistant:8123/local/calendars/contarina.ics
   name: Secco
   startswith: Secco
   timeformat: "%A, %d-%m-%Y"
   show_remaining: false
 - platform: ics  #https://github.com/KoljaWindeler/ics
   id: 2
-  url: http://hassio:8123/local/calendars/contarina.ics
+  url: http://homeassistant:8123/local/calendars/contarina.ics
   name: Umido
   startswith: Umido
   timeformat: "%A, %d-%m-%Y"
   show_remaining: false
 - platform: ics  #https://github.com/KoljaWindeler/ics
   id: 3
-  url: http://hassio:8123/local/calendars/contarina.ics
+  url: http://homeassistant:8123/local/calendars/contarina.ics
   name: Plastica
   startswith: Plastica
   timeformat: "%A, %d-%m-%Y"
   show_remaining: false
 - platform: ics  #https://github.com/KoljaWindeler/ics
   id: 4
-  url: http://hassio:8123/local/calendars/contarina.ics
+  url: http://homeassistant:8123/local/calendars/contarina.ics
   name: Carta
   startswith: Carta
   timeformat: "%A, %d-%m-%Y"
   show_remaining: false
 - platform: ics  #https://github.com/KoljaWindeler/ics
   id: 5
-  url: http://hassio:8123/local/calendars/contarina.ics
+  url: http://homeassistant:8123/local/calendars/contarina.ics
   name: Vegetale
   startswith: Vegetale
   timeformat: "%A, %d-%m-%Y"

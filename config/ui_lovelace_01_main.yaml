@@ -171,15 +171,15 @@ cards:
               - type: weblink
                 name: SQLite Web
                 icon: mdi:database-search
-                url: http://hassio:6210
+                url: http://homeassistant:8123/hassio/ingress/a0d7b954_sqlite-web
               - type: weblink
                 name: TasmoAdmin
                 icon: mdi:z-wave
-                url: http://hassio:9541
+                url: http://homeassistant:9541
               - type: weblink
                 name: Bitwarden
                 icon: mdi:shield-key
-                url: http://hassio:7277
+                url: http://homeassistant:7277
           - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
             head:
               type: section

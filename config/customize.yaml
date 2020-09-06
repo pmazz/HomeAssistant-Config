@@ -22,7 +22,7 @@ sensor.memory_free:
   icon: mdi:memory
   unit_of_measurement: MB
 sensor.hass_ip_address:
-  friendly_name: Internal IPs
+  friendly_name: Internal IP
   icon: mdi:earth-off
 
 

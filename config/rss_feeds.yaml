@@ -1,6 +1,6 @@
 #https://www.home-assistant.io/components/rss_feed_template
 
-#Accessible on http://hassio:8123/api/rss_template/raspberry
+#Accessible on http://homeassistant:8123/api/rss_template/raspberry
 raspberry:
   requires_api_password: false
   title: "Raspberry PI sensors ({{ now().strftime('%H:%M:%S') }})"
@@ -22,9 +22,9 @@ raspberry:
   - title: Available HA version
     description: "{{ state_attr('binary_sensor.updater', 'newest_version') }}"
   - title: "{% if not is_state('sensor.hass_ip_address', 'unknown') %}{{state_attr('sensor.hass_ip_address', 'friendly_name')}}{% else %}Internal IPs{% endif %}"
-    description: "{% if not is_state('sensor.hass_ip_address', 'unknown') %}{{states('sensor.hass_ip_address') | replace('\n',', ')}}{% else %}N/A{% endif %}"
+    description: "{% if not is_state('sensor.hass_ip_address', 'unknown') %}{{states('sensor.hass_ip_address')}}{% else %}N/A{% endif %}"
 
-#Accessible on http://hassio:8123/api/rss_template/fritzbox
+#Accessible on http://homeassistant:8123/api/rss_template/fritzbox
 fritzbox:
   requires_api_password: false
   title: "FritzBox sensors ({{ now().strftime('%H:%M:%S') }})"
@@ -48,7 +48,7 @@ fritzbox:
   - title: "{% if not is_state('sensor.fritz_attr_transmission_rate_down', 'unknown') %}{{state_attr('sensor.fritz_attr_transmission_rate_down', 'friendly_name')}}{% else %}Current downstream (bytes/sec){% endif %}"
     description: "{% if not is_state('sensor.fritz_attr_transmission_rate_down', 'unknown') %}{{states('sensor.fritz_attr_transmission_rate_down')}} {{state_attr('sensor.fritz_attr_transmission_rate_down', 'unit_of_measurement')}}{% else %}N/A{% endif %}"
 
-#Accessible on http://hassio:8123/api/rss_template/qnap
+#Accessible on http://homeassistant:8123/api/rss_template/qnap
 qnap:
   requires_api_password: false
   title: "Qnap sensors ({{ now().strftime('%H:%M:%S') }})"

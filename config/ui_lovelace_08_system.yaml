@@ -326,6 +326,8 @@ cards:
                 name: Commits
               - attribute: stargazers_count
                 name: Stars
+              - attribute: subscribers_count
+                name: Watchers
               - attribute: forks_count
                 name: Forks
           - entity: sensor.github_2
@@ -343,5 +345,7 @@ cards:
                 name: Commits
               - attribute: stargazers_count
                 name: Stars
+              - attribute: subscribers_count
+                name: Watchers
               - attribute: forks_count
                 name: Forks

@@ -105,7 +105,7 @@
 
 - id: system_execute_script_via_webhook
   #Esegue script tramite webhook trigger
-  #- Post su http://hassio:8123/api/webhook/exec_script_webhook
+  #- Post su http://homeassistant:8123/api/webhook/exec_script_webhook
   #- Header -> Content-Type: application/json
   #- Body -> {"script":"<nome script senza domain>"}
   alias: system_execute_script_via_webhook
@@ -1255,7 +1255,7 @@
               *Avail. version:* {{ state_attr('binary_sensor.updater', 'newest_version') }}
               *HACS updates:* {{ states('sensor.hacs') }}
             *Internal IPs:*
-              {% if not is_state('sensor.hass_ip_address', 'unknown') %}{{states('sensor.hass_ip_address') | replace("\n","\n    ")}}{% else %}N/A{% endif %}
+              {% if not is_state('sensor.hass_ip_address', 'unknown') %}{{states('sensor.hass_ip_address')}}{% else %}N/A{% endif %}
         inline_keyboard:
           - "\U0001F4AB Refresh:/sensors_raspberry, \U0001F519 Go back:/sensors"
 
