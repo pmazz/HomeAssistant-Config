@@ -116,19 +116,23 @@
     hass_addon_updates:
       friendly_name: Addon Updates
       icon_template: mdi:cogs
-      entity_id: 
-        - sensor.addon_addon_adguard
-        - sensor.addon_addon_bitwarden
-        - sensor.addon_addon_dasshio
-        - sensor.addon_addon_duckdns
-        - sensor.addon_addon_configurator
-        - sensor.addon_addon_nut
-        - sensor.addon_addon_nodered
-        - sensor.addon_addon_samba
-        - sensor.addon_addon_sqliteweb
-        - sensor.addon_addon_ssh
-        - sensor.addon_addon_tasmoadmin
-        - sensor.addon_addon_motioneye
+      entity_id:
+        - sensor.addon_adguard
+        - sensor.addon_bitwarden
+        - sensor.addon_dasshio
+        - sensor.addon_duckdns
+        - sensor.addon_configurator
+        - sensor.addon_nut
+        - sensor.addon_nodered
+        - sensor.addon_samba
+        - sensor.addon_sqliteweb
+        - sensor.addon_ssh
+        - sensor.addon_tasmoadmin
+        - sensor.addon_motioneye
+        - sensor.addon_mariadb
+        - sensor.addon_mosquitto
+        - sensor.addon_phpmyadmin
+        - sensor.addon_vscode
       value_template: >
         {%- set addon_upd = namespace(value=0) -%}
         {%- for addon in states['sensor'] if addon.name.startswith("addon_") -%}
@@ -149,6 +153,166 @@
         # repositories: >
         #   {% set jjj = [{"name":"hacs/integration", "display_name":"HACS", "installed_version":"1.1.0", "available_version":"1.1.1"}] %}
         #   {{ jjj }}
+
+    addon_adguard_update:
+      icon_template: "{{ state_attr('sensor.addon_adguard', 'icon') }}"
+      entity_id:
+        - sensor.addon_adguard
+      value_template: "{{ state_attr('sensor.addon_adguard', 'version') != state_attr('sensor.addon_adguard', 'version_latest') }}"
+      attribute_templates:
+        name: "{{ state_attr('sensor.addon_adguard', 'name') }}"
+        version: "{{ state_attr('sensor.addon_adguard', 'version') }}"
+        version_latest: "{{ state_attr('sensor.addon_adguard', 'version_latest') }}"
+
+    addon_bitwarden_update:
+      icon_template: "{{ state_attr('sensor.addon_bitwarden', 'icon') }}"
+      entity_id:
+        - sensor.addon_bitwarden
+      value_template: "{{ state_attr('sensor.addon_bitwarden', 'version') != state_attr('sensor.addon_bitwarden', 'version_latest') }}"
+      attribute_templates:
+        name: "{{ state_attr('sensor.addon_bitwarden', 'name') }}"
+        version: "{{ state_attr('sensor.addon_bitwarden', 'version') }}"
+        version_latest: "{{ state_attr('sensor.addon_bitwarden', 'version_latest') }}"
+
+    addon_dasshio_update:
+      icon_template: "{{ state_attr('sensor.addon_dasshio', 'icon') }}"
+      entity_id:
+        - sensor.addon_dasshio
+      value_template: "{{ state_attr('sensor.addon_dasshio', 'version') != state_attr('sensor.addon_dasshio', 'version_latest') }}"
+      attribute_templates:
+        name: "{{ state_attr('sensor.addon_dasshio', 'name') }}"
+        version: "{{ state_attr('sensor.addon_dasshio', 'version') }}"
+        version_latest: "{{ state_attr('sensor.addon_dasshio', 'version_latest') }}"
+
+    addon_duckdns_update:
+      icon_template: "{{ state_attr('sensor.addon_duckdns', 'icon') }}"
+      entity_id:
+        - sensor.addon_duckdns
+      value_template: "{{ state_attr('sensor.addon_duckdns', 'version') != state_attr('sensor.addon_duckdns', 'version_latest') }}"
+      attribute_templates:
+        name: "{{ state_attr('sensor.addon_duckdns', 'name') }}"
+        version: "{{ state_attr('sensor.addon_duckdns', 'version') }}"
+        version_latest: "{{ state_attr('sensor.addon_duckdns', 'version_latest') }}"
+
+    addon_configurator_update:
+      icon_template: "{{ state_attr('sensor.addon_configurator', 'icon') }}"
+      entity_id:
+        - sensor.addon_configurator
+      value_template: "{{ state_attr('sensor.addon_configurator', 'version') != state_attr('sensor.addon_configurator', 'version_latest') }}"
+      attribute_templates:
+        name: "{{ state_attr('sensor.addon_configurator', 'name') }}"
+        version: "{{ state_attr('sensor.addon_configurator', 'version') }}"
+        version_latest: "{{ state_attr('sensor.addon_configurator', 'version_latest') }}"
+
+    addon_nut_update:
+      icon_template: "{{ state_attr('sensor.addon_nut', 'icon') }}"
+      entity_id:
+        - sensor.addon_nut
+      value_template: "{{ state_attr('sensor.addon_nut', 'version') != state_attr('sensor.addon_nut', 'version_latest') }}"
+      attribute_templates:
+        name: "{{ state_attr('sensor.addon_nut', 'name') }}"
+        version: "{{ state_attr('sensor.addon_nut', 'version') }}"
+        version_latest: "{{ state_attr('sensor.addon_nut', 'version_latest') }}"
+
+    addon_nodered_update:
+      icon_template: "{{ state_attr('sensor.addon_nodered', 'icon') }}"
+      entity_id:
+        - sensor.addon_nodered
+      value_template: "{{ state_attr('sensor.addon_nodered', 'version') != state_attr('sensor.addon_nodered', 'version_latest') }}"
+      attribute_templates:
+        name: "{{ state_attr('sensor.addon_nodered', 'name') }}"
+        version: "{{ state_attr('sensor.addon_nodered', 'version') }}"
+        version_latest: "{{ state_attr('sensor.addon_nodered', 'version_latest') }}"
+
+    addon_samba_update:
+      icon_template: "{{ state_attr('sensor.addon_samba', 'icon') }}"
+      entity_id:
+        - sensor.addon_samba
+      value_template: "{{ state_attr('sensor.addon_samba', 'version') != state_attr('sensor.addon_samba', 'version_latest') }}"
+      attribute_templates:
+        name: "{{ state_attr('sensor.addon_samba', 'name') }}"
+        version: "{{ state_attr('sensor.addon_samba', 'version') }}"
+        version_latest: "{{ state_attr('sensor.addon_samba', 'version_latest') }}"
+
+    addon_sqliteweb_update:
+      icon_template: "{{ state_attr('sensor.addon_sqliteweb', 'icon') }}"
+      entity_id:
+        - sensor.addon_sqliteweb
+      value_template: "{{ state_attr('sensor.addon_sqliteweb', 'version') != state_attr('sensor.addon_sqliteweb', 'version_latest') }}"
+      attribute_templates:
+        name: "{{ state_attr('sensor.addon_sqliteweb', 'name') }}"
+        version: "{{ state_attr('sensor.addon_sqliteweb', 'version') }}"
+        version_latest: "{{ state_attr('sensor.addon_sqliteweb', 'version_latest') }}"
+
+    addon_ssh_update:
+      icon_template: "{{ state_attr('sensor.addon_ssh', 'icon') }}"
+      entity_id:
+        - sensor.addon_ssh
+      value_template: "{{ state_attr('sensor.addon_ssh', 'version') != state_attr('sensor.addon_ssh', 'version_latest') }}"
+      attribute_templates:
+        name: "{{ state_attr('sensor.addon_ssh', 'name') }}"
+        version: "{{ state_attr('sensor.addon_ssh', 'version') }}"
+        version_latest: "{{ state_attr('sensor.addon_ssh', 'version_latest') }}"
+
+    addon_tasmoadmin_update:
+      icon_template: "{{ state_attr('sensor.addon_tasmoadmin', 'icon') }}"
+      entity_id:
+        - sensor.addon_tasmoadmin
+      value_template: "{{ state_attr('sensor.addon_tasmoadmin', 'version') != state_attr('sensor.addon_tasmoadmin', 'version_latest') }}"
+      attribute_templates:
+        name: "{{ state_attr('sensor.addon_tasmoadmin', 'name') }}"
+        version: "{{ state_attr('sensor.addon_tasmoadmin', 'version') }}"
+        version_latest: "{{ state_attr('sensor.addon_tasmoadmin', 'version_latest') }}"
+
+    addon_motioneye_update:
+      icon_template: "{{ state_attr('sensor.addon_motioneye', 'icon') }}"
+      entity_id:
+        - sensor.addon_motioneye
+      value_template: "{{ state_attr('sensor.addon_motioneye', 'version') != state_attr('sensor.addon_motioneye', 'version_latest') }}"
+      attribute_templates:
+        name: "{{ state_attr('sensor.addon_motioneye', 'name') }}"
+        version: "{{ state_attr('sensor.addon_motioneye', 'version') }}"
+        version_latest: "{{ state_attr('sensor.addon_motioneye', 'version_latest') }}"
+
+    addon_mariadb_update:
+      icon_template: "{{ state_attr('sensor.addon_mariadb', 'icon') }}"
+      entity_id:
+        - sensor.addon_mariadb
+      value_template: "{{ state_attr('sensor.addon_mariadb', 'version') != state_attr('sensor.addon_mariadb', 'version_latest') }}"
+      attribute_templates:
+        name: "{{ state_attr('sensor.addon_mariadb', 'name') }}"
+        version: "{{ state_attr('sensor.addon_mariadb', 'version') }}"
+        version_latest: "{{ state_attr('sensor.addon_mariadb', 'version_latest') }}"
+
+    addon_mosquitto_update:
+      icon_template: "{{ state_attr('sensor.addon_mosquitto', 'icon') }}"
+      entity_id:
+        - sensor.addon_mosquitto
+      value_template: "{{ state_attr('sensor.addon_mosquitto', 'version') != state_attr('sensor.addon_mosquitto', 'version_latest') }}"
+      attribute_templates:
+        name: "{{ state_attr('sensor.addon_mosquitto', 'name') }}"
+        version: "{{ state_attr('sensor.addon_mosquitto', 'version') }}"
+        version_latest: "{{ state_attr('sensor.addon_mosquitto', 'version_latest') }}"
+
+    addon_phpmyadmin_update:
+      icon_template: "{{ state_attr('sensor.addon_phpmyadmin', 'icon') }}"
+      entity_id:
+        - sensor.addon_phpmyadmin
+      value_template: "{{ state_attr('sensor.addon_phpmyadmin', 'version') != state_attr('sensor.addon_phpmyadmin', 'version_latest') }}"
+      attribute_templates:
+        name: "{{ state_attr('sensor.addon_phpmyadmin', 'name') }}"
+        version: "{{ state_attr('sensor.addon_phpmyadmin', 'version') }}"
+        version_latest: "{{ state_attr('sensor.addon_phpmyadmin', 'version_latest') }}"
+
+    addon_vscode_update:
+      icon_template: "{{ state_attr('sensor.addon_vscode', 'icon') }}"
+      entity_id:
+        - sensor.addon_vscode
+      value_template: "{{ state_attr('sensor.addon_vscode', 'version') != state_attr('sensor.addon_vscode', 'version_latest') }}"
+      attribute_templates:
+        name: "{{ state_attr('sensor.addon_vscode', 'name') }}"
+        version: "{{ state_attr('sensor.addon_vscode', 'version') }}"
+        version_latest: "{{ state_attr('sensor.addon_vscode', 'version_latest') }}"
 
 - platform: mqtt  #https://www.home-assistant.io/integrations/binary_sensor.mqtt
   name: online_pzem_004t

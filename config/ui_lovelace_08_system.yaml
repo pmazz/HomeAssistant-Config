@@ -129,119 +129,347 @@ cards:
               - sensor.hass_input_count
               - sensor.hass_script_count
           - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-            head: 
-              entity: sensor.hass_addon_count
-              name: Addons
-              state_color: true
+            head:
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                entity: binary_sensor.hass_addon_updates
+                name: Addons
+                show_state: false
+                state_color: true
+                icon: fas:puzzle-piece
+                entities:
+                  - entity: binary_sensor.hass_addon_updates
+                    attribute: updates_count
+                    unit: update(s)
+                    name: []
             items:
-              - entity: sensor.addon_adguard
+              - entity: binary_sensor.addon_adguard_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: AdGuard Home
-                icon: mdi:cogs
+                icon: si:adguard
+                state_color: true
+                show_state: false
                 entities:
                   - icon: mdi:open-in-new
                     tap_action: 
                       action: url
-                      url_path: /hassio/addon/a0d7b954_adguard
-              - entity: sensor.addon_bitwarden
+                      url_path: /hassio/ingress/a0d7b954_adguard
+                  - icon: mdi:hammer-screwdriver
+                    tap_action: 
+                      action: url
+                      url_path: /hassio/addon/a0d7b954_adguard/config
+                  - attribute: version
+                    name: Installed
+                  - attribute: version_latest
+                    name: Available
+                  - entity: sensor.addon_adguard
+                    name: Status
+                    unit: []
+              - entity: binary_sensor.addon_bitwarden_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: Bitwarden RS
-                icon: mdi:cogs
+                icon: si:bitwarden
+                state_color: true
+                show_state: false
                 entities:
                   - icon: mdi:open-in-new
                     tap_action: 
                       action: url
-                      url_path: /hassio/addon/a0d7b954_bitwarden
-              - entity: sensor.addon_configurator
-                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-                name: File editor
-                icon: mdi:cogs
-                entities:
-                  - icon: mdi:open-in-new
+                      url_path: http://homeassistant:7277
+                  - icon: mdi:hammer-screwdriver
                     tap_action: 
                       action: url
-                      url_path: /hassio/addon/core_configurator
-              - entity: sensor.addon_dasshio
+                      url_path: /hassio/addon/a0d7b954_bitwarden/config
+                  - attribute: version
+                    name: Installed
+                  - attribute: version_latest
+                    name: Available
+                  - entity: sensor.addon_bitwarden
+                    name: Status
+                    unit: []
+              - entity: binary_sensor.addon_dasshio_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: Dasshio
-                icon: mdi:cogs
+                icon: fas:puzzle-piece
+                state_color: true
+                show_state: false
                 entities:
-                  - icon: mdi:open-in-new
+                  - icon: mdi:hammer-screwdriver
                     tap_action: 
                       action: url
-                      url_path: /hassio/addon/03d23610_dasshio
-              - entity: sensor.addon_duckdns
+                      url_path: /hassio/addon/03d23610_dasshio/config
+                  - attribute: version
+                    name: Installed
+                  - attribute: version_latest
+                    name: Available
+                  - entity: sensor.addon_dasshio
+                    name: Status
+                    unit: []
+              - entity: binary_sensor.addon_duckdns_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: Duck DNS
-                icon: mdi:cogs
+                icon: mdi:dns-outline
+                state_color: true
+                show_state: false
+                entities:
+                  - icon: mdi:hammer-screwdriver
+                    tap_action: 
+                      action: url
+                      url_path: /hassio/addon/core_duckdns/config
+                  - attribute: version
+                    name: Installed
+                  - attribute: version_latest
+                    name: Available
+                  - entity: sensor.addon_duckdns
+                    name: Status
+                    unit: []
+              - entity: binary_sensor.addon_configurator_update
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: File editor
+                icon: mdi:file-document-edit-outline
+                state_color: true
+                show_state: false
                 entities:
                   - icon: mdi:open-in-new
                     tap_action: 
                       action: url
-                      url_path: /hassio/addon/core_duckdns
-              - entity: sensor.addon_motioneye
+                      url_path: /hassio/ingress/core_configurator
+                  - icon: mdi:hammer-screwdriver
+                    tap_action: 
+                      action: url
+                      url_path: /hassio/addon/core_configurator/config
+                  - attribute: version
+                    name: Installed
+                  - attribute: version_latest
+                    name: Available
+                  - entity: sensor.addon_configurator
+                    name: Status
+                    unit: []
+              - entity: binary_sensor.addon_mariadb_update
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: MariaDB
+                icon: si:mariadb
+                state_color: true
+                show_state: false
+                entities:
+                  - icon: mdi:hammer-screwdriver
+                    tap_action: 
+                      action: url
+                      url_path: /hassio/addon/core_mariadb/config
+                  - attribute: version
+                    name: Installed
+                  - attribute: version_latest
+                    name: Available
+                  - entity: sensor.addon_mariadb
+                    name: Status
+                    unit: []
+              - entity: binary_sensor.addon_mosquitto_update
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: Mosquitto
+                icon: si:eclipsemosquitto
+                state_color: true
+                show_state: false
+                entities:
+                  - icon: mdi:hammer-screwdriver
+                    tap_action: 
+                      action: url
+                      url_path: /hassio/addon/core_mosquitto/config
+                  - attribute: version
+                    name: Installed
+                  - attribute: version_latest
+                    name: Available
+                  - entity: sensor.addon_mosquitto
+                    name: Status
+                    unit: []
+              - entity: binary_sensor.addon_motioneye_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: motionEye
-                icon: mdi:cogs
+                icon: mdi:webcam
+                state_color: true
+                show_state: false
                 entities:
                   - icon: mdi:open-in-new
                     tap_action: 
                       action: url
-                      url_path: /hassio/addon/a0d7b954_motioneye
-              - entity: sensor.addon_nodered
-                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-                name: Node-RED
-                icon: mdi:cogs
-                entities:
-                  - icon: mdi:open-in-new
+                      url_path: /hassio/ingress/a0d7b954_motioneye
+                  - icon: mdi:hammer-screwdriver
                     tap_action: 
                       action: url
-                      url_path: /hassio/addon/a0d7b954_nodered
-              - entity: sensor.addon_nut
+                      url_path: /hassio/addon/a0d7b954_motioneye/config
+                  - attribute: version
+                    name: Installed
+                  - attribute: version_latest
+                    name: Available
+                  - entity: sensor.addon_motioneye
+                    name: Status
+                    unit: []
+              - entity: binary_sensor.addon_nut_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: Network UPS Tools
-                icon: mdi:cogs
+                icon: fas:puzzle-piece
+                state_color: true
+                show_state: false
+                entities:
+                  - icon: mdi:hammer-screwdriver
+                    tap_action: 
+                      action: url
+                      url_path: /hassio/addon/a0d7b954_nut/config
+                  - attribute: version
+                    name: Installed
+                  - attribute: version_latest
+                    name: Available
+                  - entity: sensor.addon_nut
+                    name: Status
+                    unit: []
+              - entity: binary_sensor.addon_nodered_update
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: Node-RED
+                icon: si:node-red
+                state_color: true
+                show_state: false
                 entities:
                   - icon: mdi:open-in-new
                     tap_action: 
                       action: url
-                      url_path: /hassio/addon/a0d7b954_nut
-              - entity: sensor.addon_samba
+                      url_path: /hassio/ingress/a0d7b954_nodered
+                  - icon: mdi:hammer-screwdriver
+                    tap_action: 
+                      action: url
+                      url_path: /hassio/addon/a0d7b954_nodered/config
+                  - attribute: version
+                    name: Installed
+                  - attribute: version_latest
+                    name: Available
+                  - entity: sensor.addon_nodered
+                    name: Status
+                    unit: []
+              - entity: binary_sensor.addon_phpmyadmin_update
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: phpMyAdmin
+                icon: si:php
+                state_color: true
+                show_state: false
+                entities:
+                  - icon: mdi:open-in-new
+                    tap_action: 
+                      action: url
+                      url_path: /hassio/ingress/a0d7b954_phpmyadmin
+                  - icon: mdi:hammer-screwdriver
+                    tap_action: 
+                      action: url
+                      url_path: /hassio/addon/a0d7b954_phpmyadmin/config
+                  - attribute: version
+                    name: Installed
+                  - attribute: version_latest
+                    name: Available
+                  - entity: sensor.addon_phpmyadmin
+                    name: Status
+                    unit: []
+              - entity: binary_sensor.addon_samba_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: Samba share
-                icon: mdi:cogs
+                icon: fas:puzzle-piece
+                state_color: true
+                show_state: false
                 entities:
-                  - icon: mdi:open-in-new
+                  - icon: mdi:hammer-screwdriver
                     tap_action: 
                       action: url
-                      url_path: /hassio/addon/core_samba
-              - entity: sensor.addon_sqliteweb
+                      url_path: /hassio/addon/core_samba/config
+                  - attribute: version
+                    name: Installed
+                  - attribute: version_latest
+                    name: Available
+                  - entity: sensor.addon_samba
+                    name: Status
+                    unit: []
+              - entity: binary_sensor.addon_sqliteweb_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: SQLite Web
-                icon: mdi:cogs
+                icon: si:sqlite
+                state_color: true
+                show_state: false
                 entities:
                   - icon: mdi:open-in-new
                     tap_action: 
                       action: url
-                      url_path: /hassio/addon/a0d7b954_sqlite-web
-              - entity: sensor.addon_ssh
+                      url_path: /hassio/ingress/a0d7b954_sqlite-web
+                  - icon: mdi:hammer-screwdriver
+                    tap_action: 
+                      action: url
+                      url_path: /hassio/addon/a0d7b954_sqlite-web/config
+                  - attribute: version
+                    name: Installed
+                  - attribute: version_latest
+                    name: Available
+                  - entity: sensor.addon_sqliteweb
+                    name: Status
+                    unit: []
+              - entity: binary_sensor.addon_ssh_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: SSH & Web Terminal
-                icon: mdi:cogs
+                icon: fas:terminal
+                state_color: true
+                show_state: false
                 entities:
                   - icon: mdi:open-in-new
                     tap_action: 
                       action: url
-                      url_path: /hassio/addon/a0d7b954_ssh
-              - entity: sensor.addon_tasmoadmin
+                      url_path: /hassio/ingress/a0d7b954_ssh
+                  - icon: mdi:hammer-screwdriver
+                    tap_action: 
+                      action: url
+                      url_path: /hassio/addon/a0d7b954_ssh/config
+                  - attribute: version
+                    name: Installed
+                  - attribute: version_latest
+                    name: Available
+                  - entity: sensor.addon_ssh
+                    name: Status
+                    unit: []
+              - entity: binary_sensor.addon_tasmoadmin_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: TasmoAdmin
-                icon: mdi:cogs
+                icon: fas:puzzle-piece
+                state_color: true
+                show_state: false
                 entities:
                   - icon: mdi:open-in-new
                     tap_action: 
                       action: url
-                      url_path: /hassio/addon/a0d7b954_sonweb
+                      url_path: http://homeassistant:9541
+                  - icon: mdi:hammer-screwdriver
+                    tap_action: 
+                      action: url
+                      url_path: /hassio/addon/a0d7b954_sonweb/config
+                  - attribute: version
+                    name: Installed
+                  - attribute: version_latest
+                    name: Available
+                  - entity: sensor.addon_tasmoadmin
+                    name: Status
+                    unit: []
+              - entity: binary_sensor.addon_vscode_update
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: Visual Studio Code
+                icon: si:visualstudiocode
+                state_color: true
+                show_state: false
+                entities:
+                  - icon: mdi:open-in-new
+                    tap_action: 
+                      action: url
+                      url_path: /hassio/ingress/a0d7b954_vscode
+                  - icon: mdi:hammer-screwdriver
+                    tap_action: 
+                      action: url
+                      url_path: /hassio/addon/a0d7b954_vscode/config
+                  - attribute: version
+                    name: Installed
+                  - attribute: version_latest
+                    name: Available
+                  - entity: sensor.addon_vscode
+                    name: Status
+                    unit: []
           - type: section
           - entity: sensor.hass_config_check_result
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row

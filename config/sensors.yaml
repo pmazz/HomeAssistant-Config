@@ -400,6 +400,66 @@
     - version_latest
   scan_interval: 3600
 
+- platform: rest  #https://www.home-assistant.io/integrations/rest
+  name: addon_mariadb
+  resource: http://homeassistant:8123/api/hassio/addons/core_mariadb/info
+  headers:
+    Authorization: !secret hass_api_llt
+    Content-Type: application/json
+  value_template: "{{ value_json.data.state }}"
+  json_attributes_path: "$.data"
+  json_attributes:
+    - name
+    - slug
+    - version
+    - version_latest
+  scan_interval: 3600
+
+- platform: rest  #https://www.home-assistant.io/integrations/rest
+  name: addon_mosquitto
+  resource: http://homeassistant:8123/api/hassio/addons/core_mosquitto/info
+  headers:
+    Authorization: !secret hass_api_llt
+    Content-Type: application/json
+  value_template: "{{ value_json.data.state }}"
+  json_attributes_path: "$.data"
+  json_attributes:
+    - name
+    - slug
+    - version
+    - version_latest
+  scan_interval: 3600
+
+- platform: rest  #https://www.home-assistant.io/integrations/rest
+  name: addon_phpmyadmin
+  resource: http://homeassistant:8123/api/hassio/addons/a0d7b954_phpmyadmin/info
+  headers:
+    Authorization: !secret hass_api_llt
+    Content-Type: application/json
+  value_template: "{{ value_json.data.state }}"
+  json_attributes_path: "$.data"
+  json_attributes:
+    - name
+    - slug
+    - version
+    - version_latest
+  scan_interval: 3600
+
+- platform: rest  #https://www.home-assistant.io/integrations/rest
+  name: addon_vscode
+  resource: http://homeassistant:8123/api/hassio/addons/a0d7b954_vscode/info
+  headers:
+    Authorization: !secret hass_api_llt
+    Content-Type: application/json
+  value_template: "{{ value_json.data.state }}"
+  json_attributes_path: "$.data"
+  json_attributes:
+    - name
+    - slug
+    - version
+    - version_latest
+  scan_interval: 3600
+
 - platform: template  #https://www.home-assistant.io/components/sensor.template
   sensors:
     hass_addon_count:
