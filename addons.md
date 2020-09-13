@@ -123,13 +123,9 @@ Flow-based programming for the Internet of Things.
 
 ![phpMyAdmin](.images/addons/phpmyadmin.png "phpMyAdmin")
 
-Flow-based programming for the Internet of Things.
+A web interface for the official MariaDB add-on.
 
-* <https://github.com/hassio-addons/addon-node-red>
-* <https://nodered.org>
-* [My Node-Red flows](node-red.md)
-
-| ****<BR>A web interface for the official MariaDB add-on. | No configuration required | <https://github.com/hassio-addons/addon-phpmyadmin> |
+* <https://github.com/hassio-addons/addon-phpmyadmin>
 
 ***
 
