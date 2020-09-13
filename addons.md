@@ -8,14 +8,17 @@ These are the Home Assistant addons I currently use.
 * [Bitwarden RS](#bitwarden-rs)
 * [Dasshio](#dasshio)
 * [Duck DNS](#duck-dns)
-* [File Editor](#file-editor)
+* [MariaDB](#mariadb)
+* [Mosquitto Broker](#mosquitto-broker)
 * [MotionEye](#motioneye)
 * [Network UPS Tools](#network-ups-tools)
 * [Node-RED](#node-red)
+* [phpMyAdmin](#phpmyadmin)
 * [Samba share](#samba-share)
 * [SQLite Web](#sqlite-web)
 * [SSH & Web Terminal](#ssh-web-terminal)
 * [TasmoAdmin](#tasmoadmin)
+* [Visual Studio Code](#visual-studio-code)
 
 ***
 
@@ -62,13 +65,23 @@ Free Dynamic DNS service with [Let's Encrypt](https://letsencrypt.org) support.
 
 ***
 
-### File Editor
+### MariaDB
 
-![File Editor](.images/addons/file-editor.png "File Editor")
+![MariaDB](.images/addons/mariadb.png "MariaDB")
 
-Simple browser-based file editor for Home Assistant.
+MariaDB database for Home Assistant.
 
-* <https://github.com/home-assistant/hassio-addons/blob/master/configurator>
+* <https://github.com/home-assistant/hassio-addons/tree/master/mariadb>
+
+***
+
+### Mosquitto Broker
+
+![Mosquitto](.images/addons/mosquitto.png "Mosquitto")
+
+MQTT broker for Home Assistant.
+
+* <https://github.com/home-assistant/hassio-addons/tree/master/mosquitto>
 
 ***
 
@@ -103,6 +116,20 @@ Flow-based programming for the Internet of Things.
 * <https://github.com/hassio-addons/addon-node-red>
 * <https://nodered.org>
 * [My Node-Red flows](node-red.md)
+
+***
+
+### phpMyAdmin
+
+![phpMyAdmin](.images/addons/phpmyadmin.png "phpMyAdmin")
+
+Flow-based programming for the Internet of Things.
+
+* <https://github.com/hassio-addons/addon-node-red>
+* <https://nodered.org>
+* [My Node-Red flows](node-red.md)
+
+| ****<BR>A web interface for the official MariaDB add-on. | No configuration required | <https://github.com/hassio-addons/addon-phpmyadmin> |
 
 ***
 
@@ -146,5 +173,15 @@ Centrally manage all your Sonoff-Tasmota devices.
 * <https://github.com/hassio-addons/addon-tasmoadmin>
 * <https://community.home-assistant.io/t/community-hass-io-add-on-tasmoadmin/54155>
 * <https://github.com/reloxx13/TasmoAdmin>
+
+***
+
+### Visual Studio Code
+
+![Visual Studio Code](.images/addons/vscode.png "Visual Studio Code")
+
+Fully featured VSCode experience, to edit your HA config in the browser.
+
+* <https://github.com/hassio-addons/addon-vscode>
 
 ***
