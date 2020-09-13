@@ -296,21 +296,6 @@
   scan_interval: 3600
 
 - platform: rest  #https://www.home-assistant.io/integrations/rest
-  name: addon_configurator
-  resource: http://homeassistant:8123/api/hassio/addons/core_configurator/info
-  headers:
-    Authorization: !secret hass_api_llt
-    Content-Type: application/json
-  value_template: "{{ value_json.data.state }}"
-  json_attributes_path: "$.data"
-  json_attributes:
-    - name
-    - slug
-    - version
-    - version_latest
-  scan_interval: 3600
-
-- platform: rest  #https://www.home-assistant.io/integrations/rest
   name: addon_nut
   resource: http://homeassistant:8123/api/hassio/addons/a0d7b954_nut/info
   headers:
@@ -1440,7 +1425,7 @@
 #++++++++++++++++++++++++++
 #+++++ GitHub sensors +++++
 #++++++++++++++++++++++++++
-- platform: rest  #https://www.home-assistant.io/components/sensor.rest
+- platform: rest  #https://www.home-assistant.io/integrations/rest
   name: github_1
   resource: https://api.github.com/repos/pmazz/HomeAssistant-Config
   value_template: "{{ value_json.name }}"
@@ -1455,13 +1440,13 @@
     - open_issues_count
     - subscribers_count
   scan_interval: 3600
-- platform: rest  #https://www.home-assistant.io/components/sensor.rest
+- platform: rest  #https://www.home-assistant.io/integrations/rest
   name: github_1_commits
   resource: https://api.github.com/repos/pmazz/HomeAssistant-Config/contributors
   value_template: "{{ value_json|sum(attribute='contributions') }}"
   scan_interval: 3600
 
-- platform: rest  #https://www.home-assistant.io/components/sensor.rest
+- platform: rest  #https://www.home-assistant.io/integrations/rest
   name: github_2
   resource: https://api.github.com/repos/pmazz/ps_hassio_entities
   value_template: "{{ value_json.name }}"
@@ -1476,7 +1461,7 @@
     - open_issues_count
     - subscribers_count
   scan_interval: 3600
-- platform: rest  #https://www.home-assistant.io/components/sensor.rest
+- platform: rest  #https://www.home-assistant.io/integrations/rest
   name: github_2_commits
   resource: https://api.github.com/repos/pmazz/ps_hassio_entities/contributors
   value_template: "{{ value_json|sum(attribute='contributions') }}"

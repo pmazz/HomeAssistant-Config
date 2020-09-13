@@ -6,9 +6,7 @@ persistent_notification_dismiss:
   alias: Persistent Notification Dismiss
   description: "Force persistent notification dismiss after few seconds."
   sequence:
-    #Wait before dismissing the notification
-    - delay: '00:00:10'
-    #Notifica Pannello Chiudi
+    - delay: "00:00:10"
     - service: persistent_notification.dismiss
       data:
         notification_id: "9975"
@@ -23,9 +21,8 @@ hass_config_check_result:
   icon: mdi:settings-box
   description: "Check Home Assistant configuration files (via Node-Red)."
   sequence:
-    #Invoke Service
     - event: pm_check_config
-    - delay: '00:00:05' #Used to maintain switch toggled for a while
+    - delay: "00:00:05" #Used to maintain switch toggled for a while
 
 hass_reload_customize:
   #Home Assistant - Reload Customize
@@ -33,25 +30,20 @@ hass_reload_customize:
   icon: mdi:settings-box
   description: "Reload Home Assistant core configuration."
   sequence:
-    #Notifica Pannello 1
     - service: persistent_notification.create
       data:
         notification_id: "9975"
         title: "Notification"
         message: "\U000023F3 Reload Customize in corso..."
-    #Notifica Telegram 1
     - service: notify.telegram_paolo
       data:
         message: "\U000023F3 Reload Customize in corso..."
-    #Invoke Service
     - service: homeassistant.reload_core_config
-    #Notifica Telegram 2
     - service: telegram_bot.edit_message
       data_template:
         message_id: "last"
         chat_id: !secret telegram_chatid_paolo
         message: "\U00002705 Reload Customize effettuato."
-    #Notifica Pannello 2
     - service: persistent_notification.create
       data:
         notification_id: "9975"
@@ -64,25 +56,20 @@ hass_reload_scripts:
   icon: mdi:script
   description: "Reload Home Assistant scripts."
   sequence:
-    #Notifica Pannello 1
     - service: persistent_notification.create
       data:
         notification_id: "9975"
         title: "Notification"
         message: "\U000023F3 Reload Scripts in corso..."
-    #Notifica Telegram 1
     - service: notify.telegram_paolo
       data:
         message: "\U000023F3 Reload Scripts in corso..."
-    #Invoke Service
     - service: script.reload
-    #Notifica Telegram 2
     - service: telegram_bot.edit_message
       data_template:
         message_id: "last"
         chat_id: !secret telegram_chatid_paolo
         message: "\U00002705 Reload Scripts effettuato."
-    #Notifica Pannello 2
     - service: persistent_notification.create
       data:
         notification_id: "9975"
@@ -95,25 +82,20 @@ hass_reload_automations:
   icon: mdi:home-automation
   description: "Reload Home Assistant automations."
   sequence:
-    #Notifica Pannello 1
     - service: persistent_notification.create
       data:
         notification_id: "9975"
         title: "Notification"
         message: "\U000023F3 Reload Automations in corso..."
-    #Notifica Telegram 1
     - service: notify.telegram_paolo
       data:
         message: "\U000023F3 Reload Automations in corso..."
-    #Invoke Service
     - service: automation.reload
-    #Notifica Telegram 2
     - service: telegram_bot.edit_message
       data_template:
         message_id: "last"
         chat_id: !secret telegram_chatid_paolo
         message: "\U00002705 Reload Automations effettuato."
-    #Notifica Pannello 2
     - service: persistent_notification.create
       data:
         notification_id: "9975"
@@ -126,28 +108,22 @@ hass_reload_themes:
   icon: mdi:view-quilt
   description: "Reload Home Assistant themes."
   sequence:
-    #Notifica Pannello 1
     - service: persistent_notification.create
       data:
         notification_id: "9975"
         title: "Notification"
         message: "\U000023F3 Reload Themes in corso..."
-    #Notifica Telegram 1
     - service: notify.telegram_paolo
       data:
         message: "\U000023F3 Reload Themes in corso..."
-    #Invoke Service
     - service: frontend.reload_themes
-    - delay: '00:00:05' #Used to maintain switch toggled for a while
-    #Force themes reload in input_select.hass_theme_selected
-    - event: pm_reload_themes
-    #Notifica Telegram 2
+    - delay: "00:00:05" #Used to maintain switch toggled for a while
+    - event: pm_reload_themes #Force themes reload to input_select.hass_theme_selected
     - service: telegram_bot.edit_message
       data_template:
         message_id: "last"
         chat_id: !secret telegram_chatid_paolo
         message: "\U00002705 Reload Themes effettuato."
-    #Notifica Pannello 2
     - service: persistent_notification.create
       data:
         notification_id: "9975"
@@ -160,17 +136,14 @@ hass_restart:
   icon: mdi:restart
   description: "Restart Home Assistant."
   sequence:
-    #Notifica Pannello
     - service: persistent_notification.create
       data:
         notification_id: "9975-Restart"
         title: "Notification"
         message: "\U000023F3 Restart Home Assistant in corso..."
-    #Notifica Telegram
     - service: notify.telegram_paolo
       data:
         message: "\U000023F3 Restart Home Assistant in corso..."
-    #Invoke Service
     - service: homeassistant.restart
 
 hass_stop:
@@ -179,17 +152,14 @@ hass_stop:
   icon: mdi:stop-circle-outline
   description: "Stop Home Assistant."
   sequence:
-    #Notifica Pannello
     - service: persistent_notification.create
       data:
         notification_id: "9975"
         title: "Notification"
         message: "\U000023F3 Stop Home Assistant in corso..."
-    #Notifica Telegram
     - service: notify.telegram_paolo
       data:
         message: "\U000023F3 Stop Home Assistant in corso..."
-    #Invoke Service
     - service: homeassistant.stop
 
 hass_server_shutdown:
@@ -198,17 +168,14 @@ hass_server_shutdown:
   icon: mdi:stop-circle
   description: "Shutdown Home Assistant server."
   sequence:
-    #Notifica Pannello
     - service: persistent_notification.create
       data:
         notification_id: "9975"
         title: "Notification"
         message: "\U000023F3 Shutdown Server in corso..."
-    #Notifica Telegram
     - service: notify.telegram_paolo
       data:
         message: "\U000023F3 Shutdown Server in corso..."
-    #Invoke Service
     - service: hassio.host_shutdown
 
 hass_server_reboot:
@@ -217,17 +184,14 @@ hass_server_reboot:
   icon: mdi:restart
   description: "Reboot Home Assistant server."
   sequence:
-    #Notifica Pannello
     - service: persistent_notification.create
       data:
         notification_id: "9975"
         title: "Notification"
         message: "\U000023F3 Reboot Server in corso..."
-    #Notifica Telegram
     - service: notify.telegram_paolo
       data:
         message: "\U000023F3 Reboot Server in corso..."
-    #Invoke Service
     - service: hassio.host_reboot
 
 hass_recorder_purge:
@@ -236,26 +200,21 @@ hass_recorder_purge:
   icon: mdi:delete-sweep
   description: "Purge events and states older than 7 days."
   sequence:
-    #Notifica Pannello 1
     - service: persistent_notification.create
       data:
         notification_id: "9975"
         title: "Notification"
         message: "\U000023F3 Purge Recorder in corso..."
-    #Notifica Telegram 1
     - service: notify.telegram_paolo
       data:
         message: "\U000023F3 Purge Recorder in corso..."
-    #Invoke Service
     - service: recorder.purge
       data:
         keep_days: 7
         repack: true
-    #Notifica Telegram 2
     - service: notify.telegram_paolo
       data:
         message: "\U00002705 Purge Recorder effettuato."
-    #Notifica Pannello 2
     - service: persistent_notification.create
       data:
         notification_id: "9975"
@@ -268,27 +227,22 @@ snapshot_full_create:
   icon: mdi:database-export
   description: "Perform a full snapshot."
   sequence:
-    #Notifica Pannello 1
     - service: persistent_notification.create
       data:
         notification_id: "9975"
         title: "Notification"
         message: "\U000023F3 Full snapshot in corso..."
-    #Notifica Telegram 1
     - service: notify.telegram_paolo
       data:
         message: "\U000023F3 Full snapshot in corso..."
-    #Snapshot Full Create
     - service: hassio.snapshot_full
       data_template:
         name: Backup {{ now().strftime("%Y-%m-%d %H.%M") }}
-    #Notifica Telegram 2
     - service: telegram_bot.edit_message
       data_template:
         message_id: "last"
         chat_id: !secret telegram_chatid_paolo
         message: "\U00002705 Full snapshot effettuato."
-    #Notifica Pannello 2
     - service: persistent_notification.create
       data:
         notification_id: "9975"
@@ -301,31 +255,25 @@ config_commit_to_git:
   icon: mdi:git
   description: "Commit and push configuration files to Git repo."
   sequence:
-    #Notifica Pannello 1
     - service: persistent_notification.create
       data:
         notification_id: "9975"
         title: "Notification"
         message: "\U000023F3 Commit file di configurazione in corso..."
-    #Notifica Telegram 1
     - service: notify.telegram_paolo
       data:
         message: "\U000023F3 Commit file di configurazione in corso..."
-    #Create backup folder to store config files
     - service: shell_command.config_commit_to_git
-    #Alternative to standard 'delay' component
-    - service: python_script.generic_actions
+    - service: python_script.generic_actions #Alternative to standard 'delay' component
       data_template:
         action: time.sleep
         seconds: 10
         log_enabled: True
-    #Notifica Telegram 2
     - service: telegram_bot.edit_message
       data_template:
         message_id: "last"
         chat_id: !secret telegram_chatid_paolo
         message: "\U00002705 Commit file di configurazione effettuato."
-    #Notifica Pannello 2
     - service: persistent_notification.create
       data:
         notification_id: "9975"
@@ -341,44 +289,36 @@ wifi_guest_start:
   alias: Wifi Guest - Start
   description: "Start the Guest WiFi."
   sequence:
-    #TTS Speak
     - service: script.tts_speak
       data_template:
         message2say: Stò avviando la rete ospiti
         volume: "0.5"
-    #Start the guest wifi network
-    - service: switch.turn_on
+    - service: switch.turn_on #Start guest wifi
       data:
         entity_id: switch.fritzbox_guest_wifi
-    #Wait for the switch to power on
-    - delay: '00:00:10'
-    #Notifica Telegram
+    - delay: "00:00:10" #Wait for guest wifi to activate
     - service: notify.telegram_paolo
       data_template:
         message: >
           {{"\U00002705"}} Wifi Guest attivata.
             Password: *12341234*
-    #TTS Speak
     - service: script.tts_speak
       data_template:
         message2say: Rete ospiti attivata. La password è... 1, 2, 3, 4, 1, 2, 3, 4
         volume: "0.5"
+
 wifi_guest_stop:
   #Router - Stop Guest Wifi
   alias: Wifi Guest - Stop
   description: "Stop the Guest WiFi."
   sequence:
-    #Start the guest wifi network
-    - service: switch.turn_off
+    - service: switch.turn_off #Stop guest wifi
       data:
         entity_id: switch.fritzbox_guest_wifi
-    #Wait for the switch to power on
-    - delay: '00:00:10'
-    #Notifica Telegram
+    - delay: "00:00:10" #Wait for guest wifi to deactivate
     - service: notify.telegram_paolo
       data_template:
         message: "\U0000274C Wifi Guest disattivata."
-    #TTS Speak
     - service: script.tts_speak
       data_template:
         message2say: Rete ospiti disattivata.
@@ -389,28 +329,23 @@ wifi_24ghz_start:
   alias: Wifi 2.4 GHz - Start
   description: "Start the 2.4 GHz WiFi."
   sequence:
-    #Start the guest wifi network
-    - service: switch.turn_on
+    - service: switch.turn_on #Start 2.4 ghz wifi
       data:
         entity_id: switch.fritzbox_wifi
-    #Wait for the switch to power on
-    - delay: '00:00:10'
-    #Notifica Telegram
+    - delay: "00:00:10" #Wait for 2.4 ghz wifi to activate
     - service: notify.telegram_paolo
       data_template:
         message: "\U00002705 Wifi 2.4 GHz attivata."
+
 wifi_24ghz_stop:
   #Router - Stop 2.4 GHz Wifi
   alias: Wifi 2.4 GHz - Stop
   description: "Stop the 2.4 GHz WiFi."
   sequence:
-    #Start the guest wifi network
-    - service: switch.turn_off
+    - service: switch.turn_off #Stop 2.4 ghz wifi
       data:
         entity_id: switch.fritzbox_wifi
-    #Wait for the switch to power on
-    - delay: '00:00:10'
-    #Notifica Telegram
+    - delay: "00:00:10" #Wait for 2.4 ghz wifi to deactivate
     - service: notify.telegram_paolo
       data_template:
         message: "\U0000274C Wifi 2.4 GHz disattivata."
@@ -420,28 +355,23 @@ wifi_5ghz_start:
   alias: Wifi 5 GHz - Start
   description: "Start the 5 GHz WiFi."
   sequence:
-    #Start the guest wifi network
-    - service: switch.turn_on
+    - service: switch.turn_on #Start 5 ghz wifi
       data:
         entity_id: switch.fritzbox_wifi_5ghz
-    #Wait for the switch to power on
-    - delay: '00:00:10'
-    #Notifica Telegram
+    - delay: "00:00:10" #Wait for 5 ghz wifi to activate
     - service: notify.telegram_paolo
       data_template:
         message: "\U00002705 Wifi 5 GHz attivata."
+
 wifi_5ghz_stop:
   #Router - Stop 5 GHz Wifi
   alias: Wifi 5 GHz - Stop
   description: "Stop the 5 GHz WiFi."
   sequence:
-    #Start the guest wifi network
-    - service: switch.turn_off
+    - service: switch.turn_off #Stop 5 ghz wifi
       data:
         entity_id: switch.fritzbox_wifi_5ghz
-    #Wait for the switch to power on
-    - delay: '00:00:10'
-    #Notifica Telegram
+    - delay: "00:00:10" #Wait for 5 ghz wifi to deactivate
     - service: notify.telegram_paolo
       data_template:
         message: "\U0000274C Wifi 5 GHz disattivata."
@@ -462,23 +392,19 @@ tts_speak:
       description: "Volume level to be set."
       example: "0.7"
   sequence:
-    #Elaborate message before TTS
-    - service: input_text.set_value
+    - service: input_text.set_value #Elaborate message before TTS
       data_template:
         entity_id: input_text.tts_last_sentence
         value: "{{ message2say.split('|') | random }}"
-    #Store last time TTS occurred
-    - service: input_datetime.set_datetime
+    - service: input_datetime.set_datetime #Store last time TTS occurred
       data_template:
         entity_id: input_datetime.tts_last_occurred
         date: "{{ now().strftime('%Y-%m-%d') }}"
         time: "{{ now().strftime('%H:%M:%S') }}"
-    #Set volume before TTS
     - service: media_player.volume_set
       data_template:
         entity_id: media_player.salotto
         volume_level: "{{ volume }}"
-    #TTS Google Speak
     - service: tts.google_say
       entity_id: media_player.salotto
       data_template:
@@ -490,7 +416,6 @@ speak_generic:
   icon: mdi:text-to-speech
   description: "Tell a TTS message via UI."
   sequence:
-    #TTS Speak
     - service: script.tts_speak
       data_template:
         message2say: "{{ states('input_text.speak_generic_msg') }}"
@@ -506,7 +431,6 @@ tv_remote_volume_up:
   icon: mdi:volume-plus
   description: "Turn Samsung TV's volume up."
   sequence:
-    #Tv volume up
     - service: media_player.volume_up
       data_template:
         entity_id: media_player.samsung_tv
@@ -517,7 +441,6 @@ tv_remote_volume_down:
   icon: mdi:volume-minus
   description: "Turn Samsung TV's volume down."
   sequence:
-    #Tv volume down
     - service: media_player.volume_down
       data_template:
         entity_id: media_player.samsung_tv
@@ -528,7 +451,6 @@ tv_remote_volume_mute:
   icon: mdi:volume-off
   description: "Mute Samsung TV's volume."
   sequence:
-    #Tv volume mute
     - service: media_player.volume_mute
       data_template:
         entity_id: media_player.samsung_tv
@@ -540,7 +462,6 @@ tv_remote_channel_up:
   icon: mdi:chevron-up
   description: "Set Samsung TV's channel up."
   sequence:
-    #Tv channel up
     - service: input_number.increment
       data_template:
         entity_id: input_number.tv_remote_channel
@@ -551,7 +472,6 @@ tv_remote_channel_down:
   icon: mdi:chevron-down
   description: "Set Samsung TV's channel down."
   sequence:
-    #Tv channel down
     - service: input_number.decrement
       data_template:
         entity_id: input_number.tv_remote_channel
@@ -562,7 +482,6 @@ tv_remote_power_off:
   icon: mdi:power
   description: "Switch Samsung TV off."
   sequence:
-    #Tv power off
     - service: media_player.turn_off
       data_template:
         entity_id: media_player.samsung_tv
@@ -576,7 +495,6 @@ set_home_mode_day:
   alias: Set Day home mode
   description: "Set home mode to 'giorno'."
   sequence:
-    #Set home mode
     - service: input_select.select_option
       data_template:
         entity_id: input_select.home_mode
@@ -587,7 +505,6 @@ say_goodmorning:
   alias: Good Morning Message
   description: "Say the 'good morning' message."
   sequence:
-    #TTS sentence 1
     - service: script.tts_speak
       data_template:
         message2say: >
@@ -596,7 +513,6 @@ say_goodmorning:
           Buongiorno. Oggi è {{ dd[now.weekday()] }} {{ now.day | int }}, e sono le {{ now.strftime('%I') | int }} e {{ now.strftime('%M') | int }}.
         volume: "0.5"
     - wait_template: "{{ states('media_player.salotto') != 'playing' }}"
-    #TTS sentence 2
     - service: script.tts_speak
       data_template:
         message2say: >
@@ -607,19 +523,16 @@ say_goodmorning:
           {% endif %}
         volume: "0.5"
     - wait_template: "{{ states('media_player.salotto') != 'playing' }}"
-    #TTS sentence 3
     - service: script.tts_speak
       data_template:
         message2say: Ecco le ultime notizie.
         volume: "0.5"
     - wait_template: "{{ states('media_player.salotto') != 'playing' }}"
-    #Set volume before playing media
     - service: media_player.volume_set
       data_template:
         entity_id: media_player.salotto
         volume_level: "0.4"
-    #Play TGCom24 news
-    - service: media_player.play_media
+    - service: media_player.play_media #Play TGCom24 news
       data_template:
         entity_id: media_player.salotto
         media_content_id: https://podcast.unitedradio.it/105.net/NEW/upload/uploadedContent/repliche/tgcom24/tgcom24.mp3
@@ -630,18 +543,15 @@ set_home_mode_night:
   alias: Set Night home mode
   description: "Set home mode to 'notte'."
   sequence:
-    #Set home mode
     - service: input_select.select_option
       data_template:
         entity_id: input_select.home_mode
         option: "notte"
-    #TTS sentence 1
     - service: script.tts_speak
       data_template:
         message2say: Verifica che il cancello e la porta di ingresso siano chiuse.
         volume: "0.3"
     - wait_template: "{{ states('media_player.salotto') != 'playing' }}"
-    #TTS sentence 2
     - service: script.tts_speak
       data_template:
         message2say: Buonanotte.
@@ -652,7 +562,6 @@ toggle_home_mode:
   alias: Toggle Home Mode
   description: "Toggle home mode from 'notte' to 'giorno' or viceversa."
   sequence:
-    #Toggle home mode
     - service_template: >
         {% if is_state('input_select.home_mode', 'giorno') %}
           script.set_home_mode_night
@@ -665,7 +574,6 @@ home_contarina_pick_tomorrow:
   alias: Contarina Pick
   description: "Avvisa se c'è una raccolta della spazzatura il giorno dopo."
   sequence:
-    #TTS Speak
     - service: script.tts_speak
       data_template:
         message2say: >
@@ -683,7 +591,6 @@ home_contarina_pick_tomorrow:
             Per domani non è prevista nessuna raccolta.
           {% endif %}
         volume: "0.6"
-    #Notifica Telegram
     - service: notify.telegram_paolo
       data_template:
         message: "{{'\U0000267B'}} {{ states('input_text.tts_last_sentence') }}"
@@ -695,7 +602,7 @@ home_cover_up:
   fields:
     how_many_secs:
       description: "Cover up duration (in seconds)."
-      example: 10
+      example: "10"
   sequence:
     - service: switch.turn_off
       data:
@@ -719,7 +626,7 @@ home_cover_down:
   fields:
     how_many_secs:
       description: "Cover down duration (in seconds)."
-      example: 10
+      example: "10"
   sequence:
     - service: switch.turn_off
       data:
@@ -753,7 +660,6 @@ say_next_cover_down:
   alias: Tell Next Cover Down Time
   description: "Tell time of the next cover down."
   sequence:
-    #TTS sentence
     - service: script.tts_speak
       data_template:
         message2say: >
@@ -765,7 +671,6 @@ say_energy_consumption:
   alias: Tell Energy Consumption
   description: "Tell the energy consumption via TTS."
   sequence:
-    #TTS sentence
     - service: script.tts_speak
       data_template:
         message2say: >
@@ -781,7 +686,6 @@ bed_cover_on:
   alias: Bed Cover On
   description: "Switch on the electric blanket."
   sequence:
-    #Switch on the plug
     - service_template: >-
         {% if is_state('binary_sensor.online_sonoff_basic_1', 'on') %}
           switch.turn_on
@@ -790,7 +694,6 @@ bed_cover_on:
         {% endif %}
       data:
         entity_id: switch.sonoff_basic_1
-    #TTS sentence
     - service: script.tts_speak
       data_template:
         message2say: >-
@@ -806,11 +709,9 @@ bed_cover_off:
   alias: Bed Cover Off
   description: "Switch off the electric blanket."
   sequence:
-    #Switch off the plug
     - service: switch.turn_off
       data:
         entity_id: switch.sonoff_basic_1
-    #TTS sentence
     - service: script.tts_speak
       data_template:
         message2say: >-

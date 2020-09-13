@@ -121,7 +121,6 @@
         - sensor.addon_bitwarden
         - sensor.addon_dasshio
         - sensor.addon_duckdns
-        - sensor.addon_configurator
         - sensor.addon_nut
         - sensor.addon_nodered
         - sensor.addon_samba
@@ -193,16 +192,6 @@
         name: "{{ state_attr('sensor.addon_duckdns', 'name') }}"
         version: "{{ state_attr('sensor.addon_duckdns', 'version') }}"
         version_latest: "{{ state_attr('sensor.addon_duckdns', 'version_latest') }}"
-
-    addon_configurator_update:
-      icon_template: "{{ state_attr('sensor.addon_configurator', 'icon') }}"
-      entity_id:
-        - sensor.addon_configurator
-      value_template: "{{ state_attr('sensor.addon_configurator', 'version') != state_attr('sensor.addon_configurator', 'version_latest') }}"
-      attribute_templates:
-        name: "{{ state_attr('sensor.addon_configurator', 'name') }}"
-        version: "{{ state_attr('sensor.addon_configurator', 'version') }}"
-        version_latest: "{{ state_attr('sensor.addon_configurator', 'version_latest') }}"
 
     addon_nut_update:
       icon_template: "{{ state_attr('sensor.addon_nut', 'icon') }}"

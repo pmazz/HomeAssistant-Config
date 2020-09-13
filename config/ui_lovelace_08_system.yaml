@@ -222,28 +222,6 @@ cards:
                   - entity: sensor.addon_duckdns
                     name: Status
                     unit: []
-              - entity: binary_sensor.addon_configurator_update
-                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-                name: File editor
-                icon: mdi:file-document-edit-outline
-                state_color: true
-                show_state: false
-                entities:
-                  - icon: mdi:open-in-new
-                    tap_action: 
-                      action: url
-                      url_path: /hassio/ingress/core_configurator
-                  - icon: mdi:hammer-screwdriver
-                    tap_action: 
-                      action: url
-                      url_path: /hassio/addon/core_configurator/config
-                  - attribute: version
-                    name: Installed
-                  - attribute: version_latest
-                    name: Available
-                  - entity: sensor.addon_configurator
-                    name: Status
-                    unit: []
               - entity: binary_sensor.addon_mariadb_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: MariaDB
