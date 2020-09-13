@@ -1478,3 +1478,23 @@
           {% elif (trigger.to_state.state == 'off') %}
             {{'\U0000274C'}} Il Pzem è disconnesso!
           {% endif %}
+
+
+#++++++++++++++++++++++++++++++++++++++
+#+++++ Garden related automations +++++
+#++++++++++++++++++++++++++++++++++++++
+- id: mower_change_status
+  #Avvisa quando il tagliaerba cambia stato
+  alias: mower_change_status
+  trigger:
+    - platform: state
+      entity_id: sensor.landroid_m141_status
+  condition:
+    condition: template
+    value_template: "{{ trigger.from_state.state != trigger.to_state.state }}"
+  action:
+    - service: notify.telegram_paolo
+      data_template:
+        message: >
+          {{'\U0001F69C'}} Mower state changed:\n
+            From '{{trigger.from_state.state}}' to '{{trigger.to_state.state}}'

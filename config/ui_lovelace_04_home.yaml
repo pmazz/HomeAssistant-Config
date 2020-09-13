@@ -164,62 +164,102 @@ cards:
                     - entity: sensor.xiaomi_humidity_1
                       name: Humidity
       - break
-      - id: events.irrigation
-        type: conditional  #https://www.home-assistant.io/lovelace/conditional
-        conditions:
-          - entity: binary_sensor.online_sonoff_4ch_1
-            state: "on"
-        card:
-          type: entities  #https://www.home-assistant.io/lovelace/entities
-          title: Giardino
-          show_header_toggle: false
-          entities:
-            - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-              head:
-                type: section
-                label: Irrigazione
-              open: true
-              items:
-                - entity: binary_sensor.irrigation_status
+      - id: events.garden
+        type: entities  #https://www.home-assistant.io/lovelace/entities
+        title: Giardino
+        show_header_toggle: false
+        entities:
+          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+            head:
+              type: section
+              label: Mower
+            open: true
+            items:
+              - entity: sensor.landroid_m141_status
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: Status
+                icon: mdi:robot-mower
+                secondary_info:
+                  attribute: last_update
+                  name: []
+              - entity: sensor.landroid_m141_error
+                name: Error
+              - entity: sensor.landroid_m141_battery
+                name: Battery
+              - type: custom:hui-horizontal-stack-card  #https://www.home-assistant.io/lovelace/horizontal-stack
+                cards:
+                  - type: custom:button-card  #https://github.com/custom-cards/button-card
+                    template: action_button_locked
+                    icon: mdi:flag-checkered
+                    name: Start
+                    entity: script.mower_start
+                    tap_action:
+                      action: call-service
+                      service: script.mower_start
+                    confirmation:
+                      text: '[[[ return `Confermi avvio tagliaerba ?` ]]]'
+                  - type: custom:button-card  #https://github.com/custom-cards/button-card
+                    template: action_button_locked
+                    icon: mdi:pause
+                    name: Pause
+                    entity: script.mower_pause
+                    tap_action:
+                      action: call-service
+                      service: script.mower_pause
+                  - type: custom:button-card  #https://github.com/custom-cards/button-card
+                    template: action_button_locked
+                    icon: mdi:home-variant
+                    name: Go Home
+                    entity: script.mower_home
+                    tap_action:
+                      action: call-service
+                      service: script.mower_home
+          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+            head:
+              type: section
+              label: Irrigazione
+            open: true
+            items:
+              - entity: binary_sensor.irrigation_status
+                state_color: true
+              - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
+                row: true
+                card:
+                  entity: switch.sonoff_4ch_1
+                  name: Zona 1
+                  icon: mdi:sprinkler-variant
                   state_color: true
-                - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
-                  row: true
-                  card:
-                    entity: switch.sonoff_4ch_1
-                    name: Zona 1
-                    icon: mdi:sprinkler-variant
-                    state_color: true
-                - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
-                  row: true
-                  card:
-                    entity: switch.sonoff_4ch_2
-                    name: Zona 2
-                    icon: mdi:sprinkler-variant
-                    state_color: true
-                - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
-                  row: true
-                  card:
-                    entity: switch.sonoff_4ch_3
-                    name: Zona 3
-                    icon: mdi:sprinkler-variant
-                    state_color: true
-            - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-              head:
-                type: section
-                label: Avvia Irrigazione
-              open: true
-              items:
-                - entity: switch.irrigation_active
+              - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
+                row: true
+                card:
+                  entity: switch.sonoff_4ch_2
+                  name: Zona 2
+                  icon: mdi:sprinkler-variant
                   state_color: true
-                - entity: input_datetime.irrigation_start_date
-                  name: Giorno Inizio
-                - entity: input_datetime.irrigation_start_time
-                  name: Ora Inizio
-                - entity: input_number.irrigation_zone1_minutes
-                  name: Zona 1 - Durata (min.)
-                - entity: input_number.irrigation_zone2_minutes
-                  name: Zona 2 - Durata (min.)
-                - entity: input_number.irrigation_zone3_minutes
-                  name: Zona 3 - Durata (min.)
-                - entity: input_number.irrigation_nextstart_in_days
-                  name: Prossimo Avvio (gg)
+              - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
+                row: true
+                card:
+                  entity: switch.sonoff_4ch_3
+                  name: Zona 3
+                  icon: mdi:sprinkler-variant
+                  state_color: true
+          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+            head:
+              type: section
+              label: Avvia Irrigazione
+            open: true
+            items:
+              - entity: switch.irrigation_active
+                state_color: true
+              - entity: input_datetime.irrigation_start_date
+                name: Giorno Inizio
+              - entity: input_datetime.irrigation_start_time
+                name: Ora Inizio
+              - entity: input_number.irrigation_zone1_minutes
+                name: Zona 1 - Durata (min.)
+              - entity: input_number.irrigation_zone2_minutes
+                name: Zona 2 - Durata (min.)
+              - entity: input_number.irrigation_zone3_minutes
+                name: Zona 3 - Durata (min.)
+              - entity: input_number.irrigation_nextstart_in_days
+                name: Prossimo Avvio (gg)

@@ -721,3 +721,43 @@ bed_cover_off:
           La presa non è collegata
           {% endif %}
         volume: "0.4"
+
+
+#++++++++++++++++++++++++++++++++++
+#+++++ Garden related scripts +++++
+#++++++++++++++++++++++++++++++++++
+mower_start:
+  alias: Mower Start
+  icon: mdi:flag-checkered
+  description: "Send 'Start' command to mower."
+  sequence:
+    - service: landroid_cloud.start
+      data_template:
+        id: !secret landroid_id
+    - service: notify.telegram_paolo
+      data_template:
+        message: "{{'\U0001F69C'}} {{'\U0001F3C1'}} Sent 'Start' command to mower"
+
+mower_pause:
+  alias: Mower Pause
+  icon: mdi:pause
+  description: "Send 'Pause' command to mower."
+  sequence:
+    - service: landroid_cloud.pause
+      data_template:
+        id: !secret landroid_id
+    - service: notify.telegram_paolo
+      data_template:
+        message: "{{'\U0001F69C'}} {{'\U000023F8'}} Sent 'Pause' command to mower"
+
+mower_home:
+  alias: Mower Home
+  icon: mdi:home-variant
+  description: "Send 'Go Home' command to mower."
+  sequence:
+    - service: landroid_cloud.home
+      data_template:
+        id: !secret landroid_id
+    - service: notify.telegram_paolo
+      data_template:
+        message: "{{'\U0001F69C'}} {{'\U0001F519'}} Sent 'Go Home' command to mower"

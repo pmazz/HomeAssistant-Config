@@ -93,6 +93,10 @@ cards:
                 tap_action: 
                   action: url
                   url_path: http://sonoff-4ch.local
+          - entity: binary_sensor.online_landroid_m141
+            name: Tagliaerba
+            state_color: true
+            icon: mdi:robot-mower
       - break
       - id: main.mobile_devices
         type: entities  #https://www.home-assistant.io/lovelace/entities

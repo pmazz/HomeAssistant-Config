@@ -78,6 +78,17 @@ button_card_templates:  #https://github.com/custom-cards/button-card
         - height: 35px
       icon:
         - color: var(--material-primary-color)
+  action_button_locked:
+    color_type: icon
+    styles:
+      icon:
+        - color: "[[[ return (entity.state == 'on' ? 'var(--material-primary-color)' : null); ]]]"
+      name:
+        - font-size: 12px
+      card:
+        - width: 80px
+    lock:
+      enabled: true
 
 views:
   - !include ui_lovelace_01_main.yaml
