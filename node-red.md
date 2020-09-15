@@ -1,6 +1,6 @@
 # About
 
-These are the automations I've implemented by Node-Red flows.
+These are the automations I've implemented via Node-Red flows.
 
 *Documentation in progress.*  
 *Stay tuned...*

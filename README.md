@@ -2,6 +2,7 @@
 
 [![Home Assistant Badge](https://img.shields.io/badge/platform-home%20assistant-blue)](https://www.home-assistant.io)
 ![GitHub Repo Size](https://img.shields.io/github/repo-size/pmazz/HomeAssistant-Config)
+[![GitHub Commit Activity](https://img.shields.io/github/commit-activity/m/pmazz/HomeAssistant-Config)](https://github.com/pmazz/HomeAssistant-Config/commits)
 [![GitHub Last Commit](https://img.shields.io/github/last-commit/pmazz/HomeAssistant-Config)](https://github.com/pmazz/HomeAssistant-Config/commits)
 ![Build Status](https://pmazzini.visualstudio.com/Home%20Assistant/_apis/build/status/Push%20HA-Config%20To%20GitHub?branchName=master)
 
