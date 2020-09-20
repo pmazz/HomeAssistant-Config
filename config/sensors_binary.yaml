@@ -105,6 +105,12 @@
       icon_template: "{% if is_state('switch.sonoff_4ch_1', 'on') or is_state('switch.sonoff_4ch_2', 'on') or is_state('switch.sonoff_4ch_3', 'on') %}mdi:water-pump{% else %}mdi:water-pump-off{% endif %}"
       value_template: "{{ is_state('switch.sonoff_4ch_1', 'on') or is_state('switch.sonoff_4ch_2', 'on') or is_state('switch.sonoff_4ch_3', 'on') }}"
 
+    hass_available_version:
+      friendly_name: Available Version
+      icon_template: mdi:home-assistant
+      entity_id: sensor.hass_available_version
+      value_template: "{{ not is_state('sensor.hass_available_version', 'unavailable') and states('sensor.hass_available_version') != states('sensor.hass_installed_version') }}"
+
     hacs_updates:
       friendly_name: HACS Updates
       icon_template: hacs:hacs
@@ -402,3 +408,12 @@
 - platform: workday  #https://www.home-assistant.io/components/binary_sensor.workday
   name: workday
   country: IT
+
+- platform: template  #https://www.home-assistant.io/components/binary_sensor.template
+  sensors:
+    landroid_m141_battery_charging:
+      friendly_name: M141 battery charging
+      icon_template: "{{ state_attr('sensor.landroid_m141_battery', 'icon') }}"
+      device_class: battery_charging
+      entity_id: sensor.landroid_m141_battery
+      value_template: "{{ is_state_attr('sensor.landroid_m141_battery', 'charging', 1) }}"

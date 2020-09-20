@@ -97,189 +97,204 @@ cards:
                 - entity: sensor.ale_internet_end
       - break
       - id: devices.adguard
-        type: conditional  #https://www.home-assistant.io/lovelace/conditional
-        conditions:
-          - entity: binary_sensor.online_adguard
-            state: "on"
-        card:
-          type: entities  #https://www.home-assistant.io/lovelace/entities
-          title: AdGuard Home
-          show_header_toggle: false
-          entities:
-            - entity: sensor.adguard_dns_queries
-              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-              name: DNS Queries
-              state_header: Total
-              unit: " "
-              entities:
-                - entity: sensor.adguard_dns_queries_blocked
-                  name: Blocked
-                  unit: " "
-                - entity: sensor.adguard_dns_queries_blocked_ratio
-                  name: "Blocked %"
-                  unit: " "
-            - entity: sensor.adguard_safe_browsing_blocked
-              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-              name: Blocked Requests
-              state_header: Safe Browsing
-              unit: " "
-              icon: mdi:shield-account
-              entities:
-                - entity: sensor.adguard_parental_control_blocked
-                  name: Parental Control
-                  unit: " "
-            - entity: sensor.adguard_rules_count
-              name: Rules Count
-            - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
-              row: true
-              card:
-                entity: switch.adguard_protection
-                state_color: true
-      - id: devices.prusamini
-        type: conditional  #https://www.home-assistant.io/lovelace/conditional
-        conditions:
-          # - entity: binary_sensor.online_prusa_3d_printer
-          #   state: "on"
-          - entity: sensor.octoprint_current_state
-            state_not: "unknown"
-        card:
-          type: entities  #https://www.home-assistant.io/lovelace/entities
-          title: Prusa Mini (Octoprint)
-          show_header_toggle: false
-          entities:
-            - entity: sensor.octoprint_current_state
-              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-              name: Current Status
-              state_header: Status
-              entities:
-                - attribute: html_url
-                  icon: mdi:cloud-print-outline
-                  tap_action:
-                    action: url
-                    url_path: http://octoprint.local
-                - attribute: html_url
-                  icon: mdi:printer-3d
-                  tap_action:
-                    action: url
-                    url_path: http://prusamini.local
-            - entity: sensor.octoprint_job_percentage
-              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-              name: Current Job
-              show_state: false
-              entities:
-                - entity: sensor.octoprint_job_percentage
-                  name: Job %
-                  unit: " "
-                - entity: sensor.octoprint_time_elapsed
-                  name: Elapsed
-                - entity: sensor.octoprint_time_remaining
-                  name: Remaining
-            - entity: binary_sensor.octoprint_printing
-              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-              name: Printing Status
-              show_state: false
+        type: entities  #https://www.home-assistant.io/lovelace/entities
+        title: AdGuard Home
+        show_header_toggle: false
+        entities:
+          - entity: sensor.adguard_dns_queries
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: DNS Queries
+            state_header: Total
+            unit: " "
+            entities:
+              - entity: sensor.adguard_dns_queries_blocked
+                name: Blocked
+                unit: " "
+              - entity: sensor.adguard_dns_queries_blocked_ratio
+                name: "Blocked %"
+                unit: " "
+          - entity: sensor.adguard_safe_browsing_blocked
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: Blocked Requests
+            state_header: Safe Browsing
+            unit: " "
+            icon: mdi:shield-account
+            entities:
+              - entity: sensor.adguard_parental_control_blocked
+                name: Parental Control
+                unit: " "
+          - entity: sensor.adguard_rules_count
+            name: Rules Count
+          - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
+            row: true
+            card:
+              entity: switch.adguard_protection
               state_color: true
-              icon: mdi:printer-3d-nozzle-alert
-              entities:
-                - entity: binary_sensor.octoprint_printing
-                  name: Printing
-                - entity: binary_sensor.octoprint_printing_error
-                  name: Printing Error
-            - entity: sensor.octoprint_actual_bed_temp
-              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-              name: Bed Temperature
-              show_state: false
-              icon: mdi:thermometer
-              entities:
-                - entity: sensor.octoprint_actual_bed_temp
-                  name: Actual °C
-                  unit: " "
-                - entity: sensor.octoprint_target_bed_temp
-                  name: Target °C
-                  unit: " "
-            - entity: sensor.octoprint_actual_tool0_temp
-              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-              name: Nozzle Temperature
-              show_state: false
-              icon: mdi:thermometer
-              entities:
-                - entity: sensor.octoprint_actual_tool0_temp
-                  name: Actual °C
-                  unit: " "
-                - entity: sensor.octoprint_target_tool0_temp
-                  name: Target °C
-                  unit: " "
+      - id: devices.prusamini
+        type: entities  #https://www.home-assistant.io/lovelace/entities
+        title: Prusa Mini
+        show_header_toggle: false
+        entities:
+          - type: section
+            label: Octoprint
+          - entity: sensor.octoprint_current_state
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: Current Status
+            state_header: Status
+            entities:
+              - attribute: html_url
+                icon: mdi:cloud-print-outline
+                tap_action:
+                  action: url
+                  url_path: http://octoprint.local
+              - attribute: html_url
+                icon: mdi:printer-3d
+                tap_action:
+                  action: url
+                  url_path: http://prusamini.local
+          - entity: sensor.octoprint_job_percentage
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: Current Job
+            show_state: false
+            entities:
+              - entity: sensor.octoprint_job_percentage
+                name: Job %
+                unit: " "
+              - entity: sensor.octoprint_time_elapsed
+                name: Elapsed
+              - entity: sensor.octoprint_time_remaining
+                name: Remaining
+          - entity: binary_sensor.octoprint_printing
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: Printing Status
+            show_state: false
+            state_color: true
+            icon: mdi:printer-3d-nozzle-alert
+            entities:
+              - entity: binary_sensor.octoprint_printing
+                name: Printing
+              - entity: binary_sensor.octoprint_printing_error
+                name: Printing Error
+          - entity: sensor.octoprint_actual_bed_temp
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: Bed Temperature
+            show_state: false
+            icon: mdi:thermometer
+            entities:
+              - entity: sensor.octoprint_actual_bed_temp
+                name: Actual °C
+                unit: " "
+              - entity: sensor.octoprint_target_bed_temp
+                name: Target °C
+                unit: " "
+          - entity: sensor.octoprint_actual_tool0_temp
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: Nozzle Temperature
+            show_state: false
+            icon: mdi:thermometer
+            entities:
+              - entity: sensor.octoprint_actual_tool0_temp
+                name: Actual °C
+                unit: " "
+              - entity: sensor.octoprint_target_tool0_temp
+                name: Target °C
+                unit: " "
       - break
       - id: devices.ups
-        type: conditional  #https://www.home-assistant.io/lovelace/conditional
-        conditions:
+        type: entities  #https://www.home-assistant.io/lovelace/entities
+        title: UPS
+        show_header_toggle: false
+        entities:
           - entity: sensor.tecnoware_ups_status
-            state: "Online"
-        card:
-          type: entities  #https://www.home-assistant.io/lovelace/entities
-          title: UPS
-          show_header_toggle: false
-          entities:
-            - entity: sensor.tecnoware_ups_status
-              name: Status
-            - entity: sensor.tecnoware_ups_battery_charge
-              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-              name: Battery
-              state_header: Charge
-              entities:
-                - entity: sensor.tecnoware_ups_battery_runtime
-                  name: Runtime
-            - entity: sensor.tecnoware_ups_load
-              name: Load
-            - entity: sensor.tecnoware_ups_output_voltage
-              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-              name: Voltage
-              state_header: Output
-              entities:
-                - entity: sensor.tecnoware_ups_input_voltage
-                  name: Input
-            # - entity: sensor.tecnoware_ups_input_line_frequency
+            name: Status
+          - entity: sensor.tecnoware_ups_battery_charge
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: Battery
+            state_header: Charge
+            entities:
+              - entity: sensor.tecnoware_ups_battery_runtime
+                name: Runtime
+          - entity: sensor.tecnoware_ups_load
+            name: Load
+          - entity: sensor.tecnoware_ups_output_voltage
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: Voltage
+            state_header: Output
+            entities:
+              - entity: sensor.tecnoware_ups_input_voltage
+                name: Input
+              # - entity: sensor.tecnoware_ups_input_line_frequency
       - id: devices.nas
-        type: conditional  #https://www.home-assistant.io/lovelace/conditional
-        conditions:
-          - entity: binary_sensor.online_nas_qnap
-            state: "on"
-        card:
-          type: entities  #https://www.home-assistant.io/lovelace/entities
-          title: NAS
-          show_header_toggle: false
-          entities:
-            #- sensor.nas_attr_name
-            - sensor.nas_attr_model
-            #- sensor.nas_attr_serial
-            - sensor.nas_attr_uptime
-            - entity: sensor.nas_system_temperature
-              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+        type: entities  #https://www.home-assistant.io/lovelace/entities
+        title: NAS
+        show_header_toggle: false
+        entities:
+          #- sensor.nas_attr_name
+          - sensor.nas_attr_model
+          #- sensor.nas_attr_serial
+          - sensor.nas_attr_uptime
+          - type: section
+          - entity: sensor.nas_current_status
+            name: NAS Current Status
+            secondary_info: last-changed
+          - binary_sensor.online_nas_qnap
+          - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
+            row: true
+            card:
+              entity: switch.nas_qnap
+              state_color: true
+          - entity: sensor.nas_attr_uptime
+            name: NAS Uptime
+          - script.nas_shutdown
+          - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+            conditions:
+              - entity: binary_sensor.online_nas_qnap
+                state: "on"
+            card:
+              type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
+              show_header_toggle: false
               entities:
-                - entity: sensor.nas_temperature_drive_0_1
-                  name: Drive 1
-                - entity: sensor.nas_temperature_drive_0_2
-                  name: Drive 2
-            - entity: sensor.nas_memory_usage
-              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-              entities:
-                - entity: sensor.nas_memory_used
-                  name: Used
-                - entity: sensor.nas_memory_available
-                  name: Available
-            - sensor.nas_cpu_usage
-            - entity: sensor.nas_volume_used_volume1
-              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-              name: Space usage
-              entities:
-                - entity: sensor.nas_used_space_volume1
-                  name: Used
-                - entity: sensor.nas_free_space_volume1
-                  name: Available
-            - entity: sensor.nas_status
-              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-              entities:
-                - entity: sensor.nas_smart_status_drive_0_1
-                  name: Drive 1
-                - entity: sensor.nas_smart_status_drive_0_2
-                  name: Drive 2
+                - entity: sensor.nas_system_temperature
+                  type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                  entities:
+                    - entity: sensor.nas_temperature_drive_0_1
+                      name: Drive 1
+                    - entity: sensor.nas_temperature_drive_0_2
+                      name: Drive 2
+                - entity: sensor.nas_memory_usage
+                  type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                  entities:
+                    - entity: sensor.nas_memory_used
+                      name: Used
+                    - entity: sensor.nas_memory_available
+                      name: Available
+                - sensor.nas_cpu_usage
+                - entity: sensor.nas_volume_used_volume1
+                  type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                  name: Space usage
+                  entities:
+                    - entity: sensor.nas_used_space_volume1
+                      name: Used
+                    - entity: sensor.nas_free_space_volume1
+                      name: Available
+                - entity: sensor.nas_status
+                  type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                  entities:
+                    - entity: sensor.nas_smart_status_drive_0_1
+                      name: Drive 1
+                    - entity: sensor.nas_smart_status_drive_0_2
+                      name: Drive 2
+              style: |
+                ha-card {
+                  box-shadow: none;
+                  background-color: transparent;
+                }
+                ha-card > div.card-content {
+                  padding: 0px 0px 5px 0px;
+                }
+                ha-card > div.card-content > div {
+                  margin: 0px !important;
+                }
+                ha-card > hui-conditional-card > hui-section-row.head {
+                  padding-left: 16px;
+                }

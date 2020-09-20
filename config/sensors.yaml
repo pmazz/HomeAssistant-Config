@@ -89,6 +89,12 @@
 - platform: version  #https://www.home-assistant.io/components/sensor.version
   name: hass_installed_version
 
+- platform: rest  #https://www.home-assistant.io/integrations/rest
+  name: hass_available_version
+  resource: https://version.home-assistant.io/stable.json
+  value_template: "{{ value_json.homeassistant.default }}"
+  scan_interval: 3600
+
 - platform: command_line  #https://www.home-assistant.io/components/sensor.command_line
   name: hass_ip_address
   command: ifconfig | sed -n -e 's/:127\.0\.0\.1 //g' -e 's/:172\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\} //g' -e 's/ *inet addr:\([0-9.]\+\).*/\1/gp'
@@ -1263,9 +1269,9 @@
   icon: mdi:restart-alert
 
 
-#++++++++++++++++++++++++++++++++++++++++++++
-#+++++ Tasmota telemetry sensors (PZEM) +++++
-#++++++++++++++++++++++++++++++++++++++++++++
+#++++++++++++++++++++++++++++++++++++++
+#+++++ MQTT Broker system sensors +++++
+#++++++++++++++++++++++++++++++++++++++
 - platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
   name: mqtt_broker_clients_total
   state_topic: "$SYS/broker/clients/total"

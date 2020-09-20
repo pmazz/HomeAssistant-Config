@@ -12,157 +12,147 @@ cards:
     max_columns: 3
     cards:
       - id: home.electricity
-        type: conditional  #https://www.home-assistant.io/lovelace/conditional
-        conditions:
-          - entity: binary_sensor.online_pzem_004t
-            state: "on"
-        card:
-          type: entities  #https://www.home-assistant.io/lovelace/entities
-          title: Elettricità
-          show_header_toggle: false
-          entities:
-            - entity: sensor.pzem_power
-              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-              name: Consumo Attuale
-              state_header: Attuale
-              entities:
-                - entity: sensor.pzem_voltage
-                  name: Tensione
-                  unit: "V"
-                - entity: sensor.pzem_power_factor
-                  name: Fatt. Pot.
-            - entity: sensor.pzem_energy_today
-              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-              name: Consumi Giorno (kWh)
-              state_header: Oggi
-              unit: " "
-              entities:
-                - entity: sensor.pzem_energy_yesterday
-                  name: Ieri
-                  unit: " "
-            - entity: sensor.pzem_boot_count
-              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-              name: Telemetria Pzem
-              state_header: "Boot #"
-              entities:
-                - icon: mdi:open-in-new
-                  tap_action: 
-                    action: url
-                    url_path: http://pzem-004t.local
-                - entity: sensor.pzem_wifi_rssi
-                  name: Wifi
-            - type: section
-            - type: custom:mini-graph-card  #https://github.com/kalkih/mini-graph-card
-              hours_to_show: 12
-              points_per_hour: 12
-              update_interval: 30
-              hour24: true
-              height: 120
-              line_width: 2
-              font_size: 70
-              align_state: right
-              font_size_header: 12
-              show:
-                labels: true
-                icon: false
-              color_thresholds:
-                - value: 0
-                  color: "#00ff00"
-                - value: 1000
-                  color: "#0000ff"
-                - value: 2500
-                  color: "#ff0000"
-              entities:
-                - entity: sensor.pzem_power
-                  name: Consumi (ultime 12 ore)
-            - type: custom:mini-graph-card  #https://github.com/kalkih/mini-graph-card
-              hours_to_show: 360
-              points_per_hour: 0.042
-              height: 70
-              font_size_header: 12
-              decimals: 2
-              aggregate_func: max
-              group_by: date
-              show:
-                graph: bar
-                labels: false
-                icon: false
-              entities:
-                - entity: sensor.pzem_energy_entire_day
-                  name: Consumi (ultimi 15 giorni)
-                  show_state: false
+        type: entities  #https://www.home-assistant.io/lovelace/entities
+        title: Elettricità
+        show_header_toggle: false
+        entities:
+          - entity: sensor.pzem_power
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: Consumo Attuale
+            state_header: Attuale
+            entities:
+              - entity: sensor.pzem_voltage
+                name: Tensione
+                unit: "V"
+              - entity: sensor.pzem_power_factor
+                name: Fatt. Pot.
+          - entity: sensor.pzem_energy_today
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: Consumi Giorno (kWh)
+            state_header: Oggi
+            unit: " "
+            entities:
+              - entity: sensor.pzem_energy_yesterday
+                name: Ieri
+                unit: " "
+          - entity: sensor.pzem_boot_count
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: Telemetria Pzem
+            state_header: "Boot #"
+            entities:
+              - icon: mdi:open-in-new
+                tap_action: 
+                  action: url
+                  url_path: http://pzem-004t.local
+              - entity: sensor.pzem_wifi_rssi
+                name: Wifi
+          - type: section
+          - type: custom:mini-graph-card  #https://github.com/kalkih/mini-graph-card
+            hours_to_show: 12
+            points_per_hour: 12
+            update_interval: 30
+            hour24: true
+            height: 120
+            line_width: 2
+            font_size: 70
+            align_state: right
+            font_size_header: 12
+            show:
+              labels: true
+              icon: false
+            color_thresholds:
+              - value: 0
+                color: "#00ff00"
+              - value: 1000
+                color: "#0000ff"
+              - value: 2500
+                color: "#ff0000"
+            entities:
+              - entity: sensor.pzem_power
+                name: Consumi (ultime 12 ore)
+          - type: custom:mini-graph-card  #https://github.com/kalkih/mini-graph-card
+            hours_to_show: 360
+            points_per_hour: 0.042
+            height: 70
+            font_size_header: 12
+            decimals: 2
+            aggregate_func: max
+            group_by: date
+            show:
+              graph: bar
+              labels: false
+              icon: false
+            entities:
+              - entity: sensor.pzem_energy_entire_day
+                name: Consumi (ultimi 15 giorni)
+                show_state: false
       - break
       - id: home.xiaomi
-        type: conditional  #https://www.home-assistant.io/lovelace/conditional
-        conditions:
-          - entity: binary_sensor.online_xiaomi_gateway
-            state: "on"
-        card:
-          type: entities  #https://www.home-assistant.io/lovelace/entities
-          title: Xiaomi Sensors
-          show_header_toggle: false
-          entities:
-            - entity: light.xiaomi_hub_light
-              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-              name: Hub Light
-              toggle: true
-              # secondary_info: last-changed
-              entities:
-                - entity: sensor.xiaomi_hub_illumination
-                  name: Illumination
-            - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-              head:
-                type: section
-                label: Door/Window
-              open: true
-              items:
-                - entity: binary_sensor.xiaomi_door_window_1
-                  type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-                  name: Porta Ingresso
-                  secondary_info: last-changed
-                  entities:
-                    - entity: sensor.xiaomi_attr_battery_door_window_1
-                      name: Battery
-            - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-              head:
-                type: section
-                label: Motion
-              open: true
-              items:
-                - entity: binary_sensor.xiaomi_motion_1
-                  type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-                  name: Salotto
-                  secondary_info: last-changed
-                  entities:
-                    - entity: sensor.xiaomi_attr_battery_motion_1
-                      name: Battery
-                    - entity: sensor.xiaomi_motion_1_illumination
-                      name: Illumination
-                - entity: binary_sensor.xiaomi_motion_2
-                  type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-                  name: Taverna
-                  secondary_info: last-changed
-                  entities:
-                    - entity: sensor.xiaomi_attr_battery_motion_2
-                      name: Battery
-                    - entity: sensor.xiaomi_motion_2_illumination
-                      name: Illumination
-            - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-              head:
-                type: section
-                label: Temperature/Humidity
-              open: true
-              items:
-                - entity: sensor.xiaomi_temperature_1
-                  type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-                  name: Bagno
-                  state_header: Temperature
-                  secondary_info: last-changed
-                  entities:
-                    - entity: sensor.xiaomi_attr_battery_temperature_1
-                      name: Battery
-                    - entity: sensor.xiaomi_humidity_1
-                      name: Humidity
+        type: entities  #https://www.home-assistant.io/lovelace/entities
+        title: Xiaomi Sensors
+        show_header_toggle: false
+        entities:
+          - entity: light.xiaomi_hub_light
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: Hub Light
+            toggle: true
+            # secondary_info: last-changed
+            entities:
+              - entity: sensor.xiaomi_hub_illumination
+                name: Illumination
+          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+            head:
+              type: section
+              label: Door/Window
+            open: true
+            items:
+              - entity: binary_sensor.xiaomi_door_window_1
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: Porta Ingresso
+                secondary_info: last-changed
+                entities:
+                  - entity: sensor.xiaomi_attr_battery_door_window_1
+                    name: Battery
+          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+            head:
+              type: section
+              label: Motion
+            open: true
+            items:
+              - entity: binary_sensor.xiaomi_motion_1
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: Salotto
+                secondary_info: last-changed
+                entities:
+                  - entity: sensor.xiaomi_attr_battery_motion_1
+                    name: Battery
+                  - entity: sensor.xiaomi_motion_1_illumination
+                    name: Illumination
+              - entity: binary_sensor.xiaomi_motion_2
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: Taverna
+                secondary_info: last-changed
+                entities:
+                  - entity: sensor.xiaomi_attr_battery_motion_2
+                    name: Battery
+                  - entity: sensor.xiaomi_motion_2_illumination
+                    name: Illumination
+          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+            head:
+              type: section
+              label: Temperature/Humidity
+            open: true
+            items:
+              - entity: sensor.xiaomi_temperature_1
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: Bagno
+                state_header: Temperature
+                secondary_info: last-changed
+                entities:
+                  - entity: sensor.xiaomi_attr_battery_temperature_1
+                    name: Battery
+                  - entity: sensor.xiaomi_humidity_1
+                    name: Humidity
       - break
       - id: events.garden
         type: entities  #https://www.home-assistant.io/lovelace/entities
@@ -184,8 +174,14 @@ cards:
                   name: []
               - entity: sensor.landroid_m141_error
                 name: Error
-              - entity: sensor.landroid_m141_battery
+              - entity: binary_sensor.landroid_m141_battery_charging
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: Battery
+                show_state: false
+                state_color: true
+                entities:
+                  - entity: sensor.landroid_m141_battery
+                    name: []
               - type: custom:hui-horizontal-stack-card  #https://www.home-assistant.io/lovelace/horizontal-stack
                 cards:
                   - type: custom:button-card  #https://github.com/custom-cards/button-card
@@ -197,7 +193,7 @@ cards:
                       action: call-service
                       service: script.mower_start
                     confirmation:
-                      text: '[[[ return `Confermi avvio tagliaerba ?` ]]]'
+                      text: "[[[ return 'Confermi avvio tagliaerba ?' ]]]"
                   - type: custom:button-card  #https://github.com/custom-cards/button-card
                     template: action_button_locked
                     icon: mdi:pause

@@ -12,13 +12,8 @@ cards:
     max_columns: 3
     cards:
       - id: media.google_home_player
-        type: conditional  #https://www.home-assistant.io/lovelace/conditional
-        conditions:
-          - entity: binary_sensor.online_google_home
-            state: "on"
-        card:
-          type: media-control  #https://www.home-assistant.io/lovelace/media-control
-          entity: media_player.salotto
+        type: media-control  #https://www.home-assistant.io/lovelace/media-control
+        entity: media_player.salotto
       - id: media.google_home
         type: conditional  #https://www.home-assistant.io/lovelace/conditional
         conditions:
@@ -180,13 +175,8 @@ cards:
                               option: "-Off-"
       - break
       - id: media.samsung_tv_player
-        type: conditional  #https://www.home-assistant.io/lovelace/conditional
-        conditions:
-          - entity: binary_sensor.online_samsung_tv
-            state: "on"
-        card:
-          type: media-control  #https://www.home-assistant.io/lovelace/media-control
-          entity: media_player.samsung_tv
+        type: media-control  #https://www.home-assistant.io/lovelace/media-control
+        entity: media_player.samsung_tv
       - id: media.tv
         type: conditional  #https://www.home-assistant.io/lovelace/conditional
         conditions:
@@ -263,10 +253,5 @@ cards:
                           is_volume_muted: true
       - break
       - id: media.google_chromecast_player
-        type: conditional  #https://www.home-assistant.io/lovelace/conditional
-        conditions:
-          - entity: binary_sensor.online_google_chromecast
-            state: "on"
-        card:
-          type: media-control  #https://www.home-assistant.io/lovelace/media-control
-          entity: media_player.chromecast1100
+        type: media-control  #https://www.home-assistant.io/lovelace/media-control
+        entity: media_player.chromecast1100

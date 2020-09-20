@@ -72,7 +72,7 @@ cards:
         title: Home Assistant
         show_header_toggle: false
         entities:
-          - entity: binary_sensor.updater
+          - entity: binary_sensor.hass_available_version
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
             name: HASS Version
             show_state: false
@@ -81,8 +81,7 @@ cards:
             entities:
               - entity: sensor.hass_installed_version
                 name: Installed
-              - entity: binary_sensor.updater
-                attribute: newest_version
+              - entity: sensor.hass_available_version
                 name: Available
           - entity: binary_sensor.hass_addon_updates
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
@@ -104,30 +103,6 @@ cards:
                 attribute: updates_count
                 unit: update(s)
                 name: " "
-          - type: section
-          - entity: sensor.hass_db_filesize
-            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-            name: HASS Database
-            state_header: Size
-            entities:
-              - entity: sensor.hass_db_states_count
-                name: "States"
-              - entity: sensor.hass_db_events_count
-                name: "Events"
-          - entity: sensor.hass_sensor_count
-            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-            name: HASS Sensors 1/2
-            state_header: Sensors
-            entities:
-              - sensor.hass_switch_count
-              - sensor.hass_lights_count
-          - entity: sensor.hass_automation_count
-            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-            name: HASS Sensors 2/2
-            state_header: Automations
-            entities:
-              - sensor.hass_input_count
-              - sensor.hass_script_count
           - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
             head:
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
@@ -448,6 +423,30 @@ cards:
                   - entity: sensor.addon_vscode
                     name: Status
                     unit: []
+          - type: section
+          - entity: sensor.hass_db_filesize
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: HASS Database
+            state_header: Size
+            entities:
+              - entity: sensor.hass_db_states_count
+                name: "States"
+              - entity: sensor.hass_db_events_count
+                name: "Events"
+          - entity: sensor.hass_sensor_count
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: HASS Sensors 1/2
+            state_header: Sensors
+            entities:
+              - sensor.hass_switch_count
+              - sensor.hass_lights_count
+          - entity: sensor.hass_automation_count
+            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+            name: HASS Sensors 2/2
+            state_header: Automations
+            entities:
+              - sensor.hass_input_count
+              - sensor.hass_script_count
           - type: section
           - entity: sensor.hass_config_check_result
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
