@@ -39,7 +39,6 @@ cards:
                       color_type: blank-card
                     - type: custom:button-card  #https://github.com/custom-cards/button-card
                       color_type: icon
-                      template: media_button
                       icon: mdi:volume-plus
                       template: media_button
                       tap_action:
