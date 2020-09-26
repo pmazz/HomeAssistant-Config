@@ -111,6 +111,12 @@
       entity_id: sensor.hass_available_version
       value_template: "{{ not is_state('sensor.hass_available_version', 'unavailable') and states('sensor.hass_available_version') != states('sensor.hass_installed_version') }}"
 
+    hassos_available_version:
+      friendly_name: OS Available Version
+      icon_template: mdi:home-assistant
+      entity_id: sensor.hassos_available_version
+      value_template: "{{ not is_state('sensor.hassos_available_version', 'unavailable') and states('sensor.hassos_available_version') != states('sensor.hass_installed_version') }}"
+
     hacs_updates:
       friendly_name: HACS Updates
       icon_template: hacs:hacs

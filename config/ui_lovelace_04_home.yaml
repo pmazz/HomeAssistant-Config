@@ -218,27 +218,29 @@ cards:
             items:
               - entity: binary_sensor.irrigation_status
                 state_color: true
-              - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
-                row: true
-                card:
-                  entity: switch.sonoff_4ch_1
-                  name: Zona 1
-                  icon: mdi:sprinkler-variant
-                  state_color: true
-              - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
-                row: true
-                card:
-                  entity: switch.sonoff_4ch_2
-                  name: Zona 2
-                  icon: mdi:sprinkler-variant
-                  state_color: true
-              - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
-                row: true
-                card:
-                  entity: switch.sonoff_4ch_3
-                  name: Zona 3
-                  icon: mdi:sprinkler-variant
-                  state_color: true
+              - type: custom:hui-horizontal-stack-card  #https://www.home-assistant.io/lovelace/horizontal-stack
+                cards:
+                  - type: custom:button-card  #https://github.com/custom-cards/button-card
+                    template: action_button_locked
+                    icon: mdi:sprinkler-variant
+                    name: Zona 1
+                    entity: switch.sonoff_4ch_1
+                    confirmation:
+                      text: "[[[ return 'Confermi avvio irrigazione zona 1 ?' ]]]"
+                  - type: custom:button-card  #https://github.com/custom-cards/button-card
+                    template: action_button_locked
+                    icon: mdi:sprinkler-variant
+                    name: Zona 2
+                    entity: switch.sonoff_4ch_2
+                    confirmation:
+                      text: "[[[ return 'Confermi avvio irrigazione zona 2 ?' ]]]"
+                  - type: custom:button-card  #https://github.com/custom-cards/button-card
+                    template: action_button_locked
+                    icon: mdi:sprinkler-variant
+                    name: Zona 3
+                    entity: switch.sonoff_4ch_3
+                    confirmation:
+                      text: "[[[ return 'Confermi avvio irrigazione zona 3 ?' ]]]"
           - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
             head:
               type: section

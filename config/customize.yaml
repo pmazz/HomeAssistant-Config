@@ -201,6 +201,12 @@ sensor.hass_installed_version:
 sensor.hass_available_version:
   friendly_name: Available Version
   icon: mdi:home-assistant
+sensor.hassos_installed_version:
+  friendly_name: HassOS Installed Version
+  icon: mdi:home-assistant
+sensor.hassos_available_version:
+  friendly_name: HassOS Available Version
+  icon: mdi:home-assistant
 sensor.hass_db_filesize:
   friendly_name: DB Size
   icon: mdi:database

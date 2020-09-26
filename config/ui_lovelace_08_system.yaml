@@ -83,16 +83,17 @@ cards:
                 name: Installed
               - entity: sensor.hass_available_version
                 name: Available
-          - entity: binary_sensor.hass_addon_updates
+          - entity: binary_sensor.hassos_available_version
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-            name: Addon Updates
+            name: HassOS Version
             show_state: false
             state_color: true
+            icon: mdi:home-assistant
             entities:
-              - entity: binary_sensor.hass_addon_updates
-                attribute: updates_count
-                unit: update(s)
-                name: " "
+              - entity: sensor.hassos_installed_version
+                name: Installed
+              - entity: sensor.hassos_available_version
+                name: Available
           - entity: binary_sensor.hacs_updates
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
             name: HACS Updates
