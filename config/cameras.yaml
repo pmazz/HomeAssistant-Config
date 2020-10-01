@@ -1,11 +1,3 @@
-#+++++++++++++++++++++++++++
-#+++++ Weather cameras +++++
-#+++++++++++++++++++++++++++
-- platform: generic  #https://www.home-assistant.io/integrations/generic_ip_camera
-  name: Weather Map (Ponzano)
-  still_image_url: https://www.yr.no/place/Italy/Veneto/Ponzano_Veneto/meteogram.svg
-  content_type: "image/svg+xml"
-
 #+++++++++++++++++++++++
 #+++++ Map cameras +++++
 #+++++++++++++++++++++++

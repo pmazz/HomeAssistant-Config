@@ -79,18 +79,11 @@ cards:
                   row: true
                   card:
                     entity: switch.fritzbox_profile_tablet_ale
-                    name: Internet
+                    name: Timer Internet
                     icon: mdi:tablet-android
                     state_color: true
                 - entity: input_datetime.ale_internet
                   name: Durata (minuti)
-                - entity: timer.ale_internet
-                  type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-                  name: Timer
-                  entities:
-                    - entity: timer.ale_internet
-                      attribute: remaining
-                      name: []
                 - entity: timer.ale_internet
                   name: Countdown
                   icon: mdi:clock-end

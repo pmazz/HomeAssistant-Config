@@ -18,7 +18,7 @@ persistent_notification_dismiss:
 hass_config_check_result:
   #Home Assistant - Reload Customize
   alias: Check Configuration
-  icon: mdi:settings-box
+  icon: mdi:cog-box
   description: "Check Home Assistant configuration files (via Node-Red)."
   sequence:
     - event: pm_check_config
@@ -27,7 +27,7 @@ hass_config_check_result:
 hass_reload_customize:
   #Home Assistant - Reload Customize
   alias: Reload Customize
-  icon: mdi:settings-box
+  icon: mdi:cog-box
   description: "Reload Home Assistant core configuration."
   sequence:
     - service: persistent_notification.create
@@ -40,7 +40,7 @@ hass_reload_customize:
         message: "\U000023F3 Reload Customize in corso..."
     - service: homeassistant.reload_core_config
     - service: telegram_bot.edit_message
-      data_template:
+      data:
         message_id: "last"
         chat_id: !secret telegram_chatid_paolo
         message: "\U00002705 Reload Customize effettuato."
@@ -66,7 +66,7 @@ hass_reload_scripts:
         message: "\U000023F3 Reload Scripts in corso..."
     - service: script.reload
     - service: telegram_bot.edit_message
-      data_template:
+      data:
         message_id: "last"
         chat_id: !secret telegram_chatid_paolo
         message: "\U00002705 Reload Scripts effettuato."
@@ -92,7 +92,7 @@ hass_reload_automations:
         message: "\U000023F3 Reload Automations in corso..."
     - service: automation.reload
     - service: telegram_bot.edit_message
-      data_template:
+      data:
         message_id: "last"
         chat_id: !secret telegram_chatid_paolo
         message: "\U00002705 Reload Automations effettuato."
@@ -120,7 +120,7 @@ hass_reload_themes:
     - delay: "00:00:05" #Used to maintain switch toggled for a while
     - event: pm_reload_themes #Force themes reload to input_select.hass_theme_selected
     - service: telegram_bot.edit_message
-      data_template:
+      data:
         message_id: "last"
         chat_id: !secret telegram_chatid_paolo
         message: "\U00002705 Reload Themes effettuato."
@@ -236,10 +236,10 @@ snapshot_full_create:
       data:
         message: "\U000023F3 Full snapshot in corso..."
     - service: hassio.snapshot_full
-      data_template:
+      data:
         name: Backup {{ now().strftime("%Y-%m-%d %H.%M") }}
     - service: telegram_bot.edit_message
-      data_template:
+      data:
         message_id: "last"
         chat_id: !secret telegram_chatid_paolo
         message: "\U00002705 Full snapshot effettuato."
@@ -265,12 +265,12 @@ config_commit_to_git:
         message: "\U000023F3 Commit file di configurazione in corso..."
     - service: shell_command.config_commit_to_git
     - service: python_script.generic_actions #Alternative to standard 'delay' component
-      data_template:
+      data:
         action: time.sleep
         seconds: 10
         log_enabled: True
     - service: telegram_bot.edit_message
-      data_template:
+      data:
         message_id: "last"
         chat_id: !secret telegram_chatid_paolo
         message: "\U00002705 Commit file di configurazione effettuato."
@@ -290,7 +290,7 @@ wifi_guest_start:
   description: "Start the Guest WiFi."
   sequence:
     - service: script.tts_speak
-      data_template:
+      data:
         message2say: Stò avviando la rete ospiti
         volume: "0.5"
     - service: switch.turn_on #Start guest wifi
@@ -298,12 +298,12 @@ wifi_guest_start:
         entity_id: switch.fritzbox_guest_wifi
     - delay: "00:00:10" #Wait for guest wifi to activate
     - service: notify.telegram_paolo
-      data_template:
+      data:
         message: >
           {{"\U00002705"}} Wifi Guest attivata.
             Password: *12341234*
     - service: script.tts_speak
-      data_template:
+      data:
         message2say: Rete ospiti attivata. La password è... 1, 2, 3, 4, 1, 2, 3, 4
         volume: "0.5"
 
@@ -317,10 +317,10 @@ wifi_guest_stop:
         entity_id: switch.fritzbox_guest_wifi
     - delay: "00:00:10" #Wait for guest wifi to deactivate
     - service: notify.telegram_paolo
-      data_template:
+      data:
         message: "\U0000274C Wifi Guest disattivata."
     - service: script.tts_speak
-      data_template:
+      data:
         message2say: Rete ospiti disattivata.
         volume: "0.5"
 
@@ -334,7 +334,7 @@ wifi_24ghz_start:
         entity_id: switch.fritzbox_wifi
     - delay: "00:00:10" #Wait for 2.4 ghz wifi to activate
     - service: notify.telegram_paolo
-      data_template:
+      data:
         message: "\U00002705 Wifi 2.4 GHz attivata."
 
 wifi_24ghz_stop:
@@ -347,7 +347,7 @@ wifi_24ghz_stop:
         entity_id: switch.fritzbox_wifi
     - delay: "00:00:10" #Wait for 2.4 ghz wifi to deactivate
     - service: notify.telegram_paolo
-      data_template:
+      data:
         message: "\U0000274C Wifi 2.4 GHz disattivata."
 
 wifi_5ghz_start:
@@ -360,7 +360,7 @@ wifi_5ghz_start:
         entity_id: switch.fritzbox_wifi_5ghz
     - delay: "00:00:10" #Wait for 5 ghz wifi to activate
     - service: notify.telegram_paolo
-      data_template:
+      data:
         message: "\U00002705 Wifi 5 GHz attivata."
 
 wifi_5ghz_stop:
@@ -373,7 +373,7 @@ wifi_5ghz_stop:
         entity_id: switch.fritzbox_wifi_5ghz
     - delay: "00:00:10" #Wait for 5 ghz wifi to deactivate
     - service: notify.telegram_paolo
-      data_template:
+      data:
         message: "\U0000274C Wifi 5 GHz disattivata."
 
 
@@ -393,21 +393,21 @@ tts_speak:
       example: "0.7"
   sequence:
     - service: input_text.set_value #Elaborate message before TTS
-      data_template:
+      data:
         entity_id: input_text.tts_last_sentence
         value: "{{ message2say.split('|') | random }}"
     - service: input_datetime.set_datetime #Store last time TTS occurred
-      data_template:
+      data:
         entity_id: input_datetime.tts_last_occurred
         date: "{{ now().strftime('%Y-%m-%d') }}"
         time: "{{ now().strftime('%H:%M:%S') }}"
     - service: media_player.volume_set
-      data_template:
+      data:
         entity_id: media_player.salotto
         volume_level: "{{ volume }}"
     - service: tts.google_say
       entity_id: media_player.salotto
-      data_template:
+      data:
         message: "{{ states('input_text.tts_last_sentence') }}"
 
 speak_generic:
@@ -417,7 +417,7 @@ speak_generic:
   description: "Tell a TTS message via UI."
   sequence:
     - service: script.tts_speak
-      data_template:
+      data:
         message2say: "{{ states('input_text.speak_generic_msg') }}"
         volume: "{{ states('input_number.google_home_volume') }}"
 
@@ -432,7 +432,7 @@ tv_remote_volume_up:
   description: "Turn Samsung TV's volume up."
   sequence:
     - service: media_player.volume_up
-      data_template:
+      data:
         entity_id: media_player.samsung_tv
 
 tv_remote_volume_down:
@@ -442,7 +442,7 @@ tv_remote_volume_down:
   description: "Turn Samsung TV's volume down."
   sequence:
     - service: media_player.volume_down
-      data_template:
+      data:
         entity_id: media_player.samsung_tv
 
 tv_remote_volume_mute:
@@ -452,7 +452,7 @@ tv_remote_volume_mute:
   description: "Mute Samsung TV's volume."
   sequence:
     - service: media_player.volume_mute
-      data_template:
+      data:
         entity_id: media_player.samsung_tv
         is_volume_muted: true
 
@@ -463,7 +463,7 @@ tv_remote_channel_up:
   description: "Set Samsung TV's channel up."
   sequence:
     - service: input_number.increment
-      data_template:
+      data:
         entity_id: input_number.tv_remote_channel
 
 tv_remote_channel_down:
@@ -473,7 +473,7 @@ tv_remote_channel_down:
   description: "Set Samsung TV's channel down."
   sequence:
     - service: input_number.decrement
-      data_template:
+      data:
         entity_id: input_number.tv_remote_channel
 
 tv_remote_power_off:
@@ -483,7 +483,7 @@ tv_remote_power_off:
   description: "Switch Samsung TV off."
   sequence:
     - service: media_player.turn_off
-      data_template:
+      data:
         entity_id: media_player.samsung_tv
 
 
@@ -496,7 +496,7 @@ set_home_mode_day:
   description: "Set home mode to 'giorno'."
   sequence:
     - service: input_select.select_option
-      data_template:
+      data:
         entity_id: input_select.home_mode
         option: "giorno"
 
@@ -506,7 +506,7 @@ say_goodmorning:
   description: "Say the 'good morning' message."
   sequence:
     - service: script.tts_speak
-      data_template:
+      data:
         message2say: >
           {% set now = now() %}
           {% set dd = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica"] %}
@@ -514,7 +514,7 @@ say_goodmorning:
         volume: "0.5"
     - wait_template: "{{ states('media_player.salotto') != 'playing' }}"
     - service: script.tts_speak
-      data_template:
+      data:
         message2say: >
           Fuori ci sono {{ states('sensor.dark_sky_temperature') | round }} gradi.
           Il tempo previsto è: {{ states('sensor.dark_sky_summary') }}.
@@ -524,16 +524,16 @@ say_goodmorning:
         volume: "0.5"
     - wait_template: "{{ states('media_player.salotto') != 'playing' }}"
     - service: script.tts_speak
-      data_template:
+      data:
         message2say: Ecco le ultime notizie.
         volume: "0.5"
     - wait_template: "{{ states('media_player.salotto') != 'playing' }}"
     - service: media_player.volume_set
-      data_template:
+      data:
         entity_id: media_player.salotto
         volume_level: "0.4"
     - service: media_player.play_media #Play TGCom24 news
-      data_template:
+      data:
         entity_id: media_player.salotto
         media_content_id: https://podcast.unitedradio.it/105.net/NEW/upload/uploadedContent/repliche/tgcom24/tgcom24.mp3
         media_content_type: "audio/mp4"
@@ -544,16 +544,16 @@ set_home_mode_night:
   description: "Set home mode to 'notte'."
   sequence:
     - service: input_select.select_option
-      data_template:
+      data:
         entity_id: input_select.home_mode
         option: "notte"
     - service: script.tts_speak
-      data_template:
+      data:
         message2say: Verifica che il cancello e la porta di ingresso siano chiuse.
         volume: "0.3"
     - wait_template: "{{ states('media_player.salotto') != 'playing' }}"
     - service: script.tts_speak
-      data_template:
+      data:
         message2say: Buonanotte.
         volume: "0.3"
 
@@ -562,7 +562,7 @@ toggle_home_mode:
   alias: Toggle Home Mode
   description: "Toggle home mode from 'notte' to 'giorno' or viceversa."
   sequence:
-    - service_template: >
+    - service: >
         {% if is_state('input_select.home_mode', 'giorno') %}
           script.set_home_mode_night
         {% else %}
@@ -575,7 +575,7 @@ home_contarina_pick_tomorrow:
   description: "Avvisa se c'è una raccolta della spazzatura il giorno dopo."
   sequence:
     - service: script.tts_speak
-      data_template:
+      data:
         message2say: >
           {% set raccolte = states.sensor | selectattr("entity_id", ">=", "sensor.ics_1") | selectattr("entity_id", "<=", "sensor.ics_5") 
             | selectattr("attributes.remaining", "==", 1) | list %}
@@ -592,7 +592,7 @@ home_contarina_pick_tomorrow:
           {% endif %}
         volume: "0.6"
     - service: notify.telegram_paolo
-      data_template:
+      data:
         message: "{{'\U0000267B'}} {{ states('input_text.tts_last_sentence') }}"
 
 home_cover_up:
@@ -616,7 +616,7 @@ home_cover_up:
       data:
         entity_id: switch.sonoff_dual_1
     - service: notify.telegram_paolo
-      data_template:
+      data:
         message: "{{'\U00002B06'}} Alzate le serrande ({% if how_many_secs and how_many_secs | int > 0 %}{{ how_many_secs }}{% else %}{{ states('input_number.event_duration_cover_up') | int }}{% endif %} sec.)"
 
 home_cover_down:
@@ -640,7 +640,7 @@ home_cover_down:
       data:
         entity_id: switch.sonoff_dual_2
     - service: notify.telegram_paolo
-      data_template:
+      data:
         message: "{{'\U00002B07'}} Abbassate le serrande ({% if how_many_secs and how_many_secs | int > 0 %}{{ how_many_secs }}{% else %}{{ states('input_number.event_duration_cover_down') | int }}{% endif %} sec.)"
 
 home_cover_stop:
@@ -661,7 +661,7 @@ say_next_cover_down:
   description: "Tell time of the next cover down."
   sequence:
     - service: script.tts_speak
-      data_template:
+      data:
         message2say: >
           Serrande giù: {% if '{:02}'.format(now().hour) ~ '{:02}'.format(now().minute) > states('sensor.cover_down_start').replace(":", "") %}domani,{% endif %} alle {{ states('sensor.cover_down_start').replace(":", " e ") }}
         volume: "0.3"
@@ -672,7 +672,7 @@ say_energy_consumption:
   description: "Tell the energy consumption via TTS."
   sequence:
     - service: script.tts_speak
-      data_template:
+      data:
         message2say: >
           {% if is_state('binary_sensor.online_pzem_004t', 'on') %}
           Il consumo attuale è di {{ states('sensor.pzem_power') }} watt
@@ -686,7 +686,7 @@ bed_cover_on:
   alias: Bed Cover On
   description: "Switch on the electric blanket."
   sequence:
-    - service_template: >-
+    - service: >-
         {% if is_state('binary_sensor.online_sonoff_basic_1', 'on') %}
           switch.turn_on
         {% else %}
@@ -695,7 +695,7 @@ bed_cover_on:
       data:
         entity_id: switch.sonoff_basic_1
     - service: script.tts_speak
-      data_template:
+      data:
         message2say: >-
           {% if is_state('binary_sensor.online_sonoff_basic_1', 'on') %}
           Coperta accesa
@@ -713,7 +713,7 @@ bed_cover_off:
       data:
         entity_id: switch.sonoff_basic_1
     - service: script.tts_speak
-      data_template:
+      data:
         message2say: >-
           {% if is_state('binary_sensor.online_sonoff_basic_1', 'on') %}
           Coperta spenta
@@ -732,10 +732,10 @@ mower_start:
   description: "Send 'Start' command to mower."
   sequence:
     - service: landroid_cloud.start
-      data_template:
+      data:
         id: !secret landroid_id
     - service: notify.telegram_paolo
-      data_template:
+      data:
         message: "{{'\U0001F69C'}} {{'\U0001F3C1'}} Sent 'Start' command to mower"
 
 mower_pause:
@@ -744,10 +744,10 @@ mower_pause:
   description: "Send 'Pause' command to mower."
   sequence:
     - service: landroid_cloud.pause
-      data_template:
+      data:
         id: !secret landroid_id
     - service: notify.telegram_paolo
-      data_template:
+      data:
         message: "{{'\U0001F69C'}} {{'\U000023F8'}} Sent 'Pause' command to mower"
 
 mower_home:
@@ -756,8 +756,8 @@ mower_home:
   description: "Send 'Go Home' command to mower."
   sequence:
     - service: landroid_cloud.home
-      data_template:
+      data:
         id: !secret landroid_id
     - service: notify.telegram_paolo
-      data_template:
+      data:
         message: "{{'\U0001F69C'}} {{'\U0001F519'}} Sent 'Go Home' command to mower"

@@ -55,6 +55,7 @@ cards:
         entities:
           - entity: input_boolean.event_sonoleore
             state_color: true
+          - input_select.event_type_sonoleore
           - input_number.event_volume_sonoleore
       - break
       - id: events.ale

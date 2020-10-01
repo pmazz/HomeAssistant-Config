@@ -3,7 +3,7 @@
 #++++++++++++++++++++++++++
 path: system
 title: System
-icon: mdi:settings
+icon: mdi:cog
 panel: true
 cards:
   - id: system.container
@@ -521,7 +521,7 @@ cards:
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
             name: HomeAssistant-Config
             show_state: false
-            icon: mdi:github-circle
+            icon: mdi:github
             entities:
               - attribute: html_url
                 icon: mdi:open-in-new
@@ -540,7 +540,7 @@ cards:
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
             name: ps_hassio_entities
             show_state: false
-            icon: mdi:github-circle
+            icon: mdi:github
             entities:
               - attribute: html_url
                 icon: mdi:open-in-new

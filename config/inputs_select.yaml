@@ -366,3 +366,10 @@ event_daytype_sonoff_basic_2:
     - feriale
     - festivo
   icon: mdi:calendar
+
+event_type_sonoleore:
+  name: Tipo Avviso
+  options:
+    - Voice
+    - Cuckoo
+  icon: mdi:alarm-note

@@ -42,7 +42,7 @@
       value_template: "{{ is_state('binary_sensor.updater', 'on') and states('binary_sensor.updater') != states('sensor.hass_installed_version') }}"
   action:
     - service: notify.telegram_paolo
-      data_template: 
+      data: 
         title: "\U0001F389 Home Assistant Update"
         message: "Version *{{state_attr('binary_sensor.updater', 'newest_version')}}* is now available (installed: {{states('sensor.hass_installed_version')}})."
 
@@ -57,7 +57,7 @@
       value_template: "{{ trigger.from_state.state != trigger.to_state.state and (states('sensor.hacs') | int) > 0 }}"
   action:
     - service: telegram_bot.send_message
-      data_template:
+      data:
         title: "\U0001F389 HACS Updates"
         message: >
           *{{states('sensor.hacs')}}* update{% if (states('sensor.hacs') | int) > 1 %}s{% endif %} available{{":"}}
@@ -88,7 +88,7 @@
       to: "idle"
   action:
     - service: media_player.volume_set #Reset volume after playing
-      data_template:
+      data:
         entity_id: media_player.salotto
         volume_level: "{{ states('input_number.google_home_volume') }}"
 
@@ -103,15 +103,15 @@
       webhook_id: exec_script_webhook
   action:
     - service: notify.telegram_paolo
-      data_template:
+      data:
         message: "Esecuzione '[script.{{trigger.json.script}}]' da webhook"
-    - service_template: "script.{{trigger.json.script}}"
+    - service: "script.{{trigger.json.script}}"
     - service: input_text.set_value #Store last executed script
-      data_template:
+      data:
         entity_id: input_text.webhook_last_script
         value: "script.{{trigger.json.script}}"
     - service: input_datetime.set_datetime #Store last executed script time
-      data_template:
+      data:
         entity_id: input_datetime.webhook_last_script_exec
         date: "{{ now().strftime('%Y-%m-%d') }}"
         time: "{{ now().strftime('%H:%M:%S') }}"
@@ -142,7 +142,7 @@
       to: "on"
   action:
     - service: mqtt.publish #Status request for the Tasmota device (for boot count, RSSI, etc)
-      data_template:
+      data:
         topic: "home/{{ trigger.entity_id|replace('binary_sensor.online_', '')|replace('smartplug', 'smart_plug') }}/cmnd/STATUS"
         payload: "0"
 
@@ -168,11 +168,11 @@
       entity_id: input_select.hass_theme_selected
   action:
     - service: input_text.set_value
-      data_template:
+      data:
         entity_id: input_text.hass_theme_selected_saved
         value: "{{ states('input_select.hass_theme_selected') }}"
     - service: frontend.set_theme
-      data_template:
+      data:
         name: "{{ states('input_select.hass_theme_selected') }}"
 
 # - id: hass_theme_selected_saved___changed
@@ -182,7 +182,7 @@
 #       entity_id: input_text.hass_theme_selected_saved
 #   action:
 #     - service: notify.telegram_paolo
-#       data_template:
+#       data:
 #         message: "(HA) txt set\r hass\_theme\_selected: {{ states('input_select.hass_theme_selected') }}\r hass\_theme\_selected\_txt: {{ states('input_text.hass_theme_selected_saved') }}"
 
 
@@ -203,7 +203,7 @@
       state: "off"
   action:
     - service: notify.telegram_paolo
-      data_template:
+      data:
         title: "Attenzione:"
         message: "\U0001F4FA TV Accesa in casa!"
 
@@ -215,7 +215,7 @@
       entity_id: input_number.tv_remote_channel
   action:
     - service: media_player.play_media
-      data_template:
+      data:
         entity_id: media_player.samsung_tv
         media_content_id: "{{ states('input_number.tv_remote_channel') | int }}"
         media_content_type: channel
@@ -232,7 +232,7 @@
       entity_id: input_number.google_home_volume
   action:
     - service: media_player.volume_set
-      data_template:
+      data:
         entity_id: media_player.salotto
         volume_level: "{{ states('input_number.google_home_volume') }}"
 
@@ -247,7 +247,7 @@
       value_template: "{{ (trigger.from_state.attributes.volume_level | round(1)) != (trigger.to_state.attributes.volume_level | round(1)) }}"
   action:
     - service: input_number.set_value
-      data_template:
+      data:
         entity_id: input_number.google_home_volume
         value: "{{ trigger.to_state.attributes.volume_level | round(1) }}"
 
@@ -259,11 +259,11 @@
       entity_id: input_select.radio_station
   action:
     - service: media_player.volume_set #Set volume before streaming
-      data_template:
+      data:
         entity_id: media_player.salotto
         volume_level: "0.2"
     - service: media_player.play_media #Stream Radio - Play
-      data_template:
+      data:
         entity_id: media_player.salotto
         media_content_id: >
           {% if is_state("input_select.radio_station", "Radio24") %}
@@ -292,12 +292,12 @@
         media_content_type: "audio/mp4"
     - delay: "00:00:01" #Wait before force playing (needed for some radio)
     - service: media_player.media_pause #Force pause
-      data_template:
+      data:
         entity_id: media_player.salotto
     - delay: "00:00:01" #Wait before force playing (needed for some radio)
-    - service_template: >
+    - service: >
         {% if is_state("input_select.radio_station", "-Off-") %}media_player.media_stop{% else %}media_player.media_play{% endif %}
-      data_template:
+      data:
         entity_id: media_player.salotto
 
 
@@ -314,7 +314,7 @@
       command: "/start"
   action:
     - service: telegram_bot.send_message
-      data_template:
+      data:
         message: "Ciao {{ trigger.event.data.from_first }}, scegli un comando:"
         disable_notification: true
         inline_keyboard:
@@ -332,7 +332,7 @@
       data: "/goback_main"
   action:
     - service: telegram_bot.edit_replymarkup
-      data_template:
+      data:
         message_id: "last"
         chat_id: "{{ trigger.event.data.chat_id }}"
         inline_keyboard:
@@ -350,7 +350,7 @@
       data: "/systemcommands"
   action:
     - service: telegram_bot.edit_replymarkup
-      data_template:
+      data:
         message_id: "last"
         chat_id: "{{ trigger.event.data.chat_id }}"
         inline_keyboard:
@@ -372,7 +372,7 @@
       data: "/sensors"
   action:
     - service: telegram_bot.edit_replymarkup
-      data_template:
+      data:
         message_id: "last"
         chat_id: "{{ trigger.event.data.chat_id }}"
         inline_keyboard:
@@ -392,7 +392,7 @@
       data: "/sensors_home"
   action:
     - service: telegram_bot.edit_message
-      data_template:
+      data:
         message_id: "last"
         chat_id: "{{ trigger.event.data.user_id }}"
         message: >
@@ -418,7 +418,7 @@
   action:
     - service: script.toggle_home_mode
     - service: notify.telegram_paolo
-      data_template:
+      data:
         message: >
           Impostata modalità {{states('input_select.home_mode')}}
         inline_keyboard:
@@ -435,7 +435,7 @@
       data: "/switches"
   action:
     - service: telegram_bot.edit_message
-      data_template:
+      data:
         message_id: "last"
         chat_id: "{{ trigger.event.data.user_id }}"
         message: >
@@ -486,7 +486,7 @@
       data:
         entity_id: switch.smartplug_1
     - service: notify.telegram_paolo
-      data_template:
+      data:
         message: >
           {% if is_state('switch.smartplug_1', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({{states('switch.smartplug_1') | upper()}}).{% endif %}
 
@@ -503,7 +503,7 @@
       data:
         entity_id: switch.smartplug_2
     - service: notify.telegram_paolo
-      data_template:
+      data:
         message: >
           {% if is_state('switch.smartplug_2', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({{states('switch.smartplug_2') | upper()}}).{% endif %}
 
@@ -520,7 +520,7 @@
       data:
         entity_id: switch.smartplug_3
     - service: notify.telegram_paolo
-      data_template:
+      data:
         message: >
           {% if is_state('switch.smartplug_3', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({{states('switch.smartplug_3') | upper()}}).{% endif %}
 
@@ -537,7 +537,7 @@
       data:
         entity_id: switch.smartplug_4
     - service: notify.telegram_paolo
-      data_template:
+      data:
         message: >
           {% if is_state('switch.smartplug_4', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({{states('switch.smartplug_4') | upper()}}).{% endif %}
 
@@ -554,7 +554,7 @@
       data:
         entity_id: switch.smartplug_5
     - service: notify.telegram_paolo
-      data_template:
+      data:
         message: >
           {% if is_state('switch.smartplug_5', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({{states('switch.smartplug_5') | upper()}}).{% endif %}
 
@@ -571,7 +571,7 @@
       data:
         entity_id: switch.smartplug_6
     - service: notify.telegram_paolo
-      data_template:
+      data:
         message: >
           {% if is_state('switch.smartplug_6', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({{states('switch.smartplug_6') | upper()}}).{% endif %}
 
@@ -588,7 +588,7 @@
       data:
         entity_id: switch.smartplug_7
     - service: notify.telegram_paolo
-      data_template:
+      data:
         message: >
           {% if is_state('switch.smartplug_7', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({{states('switch.smartplug_7') | upper()}}).{% endif %}
 
@@ -605,7 +605,7 @@
       data:
         entity_id: switch.smartplug_8
     - service: notify.telegram_paolo
-      data_template:
+      data:
         message: >
           {% if is_state('switch.smartplug_8', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({{states('switch.smartplug_8') | upper()}}).{% endif %}
 
@@ -622,7 +622,7 @@
       data:
         entity_id: switch.sonoff_basic_1
     - service: notify.telegram_paolo
-      data_template:
+      data:
         message: >
           {% if is_state('switch.sonoff_basic_1', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({% if is_state('switch.sonoff_basic_1', 'on') %}OFF{% else %}ON{% endif %}).{% endif %}
 
@@ -639,7 +639,7 @@
       data:
         entity_id: switch.sonoff_basic_2
     - service: notify.telegram_paolo
-      data_template:
+      data:
         message: >
           {% if is_state('switch.sonoff_basic_2', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({% if is_state('switch.sonoff_basic_2', 'on') %}OFF{% else %}ON{% endif %}).{% endif %}
 
@@ -656,7 +656,7 @@
 #       data:
 #         entity_id: switch.sonoff_basic_3
 #     - service: notify.telegram_paolo
-#       data_template:
+#       data:
 #         message: >
 #           {% if is_state('switch.sonoff_basic_3', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({% if is_state('switch.sonoff_basic_3', 'on') %}OFF{% else %}ON{% endif %}).{% endif %}
 
@@ -671,7 +671,7 @@
   action:
     - service: script.home_cover_up
     - service: notify.telegram_paolo
-      data_template:
+      data:
         message: >
           {% if is_state('switch.sonoff_dual_1', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F53C"}} Cover up.{% endif %}
 
@@ -686,7 +686,7 @@
   action:
     - service: script.home_cover_down
     - service: notify.telegram_paolo
-      data_template:
+      data:
         message: >
           {% if is_state('switch.sonoff_dual_2', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F53D"}} Cover down.{% endif %}
 
@@ -701,7 +701,7 @@
   action:
     - service: script.home_cover_stop
     - service: notify.telegram_paolo
-      data_template:
+      data:
         message: >
           {{"\U000023F9"}} Cover stopped.
 
@@ -715,7 +715,7 @@
       data: "/config"
   action:
     - service: telegram_bot.edit_replymarkup
-      data_template:
+      data:
         message_id: "last"
         chat_id: "{{ trigger.event.data.chat_id }}"
         inline_keyboard:
@@ -733,7 +733,7 @@
       data: "/config_commit_git"
   action:
     - service: telegram_bot.send_message
-      data_template:
+      data:
         message: "Confermi l'operazione?"
         disable_notification: true
         inline_keyboard:
@@ -749,7 +749,7 @@
       data: "/config_commit_git_confirm"
   action:
     - service: telegram_bot.delete_message
-      data_template:
+      data:
         message_id: "last"
         chat_id: "{{ trigger.event.data.chat_id }}"
     - service: script.config_commit_to_git
@@ -764,7 +764,7 @@
       data: "/config_commit_git_cancel"
   action:
     - service: telegram_bot.delete_message
-      data_template:
+      data:
         message_id: "last"
         chat_id: "{{ trigger.event.data.chat_id }}"
 
@@ -778,7 +778,7 @@
       data: "/snapshot_full_create"
   action:
     - service: telegram_bot.send_message
-      data_template:
+      data:
         message: "Confermi l'operazione?"
         disable_notification: true
         inline_keyboard:
@@ -794,7 +794,7 @@
       data: "/snapshot_full_create_confirm"
   action:
     - service: telegram_bot.delete_message
-      data_template:
+      data:
         message_id: "last"
         chat_id: "{{ trigger.event.data.chat_id }}"
     - service: script.snapshot_full_create
@@ -809,7 +809,7 @@
       data: "/snapshot_full_create_cancel"
   action:
     - service: telegram_bot.delete_message
-      data_template:
+      data:
         message_id: "last"
         chat_id: "{{ trigger.event.data.chat_id }}"
 
@@ -823,7 +823,7 @@
       data: "/wherearewe"
   action:
     - service: telegram_bot.edit_replymarkup
-      data_template:
+      data:
         message_id: "last"
         chat_id: "{{ trigger.event.data.chat_id }}"
         inline_keyboard:
@@ -840,7 +840,7 @@
       data: "/wherearewe_paolo"
   action:
     - service: telegram_bot.edit_message
-      data_template:
+      data:
         message_id: "last"
         chat_id: "{{ trigger.event.data.user_id }}"
         message: >
@@ -868,7 +868,7 @@
       data: "/wherearewe_silvia"
   action:
     - service: telegram_bot.edit_message
-      data_template:
+      data:
         message_id: "last"
         chat_id: "{{ trigger.event.data.user_id }}"
         message: >
@@ -929,7 +929,7 @@
       data: "/ha_restart"
   action:
     - service: telegram_bot.send_message
-      data_template:
+      data:
         message: "Confermi l'operazione?"
         disable_notification: true
         inline_keyboard:
@@ -945,7 +945,7 @@
       data: "/ha_restart_confirm"
   action:
     - service: telegram_bot.delete_message
-      data_template:
+      data:
         message_id: "last"
         chat_id: "{{ trigger.event.data.chat_id }}"
     - service: script.hass_restart
@@ -960,7 +960,7 @@
       data: "/ha_restart_cancel"
   action:
     - service: telegram_bot.delete_message
-      data_template:
+      data:
         message_id: "last"
         chat_id: "{{ trigger.event.data.chat_id }}"
 
@@ -974,7 +974,7 @@
       data: "/ha_stop"
   action:
     - service: telegram_bot.send_message
-      data_template:
+      data:
         message: "Confermi l'operazione?"
         disable_notification: true
         inline_keyboard:
@@ -990,7 +990,7 @@
       data: "/ha_stop_confirm"
   action:
     - service: telegram_bot.delete_message
-      data_template:
+      data:
         message_id: "last"
         chat_id: "{{ trigger.event.data.chat_id }}"
     - service: script.hass_stop
@@ -1005,7 +1005,7 @@
       data: "/ha_stop_cancel"
   action:
     - service: telegram_bot.delete_message
-      data_template:
+      data:
         message_id: "last"
         chat_id: "{{ trigger.event.data.chat_id }}"
 
@@ -1019,7 +1019,7 @@
       data: "/ho_shutdown"
   action:
     - service: telegram_bot.send_message
-      data_template:
+      data:
         message: "Confermi l'operazione?"
         disable_notification: true
         inline_keyboard:
@@ -1035,7 +1035,7 @@
       data: "/ho_shutdown_confirm"
   action:
     - service: telegram_bot.delete_message
-      data_template:
+      data:
         message_id: "last"
         chat_id: "{{ trigger.event.data.chat_id }}"
     - service: script.hass_server_shutdown
@@ -1050,7 +1050,7 @@
       data: "/ho_shutdown_cancel"
   action:
     - service: telegram_bot.delete_message
-      data_template:
+      data:
         message_id: "last"
         chat_id: "{{ trigger.event.data.chat_id }}"
 
@@ -1064,7 +1064,7 @@
       data: "/ho_reboot"
   action:
     - service: telegram_bot.send_message
-      data_template:
+      data:
         message: "Confermi l'operazione?"
         disable_notification: true
         inline_keyboard:
@@ -1080,7 +1080,7 @@
       data: "/ho_reboot_confirm"
   action:
     - service: telegram_bot.delete_message
-      data_template:
+      data:
         message_id: "last"
         chat_id: "{{ trigger.event.data.chat_id }}"
     - service: script.hass_server_reboot
@@ -1095,7 +1095,7 @@
       data: "/ho_reboot_cancel"
   action:
     - service: telegram_bot.delete_message
-      data_template:
+      data:
         message_id: "last"
         chat_id: "{{ trigger.event.data.chat_id }}"
 
@@ -1109,7 +1109,7 @@
       data: "/sensors_router"
   action:
     - service: telegram_bot.edit_message
-      data_template:
+      data:
         message_id: "last"
         chat_id: "{{ trigger.event.data.user_id }}"
         message: >
@@ -1140,7 +1140,7 @@
       data: "/sensors_raspberry"
   action:
     - service: telegram_bot.edit_message
-      data_template:
+      data:
         message_id: "last"
         chat_id: "{{ trigger.event.data.user_id }}"
         message: >
@@ -1174,7 +1174,7 @@
       data: "/sensors_devices"
   action:
     - service: telegram_bot.edit_message
-      data_template:
+      data:
         message_id: "last"
         chat_id: "{{ trigger.event.data.user_id }}"
         message: >
@@ -1196,7 +1196,7 @@
       data: "/sensors_mobiledevices"
   action:
     - service: telegram_bot.edit_message
-      data_template:
+      data:
         message_id: "last"
         chat_id: "{{ trigger.event.data.user_id }}"
         message: >
@@ -1229,7 +1229,7 @@
       data: "/sensors_nas"
   action:
     - service: telegram_bot.edit_message
-      data_template:
+      data:
         message_id: "last"
         chat_id: "{{ trigger.event.data.user_id }}"
         message: >
@@ -1267,7 +1267,7 @@
       data: "/sensors_adguard"
   action:
     - service: telegram_bot.edit_message
-      data_template:
+      data:
         message_id: "last"
         chat_id: "{{ trigger.event.data.user_id }}"
         message: >
@@ -1296,13 +1296,13 @@
 #    data: "/speak_generic"
 #action:
 #  - service: script.tts_speak
-#    data_template:
+#    data:
 #      message2say: >
 #        {{ states('input_text.speak_generic_msg') }}
 ##      message2say: Ciao
 #      volume: "0.6"
 #  - service: telegram_bot.edit_message
-#    data_template:
+#    data:
 #      message_id: "last"
 #      chat_id: "{{ trigger.event.data.user_id }}"
 #      message: "\U0001F197 FATTO"
@@ -1331,7 +1331,7 @@
       state: "giorno"
   action:
     - service: script.tts_speak
-      data_template:
+      data:
         message2say: >
           {% if (trigger.to_state.state == 'on') %}
             Il gateway Xiaomi, è connesso!
@@ -1340,7 +1340,7 @@
           {% endif %}
         volume: "0.4"
     - service: notify.telegram_paolo
-      data_template:
+      data:
         message: >
           {% if (trigger.to_state.state == 'on') %}
             {{'\U0001F44D'}} Il gateway Xiaomi è connesso!
@@ -1366,7 +1366,7 @@
       state: "giorno"
   action:
     - service: script.tts_speak
-      data_template:
+      data:
         message2say: >
           {% if (trigger.to_state.state == 'on') %}
             Il Nas, è connesso!
@@ -1375,7 +1375,7 @@
           {% endif %}
         volume: "0.3"
     - service: notify.telegram_paolo
-      data_template:
+      data:
         message: >
           {% if (trigger.to_state.state == 'on') %}
             {{'\U0001F44D'}} Il Nas è connesso!
@@ -1409,7 +1409,7 @@
   action:
     - delay: "00:40:00"
     - service: script.tts_speak
-      data_template:
+      data:
         message2say: Silvia. È quasi ora di tornare in ufficio.
         volume: "0.6"
 
@@ -1423,7 +1423,7 @@
       to: "on"
   action:
     - service: timer.start
-      data_template:
+      data:
         entity_id: timer.ale_internet
         duration: >
           {{states('input_datetime.ale_internet')}}
@@ -1438,7 +1438,7 @@
       to: "off"
   action:
     - service: timer.finish
-      data_template:
+      data:
         entity_id: timer.ale_internet
 
 - id: ale_internet_timer_complete
@@ -1471,7 +1471,7 @@
       to: "on"
   action:
     - service: notify.telegram_paolo
-      data_template:
+      data:
         message: >
           {% if (trigger.to_state.state == 'on') %}
             {{'\U00002705'}} Il Pzem è connesso!
@@ -1494,7 +1494,7 @@
     value_template: "{{ trigger.from_state.state != trigger.to_state.state }}"
   action:
     - service: notify.telegram_paolo
-      data_template:
+      data:
         message: >
           {{'\U0001F69C'}} Mower state changed:\n
             From '{{trigger.from_state.state}}' to '{{trigger.to_state.state}}'
