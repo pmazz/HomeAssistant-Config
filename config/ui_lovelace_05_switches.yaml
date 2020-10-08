@@ -1095,7 +1095,27 @@ cards:
           title: Serrande
           show_header_toggle: false
           entities:
-            - cover.home_cover
+            - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+              head: 
+                entity: binary_sensor.online_sonoff_dual_1
+                name: Serrande
+                state_color: true
+                icon: mdi:wifi
+              items:
+                - entity: sensor.sonoff_dual_1_boot_count
+                  type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                  name: Telemetria
+                  icon: mdi:cogs
+                  state_header: "Boot #"
+                  entities:
+                    - icon: mdi:open-in-new
+                      tap_action: 
+                        action: url
+                        url_path: http://sonoff-dual-1.local
+                    - entity: sensor.sonoff_dual_1_wifi_rssi
+                      name: Wifi
+            - entity: cover.home_cover
+              name: Comandi
             - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
               conditions:
                 - entity: input_select.event_starttype_cover_up

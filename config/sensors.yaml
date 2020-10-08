@@ -321,21 +321,6 @@
   scan_interval: 3600
 
 - platform: rest  #https://www.home-assistant.io/integrations/rest
-  name: addon_sqliteweb
-  resource: http://homeassistant:8123/api/hassio/addons/a0d7b954_sqlite-web/info
-  headers:
-    Authorization: !secret hass_api_llt
-    Content-Type: application/json
-  value_template: "{{ value_json.data.state }}"
-  json_attributes_path: "$.data"
-  json_attributes:
-    - name
-    - slug
-    - version
-    - version_latest
-  scan_interval: 3600
-
-- platform: rest  #https://www.home-assistant.io/integrations/rest
   name: addon_ssh
   resource: http://homeassistant:8123/api/hassio/addons/a0d7b954_ssh/info
   headers:

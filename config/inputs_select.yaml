@@ -370,6 +370,7 @@ event_daytype_sonoff_basic_2:
 event_type_sonoleore:
   name: Tipo Avviso
   options:
-    - Voice
+    - Bells
     - Cuckoo
+    - Voice
   icon: mdi:alarm-note

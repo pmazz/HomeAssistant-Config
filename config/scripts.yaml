@@ -377,9 +377,9 @@ wifi_5ghz_stop:
         message: "\U0000274C Wifi 5 GHz disattivata."
 
 
-#+++++++++++++++++++++++++++++++
-#+++++ TTS related scripts +++++
-#+++++++++++++++++++++++++++++++
+#+++++++++++++++++++++++++++++++++++++++
+#+++++ TTS & sound related scripts +++++
+#+++++++++++++++++++++++++++++++++++++++
 tts_speak:
   #Pronuncia una frase con TTS
   alias: TTS Speak
@@ -420,6 +420,27 @@ speak_generic:
       data:
         message2say: "{{ states('input_text.speak_generic_msg') }}"
         volume: "{{ states('input_number.google_home_volume') }}"
+
+play_audio_file:
+  alias: Play Audio File
+  description: "Plays an audio file."
+  fields:
+    audio_file:
+      description: "The audio file to be played. Files should be placed in the 'www' folder."
+      example: "/local/sounds/audio-1.mp3"
+    volume:
+      description: "Volume level to be set."
+      example: "0.7"
+  sequence:
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.salotto
+        volume_level: "{{ volume }}"
+    - service: media_player.play_media
+      data:
+        entity_id: media_player.salotto
+        media_content_id: "{{ audio_file }}"
+        media_content_type: "audio/mp4"
 
 
 #++++++++++++++++++++++++++++++

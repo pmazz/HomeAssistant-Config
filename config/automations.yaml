@@ -62,8 +62,8 @@
         message: >
           *{{states('sensor.hacs')}}* update{% if (states('sensor.hacs') | int) > 1 %}s{% endif %} available{{":"}}
           {% for rep in state_attr('sensor.hacs', 'repositories') %}
-          {{- "\r- [" ~ rep.name.split('/')[1] ~ "](https://github.com/" ~ rep.name ~ ")\r  " ~ rep['installed_version'] ~ " -> " ~ rep['available_version'] }}
-          {{- "\r  [Commits](https://github.com/" ~ rep.name ~ "/commits) - [Releases](https://github.com/" ~ rep.name ~ "/releases)" }}
+          {{- "\n- [" ~ rep.name.split('/')[1] ~ "](https://github.com/" ~ rep.name ~ ")\n  " ~ rep['installed_version'] ~ " -> " ~ rep['available_version'] }}
+          {{- "\n  [Commits](https://github.com/" ~ rep.name ~ "/commits) - [Releases](https://github.com/" ~ rep.name ~ "/releases)" }}
           {% endfor %}
         disable_web_page_preview: true
         target:
@@ -183,7 +183,7 @@
 #   action:
 #     - service: notify.telegram_paolo
 #       data:
-#         message: "(HA) txt set\r hass\_theme\_selected: {{ states('input_select.hass_theme_selected') }}\r hass\_theme\_selected\_txt: {{ states('input_text.hass_theme_selected_saved') }}"
+#         message: "(HA) txt set\n hass\_theme\_selected: {{ states('input_select.hass_theme_selected') }}\n hass\_theme\_selected\_txt: {{ states('input_text.hass_theme_selected_saved') }}"
 
 
 #++++++++++++++++++++++++++++++++++

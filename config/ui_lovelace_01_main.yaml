@@ -65,38 +65,6 @@ cards:
                 tap_action: 
                   action: url
                   url_path: http://prusa-mini.local
-          - entity: binary_sensor.online_pzem_004t
-            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-            state_color: true
-            entities:
-              - icon: mdi:open-in-new
-                tap_action: 
-                  action: url
-                  url_path: http://pzem-004t.local
-          - entity: binary_sensor.online_sonoff_dual_1
-            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-            name: Serrande
-            state_color: true
-            icon: mdi:window-open
-            entities:
-              - icon: mdi:open-in-new
-                tap_action: 
-                  action: url
-                  url_path: http://sonoff-dual-1.local
-          - entity: binary_sensor.online_sonoff_4ch_1
-            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-            name: Irrigazione
-            state_color: true
-            icon: mdi:sprinkler-variant
-            entities:
-              - icon: mdi:open-in-new
-                tap_action: 
-                  action: url
-                  url_path: http://sonoff-4ch.local
-          - entity: binary_sensor.online_landroid_m141
-            name: Tagliaerba
-            state_color: true
-            icon: mdi:robot-mower
       - break
       - id: main.mobile_devices
         type: entities  #https://www.home-assistant.io/lovelace/entities
@@ -172,10 +140,6 @@ cards:
               label: Hass.io Addons
             open: true
             items:
-              - type: weblink
-                name: SQLite Web
-                icon: mdi:database-search
-                url: http://homeassistant:8123/hassio/ingress/a0d7b954_sqlite-web
               - type: weblink
                 name: TasmoAdmin
                 icon: mdi:z-wave

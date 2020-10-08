@@ -16,6 +16,24 @@ cards:
         title: Elettricità
         show_header_toggle: false
         entities:
+          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+            head: 
+              entity: binary_sensor.online_pzem_004t
+              state_color: true
+              icon: mdi:wifi
+            items:
+              - entity: sensor.pzem_boot_count
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: Telemetria
+                icon: mdi:cogs
+                state_header: "Boot #"
+                entities:
+                  - icon: mdi:open-in-new
+                    tap_action: 
+                      action: url
+                      url_path: http://pzem-004t.local
+                  - entity: sensor.pzem_wifi_rssi
+                    name: Wifi
           - entity: sensor.pzem_power
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
             name: Consumo Attuale
@@ -35,17 +53,6 @@ cards:
               - entity: sensor.pzem_energy_yesterday
                 name: Ieri
                 unit: " "
-          - entity: sensor.pzem_boot_count
-            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-            name: Telemetria Pzem
-            state_header: "Boot #"
-            entities:
-              - icon: mdi:open-in-new
-                tap_action: 
-                  action: url
-                  url_path: http://pzem-004t.local
-              - entity: sensor.pzem_wifi_rssi
-                name: Wifi
           - type: section
           - type: custom:mini-graph-card  #https://github.com/kalkih/mini-graph-card
             hours_to_show: 12
@@ -165,6 +172,25 @@ cards:
               label: Mower
             open: true
             items:
+              - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+                head: 
+                  entity: binary_sensor.online_landroid_m141
+                  name: Tagliaerba
+                  state_color: true
+                  icon: mdi:wifi
+                items:
+                  - entity: sensor.landroid_m141_status
+                    type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                    name: Telemetria
+                    icon: mdi:cogs
+                    show_state: false
+                    entities:
+                      - attribute: rssi
+#TODO Convertire rssi (come Tasmota)
+                        name: Wifi
+                      - attribute: distance
+                        name: Distance
+                        unit: mt
               - entity: sensor.landroid_m141_status
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: Status
@@ -216,6 +242,25 @@ cards:
               label: Irrigazione
             open: true
             items:
+              - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+                head: 
+                  entity: binary_sensor.online_sonoff_4ch_1
+                  name: Irrigazione
+                  state_color: true
+                  icon: mdi:wifi
+                items:
+                  - entity: sensor.sonoff_4ch_1_boot_count
+                    type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                    name: Telemetria
+                    icon: mdi:cogs
+                    state_header: "Boot #"
+                    entities:
+                      - icon: mdi:open-in-new
+                        tap_action: 
+                          action: url
+                          url_path: http://pzem-004t.local
+                      - entity: sensor.sonoff_4ch_1_wifi_rssi
+                        name: Wifi
               - entity: binary_sensor.irrigation_status
                 state_color: true
               - type: custom:hui-horizontal-stack-card  #https://www.home-assistant.io/lovelace/horizontal-stack

@@ -336,28 +336,6 @@ cards:
                   - entity: sensor.addon_samba
                     name: Status
                     unit: []
-              - entity: binary_sensor.addon_sqliteweb_update
-                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-                name: SQLite Web
-                icon: si:sqlite
-                state_color: true
-                show_state: false
-                entities:
-                  - icon: mdi:open-in-new
-                    tap_action: 
-                      action: url
-                      url_path: /hassio/ingress/a0d7b954_sqlite-web
-                  - icon: mdi:hammer-screwdriver
-                    tap_action: 
-                      action: url
-                      url_path: /hassio/addon/a0d7b954_sqlite-web/config
-                  - attribute: version
-                    name: Installed
-                  - attribute: version_latest
-                    name: Available
-                  - entity: sensor.addon_sqliteweb
-                    name: Status
-                    unit: []
               - entity: binary_sensor.addon_ssh_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: SSH & Web Terminal

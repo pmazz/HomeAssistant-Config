@@ -118,7 +118,6 @@
         - sensor.addon_nut
         - sensor.addon_nodered
         - sensor.addon_samba
-        - sensor.addon_sqliteweb
         - sensor.addon_ssh
         - sensor.addon_tasmoadmin
         - sensor.addon_motioneye
@@ -202,14 +201,6 @@
         name: "{{ state_attr('sensor.addon_samba', 'name') }}"
         version: "{{ state_attr('sensor.addon_samba', 'version') }}"
         version_latest: "{{ state_attr('sensor.addon_samba', 'version_latest') }}"
-
-    addon_sqliteweb_update:
-      icon_template: "{{ state_attr('sensor.addon_sqliteweb', 'icon') }}"
-      value_template: "{{ state_attr('sensor.addon_sqliteweb', 'version') != state_attr('sensor.addon_sqliteweb', 'version_latest') }}"
-      attribute_templates:
-        name: "{{ state_attr('sensor.addon_sqliteweb', 'name') }}"
-        version: "{{ state_attr('sensor.addon_sqliteweb', 'version') }}"
-        version_latest: "{{ state_attr('sensor.addon_sqliteweb', 'version_latest') }}"
 
     addon_ssh_update:
       icon_template: "{{ state_attr('sensor.addon_ssh', 'icon') }}"
