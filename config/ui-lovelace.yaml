@@ -20,9 +20,6 @@ resources:
   - url: /hacsfiles/lovelace-multiple-entity-row/multiple-entity-row.js
     #https://github.com/benct/lovelace-multiple-entity-row
     type: module
-  - url: /hacsfiles/custom-header/custom-header.js
-    #https://github.com/maykar/custom-header
-    type: module
   - url: /hacsfiles/vertical-stack-in-card/vertical-stack-in-card.js
     #https://github.com/custom-cards/vertical-stack-in-card
     type: module
@@ -54,22 +51,6 @@ resources:
   - url: /hacsfiles/custom-cards/lovelace-theme-maker-master/theme-maker.js
     #https://github.com/thomasloven/lovelace-theme-maker
     type: module
-
-custom_header:  #https://github.com/maykar/custom-header
-  # disabled_mode: true
-  compact_mode: true
-  hide_help: true
-  hide_config: true
-  voice_hide: true
-  indicator_top: true
-  hide_tabs: 'system'
-  hidden_tab_redirect: true
-  chevron: false
-  exceptions:
-    - conditions:
-        user: Paolo
-      config:
-        show_tabs: '0 to 20'
 
 button_card_templates:  #https://github.com/custom-cards/button-card
   media_button:
