@@ -100,6 +100,30 @@ cards:
                   - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
                     conditions:
                       - entity: input_select.event_starttype_sonoff_basic_1
+                        state: "Timer Off"
+                    card:
+                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
+                      show_header_toggle: false
+                      entities:
+                        - input_datetime.event_timer_off_sonoff_basic_1
+                        - timer.event_timer_off_sonoff_basic_1
+                      style: |
+                        ha-card {
+                          box-shadow: none;
+                          background-color: transparent;
+                        }
+                        ha-card > div.card-content {
+                          padding: 0px 0px 5px 0px;
+                        }
+                        ha-card > div.card-content > div {
+                          margin: 0px !important;
+                        }
+                        ha-card > hui-conditional-card > hui-section-row.head {
+                          padding-left: 16px;
+                        }
+                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    conditions:
+                      - entity: input_select.event_starttype_sonoff_basic_1
                         state: "Battery"
                     card:
                       type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
@@ -190,6 +214,30 @@ cards:
                         }
                         ha-card > div.card-content > div {
                           margin: 0px !important;
+                        }
+                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    conditions:
+                      - entity: input_select.event_starttype_sonoff_basic_2
+                        state: "Timer Off"
+                    card:
+                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
+                      show_header_toggle: false
+                      entities:
+                        - input_datetime.event_timer_off_sonoff_basic_2
+                        - timer.event_timer_off_sonoff_basic_2
+                      style: |
+                        ha-card {
+                          box-shadow: none;
+                          background-color: transparent;
+                        }
+                        ha-card > div.card-content {
+                          padding: 0px 0px 5px 0px;
+                        }
+                        ha-card > div.card-content > div {
+                          margin: 0px !important;
+                        }
+                        ha-card > hui-conditional-card > hui-section-row.head {
+                          padding-left: 16px;
                         }
                   - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
                     conditions:
@@ -362,6 +410,30 @@ cards:
                   - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_1
+                        state: "Timer Off"
+                    card:
+                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
+                      show_header_toggle: false
+                      entities:
+                        - input_datetime.event_timer_off_smartplug_1
+                        - timer.event_timer_off_smartplug_1
+                      style: |
+                        ha-card {
+                          box-shadow: none;
+                          background-color: transparent;
+                        }
+                        ha-card > div.card-content {
+                          padding: 0px 0px 5px 0px;
+                        }
+                        ha-card > div.card-content > div {
+                          margin: 0px !important;
+                        }
+                        ha-card > hui-conditional-card > hui-section-row.head {
+                          padding-left: 16px;
+                        }
+                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_1
                         state: "Battery"
                     card:
                       type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
@@ -445,6 +517,30 @@ cards:
                         - input_datetime.event_poweron_smartplug_2
                         - input_datetime.event_poweroff_smartplug_2
                         - input_select.event_daytype_smartplug_2
+                      style: |
+                        ha-card {
+                          box-shadow: none;
+                          background-color: transparent;
+                        }
+                        ha-card > div.card-content {
+                          padding: 0px 0px 5px 0px;
+                        }
+                        ha-card > div.card-content > div {
+                          margin: 0px !important;
+                        }
+                        ha-card > hui-conditional-card > hui-section-row.head {
+                          padding-left: 16px;
+                        }
+                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_2
+                        state: "Timer Off"
+                    card:
+                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
+                      show_header_toggle: false
+                      entities:
+                        - input_datetime.event_timer_off_smartplug_2
+                        - timer.event_timer_off_smartplug_2
                       style: |
                         ha-card {
                           box-shadow: none;
@@ -562,6 +658,30 @@ cards:
                   - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_3
+                        state: "Timer Off"
+                    card:
+                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
+                      show_header_toggle: false
+                      entities:
+                        - input_datetime.event_timer_off_smartplug_3
+                        - timer.event_timer_off_smartplug_3
+                      style: |
+                        ha-card {
+                          box-shadow: none;
+                          background-color: transparent;
+                        }
+                        ha-card > div.card-content {
+                          padding: 0px 0px 5px 0px;
+                        }
+                        ha-card > div.card-content > div {
+                          margin: 0px !important;
+                        }
+                        ha-card > hui-conditional-card > hui-section-row.head {
+                          padding-left: 16px;
+                        }
+                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_3
                         state: "Battery"
                     card:
                       type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
@@ -645,6 +765,30 @@ cards:
                         - input_datetime.event_poweron_smartplug_4
                         - input_datetime.event_poweroff_smartplug_4
                         - input_select.event_daytype_smartplug_4
+                      style: |
+                        ha-card {
+                          box-shadow: none;
+                          background-color: transparent;
+                        }
+                        ha-card > div.card-content {
+                          padding: 0px 0px 5px 0px;
+                        }
+                        ha-card > div.card-content > div {
+                          margin: 0px !important;
+                        }
+                        ha-card > hui-conditional-card > hui-section-row.head {
+                          padding-left: 16px;
+                        }
+                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_4
+                        state: "Timer Off"
+                    card:
+                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
+                      show_header_toggle: false
+                      entities:
+                        - input_datetime.event_timer_off_smartplug_4
+                        - timer.event_timer_off_smartplug_4
                       style: |
                         ha-card {
                           box-shadow: none;
@@ -762,6 +906,30 @@ cards:
                   - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_5
+                        state: "Timer Off"
+                    card:
+                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
+                      show_header_toggle: false
+                      entities:
+                        - input_datetime.event_timer_off_smartplug_5
+                        - timer.event_timer_off_smartplug_5
+                      style: |
+                        ha-card {
+                          box-shadow: none;
+                          background-color: transparent;
+                        }
+                        ha-card > div.card-content {
+                          padding: 0px 0px 5px 0px;
+                        }
+                        ha-card > div.card-content > div {
+                          margin: 0px !important;
+                        }
+                        ha-card > hui-conditional-card > hui-section-row.head {
+                          padding-left: 16px;
+                        }
+                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_5
                         state: "Battery"
                     card:
                       type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
@@ -845,6 +1013,30 @@ cards:
                         - input_datetime.event_poweron_smartplug_6
                         - input_datetime.event_poweroff_smartplug_6
                         - input_select.event_daytype_smartplug_6
+                      style: |
+                        ha-card {
+                          box-shadow: none;
+                          background-color: transparent;
+                        }
+                        ha-card > div.card-content {
+                          padding: 0px 0px 5px 0px;
+                        }
+                        ha-card > div.card-content > div {
+                          margin: 0px !important;
+                        }
+                        ha-card > hui-conditional-card > hui-section-row.head {
+                          padding-left: 16px;
+                        }
+                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_6
+                        state: "Timer Off"
+                    card:
+                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
+                      show_header_toggle: false
+                      entities:
+                        - input_datetime.event_timer_off_smartplug_6
+                        - timer.event_timer_off_smartplug_6
                       style: |
                         ha-card {
                           box-shadow: none;
@@ -962,6 +1154,30 @@ cards:
                   - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_7
+                        state: "Timer Off"
+                    card:
+                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
+                      show_header_toggle: false
+                      entities:
+                        - input_datetime.event_timer_off_smartplug_7
+                        - timer.event_timer_off_smartplug_7
+                      style: |
+                        ha-card {
+                          box-shadow: none;
+                          background-color: transparent;
+                        }
+                        ha-card > div.card-content {
+                          padding: 0px 0px 5px 0px;
+                        }
+                        ha-card > div.card-content > div {
+                          margin: 0px !important;
+                        }
+                        ha-card > hui-conditional-card > hui-section-row.head {
+                          padding-left: 16px;
+                        }
+                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_7
                         state: "Battery"
                     card:
                       type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
@@ -1045,6 +1261,30 @@ cards:
                         - input_datetime.event_poweron_smartplug_8
                         - input_datetime.event_poweroff_smartplug_8
                         - input_select.event_daytype_smartplug_8
+                      style: |
+                        ha-card {
+                          box-shadow: none;
+                          background-color: transparent;
+                        }
+                        ha-card > div.card-content {
+                          padding: 0px 0px 5px 0px;
+                        }
+                        ha-card > div.card-content > div {
+                          margin: 0px !important;
+                        }
+                        ha-card > hui-conditional-card > hui-section-row.head {
+                          padding-left: 16px;
+                        }
+                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_8
+                        state: "Timer Off"
+                    card:
+                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
+                      show_header_toggle: false
+                      entities:
+                        - input_datetime.event_timer_off_smartplug_8
+                        - timer.event_timer_off_smartplug_8
                       style: |
                         ha-card {
                           box-shadow: none;

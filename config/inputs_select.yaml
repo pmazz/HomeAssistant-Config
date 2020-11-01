@@ -132,6 +132,7 @@ event_starttype_smartplug_1:
     - None
     - Toggle
     - On/Off
+    - Timer Off
     - Battery
   icon: mdi:flash-outline
 event_daytype_smartplug_1:
@@ -157,6 +158,7 @@ event_starttype_smartplug_2:
     - None
     - Toggle
     - On/Off
+    - Timer Off
     - Battery
   icon: mdi:flash-outline
 event_daytype_smartplug_2:
@@ -182,6 +184,7 @@ event_starttype_smartplug_3:
     - None
     - Toggle
     - On/Off
+    - Timer Off
     - Battery
   icon: mdi:flash-outline
 event_daytype_smartplug_3:
@@ -207,6 +210,7 @@ event_starttype_smartplug_4:
     - None
     - Toggle
     - On/Off
+    - Timer Off
     - Battery
   icon: mdi:flash-outline
 event_daytype_smartplug_4:
@@ -232,6 +236,7 @@ event_starttype_smartplug_5:
     - None
     - Toggle
     - On/Off
+    - Timer Off
     - Battery
   icon: mdi:flash-outline
 event_daytype_smartplug_5:
@@ -257,6 +262,7 @@ event_starttype_smartplug_6:
     - None
     - Toggle
     - On/Off
+    - Timer Off
     - Battery
   icon: mdi:flash-outline
 event_daytype_smartplug_6:
@@ -282,6 +288,7 @@ event_starttype_smartplug_7:
     - None
     - Toggle
     - On/Off
+    - Timer Off
     - Battery
   icon: mdi:flash-outline
 event_daytype_smartplug_7:
@@ -307,6 +314,7 @@ event_starttype_smartplug_8:
     - None
     - Toggle
     - On/Off
+    - Timer Off
     - Battery
   icon: mdi:flash-outline
 event_daytype_smartplug_8:
@@ -332,6 +340,7 @@ event_starttype_sonoff_basic_1:
     - None
     - Toggle
     - On/Off
+    - Timer Off
     - Battery
   icon: mdi:flash-outline
 event_daytype_sonoff_basic_1:
@@ -357,6 +366,7 @@ event_starttype_sonoff_basic_2:
     - None
     - Toggle
     - On/Off
+    - Timer Off
     - Battery
   icon: mdi:flash-outline
 event_daytype_sonoff_basic_2:

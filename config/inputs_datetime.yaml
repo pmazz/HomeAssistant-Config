@@ -55,6 +55,11 @@ event_poweroff_smartplug_1:
   icon: mdi:clock-end
   has_date: false
   has_time: true
+event_timer_off_smartplug_1:
+  name: Durata (hh:mm)
+  icon: mdi:web-clock
+  has_date: false
+  has_time: true
 
 event_toggle_smartplug_2:
   name: Ora
@@ -69,6 +74,11 @@ event_poweron_smartplug_2:
 event_poweroff_smartplug_2:
   name: Spegnimento
   icon: mdi:clock-end
+  has_date: false
+  has_time: true
+event_timer_off_smartplug_2:
+  name: Durata (hh:mm)
+  icon: mdi:web-clock
   has_date: false
   has_time: true
 
@@ -87,6 +97,11 @@ event_poweroff_smartplug_3:
   icon: mdi:clock-end
   has_date: false
   has_time: true
+event_timer_off_smartplug_3:
+  name: Durata (hh:mm)
+  icon: mdi:web-clock
+  has_date: false
+  has_time: true
 
 event_toggle_smartplug_4:
   name: Ora
@@ -101,6 +116,11 @@ event_poweron_smartplug_4:
 event_poweroff_smartplug_4:
   name: Spegnimento
   icon: mdi:clock-end
+  has_date: false
+  has_time: true
+event_timer_off_smartplug_4:
+  name: Durata (hh:mm)
+  icon: mdi:web-clock
   has_date: false
   has_time: true
 
@@ -119,6 +139,11 @@ event_poweroff_smartplug_5:
   icon: mdi:clock-end
   has_date: false
   has_time: true
+event_timer_off_smartplug_5:
+  name: Durata (hh:mm)
+  icon: mdi:web-clock
+  has_date: false
+  has_time: true
 
 event_toggle_smartplug_6:
   name: Ora
@@ -133,6 +158,11 @@ event_poweron_smartplug_6:
 event_poweroff_smartplug_6:
   name: Spegnimento
   icon: mdi:clock-end
+  has_date: false
+  has_time: true
+event_timer_off_smartplug_6:
+  name: Durata (hh:mm)
+  icon: mdi:web-clock
   has_date: false
   has_time: true
 
@@ -151,6 +181,11 @@ event_poweroff_smartplug_7:
   icon: mdi:clock-end
   has_date: false
   has_time: true
+event_timer_off_smartplug_7:
+  name: Durata (hh:mm)
+  icon: mdi:web-clock
+  has_date: false
+  has_time: true
 
 event_toggle_smartplug_8:
   name: Ora
@@ -165,6 +200,11 @@ event_poweron_smartplug_8:
 event_poweroff_smartplug_8:
   name: Spegnimento
   icon: mdi:clock-end
+  has_date: false
+  has_time: true
+event_timer_off_smartplug_8:
+  name: Durata (hh:mm)
+  icon: mdi:web-clock
   has_date: false
   has_time: true
 
@@ -183,6 +223,11 @@ event_poweroff_sonoff_basic_1:
   icon: mdi:clock-end
   has_date: false
   has_time: true
+event_timer_off_sonoff_basic_1:
+  name: Durata (hh:mm)
+  icon: mdi:web-clock
+  has_date: false
+  has_time: true
 
 event_toggle_sonoff_basic_2:
   name: Ora
@@ -197,6 +242,11 @@ event_poweron_sonoff_basic_2:
 event_poweroff_sonoff_basic_2:
   name: Spegnimento
   icon: mdi:clock-end
+  has_date: false
+  has_time: true
+event_timer_off_sonoff_basic_2:
+  name: Durata (hh:mm)
+  icon: mdi:web-clock
   has_date: false
   has_time: true
 

@@ -178,9 +178,6 @@ samsungtv:  #https://www.home-assistant.io/integrations/samsungtv
 #   domain: !secret duckdns_domain
 #   access_token: !secret duckdns_token
 
-ifttt:  #https://www.home-assistant.io/components/ifttt
-  key: !secret ifttt_key
-
 mqtt:  #https://www.home-assistant.io/components/mqtt
   broker: !secret mqtt_broker
   port: !secret mqtt_port
@@ -232,12 +229,6 @@ shell_command: !include shell_commands.yaml
 cover: !include covers.yaml
 
 camera: !include cameras.yaml
-
-tuya:  #https://www.home-assistant.io/components/tuya
-  country_code: !secret tuya_country_code
-  username: !secret tuya_user
-  password: !secret tuya_pwd
-  platform: smart_life
 
 openuv:  #https://www.home-assistant.io/components/openuv
   api_key: !secret openuv_api_key
