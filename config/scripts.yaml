@@ -16,7 +16,6 @@ persistent_notification_dismiss:
 #+++++ System related scripts +++++
 #++++++++++++++++++++++++++++++++++
 hass_config_check_result:
-  #Home Assistant - Reload Customize
   alias: Check Configuration
   icon: mdi:cog-box
   description: "Check Home Assistant configuration files (via Node-Red)."
@@ -25,7 +24,6 @@ hass_config_check_result:
     - delay: "00:00:05" #Used to maintain switch toggled for a while
 
 hass_reload_customize:
-  #Home Assistant - Reload Customize
   alias: Reload Customize
   icon: mdi:cog-box
   description: "Reload Home Assistant core configuration."
@@ -51,7 +49,6 @@ hass_reload_customize:
         message: "\U0001F44D Reload Customize effettuato."
 
 hass_reload_scripts:
-  #Home Assistant - Reload Scripts
   alias: Reload Scripts
   icon: mdi:script
   description: "Reload Home Assistant scripts."
@@ -77,7 +74,6 @@ hass_reload_scripts:
         message: "\U0001F44D Reload Scripts effettuato."
 
 hass_reload_automations:
-  #Home Assistant - Reload Automations
   alias: Reload Automations
   icon: mdi:home-automation
   description: "Reload Home Assistant automations."
@@ -103,7 +99,6 @@ hass_reload_automations:
         message: "\U0001F44D Reload Automations effettuato."
 
 hass_reload_themes:
-  #Home Assistant - Reload Themes
   alias: Reload Themes
   icon: mdi:view-quilt
   description: "Reload Home Assistant themes."
@@ -131,7 +126,6 @@ hass_reload_themes:
         message: "\U0001F44D Reload Themes effettuato."
 
 hass_restart:
-  #Home Assistant - Restart
   alias: Restart Home Assistant
   icon: mdi:restart
   description: "Restart Home Assistant."
@@ -147,7 +141,6 @@ hass_restart:
     - service: homeassistant.restart
 
 hass_stop:
-  #Home Assistant - Stop
   alias: Stop Home Assistant
   icon: mdi:stop-circle-outline
   description: "Stop Home Assistant."
@@ -163,7 +156,6 @@ hass_stop:
     - service: homeassistant.stop
 
 hass_server_shutdown:
-  #Server - Shutdown
   alias: Shutdown Server
   icon: mdi:stop-circle
   description: "Shutdown Home Assistant server."
@@ -179,7 +171,6 @@ hass_server_shutdown:
     - service: hassio.host_shutdown
 
 hass_server_reboot:
-  #Server - Reboot
   alias: Reboot Server
   icon: mdi:restart
   description: "Reboot Home Assistant server."
@@ -195,7 +186,6 @@ hass_server_reboot:
     - service: hassio.host_reboot
 
 hass_recorder_purge:
-  #Home Assistant - Purge Recorder
   alias: Purge Recorder
   icon: mdi:delete-sweep
   description: "Purge events and states older than 7 days."
@@ -222,7 +212,6 @@ hass_recorder_purge:
         message: "\U0001F44D Purge Recorder effettuato."
 
 snapshot_full_create:
-  #Creazione snapshot full
   alias: Full snapshot
   icon: mdi:database-export
   description: "Perform a full snapshot."
@@ -250,7 +239,6 @@ snapshot_full_create:
         message: "\U0001F44D Full snapshot effettuato."
 
 config_commit_to_git:
-  #Backup file di configurazione
   alias: Commit configuration to Git
   icon: mdi:git
   description: "Commit and push configuration files to Git repo."
@@ -280,12 +268,59 @@ config_commit_to_git:
         title: "Notification"
         message: "\U0001F44D Commit file di configurazione effettuato."
 
+hass_reload_addon_status:
+  alias: Reload Addon Status
+  icon: mdi:home-automation
+  description: "Reload addon status."
+  sequence:
+    - service: homeassistant.update_entity
+      data:
+        entity_id: sensor.addon_samba
+    - service: homeassistant.update_entity
+      data:
+        entity_id: sensor.addon_adguard
+    - service: homeassistant.update_entity
+      data:
+        entity_id: sensor.addon_bitwarden
+    - service: homeassistant.update_entity
+      data:
+        entity_id: sensor.addon_dasshio
+    - service: homeassistant.update_entity
+      data:
+        entity_id: sensor.addon_duckdns
+    - service: homeassistant.update_entity
+      data:
+        entity_id: sensor.addon_nut
+    - service: homeassistant.update_entity
+      data:
+        entity_id: sensor.addon_nodered
+    - service: homeassistant.update_entity
+      data:
+        entity_id: sensor.addon_ssh
+    - service: homeassistant.update_entity
+      data:
+        entity_id: sensor.addon_tasmoadmin
+    - service: homeassistant.update_entity
+      data:
+        entity_id: sensor.addon_motioneye
+    - service: homeassistant.update_entity
+      data:
+        entity_id: sensor.addon_mariadb
+    - service: homeassistant.update_entity
+      data:
+        entity_id: sensor.addon_mosquitto
+    - service: homeassistant.update_entity
+      data:
+        entity_id: sensor.addon_phpmyadmin
+    - service: homeassistant.update_entity
+      data:
+        entity_id: sensor.addon_vscode
+
 
 #++++++++++++++++++++++++++++++++++
 #+++++ Router related scripts +++++
 #++++++++++++++++++++++++++++++++++
 wifi_guest_start:
-  #Router - Start Guest Wifi
   alias: Wifi Guest - Start
   description: "Start the Guest WiFi."
   sequence:
@@ -308,7 +343,6 @@ wifi_guest_start:
         volume: "0.5"
 
 wifi_guest_stop:
-  #Router - Stop Guest Wifi
   alias: Wifi Guest - Stop
   description: "Stop the Guest WiFi."
   sequence:
@@ -325,7 +359,6 @@ wifi_guest_stop:
         volume: "0.5"
 
 wifi_24ghz_start:
-  #Router - Start 2.4 GHz Wifi
   alias: Wifi 2.4 GHz - Start
   description: "Start the 2.4 GHz WiFi."
   sequence:
@@ -338,7 +371,6 @@ wifi_24ghz_start:
         message: "\U00002705 Wifi 2.4 GHz attivata."
 
 wifi_24ghz_stop:
-  #Router - Stop 2.4 GHz Wifi
   alias: Wifi 2.4 GHz - Stop
   description: "Stop the 2.4 GHz WiFi."
   sequence:
@@ -351,7 +383,6 @@ wifi_24ghz_stop:
         message: "\U0000274C Wifi 2.4 GHz disattivata."
 
 wifi_5ghz_start:
-  #Router - Start 5 GHz Wifi
   alias: Wifi 5 GHz - Start
   description: "Start the 5 GHz WiFi."
   sequence:
@@ -364,7 +395,6 @@ wifi_5ghz_start:
         message: "\U00002705 Wifi 5 GHz attivata."
 
 wifi_5ghz_stop:
-  #Router - Stop 5 GHz Wifi
   alias: Wifi 5 GHz - Stop
   description: "Stop the 5 GHz WiFi."
   sequence:
@@ -447,7 +477,6 @@ play_audio_file:
 #+++++ TV related scripts +++++
 #++++++++++++++++++++++++++++++
 tv_remote_volume_up:
-  #Telecomando TV - Volume Up
   alias: Volume Su
   icon: mdi:volume-plus
   description: "Turn Samsung TV's volume up."
@@ -457,7 +486,6 @@ tv_remote_volume_up:
         entity_id: media_player.samsung_tv
 
 tv_remote_volume_down:
-  #Telecomando TV - Volume Down
   alias: Volume Giù
   icon: mdi:volume-minus
   description: "Turn Samsung TV's volume down."
@@ -467,7 +495,6 @@ tv_remote_volume_down:
         entity_id: media_player.samsung_tv
 
 tv_remote_volume_mute:
-  #Telecomando TV - Volume Mute
   alias: Volume Muto
   icon: mdi:volume-off
   description: "Mute Samsung TV's volume."
@@ -478,7 +505,6 @@ tv_remote_volume_mute:
         is_volume_muted: true
 
 tv_remote_channel_up:
-  #Telecomando TV - Channel Up
   alias: Canale Su
   icon: mdi:chevron-up
   description: "Set Samsung TV's channel up."
@@ -488,7 +514,6 @@ tv_remote_channel_up:
         entity_id: input_number.tv_remote_channel
 
 tv_remote_channel_down:
-  #Telecomando TV - Channel Down
   alias: Canale Giù
   icon: mdi:chevron-down
   description: "Set Samsung TV's channel down."
@@ -498,7 +523,6 @@ tv_remote_channel_down:
         entity_id: input_number.tv_remote_channel
 
 tv_remote_power_off:
-  #Telecomando TV - Power Off
   alias: Power Off
   icon: mdi:power
   description: "Switch Samsung TV off."
@@ -617,7 +641,6 @@ home_contarina_pick_tomorrow:
         message: "{{'\U0000267B'}} {{ states('input_text.tts_last_sentence') }}"
 
 home_cover_up:
-  #Alza le serrande per un determinato periodo (secondi)
   alias: Home Cover Up
   description: "Alza le serrande per un determinato periodo (secondi)."
   fields:
@@ -641,7 +664,6 @@ home_cover_up:
         message: "{{'\U00002B06'}} Alzate le serrande ({% if how_many_secs and how_many_secs | int > 0 %}{{ how_many_secs }}{% else %}{{ states('input_number.event_duration_cover_up') | int }}{% endif %} sec.)"
 
 home_cover_down:
-  #Abbassa le serrande per un determinato periodo (secondi)
   alias: Home Cover Down
   description: "Abbassa le serrande per un determinato periodo (secondi)."
   fields:
@@ -665,7 +687,6 @@ home_cover_down:
         message: "{{'\U00002B07'}} Abbassate le serrande ({% if how_many_secs and how_many_secs | int > 0 %}{{ how_many_secs }}{% else %}{{ states('input_number.event_duration_cover_down') | int }}{% endif %} sec.)"
 
 home_cover_stop:
-  #Interrompe il movimento delle serrande
   alias: Home Cover Stop
   description: "Ferma le serrande."
   sequence:
@@ -677,7 +698,6 @@ home_cover_stop:
         entity_id: switch.sonoff_dual_2
 
 say_next_cover_down:
-  #Comunica il consumo di energia elettrica
   alias: Tell Next Cover Down Time
   description: "Tell time of the next cover down."
   sequence:

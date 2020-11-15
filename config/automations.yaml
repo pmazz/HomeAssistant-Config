@@ -175,16 +175,6 @@
       data:
         name: "{{ states('input_select.hass_theme_selected') }}"
 
-# - id: hass_theme_selected_saved___changed
-#   alias: hass_theme_selected_saved changed
-#   trigger:
-#     - platform: state
-#       entity_id: input_text.hass_theme_selected_saved
-#   action:
-#     - service: notify.telegram_paolo
-#       data:
-#         message: "(HA) txt set\n hass\_theme\_selected: {{ states('input_select.hass_theme_selected') }}\n hass\_theme\_selected\_txt: {{ states('input_text.hass_theme_selected_saved') }}"
-
 
 #++++++++++++++++++++++++++++++++++
 #+++++ TV related automations +++++
@@ -305,7 +295,6 @@
 #+++++ Telegram related automations +++++
 #++++++++++++++++++++++++++++++++++++++++
 - id: bot_cmd_start
-  #Bot - Comando /start
   alias: bot_cmd_start
   trigger:
     platform: event
@@ -323,7 +312,6 @@
           - "\U00002699 Configuration:/config, \U000026A1 System Commands:/systemcommands"
 
 - id: bot_cmd_goback_start
-  #Bot - Comando /goback_main
   alias: bot_cmd_goback_start
   trigger:
     platform: event
@@ -341,7 +329,6 @@
           - "\U00002699 Configuration:/config, \U000026A1 System Commands:/systemcommands"
 
 - id: bot_cmd_system
-  #Bot - Comando /systemcommands
   alias: bot_cmd_system
   trigger:
     platform: event
@@ -358,12 +345,9 @@
           - "\U000026A1 Reload Customize:/ha_reload_customize"
           - "\U0001F503 Reboot Host:/ho_reboot, \U0001F501 Restart HA:/ha_restart"
           - "\U0001F50C Shutdown Host:/ho_shutdown, \U000023F9 Stop HA:/ha_stop"
-#TODO CANCELLARE IL TEST
-#        - "\U0001F5E3 Speak:/speak_generic"
           - "\U0001F519 Go back:/goback_main"
 
 - id: bot_cmd_sensors
-  #Bot - Comando /sensors
   alias: bot_cmd_sensors
   trigger:
     platform: event
@@ -383,7 +367,6 @@
           - "\U0001F519 Go back:/goback_main"
 
 - id: bot_cmd_sensors_home
-  #Bot - Comando /sensors_home
   alias: bot_cmd_sensors_home
   trigger:
     platform: event
@@ -408,7 +391,6 @@
           - "\U0001F4AB Refresh:/sensors_home, \U0001F519 Go back:/sensors"
 
 - id: bot_cmd_sensors_home_mode_toggle
-  #Bot - Comando /sensors_home_mode_toggle
   alias: bot_cmd_sensors_home_mode_toggle
   trigger:
     platform: event
@@ -426,7 +408,6 @@
           - "\U0001F4AB Refresh:/sensors_home, \U0001F519 Go back:/goback_main"
 
 - id: bot_cmd_switches
-  #Bot - Comando /switches
   alias: bot_cmd_switches
   trigger:
     platform: event
@@ -474,7 +455,6 @@
           - "\U0001F4AB Refresh:/switches, \U0001F519 Go back:/goback_main"
 
 - id: bot_cmd_switches_toggle_plug1
-  #Bot - Comando /switches_toggle_plug1
   alias: bot_cmd_switches_toggle_plug1
   trigger:
     platform: event
@@ -491,7 +471,6 @@
           {% if is_state('switch.smartplug_1', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({{states('switch.smartplug_1') | upper()}}).{% endif %}
 
 - id: bot_cmd_switches_toggle_plug2
-  #Bot - Comando /switches_toggle_plug2
   alias: bot_cmd_switches_toggle_plug2
   trigger:
     platform: event
@@ -508,7 +487,6 @@
           {% if is_state('switch.smartplug_2', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({{states('switch.smartplug_2') | upper()}}).{% endif %}
 
 - id: bot_cmd_switches_toggle_plug3
-  #Bot - Comando /switches_toggle_plug3
   alias: bot_cmd_switches_toggle_plug3
   trigger:
     platform: event
@@ -525,7 +503,6 @@
           {% if is_state('switch.smartplug_3', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({{states('switch.smartplug_3') | upper()}}).{% endif %}
 
 - id: bot_cmd_switches_toggle_plug4
-  #Bot - Comando /switches_toggle_plug4
   alias: bot_cmd_switches_toggle_plug4
   trigger:
     platform: event
@@ -542,7 +519,6 @@
           {% if is_state('switch.smartplug_4', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({{states('switch.smartplug_4') | upper()}}).{% endif %}
 
 - id: bot_cmd_switches_toggle_plug5
-  #Bot - Comando /switches_toggle_plug5
   alias: bot_cmd_switches_toggle_plug5
   trigger:
     platform: event
@@ -559,7 +535,6 @@
           {% if is_state('switch.smartplug_5', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({{states('switch.smartplug_5') | upper()}}).{% endif %}
 
 - id: bot_cmd_switches_toggle_plug6
-  #Bot - Comando /switches_toggle_plug6
   alias: bot_cmd_switches_toggle_plug6
   trigger:
     platform: event
@@ -576,7 +551,6 @@
           {% if is_state('switch.smartplug_6', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({{states('switch.smartplug_6') | upper()}}).{% endif %}
 
 - id: bot_cmd_switches_toggle_plug7
-  #Bot - Comando /switches_toggle_plug7
   alias: bot_cmd_switches_toggle_plug7
   trigger:
     platform: event
@@ -593,7 +567,6 @@
           {% if is_state('switch.smartplug_7', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({{states('switch.smartplug_7') | upper()}}).{% endif %}
 
 - id: bot_cmd_switches_toggle_plug8
-  #Bot - Comando /switches_toggle_plug8
   alias: bot_cmd_switches_toggle_plug8
   trigger:
     platform: event
@@ -610,7 +583,6 @@
           {% if is_state('switch.smartplug_8', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({{states('switch.smartplug_8') | upper()}}).{% endif %}
 
 - id: bot_cmd_switches_toggle_sonoff_basic_1
-  #Bot - Comando /switches_toggle_sonoff_basic_1
   alias: bot_cmd_switches_toggle_sonoff_basic_1
   trigger:
     platform: event
@@ -627,7 +599,6 @@
           {% if is_state('switch.sonoff_basic_1', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({% if is_state('switch.sonoff_basic_1', 'on') %}OFF{% else %}ON{% endif %}).{% endif %}
 
 - id: bot_cmd_switches_toggle_sonoff_basic_2
-  #Bot - Comando /switches_toggle_sonoff_basic_2
   alias: bot_cmd_switches_toggle_sonoff_basic_2
   trigger:
     platform: event
@@ -644,7 +615,6 @@
           {% if is_state('switch.sonoff_basic_2', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({% if is_state('switch.sonoff_basic_2', 'on') %}OFF{% else %}ON{% endif %}).{% endif %}
 
 # - id: bot_cmd_switches_toggle_sonoff_basic_3
-#   #Bot - Comando /switches_toggle_sonoff_basic_3
 #   alias: bot_cmd_switches_toggle_sonoff_basic_3
 #   trigger:
 #     platform: event
@@ -661,7 +631,6 @@
 #           {% if is_state('switch.sonoff_basic_3', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F44D"}} Comando eseguito ({% if is_state('switch.sonoff_basic_3', 'on') %}OFF{% else %}ON{% endif %}).{% endif %}
 
 - id: bot_cmd_switches_cover_up
-  #Bot - Comando /switches_cover_up
   alias: bot_cmd_switches_cover_up
   trigger:
     platform: event
@@ -676,7 +645,6 @@
           {% if is_state('switch.sonoff_dual_1', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F53C"}} Cover up.{% endif %}
 
 - id: bot_cmd_switches_cover_down
-  #Bot - Comando /switches_cover_down
   alias: bot_cmd_switches_cover_down
   trigger:
     platform: event
@@ -691,7 +659,6 @@
           {% if is_state('switch.sonoff_dual_2', 'unavailable') %}{{"\U0000274C"}} Comando NON eseguito.{% else %}{{"\U0001F53D"}} Cover down.{% endif %}
 
 - id: bot_cmd_switches_cover_stop
-  #Bot - Comando /switches_cover_stop
   alias: bot_cmd_switches_cover_stop
   trigger:
     platform: event
@@ -706,7 +673,6 @@
           {{"\U000023F9"}} Cover stopped.
 
 - id: bot_cmd_config
-  #Bot - Comando /config
   alias: bot_cmd_config
   trigger:
     platform: event
@@ -724,7 +690,6 @@
           - "\U0001F519 Go back:/goback_main"
 
 - id: bot_cmd_config_commit_git
-  #Bot - Comando /config_commit_git
   alias: bot_cmd_config_commit_git
   trigger:
     platform: event
@@ -740,7 +705,6 @@
           - "\U0001F44D Yes:/config_commit_git_confirm, \U0001F44E No:/config_commit_git_cancel"
 
 - id: bot_cmd_config_commit_git_confirm
-  #Bot - Comando /config_commit_git_confirm
   alias: bot_cmd_config_commit_git_confirm
   trigger:
     platform: event
@@ -755,7 +719,6 @@
     - service: script.config_commit_to_git
 
 - id: bot_cmd_config_commit_git_cancel
-  #Bot - Comando /config_commit_git_cancel
   alias: bot_cmd_config_commit_git_cancel
   trigger:
     platform: event
@@ -769,7 +732,6 @@
         chat_id: "{{ trigger.event.data.chat_id }}"
 
 - id: bot_cmd_config_snapshot_full
-  #Bot - Comando /snapshot_full_create
   alias: bot_cmd_config_snapshot_full
   trigger:
     platform: event
@@ -785,7 +747,6 @@
           - "\U0001F44D Yes:/snapshot_full_create_confirm, \U0001F44E No:/snapshot_full_create_cancel"
 
 - id: bot_cmd_config_snapshot_full_confirm
-  #Bot - Comando /snapshot_full_create_confirm
   alias: bot_cmd_config_snapshot_full_confirm
   trigger:
     platform: event
@@ -800,7 +761,6 @@
     - service: script.snapshot_full_create
 
 - id: bot_cmd_config_snapshot_full_cancel
-  #Bot - Comando /snapshot_full_create_cancel
   alias: bot_cmd_config_snapshot_full_cancel
   trigger:
     platform: event
@@ -814,7 +774,6 @@
         chat_id: "{{ trigger.event.data.chat_id }}"
 
 - id: bot_cmd_wherearewe
-  #Bot - Comando /wherearewe
   alias: bot_cmd_wherearewe
   trigger:
     platform: event
@@ -831,7 +790,6 @@
           - "\U0001F519 Go back:/goback_main"
 
 - id: bot_cmd_wherearewe_paolo
-  #Bot - Comando /wherearewe_paolo
   alias: bot_cmd_wherearewe_paolo
   trigger:
     platform: event
@@ -859,7 +817,6 @@
           - "\U0001F4AB Refresh:/wherearewe_paolo, \U0001F519 Go back:/wherearewe"
 
 - id: bot_cmd_wherearewe_silvia
-  #Bot - Comando /wherearewe_silvia
   alias: bot_cmd_wherearewe_silvia
   trigger:
     platform: event
@@ -887,7 +844,6 @@
           - "\U0001F4AB Refresh:/wherearewe_silvia, \U0001F519 Go back:/wherearewe"
 
 - id: bot_cmd_system_ha_reload_customize
-  #Bot - Comando /ha_reload_customize
   alias: bot_cmd_system_ha_reload_customize
   trigger:
     platform: event
@@ -898,7 +854,6 @@
     - service: script.hass_reload_customize
 
 - id: bot_cmd_system_ha_reload_scripts
-  #Bot - Comando /ha_reload_scripts
   alias: bot_cmd_system_ha_reload_scripts
   trigger:
     platform: event
@@ -909,7 +864,6 @@
     - service: script.hass_reload_scripts
 
 - id: bot_cmd_system_ha_reload_automations
-  #Bot - Comando /ha_reload_automations
   alias: bot_cmd_system_ha_reload_automations
   trigger:
     platform: event
@@ -920,7 +874,6 @@
     - service: script.hass_reload_automations
 
 - id: bot_cmd_system_ha_restart
-  #Bot - Comando /ha_restart
   alias: bot_cmd_system_ha_restart
   trigger:
     platform: event
@@ -936,7 +889,6 @@
           - "\U0001F44D Yes:/ha_restart_confirm, \U0001F44E No:/ha_restart_cancel"
 
 - id: bot_cmd_system_ha_restart_confirm
-  #Bot - Comando /ha_restart_confirm
   alias: bot_cmd_system_ha_restart_confirm
   trigger:
     platform: event
@@ -951,7 +903,6 @@
     - service: script.hass_restart
 
 - id: bot_cmd_system_ha_restart_cancel
-  #Bot - Comando /ha_restart_cancel
   alias: bot_cmd_system_ha_restart_cancel
   trigger:
     platform: event
@@ -965,7 +916,6 @@
         chat_id: "{{ trigger.event.data.chat_id }}"
 
 - id: bot_cmd_system_ha_stop
-  #Bot - Comando /ha_stop
   alias: bot_cmd_system_ha_stop
   trigger:
     platform: event
@@ -981,7 +931,6 @@
           - "\U0001F44D Yes:/ha_stop_confirm, \U0001F44E No:/ha_stop_cancel"
 
 - id: bot_cmd_system_ha_stop_confirm
-  #Bot - Comando /ha_stop_confirm
   alias: bot_cmd_system_ha_stop_confirm
   trigger:
     platform: event
@@ -996,7 +945,6 @@
     - service: script.hass_stop
 
 - id: bot_cmd_system_ha_stop_cancel
-  #Bot - Comando /ha_stop_cancel
   alias: bot_cmd_system_ha_stop_cancel
   trigger:
     platform: event
@@ -1010,7 +958,6 @@
         chat_id: "{{ trigger.event.data.chat_id }}"
 
 - id: bot_cmd_system_ho_shutdown
-  #Bot - Comando /ho_shutdown
   alias: bot_cmd_system_ho_shutdown
   trigger:
     platform: event
@@ -1026,7 +973,6 @@
           - "\U0001F44D Yes:/ho_shutdown_confirm, \U0001F44E No:/ho_shutdown_cancel"
 
 - id: bot_cmd_system_ho_shutdown_confirm
-  #Bot - Comando /ho_shutdown_confirm
   alias: bot_cmd_system_ho_shutdown_confirm
   trigger:
     platform: event
@@ -1041,7 +987,6 @@
     - service: script.hass_server_shutdown
 
 - id: bot_cmd_system_ho_shutdown_cancel
-  #Bot - Comando /ho_shutdown_cancel
   alias: bot_cmd_system_ho_shutdown_cancel
   trigger:
     platform: event
@@ -1055,7 +1000,6 @@
         chat_id: "{{ trigger.event.data.chat_id }}"
 
 - id: bot_cmd_system_ho_reboot
-  #Bot - Comando /ho_reboot
   alias: bot_cmd_system_ho_reboot
   trigger:
     platform: event
@@ -1071,7 +1015,6 @@
           - "\U0001F44D Yes:/ho_reboot_confirm, \U0001F44E No:/ho_reboot_cancel"
 
 - id: bot_cmd_system_ho_reboot_confirm
-  #Bot - Comando /ho_reboot_confirm
   alias: bot_cmd_system_ho_reboot_confirm
   trigger:
     platform: event
@@ -1086,7 +1029,6 @@
     - service: script.hass_server_reboot
 
 - id: bot_cmd_system_ho_reboot_cancel
-  #Bot - Comando /ho_reboot_cancel
   alias: bot_cmd_system_ho_reboot_cancel
   trigger:
     platform: event
@@ -1100,7 +1042,6 @@
         chat_id: "{{ trigger.event.data.chat_id }}"
 
 - id: bot_cmd_sensors_router
-  #Bot - Comando /sensors_router
   alias: bot_cmd_sensors_router
   trigger:
     platform: event
@@ -1131,7 +1072,6 @@
           - "\U0001F4AB Refresh:/sensors_router, \U0001F519 Go back:/sensors"
 
 - id: bot_cmd_sensors_raspberry
-  #Bot - Comando /sensors_raspberry
   alias: bot_cmd_sensors_raspberry
   trigger:
     platform: event
@@ -1165,7 +1105,6 @@
           - "\U0001F4AB Refresh:/sensors_raspberry, \U0001F519 Go back:/sensors"
 
 - id: bot_cmd_sensors_devices
-  #Bot - Comando /sensors_devices
   alias: bot_cmd_sensors_devices
   trigger:
     platform: event
@@ -1187,7 +1126,6 @@
           - "\U0001F4AB Refresh:/sensors_devices, \U0001F519 Go back:/sensors"
 
 - id: bot_cmd_sensors_mobiledevices
-  #Bot - Comando /sensors_mobiledevices
   alias: bot_cmd_sensors_mobiledevices
   trigger:
     platform: event
@@ -1220,7 +1158,6 @@
           - "\U0001F4AB Refresh:/sensors_mobiledevices, \U0001F519 Go back:/sensors"
 
 - id: bot_cmd_sensors_nas
-  #Bot - Comando /sensors_nas
   alias: bot_cmd_sensors_nas
   trigger:
     platform: event
@@ -1258,7 +1195,6 @@
           - "\U0001F4AB Refresh:/sensors_nas, \U0001F519 Go back:/sensors"
 
 - id: bot_cmd_sensors_adguard
-  #Bot - Comando /sensors_adguard
   alias: bot_cmd_sensors_adguard
   trigger:
     platform: event
@@ -1284,30 +1220,6 @@
             {% endif %}
         inline_keyboard:
           - "\U0001F4AB Refresh:/sensors_adguard, \U0001F519 Go back:/sensors"
-
-##TODO DA COMPLETARE e VERIFICARE CON GOOGLE HOME MINI
-#- id: telegram_speak_generic
-##Bot - Comando /speak_generic
-#alias: Respond to /speak_generic command
-#trigger:
-#  platform: event
-#  event_type: telegram_callback
-#  event_data:
-#    data: "/speak_generic"
-#action:
-#  - service: script.tts_speak
-#    data:
-#      message2say: >
-#        {{ states('input_text.speak_generic_msg') }}
-##      message2say: Ciao
-#      volume: "0.6"
-#  - service: telegram_bot.edit_message
-#    data:
-#      message_id: "last"
-#      chat_id: "{{ trigger.event.data.user_id }}"
-#      message: "\U0001F197 FATTO"
-#      inline_keyboard:
-#        - "\U0001F519 Go back:/goback_main"
 
 
 #++++++++++++++++++++++++++++++++++++++++++++++

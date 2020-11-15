@@ -135,11 +135,17 @@ cards:
                       url_path: /hassio/addon/a0d7b954_adguard/config
                   - attribute: version
                     name: Installed
+                    styles:
+                      width: 40px
                   - attribute: version_latest
                     name: Available
+                    styles:
+                      width: 40px
                   - entity: sensor.addon_adguard
                     name: Status
                     unit: []
+                    styles:
+                      width: 40px
               - entity: binary_sensor.addon_bitwarden_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: Bitwarden RS
@@ -156,12 +162,16 @@ cards:
                       action: url
                       url_path: /hassio/addon/a0d7b954_bitwarden/config
                   - attribute: version
-                    name: Installed
+                    styles:
+                      width: 40px
                   - attribute: version_latest
-                    name: Available
+                    styles:
+                      width: 40px
                   - entity: sensor.addon_bitwarden
-                    name: Status
+                    name: []
                     unit: []
+                    styles:
+                      width: 40px
               - entity: binary_sensor.addon_dasshio_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: Dasshio
@@ -174,12 +184,16 @@ cards:
                       action: url
                       url_path: /hassio/addon/03d23610_dasshio/config
                   - attribute: version
-                    name: Installed
+                    styles:
+                      width: 40px
                   - attribute: version_latest
-                    name: Available
+                    styles:
+                      width: 40px
                   - entity: sensor.addon_dasshio
-                    name: Status
+                    name: []
                     unit: []
+                    styles:
+                      width: 40px
               - entity: binary_sensor.addon_duckdns_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: Duck DNS
@@ -192,12 +206,16 @@ cards:
                       action: url
                       url_path: /hassio/addon/core_duckdns/config
                   - attribute: version
-                    name: Installed
+                    styles:
+                      width: 40px
                   - attribute: version_latest
-                    name: Available
+                    styles:
+                      width: 40px
                   - entity: sensor.addon_duckdns
-                    name: Status
+                    name: []
                     unit: []
+                    styles:
+                      width: 40px
               - entity: binary_sensor.addon_mariadb_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: MariaDB
@@ -210,12 +228,16 @@ cards:
                       action: url
                       url_path: /hassio/addon/core_mariadb/config
                   - attribute: version
-                    name: Installed
+                    styles:
+                      width: 40px
                   - attribute: version_latest
-                    name: Available
+                    styles:
+                      width: 40px
                   - entity: sensor.addon_mariadb
-                    name: Status
+                    name: []
                     unit: []
+                    styles:
+                      width: 40px
               - entity: binary_sensor.addon_mosquitto_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: Mosquitto
@@ -228,12 +250,16 @@ cards:
                       action: url
                       url_path: /hassio/addon/core_mosquitto/config
                   - attribute: version
-                    name: Installed
+                    styles:
+                      width: 40px
                   - attribute: version_latest
-                    name: Available
+                    styles:
+                      width: 40px
                   - entity: sensor.addon_mosquitto
-                    name: Status
+                    name: []
                     unit: []
+                    styles:
+                      width: 40px
               - entity: binary_sensor.addon_motioneye_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: motionEye
@@ -250,12 +276,16 @@ cards:
                       action: url
                       url_path: /hassio/addon/a0d7b954_motioneye/config
                   - attribute: version
-                    name: Installed
+                    styles:
+                      width: 40px
                   - attribute: version_latest
-                    name: Available
+                    styles:
+                      width: 40px
                   - entity: sensor.addon_motioneye
-                    name: Status
+                    name: []
                     unit: []
+                    styles:
+                      width: 40px
               - entity: binary_sensor.addon_nut_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: Network UPS Tools
@@ -268,12 +298,16 @@ cards:
                       action: url
                       url_path: /hassio/addon/a0d7b954_nut/config
                   - attribute: version
-                    name: Installed
+                    styles:
+                      width: 40px
                   - attribute: version_latest
-                    name: Available
+                    styles:
+                      width: 40px
                   - entity: sensor.addon_nut
-                    name: Status
+                    name: []
                     unit: []
+                    styles:
+                      width: 40px
               - entity: binary_sensor.addon_nodered_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: Node-RED
@@ -290,12 +324,16 @@ cards:
                       action: url
                       url_path: /hassio/addon/a0d7b954_nodered/config
                   - attribute: version
-                    name: Installed
+                    styles:
+                      width: 40px
                   - attribute: version_latest
-                    name: Available
+                    styles:
+                      width: 40px
                   - entity: sensor.addon_nodered
-                    name: Status
+                    name: []
                     unit: []
+                    styles:
+                      width: 40px
               - entity: binary_sensor.addon_phpmyadmin_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: phpMyAdmin
@@ -312,12 +350,16 @@ cards:
                       action: url
                       url_path: /hassio/addon/a0d7b954_phpmyadmin/config
                   - attribute: version
-                    name: Installed
+                    styles:
+                      width: 40px
                   - attribute: version_latest
-                    name: Available
+                    styles:
+                      width: 40px
                   - entity: sensor.addon_phpmyadmin
-                    name: Status
+                    name: []
                     unit: []
+                    styles:
+                      width: 40px
               - entity: binary_sensor.addon_samba_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: Samba share
@@ -330,12 +372,16 @@ cards:
                       action: url
                       url_path: /hassio/addon/core_samba/config
                   - attribute: version
-                    name: Installed
+                    styles:
+                      width: 40px
                   - attribute: version_latest
-                    name: Available
+                    styles:
+                      width: 40px
                   - entity: sensor.addon_samba
-                    name: Status
+                    name: []
                     unit: []
+                    styles:
+                      width: 40px
               - entity: binary_sensor.addon_ssh_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: SSH & Web Terminal
@@ -352,12 +398,16 @@ cards:
                       action: url
                       url_path: /hassio/addon/a0d7b954_ssh/config
                   - attribute: version
-                    name: Installed
+                    styles:
+                      width: 40px
                   - attribute: version_latest
-                    name: Available
+                    styles:
+                      width: 40px
                   - entity: sensor.addon_ssh
-                    name: Status
+                    name: []
                     unit: []
+                    styles:
+                      width: 40px
               - entity: binary_sensor.addon_tasmoadmin_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: TasmoAdmin
@@ -374,12 +424,16 @@ cards:
                       action: url
                       url_path: /hassio/addon/a0d7b954_sonweb/config
                   - attribute: version
-                    name: Installed
+                    styles:
+                      width: 40px
                   - attribute: version_latest
-                    name: Available
+                    styles:
+                      width: 40px
                   - entity: sensor.addon_tasmoadmin
-                    name: Status
+                    name: []
                     unit: []
+                    styles:
+                      width: 40px
               - entity: binary_sensor.addon_vscode_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: Visual Studio Code
@@ -396,12 +450,16 @@ cards:
                       action: url
                       url_path: /hassio/addon/a0d7b954_vscode/config
                   - attribute: version
-                    name: Installed
+                    styles:
+                      width: 40px
                   - attribute: version_latest
-                    name: Available
+                    styles:
+                      width: 40px
                   - entity: sensor.addon_vscode
-                    name: Status
+                    name: []
                     unit: []
+                    styles:
+                      width: 40px
           - type: section
           - entity: sensor.hass_db_filesize
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
@@ -416,16 +474,28 @@ cards:
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
             name: HASS Sensors 1/2
             state_header: Sensors
+            styles:
+              width: 40px
             entities:
-              - sensor.hass_switch_count
-              - sensor.hass_lights_count
+              - entity: sensor.hass_switch_count
+                styles:
+                  width: 40px
+              - entity: sensor.hass_lights_count
+                styles:
+                  width: 40px
           - entity: sensor.hass_automation_count
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
             name: HASS Sensors 2/2
-            state_header: Automations
+            state_header: Autom.
+            styles:
+              width: 40px
             entities:
-              - sensor.hass_input_count
-              - sensor.hass_script_count
+              - entity: sensor.hass_input_count
+                styles:
+                  width: 40px
+              - entity: sensor.hass_script_count
+                styles:
+                  width: 40px
           - type: section
           - entity: sensor.hass_config_check_result
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
@@ -438,6 +508,10 @@ cards:
             secondary_info:
               entity: sensor.hass_config_check_result
               name: []
+          - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
+            row: true
+            card:
+              entity: script.hass_reload_addon_status
           - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
             row: true
             card:
