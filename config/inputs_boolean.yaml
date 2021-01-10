@@ -30,3 +30,7 @@ event_cover_down:
 irrigation_active:
   name: Attivo
   icon: mdi:bell
+
+say_energy_consumption_warning:
+  name: Energy Consumption Warning
+  icon: mdi:volume-high

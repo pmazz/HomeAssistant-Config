@@ -16,6 +16,7 @@ cards:
         title: Elettricità
         show_header_toggle: false
         entities:
+          - type: section
           - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
             head: 
               entity: binary_sensor.online_pzem_004t
@@ -53,6 +54,8 @@ cards:
               - entity: sensor.pzem_energy_yesterday
                 name: Ieri
                 unit: " "
+          - entity: input_boolean.say_energy_consumption_warning
+            state_color: true
           - type: section
           - type: custom:mini-graph-card  #https://github.com/kalkih/mini-graph-card
             hours_to_show: 12
@@ -99,6 +102,7 @@ cards:
         title: Xiaomi Sensors
         show_header_toggle: false
         entities:
+          - type: section
           - entity: light.xiaomi_hub_light
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
             name: Hub Light

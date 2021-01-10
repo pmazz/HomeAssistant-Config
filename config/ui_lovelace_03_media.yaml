@@ -82,6 +82,7 @@ cards:
                           color_type: icon
                           template: media_button
                           icon: mdi:numeric-1
+                          name: "Rai 1"
                           tap_action:
                             action: call-service
                             service: input_select.select_option
@@ -92,6 +93,7 @@ cards:
                           color_type: icon
                           template: media_button
                           icon: mdi:numeric-2
+                          name: "Deejay"
                           tap_action:
                             action: call-service
                             service: input_select.select_option
@@ -102,6 +104,7 @@ cards:
                           color_type: icon
                           template: media_button
                           icon: mdi:numeric-3
+                          name: "RDS"
                           tap_action:
                             action: call-service
                             service: input_select.select_option
@@ -112,6 +115,7 @@ cards:
                           color_type: icon
                           template: media_button
                           icon: mdi:numeric-4
+                          name: "101"
                           tap_action:
                             action: call-service
                             service: input_select.select_option
@@ -122,6 +126,7 @@ cards:
                           color_type: icon
                           template: media_button
                           icon: mdi:numeric-5
+                          name: "105"
                           tap_action:
                             action: call-service
                             service: input_select.select_option
@@ -134,6 +139,7 @@ cards:
                           color_type: icon
                           template: media_button
                           icon: mdi:numeric-6
+                          name: "Virgin"
                           tap_action:
                             action: call-service
                             service: input_select.select_option
@@ -144,6 +150,7 @@ cards:
                           color_type: icon
                           template: media_button
                           icon: mdi:numeric-7
+                          name: "Capital"
                           tap_action:
                             action: call-service
                             service: input_select.select_option
@@ -154,6 +161,7 @@ cards:
                           color_type: icon
                           template: media_button
                           icon: mdi:numeric-8
+                          name: "G.Michael"
                           tap_action:
                             action: call-service
                             service: input_select.select_option
@@ -166,6 +174,7 @@ cards:
                           color_type: icon
                           template: media_button
                           icon: mdi:power
+                          name: "Off"
                           tap_action:
                             action: call-service
                             service: input_select.select_option

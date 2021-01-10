@@ -28,7 +28,7 @@
         message: "\U0001F44D Home Assistant avviato."
     - delay: "00:00:15" #Wait for Node-Red addon to boot (and catch the event)
     - event: pm_init_switches #Force switches custom configuration reload
-    - delay: "00:00:05" #Wait for the next event to raise
+    - delay: "00:00:15" #Wait for the next event to raise
     - event: pm_reload_themes #Force themes reload in input_select.hass_theme_selected
 
 - id: bot_notify_ha_newrelease
@@ -1402,11 +1402,11 @@
     - platform: state
       entity_id: sensor.landroid_m141_status
   condition:
-    condition: template
-    value_template: "{{ trigger.from_state.state != trigger.to_state.state }}"
+    - condition: template
+      value_template: "{{ trigger.from_state.state != trigger.to_state.state }}"
   action:
     - service: notify.telegram_paolo
       data:
         message: >
-          {{'\U0001F69C'}} Mower state changed:\n
+          {{'\U0001F69C'}} Mower state changed:
             From '{{trigger.from_state.state}}' to '{{trigger.to_state.state}}'

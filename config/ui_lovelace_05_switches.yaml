@@ -14,6 +14,7 @@ cards:
       - id: switches.switches
         type: entities  #https://www.home-assistant.io/lovelace/entities
         title: Switches
+        icon: mdi:dip-switch
         show_header_toggle: false
         entities:
           - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
@@ -303,8 +304,10 @@ cards:
                   type: custom:restriction-card  #https://github.com/iantrich/restriction-card
                   row: true
                   card:
-                    entity: switch.sonoff_rele_1
-                    state_color: true
+                    entity: script.garage_door_open_lock
+                  restrictions:
+                    confirm:
+                      text: "Confermi esecuzione ?"
                 items:
                   - entity: sensor.sonoff_rele_1_boot_count
                     type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
@@ -324,6 +327,66 @@ cards:
                   - entity: input_text.switch_name_sonoff_rele_1
                     name: Name
                   - entity: input_text.switch_icon_sonoff_rele_1
+                    name: Icon
+                  - type: section
+              - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+                head: 
+                  type: custom:restriction-card  #https://github.com/iantrich/restriction-card
+                  row: true
+                  card:
+                    entity: script.gate_big_open_lock
+                  restrictions:
+                    confirm:
+                      text: "Confermi esecuzione ?"
+                items:
+                  # - entity: sensor.sonoff_rele_2_boot_count
+                  #   type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                  #   name: Telemetria
+                  #   icon: mdi:cogs
+                  #   show_state: false
+                  #   entities:
+                  #     - icon: mdi:open-in-new
+                  #       tap_action: 
+                  #         action: url
+                  #         url_path: http://sonoff-rele-2.local
+                  #     - entity: sensor.sonoff_rele_2_wifi_rssi
+                  #       name: Wifi
+                  #     - entity: sensor.sonoff_rele_2_boot_count
+                  #       name: "Boot #"
+                  # - type: section
+                  - entity: input_text.switch_name_sonoff_rele_2
+                    name: Name
+                  - entity: input_text.switch_icon_sonoff_rele_2
+                    name: Icon
+                  - type: section
+              - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+                head: 
+                  type: custom:restriction-card  #https://github.com/iantrich/restriction-card
+                  row: true
+                  card:
+                    entity: script.gate_big_close
+                  restrictions:
+                    confirm:
+                      text: "Confermi esecuzione ?"
+                items:
+                  # - entity: sensor.sonoff_rele_2_boot_count
+                  #   type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                  #   name: Telemetria
+                  #   icon: mdi:cogs
+                  #   show_state: false
+                  #   entities:
+                  #     - icon: mdi:open-in-new
+                  #       tap_action: 
+                  #         action: url
+                  #         url_path: http://sonoff-rele-2.local
+                  #     - entity: sensor.sonoff_rele_2_wifi_rssi
+                  #       name: Wifi
+                  #     - entity: sensor.sonoff_rele_2_boot_count
+                  #       name: "Boot #"
+                  # - type: section
+                  - entity: input_text.switch_name_sonoff_rele_2
+                    name: Name
+                  - entity: input_text.switch_icon_sonoff_rele_2
                     name: Icon
                   - type: section
           - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
@@ -1333,8 +1396,10 @@ cards:
         card:
           type: entities  #https://www.home-assistant.io/lovelace/entities
           title: Serrande
+          icon: mdi:window-shutter
           show_header_toggle: false
           entities:
+            - type: section
             - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
               head: 
                 entity: binary_sensor.online_sonoff_dual_1

@@ -130,3 +130,10 @@ switch_name_sonoff_rele_1:
 switch_icon_sonoff_rele_1:
   name: Sonoff RE5V1C 1 - Icon
   icon: mdi:star-box
+
+switch_name_sonoff_rele_2:
+  name: Sonoff RE5V1C 2 - Name
+  icon: mdi:dip-switch
+switch_icon_sonoff_rele_2:
+  name: Sonoff RE5V1C 2 - Icon
+  icon: mdi:star-box

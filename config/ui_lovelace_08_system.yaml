@@ -16,6 +16,7 @@ cards:
         title: Server
         show_header_toggle: false
         entities:
+          - type: section
           - sensor.last_boot_verbose
           - sensor.cpu_temperature
           - sensor.processor_use
@@ -43,6 +44,7 @@ cards:
         title: MQTT Broker
         show_header_toggle: false
         entities:
+          - type: section
           - entity: sensor.mqtt_broker_version
             name: Broker
           - entity: sensor.mqtt_broker_uptime_verbose
@@ -72,6 +74,7 @@ cards:
         title: Home Assistant
         show_header_toggle: false
         entities:
+          - type: section
           - entity: binary_sensor.hass_available_version
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
             name: HASS Version
@@ -542,6 +545,7 @@ cards:
         title: Configuration
         show_header_toggle: false
         entities:
+          - type: section
           - entity: binary_sensor.home_anyone_in
             state_color: true
           - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
@@ -562,6 +566,7 @@ cards:
         title: Commands
         show_header_toggle: false
         entities:
+          - type: section
           - input_select.home_mode
           - input_select.hass_theme_selected
       - id: system.github
@@ -569,6 +574,7 @@ cards:
         title: GitHub Repos
         show_header_toggle: false
         entities:
+          - type: section
           - entity: sensor.github_1
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
             name: HomeAssistant-Config
@@ -582,12 +588,20 @@ cards:
                   url_path: https://github.com/pmazz/HomeAssistant-Config
               - entity: sensor.github_1_commits
                 name: Commits
+                styles:
+                  width: 30px
               - attribute: stargazers_count
                 name: Stars
+                styles:
+                  width: 30px
               - attribute: subscribers_count
                 name: Watchers
+                styles:
+                  width: 30px
               - attribute: forks_count
                 name: Forks
+                styles:
+                  width: 30px
           - entity: sensor.github_2
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
             name: ps_hassio_entities
@@ -600,10 +614,15 @@ cards:
                   action: url
                   url_path: https://github.com/pmazz/ps_hassio_entities
               - entity: sensor.github_2_commits
-                name: Commits
+                name: []
+                styles:
+                  width: 30px
               - attribute: stargazers_count
-                name: Stars
+                styles:
+                  width: 30px
               - attribute: subscribers_count
-                name: Watchers
+                styles:
+                  width: 30px
               - attribute: forks_count
-                name: Forks
+                styles:
+                  width: 30px

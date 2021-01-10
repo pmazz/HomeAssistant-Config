@@ -615,7 +615,6 @@ toggle_home_mode:
         {% endif %}
 
 home_contarina_pick_tomorrow:
-  #Avvisa se c'è una raccolta della spazzatura il giorno dopo
   alias: Contarina Pick
   description: "Avvisa se c'è una raccolta della spazzatura il giorno dopo."
   sequence:
@@ -639,6 +638,51 @@ home_contarina_pick_tomorrow:
     - service: notify.telegram_paolo
       data:
         message: "{{'\U0000267B'}} {{ states('input_text.tts_last_sentence') }}"
+
+home_contarina_pick_when:
+  alias: Contarina Pick
+  description: "Avvisa quando c'è una specifica raccolta della spazzatura."
+  fields:
+    pick_type:
+      description: "Tipo di raccolta da considerare ('Carta', 'Plastica', 'Vetro', 'Umido', 'Secco', 'Vegetale')."
+      example: "Carta"
+  sequence:
+    - service: script.tts_speak
+      data:
+        message2say: >
+          {% if pick_type == "carta" %}
+            {% set sensor = "ics_4" %}
+            {% set msg_part = "della carta" %}
+          {% elif pick_type == "plastica" %}
+            {% set sensor = "ics_3" %}
+            {% set msg_part = "della plastica" %}
+          {% elif pick_type == "vetro" %}
+            {% set sensor = "ics_3" %}
+            {% set msg_part = "del vetro" %}
+          {% elif pick_type == "umido" %}
+            {% set sensor = "ics_2" %}
+            {% set msg_part = "dell'umido" %}
+          {% elif pick_type == "secco" %}
+            {% set sensor = "ics_1" %}
+            {% set msg_part = "del secco" %}
+          {% elif pick_type == "vegetale" %}
+            {% set sensor = "ics_5" %}
+            {% set msg_part = "del vegetale" %}
+          {% else %}
+            {% set sensor = "" %}
+          {% endif %}
+          {% if sensor == "" %}
+            {% set msg = "Non ho capito quale raccolta" %}
+          {% else %}
+            {% set gg = state_attr("sensor." ~ sensor, "remaining") | int %}
+            {% if gg == 1 %}
+              {% set msg = "Domani c'è la raccolta " ~ msg_part %}
+            {% elif gg > 1 %}
+              {% set msg = "Tra " ~ gg ~ " giorni c'è la raccolta " ~ msg_part %}
+            {% endif %}
+          {% endif %}
+          {{ msg }}
+        volume: "0.6"
 
 home_cover_up:
   alias: Home Cover Up
@@ -763,6 +807,26 @@ bed_cover_off:
           {% endif %}
         volume: "0.4"
 
+garage_door_open_lock:
+  alias: Garage Door Open & Lock
+  description: "Open & lock the garage door."
+  sequence:
+    - service: switch.turn_on
+      data:
+        entity_id: switch.sonoff_rele_1
+    - delay: "00:00:15"
+    - service: switch.turn_on
+      data:
+        entity_id: switch.sonoff_rele_1
+
+garage_door_close:
+  alias: Garage Door Close
+  description: "Close the garage door."
+  sequence:
+    - service: switch.turn_on
+      data:
+        entity_id: switch.sonoff_rele_1
+
 
 #++++++++++++++++++++++++++++++++++
 #+++++ Garden related scripts +++++
@@ -802,3 +866,23 @@ mower_home:
     - service: notify.telegram_paolo
       data:
         message: "{{'\U0001F69C'}} {{'\U0001F519'}} Sent 'Go Home' command to mower"
+
+gate_big_open_lock:
+  alias: Big Gate Open & Lock
+  description: "Open & lock the big gate."
+  sequence:
+    - service: switch.turn_on
+      data:
+        entity_id: switch.sonoff_1000d4864e
+    - delay: "00:00:27"
+    - service: switch.turn_on
+      data:
+        entity_id: switch.sonoff_1000d4864e
+
+gate_big_close:
+  alias: Big Gate Close
+  description: "Close the big gate."
+  sequence:
+    - service: switch.turn_on
+      data:
+        entity_id: switch.sonoff_1000d4864e

@@ -21,6 +21,7 @@ cards:
           title: Router
           show_header_toggle: false
           entities:
+            - type: section
             - sensor.fritz_attr_uptime
             - sensor.fritz_attr_external_ip
             - entity: sensor.fritz_attr_is_connected
@@ -94,6 +95,7 @@ cards:
         title: AdGuard Home
         show_header_toggle: false
         entities:
+          - type: section
           - entity: sensor.adguard_dns_queries
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
             name: DNS Queries
@@ -129,7 +131,6 @@ cards:
         show_header_toggle: false
         entities:
           - type: section
-            label: Octoprint
           - entity: sensor.octoprint_current_state
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
             name: Current Status
@@ -198,6 +199,7 @@ cards:
         title: UPS
         show_header_toggle: false
         entities:
+          - type: section
           - entity: sensor.tecnoware_ups_status
             name: Status
           - entity: sensor.tecnoware_ups_battery_charge
@@ -222,6 +224,7 @@ cards:
         title: NAS
         show_header_toggle: false
         entities:
+          - type: section
           #- sensor.nas_attr_name
           - sensor.nas_attr_model
           #- sensor.nas_attr_serial

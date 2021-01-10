@@ -56,7 +56,9 @@ button_card_templates:  #https://github.com/custom-cards/button-card
   media_button:
     styles:
       card:
-        - height: 35px
+        - height: 50px
+      name:
+        - font-size: 10px
       icon:
         - color: var(--material-primary-color)
   action_button_locked:

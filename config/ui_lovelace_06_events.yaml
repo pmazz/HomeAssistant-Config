@@ -16,6 +16,7 @@ cards:
         title: Today
         show_header_toggle: false
         entities:
+          - type: section
           - entity: sensor.date
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
             name: Date/Time

@@ -1,26 +1,17 @@
 homeassistant:
-  #Name of the location where Home Assistant is running
   name: Casa Mazzini
-  #Location required to calculate the time the sun rises and sets
   latitude: !secret zone_home_lat
   longitude: !secret zone_home_long
-  #Impacts weather/sunrise data (altitude above sea level in meters)
   elevation: 70
-  #metric for Metric, imperial for Imperial
   unit_system: metric
-  #Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-  time_zone: Europe/Rome
-  #Customization file
-  customize: !include customize.yaml
+  time_zone: Europe/Rome  #http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  customize: !include customize.yaml  #https://www.home-assistant.io/docs/configuration/customizing-devices
 
-#Show links to resources in log and frontend
 #introduction:
 
-#Enables the frontend
 frontend:  #https://www.home-assistant.io/integrations/frontend
   themes: !include_dir_merge_named themes
 
-#Enables configuration UI
 config:
 
 hassio:
@@ -62,16 +53,12 @@ updater:
   #Optional, allows Home Assistant developers to focus on popular components.
   #include_used_components: true
 
-#Discover some devices automatically
 discovery:
 
-#Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
 
-#Enables support for tracking state changes over time
 history:  #https://www.home-assistant.io/integrations/history
 
-#View all events in a logbook
 logbook:  #https://www.home-assistant.io/integrations/logbook
 
 recorder:  #https://www.home-assistant.io/components/recorder
@@ -164,7 +151,6 @@ script: !include scripts.yaml
 zone: !include zones.yaml
 sensor: !include sensors.yaml
 binary_sensor: !include sensors_binary.yaml
-rss_feed_template: !include rss_feeds.yaml
 
 timer: !include timers.yaml
 
@@ -241,15 +227,42 @@ octoprint:  #https://www.home-assistant.io/integrations/octoprint
   bed: true
   number_of_tools: 1
 
+# fritzbox_tools:  #https://github.com/mammuth/ha-fritzbox-tools
+#   host: !secret fritzbox_router_ip
+#   username: !secret fritzbox_router_user
+#   password: !secret fritzbox_router_pwd
+#   devices: #Needed if you want to control the profiles of your network devices
+#     - "tablet-ale"
+#     - "tablet-silvia"
+#   profile_on: "Standard" #Needed if you want to switch between device profiles ("Access Profile")
+#   profile_off: "Blocked"  #Needed if you want to switch between device profiles ("Access Profile")
+
 fritzbox_tools:  #https://github.com/mammuth/ha-fritzbox-tools
-  host: !secret fritzbox_router_ip
-  username: !secret fritzbox_router_user
-  password: !secret fritzbox_router_pwd
-  devices: #Needed if you want to control the profiles of your network devices
-    - "tablet-ale"
-    - "tablet-silvia"
-  profile_on: "Standard" #Needed if you want to switch between device profiles ("Access Profile")
-  profile_off: "Blocked"  #Needed if you want to switch between device profiles ("Access Profile")
+  devices:
+    - host: !secret fritzbox_router_ip
+      username: !secret fritzbox_router_user
+      password: !secret fritzbox_router_pwd
+      profiles:  # Optional. Needed if you want to control the profiles of your network devices.
+        - "Standard"
+        - "Blocked"
+      use_wifi: True  # Optional, default True: if False no wifi switches will be exposed
+      use_port: False  # Optional, default True: if False no port switches will be exposed
+      use_profiles: True  # Optional, default True: if False no device switches will be exposed, redundant if devices is not specified
+      use_deflections: False  # Optional, default True: if False no call deflection switches will be exposed
+
+# fritzbox_tools:
+#   devices:
+#     - host: "192.168.178.1"  # required
+#       username: "home-assistant"  # required (create one at `System > FRITZ!Box Benutzer` on your router)
+#       password: "yourfritzboxpassword"  # required
+#       profiles: # Optional. Needed if you want to control the profiles of your network devices.
+#         - "Gesperrt"
+#         - "Gast"
+#         - "Kinder Smartphones"
+#       use_wifi: True # Optional, default True: if False no wifi switches will be exposed
+#       use_port: True  # Optional, default True: if False no port switches will be exposed
+#       use_profiles: True  # Optional, default True: if False no device switches will be exposed, redundant if devices is not specified
+#       use_deflections: True # Optional, default True: if False no call deflection switches will be exposed
 
 proxmoxve:  #https://www.home-assistant.io/integrations/proxmoxve
   - host: !secret proxmox_host
@@ -265,3 +278,8 @@ proxmoxve:  #https://www.home-assistant.io/integrations/proxmoxve
 landroid_cloud:  #https://github.com/MTrab/landroid_cloud
   - email: !secret landroid_user
     password: !secret landroid_pwd
+
+sonoff:  #https://github.com/AlexxIT/SonoffLAN
+  #TEMP per cancello auto
+  username: !secret sonoff_user
+  password: !secret sonoff_pwd

@@ -501,10 +501,6 @@
           N/A
         {%- endif -%}
 
-- platform: uptime  #https://www.home-assistant.io/components/sensor.uptime
-  name: Time Online
-  unit_of_measurement: minutes
-
 - platform: command_line  #https://www.home-assistant.io/components/sensor.command_line
   name: CPU temperature
   #NB: Questo sensore (cpu_temperature) mostra sempre 'Unknown' quando HA gira su macchina virtuale

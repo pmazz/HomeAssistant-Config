@@ -9,13 +9,14 @@ cards:
   - id: main.container
     type: custom:layout-card  #https://github.com/thomasloven/lovelace-layout-card
     layout: vertical
-    max_columns: 3
+    max_columns: 2
     cards:
       - id: main.connected_devices
         type: entities  #https://www.home-assistant.io/lovelace/entities
         title: Connected Devices
         show_header_toggle: false
         entities:
+          - type: section
           - entity: binary_sensor.online_router_fritzbox
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
             name: Router
@@ -71,6 +72,7 @@ cards:
         title: Mobile Devices
         show_header_toggle: false
         entities:
+          - type: section
           - entity: binary_sensor.online_cell_paolo
             state_color: true
           - entity: binary_sensor.online_cell_silvia
@@ -128,41 +130,3 @@ cards:
         collapse: 4
         tap_action:
           action: more-info
-      - break
-      - id: main.tools
-        type: entities  #https://www.home-assistant.io/lovelace/entities
-        title: Tools
-        show_header_toggle: false
-        entities:
-          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-            head:
-              type: section
-              label: Hass.io Addons
-            open: true
-            items:
-              - type: weblink
-                name: TasmoAdmin
-                icon: mdi:z-wave
-                url: http://homeassistant:9541
-              - type: weblink
-                name: Bitwarden
-                icon: mdi:shield-key
-                url: http://homeassistant:7277
-          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-            head:
-              type: section
-              label: RSS Links
-            open: true
-            items:
-              - type: weblink
-                name: Raspberry Sensors
-                icon: mdi:rss-box
-                url: /api/rss_template/raspberry
-              - type: weblink
-                name: FritzBox Sensors
-                icon: mdi:rss-box
-                url: /api/rss_template/fritzbox
-              - type: weblink
-                name: Qnap Sensors
-                icon: mdi:rss-box
-                url: /api/rss_template/qnap
