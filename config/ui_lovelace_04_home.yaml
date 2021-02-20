@@ -164,6 +164,16 @@ cards:
                     name: Battery
                   - entity: sensor.xiaomi_humidity_1
                     name: Humidity
+      - id: home.big_gate
+        type: entities  #https://www.home-assistant.io/lovelace/entities
+        title: Cancello Auto
+        show_header_toggle: false
+        entities:
+          - type: section
+          - entity: input_boolean.event_big_gate
+            state_color: true
+          - input_select.event_daytype_big_gate
+          - input_datetime.event_time_big_gate
       - break
       - id: events.garden
         type: entities  #https://www.home-assistant.io/lovelace/entities

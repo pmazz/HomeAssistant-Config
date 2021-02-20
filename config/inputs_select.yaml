@@ -384,3 +384,11 @@ event_type_sonoleore:
     - Cuckoo
     - Voice
   icon: mdi:alarm-note
+
+event_daytype_big_gate:
+  name: Tipo Giorno
+  options:
+    - tutti
+    - feriale
+    - festivo
+  icon: mdi:calendar

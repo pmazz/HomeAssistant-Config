@@ -874,6 +874,10 @@ gate_big_open_lock:
     - service: switch.turn_on
       data:
         entity_id: switch.sonoff_1000d4864e
+    - service: script.tts_speak
+      data:
+        message2say: Stò aprendo il cancello
+        volume: "0.5"
     - delay: "00:00:27"
     - service: switch.turn_on
       data:

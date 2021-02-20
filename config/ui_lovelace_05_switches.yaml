@@ -24,7 +24,7 @@ cards:
             open: true
             items:
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-                head: 
+                head:
                   entity: switch.sonoff_basic_1
                   state_color: true
                 items:
@@ -49,106 +49,63 @@ cards:
                     name: Icon
                   - type: section
                   - input_select.event_starttype_sonoff_basic_1
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_sonoff_basic_1
                         state: "Toggle"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_datetime.event_toggle_sonoff_basic_1
-                        - input_select.event_daytype_sonoff_basic_1
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    row:
+                      entity: input_datetime.event_toggle_sonoff_basic_1
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_sonoff_basic_1
+                        state: "Toggle"
+                    row:
+                      entity: input_select.event_daytype_sonoff_basic_1
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_sonoff_basic_1
                         state: "On/Off"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_datetime.event_poweron_sonoff_basic_1
-                        - input_datetime.event_poweroff_sonoff_basic_1
-                        - input_select.event_daytype_sonoff_basic_1
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    row:
+                      entity: input_datetime.event_poweron_sonoff_basic_1
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_sonoff_basic_1
+                        state: "On/Off"
+                    row:
+                      entity: input_datetime.event_poweroff_sonoff_basic_1
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_sonoff_basic_1
+                        state: "On/Off"
+                    row:
+                      entity: input_select.event_daytype_sonoff_basic_1
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_sonoff_basic_1
                         state: "Timer Off"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_datetime.event_timer_off_sonoff_basic_1
-                        - timer.event_timer_off_sonoff_basic_1
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    row:
+                      entity: input_datetime.event_timer_off_sonoff_basic_1
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_sonoff_basic_1
+                        state: "Timer Off"
+                    row:
+                      entity: timer.event_timer_off_sonoff_basic_1
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_sonoff_basic_1
                         state: "Battery"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_select.event_charge_device_sonoff_basic_1
-                        - input_number.event_charge_level_sonoff_basic_1
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
+                    row:
+                      entity: input_select.event_charge_device_sonoff_basic_1
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_sonoff_basic_1
+                        state: "Battery"
+                    row:
+                      entity: input_number.event_charge_level_sonoff_basic_1
                   - type: section
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-                head: 
+                head:
                   entity: switch.sonoff_basic_2
                   state_color: true
                 items:
@@ -173,100 +130,63 @@ cards:
                     name: Icon
                   - type: section
                   - input_select.event_starttype_sonoff_basic_2
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_sonoff_basic_2
                         state: "Toggle"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_datetime.event_toggle_sonoff_basic_2
-                        - input_select.event_daytype_sonoff_basic_2
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    row:
+                      entity: input_datetime.event_toggle_sonoff_basic_2
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_sonoff_basic_2
+                        state: "Toggle"
+                    row:
+                      entity: input_select.event_daytype_sonoff_basic_2
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_sonoff_basic_2
                         state: "On/Off"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_datetime.event_poweron_sonoff_basic_2
-                        - input_datetime.event_poweroff_sonoff_basic_2
-                        - input_select.event_daytype_sonoff_basic_2
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    row:
+                      entity: input_datetime.event_poweron_sonoff_basic_2
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_sonoff_basic_2
+                        state: "On/Off"
+                    row:
+                      entity: input_datetime.event_poweroff_sonoff_basic_2
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_sonoff_basic_2
+                        state: "On/Off"
+                    row:
+                      entity: input_select.event_daytype_sonoff_basic_2
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_sonoff_basic_2
                         state: "Timer Off"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_datetime.event_timer_off_sonoff_basic_2
-                        - timer.event_timer_off_sonoff_basic_2
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    row:
+                      entity: input_datetime.event_timer_off_sonoff_basic_2
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_sonoff_basic_2
+                        state: "Timer Off"
+                    row:
+                      entity: timer.event_timer_off_sonoff_basic_2
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_sonoff_basic_2
                         state: "Battery"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_select.event_charge_device_sonoff_basic_2
-                        - input_number.event_charge_level_sonoff_basic_2
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
+                    row:
+                      entity: input_select.event_charge_device_sonoff_basic_2
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_sonoff_basic_2
+                        state: "Battery"
+                    row:
+                      entity: input_number.event_charge_level_sonoff_basic_2
                   - type: section
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-                head: 
+                head:
                   type: custom:restriction-card  #https://github.com/iantrich/restriction-card
                   row: true
                   card:
@@ -300,7 +220,7 @@ cards:
             open: true
             items:
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-                head: 
+                head:
                   type: custom:restriction-card  #https://github.com/iantrich/restriction-card
                   row: true
                   card:
@@ -330,7 +250,7 @@ cards:
                     name: Icon
                   - type: section
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-                head: 
+                head:
                   type: custom:restriction-card  #https://github.com/iantrich/restriction-card
                   row: true
                   card:
@@ -360,7 +280,7 @@ cards:
                     name: Icon
                   - type: section
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-                head: 
+                head:
                   type: custom:restriction-card  #https://github.com/iantrich/restriction-card
                   row: true
                   card:
@@ -396,7 +316,7 @@ cards:
             open: true
             items:
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-                head: 
+                head:
                   entity: switch.smartplug_1
                   state_color: true
                 items:
@@ -421,106 +341,63 @@ cards:
                     name: Icon
                   - type: section
                   - input_select.event_starttype_smartplug_1
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_1
                         state: "Toggle"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_datetime.event_toggle_smartplug_1
-                        - input_select.event_daytype_smartplug_1
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    row:
+                      entity: input_datetime.event_toggle_smartplug_1
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_1
+                        state: "Toggle"
+                    row:
+                      entity: input_select.event_daytype_smartplug_1
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_1
                         state: "On/Off"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_datetime.event_poweron_smartplug_1
-                        - input_datetime.event_poweroff_smartplug_1
-                        - input_select.event_daytype_smartplug_1
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    row:
+                      entity: input_datetime.event_poweron_smartplug_1
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_1
+                        state: "On/Off"
+                    row:
+                      entity: input_datetime.event_poweroff_smartplug_1
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_1
+                        state: "On/Off"
+                    row:
+                      entity: input_select.event_daytype_smartplug_1
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_1
                         state: "Timer Off"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_datetime.event_timer_off_smartplug_1
-                        - timer.event_timer_off_smartplug_1
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    row:
+                      entity: input_datetime.event_timer_off_smartplug_1
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_1
+                        state: "Timer Off"
+                    row:
+                      entity: timer.event_timer_off_smartplug_1
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_1
                         state: "Battery"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_select.event_charge_device_smartplug_1
-                        - input_number.event_charge_level_smartplug_1
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
+                    row:
+                      entity: input_select.event_charge_device_smartplug_1
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_1
+                        state: "Battery"
+                    row:
+                      entity: input_number.event_charge_level_smartplug_1
                   - type: section
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-                head: 
+                head:
                   entity: switch.smartplug_2
                   state_color: true
                 items:
@@ -545,106 +422,63 @@ cards:
                     name: Icon
                   - type: section
                   - input_select.event_starttype_smartplug_2
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_2
                         state: "Toggle"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_datetime.event_toggle_smartplug_2
-                        - input_select.event_daytype_smartplug_2
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    row:
+                      entity: input_datetime.event_toggle_smartplug_2
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_2
+                        state: "Toggle"
+                    row:
+                      entity: input_select.event_daytype_smartplug_2
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_2
                         state: "On/Off"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_datetime.event_poweron_smartplug_2
-                        - input_datetime.event_poweroff_smartplug_2
-                        - input_select.event_daytype_smartplug_2
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    row:
+                      entity: input_datetime.event_poweron_smartplug_2
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_2
+                        state: "On/Off"
+                    row:
+                      entity: input_datetime.event_poweroff_smartplug_2
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_2
+                        state: "On/Off"
+                    row:
+                      entity: input_select.event_daytype_smartplug_2
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_2
                         state: "Timer Off"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_datetime.event_timer_off_smartplug_2
-                        - timer.event_timer_off_smartplug_2
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    row:
+                      entity: input_datetime.event_timer_off_smartplug_2
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_2
+                        state: "Timer Off"
+                    row:
+                      entity: timer.event_timer_off_smartplug_2
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_2
                         state: "Battery"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_select.event_charge_device_smartplug_2
-                        - input_number.event_charge_level_smartplug_2
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
+                    row:
+                      entity: input_select.event_charge_device_smartplug_2
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_2
+                        state: "Battery"
+                    row:
+                      entity: input_number.event_charge_level_smartplug_2
                   - type: section
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-                head: 
+                head:
                   entity: switch.smartplug_3
                   state_color: true
                 items:
@@ -669,106 +503,63 @@ cards:
                     name: Icon
                   - type: section
                   - input_select.event_starttype_smartplug_3
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_3
                         state: "Toggle"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_datetime.event_toggle_smartplug_3
-                        - input_select.event_daytype_smartplug_3
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    row:
+                      entity: input_datetime.event_toggle_smartplug_3
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_3
+                        state: "Toggle"
+                    row:
+                      entity: input_select.event_daytype_smartplug_3
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_3
                         state: "On/Off"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_datetime.event_poweron_smartplug_3
-                        - input_datetime.event_poweroff_smartplug_3
-                        - input_select.event_daytype_smartplug_3
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    row:
+                      entity: input_datetime.event_poweron_smartplug_3
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_3
+                        state: "On/Off"
+                    row:
+                      entity: input_datetime.event_poweroff_smartplug_3
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_3
+                        state: "On/Off"
+                    row:
+                      entity: input_select.event_daytype_smartplug_3
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_3
                         state: "Timer Off"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_datetime.event_timer_off_smartplug_3
-                        - timer.event_timer_off_smartplug_3
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    row:
+                      entity: input_datetime.event_timer_off_smartplug_3
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_3
+                        state: "Timer Off"
+                    row:
+                      entity: timer.event_timer_off_smartplug_3
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_3
                         state: "Battery"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_select.event_charge_device_smartplug_3
-                        - input_number.event_charge_level_smartplug_3
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
+                    row:
+                      entity: input_select.event_charge_device_smartplug_3
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_3
+                        state: "Battery"
+                    row:
+                      entity: input_number.event_charge_level_smartplug_3
                   - type: section
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-                head: 
+                head:
                   entity: switch.smartplug_4
                   state_color: true
                 items:
@@ -793,106 +584,63 @@ cards:
                     name: Icon
                   - type: section
                   - input_select.event_starttype_smartplug_4
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_4
                         state: "Toggle"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_datetime.event_toggle_smartplug_4
-                        - input_select.event_daytype_smartplug_4
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    row:
+                      entity: input_datetime.event_toggle_smartplug_4
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_4
+                        state: "Toggle"
+                    row:
+                      entity: input_select.event_daytype_smartplug_4
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_4
                         state: "On/Off"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_datetime.event_poweron_smartplug_4
-                        - input_datetime.event_poweroff_smartplug_4
-                        - input_select.event_daytype_smartplug_4
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    row:
+                      entity: input_datetime.event_poweron_smartplug_4
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_4
+                        state: "On/Off"
+                    row:
+                      entity: input_datetime.event_poweroff_smartplug_4
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_4
+                        state: "On/Off"
+                    row:
+                      entity: input_select.event_daytype_smartplug_4
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_4
                         state: "Timer Off"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_datetime.event_timer_off_smartplug_4
-                        - timer.event_timer_off_smartplug_4
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    row:
+                      entity: input_datetime.event_timer_off_smartplug_4
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_4
+                        state: "Timer Off"
+                    row:
+                      entity: timer.event_timer_off_smartplug_4
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_4
                         state: "Battery"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_select.event_charge_device_smartplug_4
-                        - input_number.event_charge_level_smartplug_4
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
+                    row:
+                      entity: input_select.event_charge_device_smartplug_4
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_4
+                        state: "Battery"
+                    row:
+                      entity: input_number.event_charge_level_smartplug_4
                   - type: section
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-                head: 
+                head:
                   entity: switch.smartplug_5
                   state_color: true
                 items:
@@ -917,106 +665,63 @@ cards:
                     name: Icon
                   - type: section
                   - input_select.event_starttype_smartplug_5
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_5
                         state: "Toggle"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_datetime.event_toggle_smartplug_5
-                        - input_select.event_daytype_smartplug_5
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    row:
+                      entity: input_datetime.event_toggle_smartplug_5
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_5
+                        state: "Toggle"
+                    row:
+                      entity: input_select.event_daytype_smartplug_5
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_5
                         state: "On/Off"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_datetime.event_poweron_smartplug_5
-                        - input_datetime.event_poweroff_smartplug_5
-                        - input_select.event_daytype_smartplug_5
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    row:
+                      entity: input_datetime.event_poweron_smartplug_5
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_5
+                        state: "On/Off"
+                    row:
+                      entity: input_datetime.event_poweroff_smartplug_5
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_5
+                        state: "On/Off"
+                    row:
+                      entity: input_select.event_daytype_smartplug_5
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_5
                         state: "Timer Off"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_datetime.event_timer_off_smartplug_5
-                        - timer.event_timer_off_smartplug_5
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    row:
+                      entity: input_datetime.event_timer_off_smartplug_5
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_5
+                        state: "Timer Off"
+                    row:
+                      entity: timer.event_timer_off_smartplug_5
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_5
                         state: "Battery"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_select.event_charge_device_smartplug_5
-                        - input_number.event_charge_level_smartplug_5
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
+                    row:
+                      entity: input_select.event_charge_device_smartplug_5
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_5
+                        state: "Battery"
+                    row:
+                      entity: input_number.event_charge_level_smartplug_5
                   - type: section
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-                head: 
+                head:
                   entity: switch.smartplug_6
                   state_color: true
                 items:
@@ -1041,106 +746,63 @@ cards:
                     name: Icon
                   - type: section
                   - input_select.event_starttype_smartplug_6
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_6
                         state: "Toggle"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_datetime.event_toggle_smartplug_6
-                        - input_select.event_daytype_smartplug_6
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    row:
+                      entity: input_datetime.event_toggle_smartplug_6
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_6
+                        state: "Toggle"
+                    row:
+                      entity: input_select.event_daytype_smartplug_6
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_6
                         state: "On/Off"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_datetime.event_poweron_smartplug_6
-                        - input_datetime.event_poweroff_smartplug_6
-                        - input_select.event_daytype_smartplug_6
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    row:
+                      entity: input_datetime.event_poweron_smartplug_6
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_6
+                        state: "On/Off"
+                    row:
+                      entity: input_datetime.event_poweroff_smartplug_6
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_6
+                        state: "On/Off"
+                    row:
+                      entity: input_select.event_daytype_smartplug_6
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_6
                         state: "Timer Off"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_datetime.event_timer_off_smartplug_6
-                        - timer.event_timer_off_smartplug_6
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    row:
+                      entity: input_datetime.event_timer_off_smartplug_6
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_6
+                        state: "Timer Off"
+                    row:
+                      entity: timer.event_timer_off_smartplug_6
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_6
                         state: "Battery"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_select.event_charge_device_smartplug_6
-                        - input_number.event_charge_level_smartplug_6
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
+                    row:
+                      entity: input_select.event_charge_device_smartplug_6
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_6
+                        state: "Battery"
+                    row:
+                      entity: input_number.event_charge_level_smartplug_6
                   - type: section
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-                head: 
+                head:
                   entity: switch.smartplug_7
                   state_color: true
                 items:
@@ -1165,106 +827,63 @@ cards:
                     name: Icon
                   - type: section
                   - input_select.event_starttype_smartplug_7
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_7
                         state: "Toggle"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_datetime.event_toggle_smartplug_7
-                        - input_select.event_daytype_smartplug_7
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    row:
+                      entity: input_datetime.event_toggle_smartplug_7
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_7
+                        state: "Toggle"
+                    row:
+                      entity: input_select.event_daytype_smartplug_7
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_7
                         state: "On/Off"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_datetime.event_poweron_smartplug_7
-                        - input_datetime.event_poweroff_smartplug_7
-                        - input_select.event_daytype_smartplug_7
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    row:
+                      entity: input_datetime.event_poweron_smartplug_7
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_7
+                        state: "On/Off"
+                    row:
+                      entity: input_datetime.event_poweroff_smartplug_7
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_7
+                        state: "On/Off"
+                    row:
+                      entity: input_select.event_daytype_smartplug_7
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_7
                         state: "Timer Off"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_datetime.event_timer_off_smartplug_7
-                        - timer.event_timer_off_smartplug_7
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    row:
+                      entity: input_datetime.event_timer_off_smartplug_7
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_7
+                        state: "Timer Off"
+                    row:
+                      entity: timer.event_timer_off_smartplug_7
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_7
                         state: "Battery"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_select.event_charge_device_smartplug_7
-                        - input_number.event_charge_level_smartplug_7
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
+                    row:
+                      entity: input_select.event_charge_device_smartplug_7
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_7
+                        state: "Battery"
+                    row:
+                      entity: input_number.event_charge_level_smartplug_7
                   - type: section
               - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-                head: 
+                head:
                   entity: switch.smartplug_8
                   state_color: true
                 items:
@@ -1289,103 +908,60 @@ cards:
                     name: Icon
                   - type: section
                   - input_select.event_starttype_smartplug_8
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_8
                         state: "Toggle"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_datetime.event_toggle_smartplug_8
-                        - input_select.event_daytype_smartplug_8
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    row:
+                      entity: input_datetime.event_toggle_smartplug_8
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_8
+                        state: "Toggle"
+                    row:
+                      entity: input_select.event_daytype_smartplug_8
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_8
                         state: "On/Off"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_datetime.event_poweron_smartplug_8
-                        - input_datetime.event_poweroff_smartplug_8
-                        - input_select.event_daytype_smartplug_8
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    row:
+                      entity: input_datetime.event_poweron_smartplug_8
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_8
+                        state: "On/Off"
+                    row:
+                      entity: input_datetime.event_poweroff_smartplug_8
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_8
+                        state: "On/Off"
+                    row:
+                      entity: input_select.event_daytype_smartplug_8
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_8
                         state: "Timer Off"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_datetime.event_timer_off_smartplug_8
-                        - timer.event_timer_off_smartplug_8
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
-                  - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
+                    row:
+                      entity: input_datetime.event_timer_off_smartplug_8
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_8
+                        state: "Timer Off"
+                    row:
+                      entity: timer.event_timer_off_smartplug_8
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_8
                         state: "Battery"
-                    card:
-                      type: custom:hui-entities-card  #https://www.home-assistant.io/lovelace/entities
-                      show_header_toggle: false
-                      entities:
-                        - input_select.event_charge_device_smartplug_8
-                        - input_number.event_charge_level_smartplug_8
-                      style: |
-                        ha-card {
-                          box-shadow: none;
-                          background-color: transparent;
-                        }
-                        ha-card > div.card-content {
-                          padding: 0px 0px 5px 0px;
-                        }
-                        ha-card > div.card-content > div {
-                          margin: 0px !important;
-                        }
-                        ha-card > hui-conditional-card > hui-section-row.head {
-                          padding-left: 16px;
-                        }
+                    row:
+                      entity: input_select.event_charge_device_smartplug_8
+                  - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                    conditions:
+                      - entity: input_select.event_starttype_smartplug_8
+                        state: "Battery"
+                    row:
+                      entity: input_number.event_charge_level_smartplug_8
                   - type: section
       - break
       - id: events.cover
@@ -1401,7 +977,7 @@ cards:
           entities:
             - type: section
             - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-              head: 
+              head:
                 entity: binary_sensor.online_sonoff_dual_1
                 name: Serrande
                 state_color: true
@@ -1421,100 +997,76 @@ cards:
                       name: Wifi
             - entity: cover.home_cover
               name: Comandi
-            - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
-              conditions:
-                - entity: input_select.event_starttype_cover_up
-                  state: "Orario"
-              card:
-                  type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-                  head:
-                    type: section
-                    label: Alza le serrande (Orario)
-                  open: true
-                  items:
-                    - entity: switch.event_cover_up
-                      type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-                      state_color: true
-                      toggle: true
-                      entities:
-                        - entity: sensor.cover_up_start
-                          name: Prox. Avvio
-                    - input_select.event_starttype_cover_up
-                    - input_datetime.event_time_cover_up #Avvio orario
-                    - entity: input_number.event_duration_cover_up
-                      name: Durata (sec.)
-                    - input_select.event_daytype_cover_up
-            - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
-              conditions:
-                - entity: input_select.event_starttype_cover_up
-                  state: "Alba"
-              card:
-                  type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-                  head:
-                    type: section
-                    label: Alza le serrande (Alba)
-                  open: true
-                  items:
-                    - entity: switch.event_cover_up
-                      type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-                      state_color: true
-                      toggle: true
-                      entities:
-                        - entity: sensor.cover_up_start
-                          name: Prox. Avvio
-                    - input_select.event_starttype_cover_up
-                    - sensor.sun_next_dawn #Avvio dopo alba
-                    - entity: input_number.event_afterdawn_cover_up #Avvio dopo alba
-                      name: Minuti Dopo Alba
-                    - entity: input_number.event_duration_cover_up
-                      name: Durata (sec.)
-                    - input_select.event_daytype_cover_up
-            - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
-              conditions:
-                - entity: input_select.event_starttype_cover_down
-                  state: "Orario"
-              card:
-                  type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-                  head:
-                    type: section
-                    label: Abbassa le serrande (Orario)
-                  open: true
-                  items:
-                    - entity: switch.event_cover_down
-                      type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-                      state_color: true
-                      toggle: true
-                      entities:
-                        - entity: sensor.cover_down_start
-                          name: Prox. Avvio
-                    - input_select.event_starttype_cover_down
-                    - input_datetime.event_time_cover_down #Avvio orario
-                    - entity: input_number.event_duration_cover_down
-                      name: Durata (sec.)
-                    - input_select.event_daytype_cover_down
-            - type: custom:hui-conditional-card  #https://www.home-assistant.io/lovelace/conditional
-              conditions:
-                - entity: input_select.event_starttype_cover_down
-                  state: "Tramonto"
-              card:
-                  type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-                  head:
-                    type: section
-                    label: Abbassa le serrande (Tramonto)
-                  open: true
-                  items:
-                    - entity: switch.event_cover_down
-                      type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-                      state_color: true
-                      toggle: true
-                      entities:
-                        - entity: sensor.cover_down_start
-                          name: Prox. Avvio
-                    - input_select.event_starttype_cover_down
-                    - sensor.sun_next_setting #Avvio dopo tramonto
-                    - entity: input_number.event_aftersunset_cover_down #Avvio dopo tramonto
-                      name: Minuti Dopo Tramonto
-                    - entity: input_number.event_duration_cover_down
-                      name: Durata (sec.)
-                    - input_select.event_daytype_cover_down
+            - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+              head:
+                type: section
+                label: Alza le serrande
+              open: true
+              items:
+                - entity: switch.event_cover_up
+                  type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                  state_color: true
+                  toggle: true
+                  entities:
+                    - entity: sensor.cover_up_start
+                      name: Prox. Avvio
+                - input_select.event_starttype_cover_up
+                - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                  conditions:
+                    - entity: input_select.event_starttype_cover_up
+                      state: "Orario"
+                  row:
+                    entity: input_datetime.event_time_cover_up #Avvio orario
+                - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                  conditions:
+                    - entity: input_select.event_starttype_cover_up
+                      state: "Alba"
+                  row:
+                    entity: sensor.sun_next_dawn #Avvio dopo alba
+                - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                  conditions:
+                    - entity: input_select.event_starttype_cover_up
+                      state: "Alba"
+                  row:
+                    entity: input_number.event_afterdawn_cover_up #Avvio dopo alba
+                    name: Minuti Dopo Alba
+                - entity: input_number.event_duration_cover_up
+                  name: Durata (sec.)
+                - input_select.event_daytype_cover_up
+            - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+              head:
+                type: section
+                label: Abbassa le serrande
+              open: true
+              items:
+                - entity: switch.event_cover_down
+                  type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                  state_color: true
+                  toggle: true
+                  entities:
+                    - entity: sensor.cover_down_start
+                      name: Prox. Avvio
+                - input_select.event_starttype_cover_down
+                - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                  conditions:
+                    - entity: input_select.event_starttype_cover_down
+                      state: "Orario"
+                  row:
+                    entity: input_datetime.event_time_cover_down #Avvio orario
+                - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                  conditions:
+                    - entity: input_select.event_starttype_cover_down
+                      state: "Tramonto"
+                  row:
+                    entity: sensor.sun_next_setting #Avvio dopo tramonto
+                - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
+                  conditions:
+                    - entity: input_select.event_starttype_cover_down
+                      state: "Tramonto"
+                  row:
+                    entity: input_number.event_aftersunset_cover_down #Avvio dopo tramonto
+                    name: Minuti Dopo Tramonto
+                - entity: input_number.event_duration_cover_down
+                  name: Durata (sec.)
+                - input_select.event_daytype_cover_down
       - break

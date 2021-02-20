@@ -34,3 +34,7 @@ irrigation_active:
 say_energy_consumption_warning:
   name: Energy Consumption Warning
   icon: mdi:volume-high
+
+event_big_gate:
+  name: Attivo
+  icon: mdi:bell

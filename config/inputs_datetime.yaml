@@ -312,3 +312,9 @@ ale_internet:
   icon: mdi:web-clock
   has_date: false
   has_time: true
+
+event_time_big_gate:
+  name: Ora Avvio
+  icon: mdi:clock-alert-outline
+  has_date: false
+  has_time: true
