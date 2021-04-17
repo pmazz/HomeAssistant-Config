@@ -41,6 +41,8 @@
         {%- endif %}
         {%- set cover_start = cover_start_ts | timestamp_custom('%H:%M') %}
         {{- cover_start }}
+      attribute_templates:
+        date: "{{ as_timestamp(state_attr('sun.sun', 'next_dawn')) | timestamp_custom('%Y-%m-%d') }}"
     cover_down_start:
       friendly_name: Avvio Serrande Giù
       icon_template: mdi:clock-alert-outline
@@ -56,6 +58,8 @@
         {%- endif %}
         {%- set cover_start = cover_start_ts | timestamp_custom('%H:%M') %}
         {{- cover_start }}
+      attribute_templates:
+        date: "{{ as_timestamp(state_attr('sun.sun', 'next_setting')) | timestamp_custom('%Y-%m-%d') }}"
 
 - platform: template  #https://www.home-assistant.io/components/sensor.template
   sensors:
@@ -500,14 +504,6 @@
         {%- else -%}
           N/A
         {%- endif -%}
-
-- platform: command_line  #https://www.home-assistant.io/components/sensor.command_line
-  name: CPU temperature
-  #NB: Questo sensore (cpu_temperature) mostra sempre 'Unknown' quando HA gira su macchina virtuale
-  command: "cat /sys/class/thermal/thermal_zone0/temp"
-  unit_of_measurement: "°C"
-  value_template: "{{ value | multiply(0.001) | round(2) }}"
-  scan_interval: 120
 
 - platform: time_date  #https://www.home-assistant.io/components/sensor.time_date
   display_options:
@@ -1265,26 +1261,280 @@
 #++++++++++++++++++++++++++
 - platform: template  #https://www.home-assistant.io/components/sensor.template
   sensors:
-    xiaomi_attr_battery_temperature_1:
-      device_class: battery
-      unit_of_measurement: "%"
-      friendly_name: Battery
-      value_template: "{% if not is_state('sensor.xiaomi_temperature_1', 'unknown') %}{{state_attr('sensor.xiaomi_temperature_1', 'battery_level')}}{% else %}N/A{% endif %}"
     xiaomi_attr_battery_door_window_1:
       device_class: battery
       unit_of_measurement: "%"
       friendly_name: Battery
       value_template: "{% if not is_state('binary_sensor.xiaomi_door_window_1', 'unknown') %}{{state_attr('binary_sensor.xiaomi_door_window_1', 'battery_level')}}{% else %}N/A{% endif %}"
-    xiaomi_attr_battery_motion_1:
-      device_class: battery
-      unit_of_measurement: "%"
-      friendly_name: Battery
-      value_template: "{% if not is_state('binary_sensor.xiaomi_motion_1', 'unknown') %}{{state_attr('binary_sensor.xiaomi_motion_1', 'battery_level')}}{% else %}N/A{% endif %}"
-    xiaomi_attr_battery_motion_2:
-      device_class: battery
-      unit_of_measurement: "%"
-      friendly_name: Battery
-      value_template: "{% if not is_state('binary_sensor.xiaomi_motion_2', 'unknown') %}{{state_attr('binary_sensor.xiaomi_motion_2', 'battery_level')}}{% else %}N/A{% endif %}"
+
+
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#+++++ Zigbee2Tasmota temperature/humidity sensors +++++
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: zb_temperature_1
+  state_topic: "home/zigbee_gate_1/79AA/tele/SENSOR"
+  value_template: >
+    {% if 'Temperature' in value_json %}
+      {{ value_json.Temperature }}
+    {% else %}
+      {{ states('sensor.zb_temperature_1') }}
+    {% endif %}
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  device_class: temperature
+  unit_of_measurement: "°C"
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: zb_temperature_1_humidity
+  state_topic: "home/zigbee_gate_1/79AA/tele/SENSOR"
+  value_template: >
+    {% if 'Humidity' in value_json %}
+      {{ value_json.Humidity }}
+    {% else %}
+      {{ states('sensor.zb_temperature_1_humidity') }}
+    {% endif %}
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  device_class: humidity
+  unit_of_measurement: "%"
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: zb_temperature_1_pressure
+  state_topic: "home/zigbee_gate_1/79AA/tele/SENSOR"
+  value_template: >
+    {% if 'Pressure' in value_json %}
+      {{ value_json.Pressure }}
+    {% else %}
+      {{ states('sensor.zb_temperature_1_pressure') }}
+    {% endif %}
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  device_class: pressure
+  unit_of_measurement: "mbar"
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: zb_temperature_1_battery
+  state_topic: "home/zigbee_gate_1/79AA/tele/SENSOR"
+  value_template: >
+    {% if 'BatteryPercentage' in value_json %}
+      {{ value_json.BatteryPercentage }}
+    {% else %}
+      {{ states('sensor.zb_temperature_1_battery') }}
+    {% endif %}
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  device_class: battery
+  unit_of_measurement: "%"
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: zb_temperature_1_linkquality
+  state_topic: "home/zigbee_gate_1/79AA/tele/SENSOR"
+  value_template: >
+    {% if 'LinkQuality' in value_json %}
+      {{ value_json.LinkQuality }}
+    {% else %}
+      {{ states('sensor.zb_temperature_1_linkquality') }}
+    {% endif %}
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: zb_temperature_2
+  state_topic: "home/zigbee_gate_1/7E8F/tele/SENSOR"
+  value_template: >
+    {% if 'Temperature' in value_json %}
+      {{ value_json.Temperature }}
+    {% else %}
+      {{ states('sensor.zb_temperature_2') }}
+    {% endif %}
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  device_class: temperature
+  unit_of_measurement: "°C"
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: zb_temperature_2_humidity
+  state_topic: "home/zigbee_gate_1/7E8F/tele/SENSOR"
+  value_template: >
+    {% if 'Humidity' in value_json %}
+      {{ value_json.Humidity }}
+    {% else %}
+      {{ states('sensor.zb_temperature_2_humidity') }}
+    {% endif %}
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  device_class: humidity
+  unit_of_measurement: "%"
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: zb_temperature_2_pressure
+  state_topic: "home/zigbee_gate_1/7E8F/tele/SENSOR"
+  value_template: >
+    {% if 'Pressure' in value_json %}
+      {{ value_json.Pressure }}
+    {% else %}
+      {{ states('sensor.zb_temperature_2_pressure') }}
+    {% endif %}
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  device_class: pressure
+  unit_of_measurement: "mbar"
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: zb_temperature_2_battery
+  state_topic: "home/zigbee_gate_1/7E8F/tele/SENSOR"
+  value_template: >
+    {% if 'BatteryPercentage' in value_json %}
+      {{ value_json.BatteryPercentage }}
+    {% else %}
+      {{ states('sensor.zb_temperature_2_battery') }}
+    {% endif %}
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  device_class: battery
+  unit_of_measurement: "%"
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: zb_temperature_2_linkquality
+  state_topic: "home/zigbee_gate_1/7E8F/tele/SENSOR"
+  value_template: >
+    {% if 'LinkQuality' in value_json %}
+      {{ value_json.LinkQuality }}
+    {% else %}
+      {{ states('sensor.zb_temperature_2_linkquality') }}
+    {% endif %}
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: zb_temperature_3
+  state_topic: "home/zigbee_gate_1/79B4/tele/SENSOR"
+  value_template: >
+    {% if 'Temperature' in value_json %}
+      {{ value_json.Temperature }}
+    {% else %}
+      {{ states('sensor.zb_temperature_3') }}
+    {% endif %}
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  device_class: temperature
+  unit_of_measurement: "°C"
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: zb_temperature_3_humidity
+  state_topic: "home/zigbee_gate_1/79B4/tele/SENSOR"
+  value_template: >
+    {% if 'Humidity' in value_json %}
+      {{ value_json.Humidity }}
+    {% else %}
+      {{ states('sensor.zb_temperature_3_humidity') }}
+    {% endif %}
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  device_class: humidity
+  unit_of_measurement: "%"
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: zb_temperature_3_pressure
+  state_topic: "home/zigbee_gate_1/79B4/tele/SENSOR"
+  value_template: >
+    {% if 'Pressure' in value_json %}
+      {{ value_json.Pressure }}
+    {% else %}
+      {{ states('sensor.zb_temperature_3_pressure') }}
+    {% endif %}
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  device_class: pressure
+  unit_of_measurement: "mbar"
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: zb_temperature_3_battery
+  state_topic: "home/zigbee_gate_1/79B4/tele/SENSOR"
+  value_template: >
+    {% if 'BatteryPercentage' in value_json %}
+      {{ value_json.BatteryPercentage }}
+    {% else %}
+      {{ states('sensor.zb_temperature_3_battery') }}
+    {% endif %}
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  device_class: battery
+  unit_of_measurement: "%"
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: zb_temperature_3_linkquality
+  state_topic: "home/zigbee_gate_1/79B4/tele/SENSOR"
+  value_template: >
+    {% if 'LinkQuality' in value_json %}
+      {{ value_json.LinkQuality }}
+    {% else %}
+      {{ states('sensor.zb_temperature_3_linkquality') }}
+    {% endif %}
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+
+
+#+++++++++++++++++++++++++++++++++++++++++
+#+++++ Zigbee2Tasmota motion sensors +++++
+#+++++++++++++++++++++++++++++++++++++++++
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: zb_motion_1_battery
+  state_topic: "home/zigbee_gate_1/668A/tele/SENSOR"
+  value_template: >
+    {% if 'BatteryPercentage' in value_json %}
+      {{ value_json.BatteryPercentage }}
+    {% else %}
+      {{ states('sensor.zb_motion_1_battery') }}
+    {% endif %}
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  device_class: battery
+  unit_of_measurement: "%"
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: zb_motion_1_linkquality
+  state_topic: "home/zigbee_gate_1/668A/tele/SENSOR"
+  value_template: >
+    {% if 'LinkQuality' in value_json %}
+      {{ value_json.LinkQuality }}
+    {% else %}
+      {{ states('sensor.zb_motion_1_linkquality') }}
+    {% endif %}
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: zb_motion_2_battery
+  state_topic: "home/zigbee_gate_1/A283/tele/SENSOR"
+  value_template: >
+    {% if 'BatteryPercentage' in value_json %}
+      {{ value_json.BatteryPercentage }}
+    {% else %}
+      {{ states('sensor.zb_motion_2_battery') }}
+    {% endif %}
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  device_class: battery
+  unit_of_measurement: "%"
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: zb_motion_2_linkquality
+  state_topic: "home/zigbee_gate_1/A283/tele/SENSOR"
+  value_template: >
+    {% if 'LinkQuality' in value_json %}
+      {{ value_json.LinkQuality }}
+    {% else %}
+      {{ states('sensor.zb_motion_2_linkquality') }}
+    {% endif %}
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
 
 
 #++++++++++++++++++++++++++++

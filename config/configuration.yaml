@@ -110,13 +110,7 @@ recorder:  #https://www.home-assistant.io/components/recorder
       - zone
   include:
     entities:
-      - sensor.xiaomi_temperature_1
-      - sensor.xiaomi_humidity_1
       - sensor.xiaomi_hub_illumination
-      - binary_sensor.xiaomi_motion_1
-      - sensor.xiaomi_motion_1_illumination
-      - binary_sensor.xiaomi_motion_2
-      - sensor.xiaomi_motion_2_illumination
       - input_text.mqtt_last_service
       - input_text.tts_last_sentence
       - input_text.webhook_last_script

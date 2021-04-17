@@ -11,4 +11,4 @@ This folder contains custom integrations, mainly installed through [Home Assista
 | **[HACS (Home Assistant Community Store)](hacs)**<BR>Manage (Install, track, upgrade) and discover custom elements for Home Assistant. | <https://github.com/hacs/integration> (version: 1.11.3) |
 | **[ICS](ics)**<BR>Integration that displays the next event of an ics calendar. | <https://github.com/KoljaWindeler/ics> (version: 0.5) |
 | **[Landroid Cloud](landroid_cloud)**<BR>Integration to connect your cloud connected Worx Landroid mowers to Home Assistant. | <https://github.com/MTrab/landroid_cloud> (version: 1.6.5) |
-| **[Simple Icons](simpleicons)**<BR>Use free icons from the [simpleicons](https://simpleicons.org) set in Home Assistant. | <https://github.com/vigonotion/hass-simpleicons> (version: 1.11.1) |
+| **[Simple Icons](simpleicons)**<BR>Use free icons from the [simpleicons](https://simpleicons.org) set in Home Assistant. | <https://github.com/vigonotion/hass-simpleicons> (version: 1.14.0) |

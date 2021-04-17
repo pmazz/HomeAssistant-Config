@@ -18,7 +18,6 @@ cards:
         entities:
           - type: section
           - sensor.last_boot_verbose
-          - sensor.cpu_temperature
           - sensor.processor_use
           - entity: sensor.memory_use
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
@@ -159,7 +158,7 @@ cards:
                   - icon: mdi:open-in-new
                     tap_action: 
                       action: url
-                      url_path: http://homeassistant:7277
+                      url_path: https://mazzpass.duckdns.org:7277
                   - icon: mdi:hammer-screwdriver
                     tap_action: 
                       action: url

@@ -98,7 +98,7 @@
     hassos_available_version:
       friendly_name: OS Available Version
       icon_template: mdi:home-assistant
-      value_template: "{{ not is_state('sensor.hassos_available_version', 'unavailable') and states('sensor.hassos_available_version') != states('sensor.hassos_installed_version') }}"
+      value_template: "{{ not is_state('sensor.hassos_available_version', 'unavailable') and not states('sensor.hassos_installed_version').endswith(states('sensor.hassos_available_version')) }}"
 
     hacs_updates:
       friendly_name: HACS Updates
@@ -365,3 +365,49 @@
       icon_template: "{{ state_attr('sensor.landroid_m141_battery', 'icon') }}"
       device_class: battery_charging
       value_template: "{{ is_state_attr('sensor.landroid_m141_battery', 'charging', 1) }}"
+
+
+
+
+#+++++++++++++++++++++++++++++++++++++++++
+#+++++ Zigbee2Tasmota motion sensors +++++
+#+++++++++++++++++++++++++++++++++++++++++
+- platform: mqtt  #https://www.home-assistant.io/integrations/binary_sensor.mqtt
+  name: zb_motion_1
+  state_topic: "home/zigbee_gate_1/668A/tele/SENSOR"
+  value_template: >
+    {% if 'Occupancy' in value_json %}
+      {% if value_json.Occupancy == 0 or value_json.Occupancy == 1 %}
+        {{ value_json.Occupancy }}
+      {% else %}
+        {{ states('binary_sensor.zb_motion_1') }}
+      {% endif %}
+    {% else %}
+      {{ states('binary_sensor.zb_motion_1') }}
+    {% endif %}
+  payload_on: 1
+  payload_off: 0
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  device_class: motion
+
+- platform: mqtt  #https://www.home-assistant.io/integrations/binary_sensor.mqtt
+  name: zb_motion_2
+  state_topic: "home/zigbee_gate_1/A283/tele/SENSOR"
+  value_template: >
+    {% if 'Occupancy' in value_json %}
+      {% if value_json.Occupancy == 0 or value_json.Occupancy == 1 %}
+        {{ value_json.Occupancy }}
+      {% else %}
+        {{ states('binary_sensor.zb_motion_2') }}
+      {% endif %}
+    {% else %}
+      {{ states('binary_sensor.zb_motion_2') }}
+    {% endif %}
+  payload_on: 1
+  payload_off: 0
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  device_class: motion

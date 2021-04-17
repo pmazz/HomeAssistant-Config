@@ -814,7 +814,7 @@ garage_door_open_lock:
     - service: switch.turn_on
       data:
         entity_id: switch.sonoff_rele_1
-    - delay: "00:00:15"
+    - delay: "00:00:16"
     - service: switch.turn_on
       data:
         entity_id: switch.sonoff_rele_1

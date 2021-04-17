@@ -116,12 +116,6 @@ cards:
               color: var(--paper-item-icon-active-color)
           - entity: sensor.xiaomi_attr_battery_door_window_1
             name: Door/Window
-          - entity: sensor.xiaomi_attr_battery_motion_1
-            name: Motion 1
-          - entity: sensor.xiaomi_attr_battery_motion_2
-            name: Motion 2
-          - entity: sensor.xiaomi_attr_battery_temperature_1
-            name: Temperature
         color_thresholds:
           - value: 15
             color: Crimson

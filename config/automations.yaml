@@ -31,20 +31,33 @@
     - delay: "00:00:15" #Wait for the next event to raise
     - event: pm_reload_themes #Force themes reload in input_select.hass_theme_selected
 
-- id: bot_notify_ha_newrelease
+- id: bot_notify_hass_newrelease
   #Notifica agg.to Home Assistant rilasciato
-  alias: bot_notify_ha_newrelease
+  alias: bot_notify_hass_newrelease
   trigger:
     - platform: state
-      entity_id: binary_sensor.updater
-  condition:
-    - condition: template
-      value_template: "{{ is_state('binary_sensor.updater', 'on') and states('binary_sensor.updater') != states('sensor.hass_installed_version') }}"
+      entity_id: binary_sensor.hass_available_version
+      from: "off"
+      to: "on"
   action:
     - service: notify.telegram_paolo
-      data: 
+      data:
         title: "\U0001F389 Home Assistant Update"
-        message: "Version *{{state_attr('binary_sensor.updater', 'newest_version')}}* is now available (installed: {{states('sensor.hass_installed_version')}})."
+        message: "Version *{{states('sensor.hass_available_version')}}* is now available (installed: {{states('sensor.hass_installed_version')}})."
+
+- id: bot_notify_hassos_newrelease
+  #Notifica agg.to HassOS rilasciato
+  alias: bot_notify_hassos_newrelease
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.hassos_available_version
+      from: "off"
+      to: "on"
+  action:
+    - service: notify.telegram_paolo
+      data:
+        title: "\U0001F389 HassOS Update"
+        message: "Version *{{states('sensor.hassos_available_version')}}* is now available (installed: {{states('sensor.hassos_installed_version')}})."
 
 - id: bot_notify_hacs_updates
   #Notifica agg.ti HACS
@@ -1089,7 +1102,6 @@
               *{{state_attr('sensor.last_boot_verbose', 'friendly_name')}}:*
               {{states('sensor.last_boot_verbose')}} {{state_attr('sensor.last_boot_verbose', 'unit_of_measurement')}}
             {% endif -%}
-            *CPU temperature:* {% if not is_state('sensor.cpu_temperature', 'unknown') and not is_state('sensor.cpu_temperature', 'unknown') %}{{states('sensor.cpu_temperature')}} {{state_attr('sensor.cpu_temperature', 'unit_of_measurement')}}{% else %}N/A{% endif %}
             *Processor use:* {% if not is_state('sensor.processor_use', 'unknown') %}{{states('sensor.processor_use')}} {{state_attr('sensor.processor_use', 'unit_of_measurement')}}{% else %}N/A{% endif %}
             *Memory*
               *Used:* {% if not is_state('sensor.memory_use', 'unknown') %}{{states('sensor.memory_use')}} {{state_attr('sensor.memory_use', 'unit_of_measurement')}}{% else %}N/A{% endif %} ({% if not is_state('sensor.memory_use_percent', 'unknown') %}{{states('sensor.memory_use_percent')}} {{state_attr('sensor.memory_use_percent', 'unit_of_measurement')}}{% else %}N/A{% endif %})
@@ -1097,7 +1109,7 @@
             *HASS*
               *DB Size:* {% if not is_state('sensor.hass_db_filesize', 'unknown') %}{{states('sensor.hass_db_filesize')}} {{state_attr('sensor.hass_db_filesize', 'unit_of_measurement')}}{% else %}N/A{% endif %}
               *Inst. version:* {{ states('sensor.hass_installed_version') }}
-              *Avail. version:* {{ state_attr('binary_sensor.updater', 'newest_version') }}
+              *Avail. version:* {{ states('sensor.hass_available_version') }}
               *HACS updates:* {{ states('sensor.hacs') }}
             *Internal IPs:*
               {% if not is_state('sensor.hass_ip_address', 'unknown') %}{{states('sensor.hass_ip_address')}}{% else %}N/A{% endif %}

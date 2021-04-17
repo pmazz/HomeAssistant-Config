@@ -130,40 +130,122 @@ cards:
               label: Motion
             open: true
             items:
-              - entity: binary_sensor.xiaomi_motion_1
-                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-                name: Salotto
-                secondary_info: last-changed
-                entities:
-                  - entity: sensor.xiaomi_attr_battery_motion_1
-                    name: Battery
-                  - entity: sensor.xiaomi_motion_1_illumination
-                    name: Illumination
-              - entity: binary_sensor.xiaomi_motion_2
-                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-                name: Taverna
-                secondary_info: last-changed
-                entities:
-                  - entity: sensor.xiaomi_attr_battery_motion_2
-                    name: Battery
-                  - entity: sensor.xiaomi_motion_2_illumination
-                    name: Illumination
+              - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+                head:
+                    entity: binary_sensor.zb_motion_1
+                    name: Ingresso
+                    state_color: true
+                    secondary_info: last-changed
+                items:
+                  - entity: sensor.zb_motion_1_battery
+                    type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                    name: Telemetria
+                    icon: mdi:cogs
+                    state_header: Battery
+                    show_state: true
+                    entities:
+                      - entity: sensor.zb_motion_1_linkquality
+                        name: Link Quality
+              - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+                head:
+                    entity: binary_sensor.zb_motion_2
+                    name: Taverna
+                    state_color: true
+                    secondary_info: last-changed
+                items:
+                  - entity: sensor.zb_motion_2_battery
+                    type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                    name: Telemetria
+                    icon: mdi:cogs
+                    state_header: Battery
+                    show_state: true
+                    entities:
+                      - entity: sensor.zb_motion_2_linkquality
+                        name: Link Quality
           - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
             head:
               type: section
               label: Temperature/Humidity
             open: true
             items:
-              - entity: sensor.xiaomi_temperature_1
-                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-                name: Bagno
-                state_header: Temperature
-                secondary_info: last-changed
-                entities:
-                  - entity: sensor.xiaomi_attr_battery_temperature_1
-                    name: Battery
-                  - entity: sensor.xiaomi_humidity_1
-                    name: Humidity
+              - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+                head:
+                    type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                    entity: sensor.zb_temperature_1
+                    name: Bagno
+                    show_state: false
+                    secondary_info: last-changed
+                    entities:
+                      - entity: sensor.zb_temperature_1
+                        name: Temperature
+                        styles:
+                          width: 60px
+                      - entity: sensor.zb_temperature_1_humidity
+                        name: Humidity
+                        styles:
+                          width: 60px
+                items:
+                  - entity: sensor.zb_temperature_1_battery
+                    type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                    name: Telemetria
+                    icon: mdi:cogs
+                    state_header: Battery
+                    show_state: true
+                    entities:
+                      - entity: sensor.zb_temperature_1_linkquality
+                        name: Link Quality
+              - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+                head:
+                    type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                    entity: sensor.zb_temperature_2
+                    name: Garage
+                    show_state: false
+                    secondary_info: last-changed
+                    entities:
+                      - entity: sensor.zb_temperature_2
+                        name: []
+                        styles:
+                          width: 60px
+                      - entity: sensor.zb_temperature_2_humidity
+                        name: []
+                        styles:
+                          width: 60px
+                items:
+                  - entity: sensor.zb_temperature_2_battery
+                    type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                    name: Telemetria
+                    icon: mdi:cogs
+                    state_header: Battery
+                    show_state: true
+                    entities:
+                      - entity: sensor.zb_temperature_2_linkquality
+                        name: Link Quality
+              - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+                head:
+                    type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                    entity: sensor.zb_temperature_3
+                    name: Salotto
+                    show_state: false
+                    secondary_info: last-changed
+                    entities:
+                      - entity: sensor.zb_temperature_3
+                        name: []
+                        styles:
+                          width: 60px
+                      - entity: sensor.zb_temperature_3_humidity
+                        name: []
+                        styles:
+                          width: 60px
+                items:
+                  - entity: sensor.zb_temperature_3_battery
+                    type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                    name: Telemetria
+                    icon: mdi:cogs
+                    state_header: Battery
+                    show_state: true
+                    entities:
+                      - entity: sensor.zb_temperature_3_linkquality
+                        name: Link Quality
       - id: home.big_gate
         type: entities  #https://www.home-assistant.io/lovelace/entities
         title: Cancello Auto
