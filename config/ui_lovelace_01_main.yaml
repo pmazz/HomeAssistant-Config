@@ -54,7 +54,7 @@ cards:
             state_color: true
           - entity: binary_sensor.online_google_chromecast
             state_color: true
-          - entity: binary_sensor.online_xiaomi_gateway
+          - entity: binary_sensor.online_zigbee_gateway_1
             state_color: true
           - entity: binary_sensor.online_epson_printer
             state_color: true
@@ -114,13 +114,10 @@ cards:
               entity_id: sensor.tablet_silvia_charging
               state: "True"
               color: var(--paper-item-icon-active-color)
-          - entity: sensor.xiaomi_attr_battery_door_window_1
-            name: Door/Window
         color_thresholds:
           - value: 15
             color: Crimson
           - value: 100
             color: var(--paper-item-icon-color)
-        collapse: 4
         tap_action:
           action: more-info

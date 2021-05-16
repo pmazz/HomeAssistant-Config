@@ -331,12 +331,6 @@
   scan_interval: 30
 
 - platform: ping  #https://www.home-assistant.io/components/binary_sensor.ping
-  host: !secret xiaomi_gateway_ip
-  name: online_xiaomi_gateway
-  count: 2
-  scan_interval: 30
-
-- platform: ping  #https://www.home-assistant.io/components/binary_sensor.ping
   host: !secret epson_printer_ip
   name: online_epson_printer
   count: 2
@@ -367,6 +361,128 @@
       value_template: "{{ is_state_attr('sensor.landroid_m141_battery', 'charging', 1) }}"
 
 
+#++++++++++++++++++++++++++++++++++++++++++
+#+++++ Zigbee2Tasmota gateway sensors +++++
+#++++++++++++++++++++++++++++++++++++++++++
+- platform: mqtt  #https://www.home-assistant.io/integrations/binary_sensor.mqtt
+  name: online_zigbee_gateway_1
+  state_topic: "home/zigbee_gate_1/tele/LWT"
+  value_template: "{{ value }}"
+  payload_on: "Online"
+  payload_off: "Offline"
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  device_class: connectivity
+  # icon: si:zigbeex
+
+
+#+++++++++++++++++++++++++++++++++++++++++++++
+#+++++ Zigbee2Tasmota open/close sensors +++++
+#+++++++++++++++++++++++++++++++++++++++++++++
+- platform: mqtt  #https://www.home-assistant.io/integrations/binary_sensor.mqtt
+  name: zb_openclose_1
+  state_topic: "home/zigbee_gate_1/8450/tele/SENSOR"
+  value_template: >
+    {% if 'Power' in value_json %}
+      {% if value_json.Power == 0 or value_json.Power == 1 %}
+        {{ value_json.Power }}
+      {% else %}
+        {{ states('binary_sensor.zb_openclose_1') }}
+      {% endif %}
+    {% elif 'Contact' in value_json %}
+      {% if value_json.Contact == 0 or value_json.Contact == 1 %}
+        {{ value_json.Contact }}
+      {% else %}
+        {{ states('binary_sensor.zb_openclose_2') }}
+      {% endif %}
+    {% else %}
+      {{ states('binary_sensor.zb_openclose_1') }}
+    {% endif %}
+  payload_on: 1
+  payload_off: 0
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  device_class: window
+
+- platform: mqtt  #https://www.home-assistant.io/integrations/binary_sensor.mqtt
+  name: zb_openclose_2
+  state_topic: "home/zigbee_gate_1/5345/tele/SENSOR"
+  value_template: >
+    {% if 'Power' in value_json %}
+      {% if value_json.Power == 0 or value_json.Power == 1 %}
+        {{ value_json.Power }}
+      {% else %}
+        {{ states('binary_sensor.zb_openclose_2') }}
+      {% endif %}
+    {% elif 'Contact' in value_json %}
+      {% if value_json.Contact == 0 or value_json.Contact == 1 %}
+        {{ value_json.Contact }}
+      {% else %}
+        {{ states('binary_sensor.zb_openclose_2') }}
+      {% endif %}
+    {% else %}
+      {{ states('binary_sensor.zb_openclose_2') }}
+    {% endif %}
+  payload_on: 1
+  payload_off: 0
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  device_class: garage_door
+
+- platform: mqtt  #https://www.home-assistant.io/integrations/binary_sensor.mqtt
+  name: zb_openclose_3
+  state_topic: "home/zigbee_gate_1/7692/tele/SENSOR"
+  value_template: >
+    {% if 'Power' in value_json %}
+      {% if value_json.Power == 0 or value_json.Power == 1 %}
+        {{ value_json.Power }}
+      {% else %}
+        {{ states('binary_sensor.zb_openclose_3') }}
+      {% endif %}
+    {% elif 'Contact' in value_json %}
+      {% if value_json.Contact == 0 or value_json.Contact == 1 %}
+        {{ value_json.Contact }}
+      {% else %}
+        {{ states('binary_sensor.zb_openclose_2') }}
+      {% endif %}
+    {% else %}
+      {{ states('binary_sensor.zb_openclose_3') }}
+    {% endif %}
+  payload_on: 1
+  payload_off: 0
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  device_class: door
+
+- platform: mqtt  #https://www.home-assistant.io/integrations/binary_sensor.mqtt
+  name: zb_openclose_4
+  state_topic: "home/zigbee_gate_1/EF3E/tele/SENSOR"
+  value_template: >
+    {% if 'Power' in value_json %}
+      {% if value_json.Power == 0 or value_json.Power == 1 %}
+        {{ value_json.Power }}
+      {% else %}
+        {{ states('binary_sensor.zb_openclose_4') }}
+      {% endif %}
+    {% elif 'Contact' in value_json %}
+      {% if value_json.Contact == 0 or value_json.Contact == 1 %}
+        {{ value_json.Contact }}
+      {% else %}
+        {{ states('binary_sensor.zb_openclose_2') }}
+      {% endif %}
+    {% else %}
+      {{ states('binary_sensor.zb_openclose_4') }}
+    {% endif %}
+  payload_on: 1
+  payload_off: 0
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  device_class: door
 
 
 #+++++++++++++++++++++++++++++++++++++++++

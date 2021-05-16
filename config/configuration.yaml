@@ -41,8 +41,6 @@ logger:  #https://www.home-assistant.io/components/logger
     #homeassistant.components.recorder: debug
     #homeassistant.components.device_tracker: debug
     #homeassistant.loader: debug
-    #custom_components.fritzbox_tools.switch: debug
-    #custom_components.fritzbox_tools: debug
 
 python_script:  #https://www.home-assistant.io/components/python_script
 
@@ -110,7 +108,6 @@ recorder:  #https://www.home-assistant.io/components/recorder
       - zone
   include:
     entities:
-      - sensor.xiaomi_hub_illumination
       - input_text.mqtt_last_service
       - input_text.tts_last_sentence
       - input_text.webhook_last_script
@@ -134,11 +131,6 @@ tts:  #https://www.home-assistant.io/components/tts
     service_name: google_say
 
 #cloud:
-
-xiaomi_aqara:
-  discovery_retry: 5
-  gateways:
-    - key: !secret xiaomi_gateway_key
 
 automation: !include automations.yaml
 script: !include scripts.yaml
@@ -220,43 +212,6 @@ octoprint:  #https://www.home-assistant.io/integrations/octoprint
   api_key: !secret octoprint_api_key
   bed: true
   number_of_tools: 1
-
-# fritzbox_tools:  #https://github.com/mammuth/ha-fritzbox-tools
-#   host: !secret fritzbox_router_ip
-#   username: !secret fritzbox_router_user
-#   password: !secret fritzbox_router_pwd
-#   devices: #Needed if you want to control the profiles of your network devices
-#     - "tablet-ale"
-#     - "tablet-silvia"
-#   profile_on: "Standard" #Needed if you want to switch between device profiles ("Access Profile")
-#   profile_off: "Blocked"  #Needed if you want to switch between device profiles ("Access Profile")
-
-fritzbox_tools:  #https://github.com/mammuth/ha-fritzbox-tools
-  devices:
-    - host: !secret fritzbox_router_ip
-      username: !secret fritzbox_router_user
-      password: !secret fritzbox_router_pwd
-      profiles:  # Optional. Needed if you want to control the profiles of your network devices.
-        - "Standard"
-        - "Blocked"
-      use_wifi: True  # Optional, default True: if False no wifi switches will be exposed
-      use_port: False  # Optional, default True: if False no port switches will be exposed
-      use_profiles: True  # Optional, default True: if False no device switches will be exposed, redundant if devices is not specified
-      use_deflections: False  # Optional, default True: if False no call deflection switches will be exposed
-
-# fritzbox_tools:
-#   devices:
-#     - host: "192.168.178.1"  # required
-#       username: "home-assistant"  # required (create one at `System > FRITZ!Box Benutzer` on your router)
-#       password: "yourfritzboxpassword"  # required
-#       profiles: # Optional. Needed if you want to control the profiles of your network devices.
-#         - "Gesperrt"
-#         - "Gast"
-#         - "Kinder Smartphones"
-#       use_wifi: True # Optional, default True: if False no wifi switches will be exposed
-#       use_port: True  # Optional, default True: if False no port switches will be exposed
-#       use_profiles: True  # Optional, default True: if False no device switches will be exposed, redundant if devices is not specified
-#       use_deflections: True # Optional, default True: if False no call deflection switches will be exposed
 
 proxmoxve:  #https://www.home-assistant.io/integrations/proxmoxve
   - host: !secret proxmox_host

@@ -73,18 +73,17 @@ cards:
             - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
               head:
                 type: section
-                label: Tablet Ale - Internet
+                label: Parental Control
               open: true
               items:
                 - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
                   row: true
                   card:
-                    entity: switch.fritzbox_profile_tablet_ale
+                    entity: switch.ale_internet_timer
                     name: Timer Internet
                     icon: mdi:tablet-android
                     state_color: true
-                - entity: input_datetime.ale_internet
-                  name: Durata (minuti)
+                - input_datetime.ale_internet
                 - entity: timer.ale_internet
                   name: Countdown
                   icon: mdi:clock-end

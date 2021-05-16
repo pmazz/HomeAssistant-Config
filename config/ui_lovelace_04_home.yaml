@@ -97,33 +97,84 @@ cards:
                 name: Consumi (ultimi 15 giorni)
                 show_state: false
       - break
-      - id: home.xiaomi
+      - id: home.zigbee
         type: entities  #https://www.home-assistant.io/lovelace/entities
-        title: Xiaomi Sensors
+        title: Zigbee Sensors
         show_header_toggle: false
         entities:
           - type: section
-          - entity: light.xiaomi_hub_light
-            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-            name: Hub Light
-            toggle: true
-            # secondary_info: last-changed
-            entities:
-              - entity: sensor.xiaomi_hub_illumination
-                name: Illumination
+          - entity: binary_sensor.online_zigbee_gateway_1
+            state_color: true
           - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
             head:
               type: section
               label: Door/Window
             open: true
             items:
-              - entity: binary_sensor.xiaomi_door_window_1
-                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-                name: Porta Ingresso
-                secondary_info: last-changed
-                entities:
-                  - entity: sensor.xiaomi_attr_battery_door_window_1
-                    name: Battery
+              - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+                head:
+                    entity: binary_sensor.zb_openclose_1
+                    name: Sensore 1
+                    state_color: true
+                    secondary_info: last-changed
+                items:
+                  - entity: sensor.zb_openclose_1_battery
+                    type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                    name: Telemetria
+                    icon: mdi:cogs
+                    state_header: Battery
+                    show_state: true
+                    entities:
+                      - entity: sensor.zb_openclose_1_linkquality
+                        name: Link Quality
+              - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+                head:
+                    entity: binary_sensor.zb_openclose_2
+                    name: Sensore 2
+                    state_color: true
+                    secondary_info: last-changed
+                items:
+                  - entity: sensor.zb_openclose_2_battery
+                    type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                    name: Telemetria
+                    icon: mdi:cogs
+                    state_header: Battery
+                    show_state: true
+                    entities:
+                      - entity: sensor.zb_openclose_2_linkquality
+                        name: Link Quality
+              - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+                head:
+                    entity: binary_sensor.zb_openclose_3
+                    name: Sensore 3
+                    state_color: true
+                    secondary_info: last-changed
+                items:
+                  - entity: sensor.zb_openclose_3_battery
+                    type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                    name: Telemetria
+                    icon: mdi:cogs
+                    state_header: Battery
+                    show_state: true
+                    entities:
+                      - entity: sensor.zb_openclose_3_linkquality
+                        name: Link Quality
+              - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+                head:
+                    entity: binary_sensor.zb_openclose_4
+                    name: Sensore 4
+                    state_color: true
+                    secondary_info: last-changed
+                items:
+                  - entity: sensor.zb_openclose_4_battery
+                    type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                    name: Telemetria
+                    icon: mdi:cogs
+                    state_header: Battery
+                    show_state: true
+                    entities:
+                      - entity: sensor.zb_openclose_4_linkquality
+                        name: Link Quality
           - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
             head:
               type: section

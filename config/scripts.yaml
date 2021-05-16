@@ -330,16 +330,16 @@ wifi_guest_start:
         volume: "0.5"
     - service: switch.turn_on #Start guest wifi
       data:
-        entity_id: switch.fritzbox_guest_wifi
+        entity_id: switch.fritzbox_7530_guest_wifi
     - delay: "00:00:10" #Wait for guest wifi to activate
     - service: notify.telegram_paolo
       data:
         message: >
           {{"\U00002705"}} Wifi Guest attivata.
-            Password: *12341234*
+            Password: *qwerty123*
     - service: script.tts_speak
       data:
-        message2say: Rete ospiti attivata. La password è... 1, 2, 3, 4, 1, 2, 3, 4
+        message2say: Rete ospiti attivata. La password è... q, w, e, r, t, ipsilon, 1, 2, 3
         volume: "0.5"
 
 wifi_guest_stop:
@@ -348,7 +348,7 @@ wifi_guest_stop:
   sequence:
     - service: switch.turn_off #Stop guest wifi
       data:
-        entity_id: switch.fritzbox_guest_wifi
+        entity_id: switch.fritzbox_7530_guest_wifi
     - delay: "00:00:10" #Wait for guest wifi to deactivate
     - service: notify.telegram_paolo
       data:
@@ -364,7 +364,7 @@ wifi_24ghz_start:
   sequence:
     - service: switch.turn_on #Start 2.4 ghz wifi
       data:
-        entity_id: switch.fritzbox_wifi
+        entity_id: switch.fritzbox_7530_wifi
     - delay: "00:00:10" #Wait for 2.4 ghz wifi to activate
     - service: notify.telegram_paolo
       data:
@@ -376,7 +376,7 @@ wifi_24ghz_stop:
   sequence:
     - service: switch.turn_off #Stop 2.4 ghz wifi
       data:
-        entity_id: switch.fritzbox_wifi
+        entity_id: switch.fritzbox_7530_wifi
     - delay: "00:00:10" #Wait for 2.4 ghz wifi to deactivate
     - service: notify.telegram_paolo
       data:
@@ -388,7 +388,7 @@ wifi_5ghz_start:
   sequence:
     - service: switch.turn_on #Start 5 ghz wifi
       data:
-        entity_id: switch.fritzbox_wifi_5ghz
+        entity_id: switch.fritzbox_7530_wifi_5ghz
     - delay: "00:00:10" #Wait for 5 ghz wifi to activate
     - service: notify.telegram_paolo
       data:
@@ -400,11 +400,94 @@ wifi_5ghz_stop:
   sequence:
     - service: switch.turn_off #Stop 5 ghz wifi
       data:
-        entity_id: switch.fritzbox_wifi_5ghz
+        entity_id: switch.fritzbox_7530_wifi_5ghz
     - delay: "00:00:10" #Wait for 5 ghz wifi to deactivate
     - service: notify.telegram_paolo
       data:
         message: "\U0000274C Wifi 5 GHz disattivata."
+
+ale_internet_start:
+  alias: Ale Internet Timer - Start
+  description: "Start the timer for Ale's Internet connection."
+  sequence:
+    - service: switch.turn_on
+      data:
+        entity_id: switch.fritzbox_7530_profile_ale
+    - service: timer.start
+      data:
+        entity_id: timer.ale_internet
+        duration: "{{states('input_datetime.ale_internet')}}"
+    - service: python_script.hass_entities
+      data:
+        action: set_state
+        entity_id: sensor.ale_internet_end
+        state: >
+          {%- if is_state('switch.fritzbox_7530_profile_ale', 'on') %}
+            {{ (as_timestamp(now()) + state_attr('input_datetime.ale_internet', 'timestamp')) | timestamp_custom('%H:%M:%S') }}
+          {%- else %}
+            -
+          {%- endif %}
+    - delay: "00:00:02" #Wait before tts (let the timer start)
+    - service: script.tts_speak
+      data:
+        message2say: >
+          {%- set duration_hh = state_attr('timer.ale_internet', 'duration').split(':')[0] | int %}
+          {%- set duration_mm = state_attr('timer.ale_internet', 'duration').split(':')[1] | int %}
+          {%- set msg = 'Timer internet attivo' %}
+          {%- if duration_hh > 0 or duration_mm > 0 %}
+            {%- set msg = msg ~ ' per ' %}
+          {%- endif %}
+          {%- if duration_hh > 1 %}
+            {%- set msg = msg ~ duration_hh ~ ' ore' %}
+          {%- elif duration_hh == 1 %}
+            {%- set msg = msg ~ duration_hh ~ ' ora' %}
+          {%- endif %}
+          {%- if duration_hh > 0 and duration_mm > 0 %}
+            {%- set msg = msg ~ ' e ' %}
+          {%- endif %}
+          {%- if duration_mm > 1 %}
+            {%- set msg = msg ~ duration_mm ~ ' minuti' %}
+          {%- elif duration_mm == 1 %}
+            {%- set msg = msg ~ duration_mm ~ ' minuto' %}
+          {%- endif %}
+          {{-msg}}
+        volume: "0.5"
+
+ale_internet_stop:
+  alias: Ale Internet Timer - Stop
+  description: "Stop the timer for Ale's Internet connection."
+  sequence:
+    - alias: Set TTS message based on timer state
+      choose:
+          conditions: "{{ is_state('timer.ale_internet', 'active') }}"
+          sequence:
+            - service: script.tts_speak
+              data:
+                message2say: "Timer Internet interrotto"
+                volume: "0.5"
+      default:
+        - service: script.tts_speak
+          data:
+            message2say: "Timer Internet completato"
+            volume: "0.5"
+    - alias: Stop the timer if active
+      choose:
+        - alias: Stop the timer if active
+          conditions:
+            - condition: state
+              entity_id: timer.ale_internet
+              state: "active"
+          sequence:
+            - service: timer.cancel
+              data:
+                entity_id: timer.ale_internet
+    - service: switch.turn_off
+      entity_id: switch.fritzbox_7530_profile_ale
+    - service: python_script.hass_entities
+      data:
+        action: set_state
+        entity_id: sensor.ale_internet_end
+        state: "-"
 
 
 #+++++++++++++++++++++++++++++++++++++++

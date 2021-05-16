@@ -42,7 +42,7 @@
         {%- set cover_start = cover_start_ts | timestamp_custom('%H:%M') %}
         {{- cover_start }}
       attribute_templates:
-        date: "{{ as_timestamp(state_attr('sun.sun', 'next_dawn')) | timestamp_custom('%Y-%m-%d') }}"
+        date_next_dawn: "{{ as_timestamp(state_attr('sun.sun', 'next_dawn')) | timestamp_custom('%Y-%m-%d') }}"
     cover_down_start:
       friendly_name: Avvio Serrande Giù
       icon_template: mdi:clock-alert-outline
@@ -59,19 +59,14 @@
         {%- set cover_start = cover_start_ts | timestamp_custom('%H:%M') %}
         {{- cover_start }}
       attribute_templates:
-        date: "{{ as_timestamp(state_attr('sun.sun', 'next_setting')) | timestamp_custom('%Y-%m-%d') }}"
+        date_next_setting: "{{ as_timestamp(state_attr('sun.sun', 'next_setting')) | timestamp_custom('%Y-%m-%d') }}"
 
 - platform: template  #https://www.home-assistant.io/components/sensor.template
   sensors:
     ale_internet_end:
       friendly_name: Orario chiusura
       icon_template: mdi:clock-alert-outline
-      value_template: >
-        {%- if is_state('switch.fritzbox_profile_tablet_ale', 'on') %}
-          {{ (as_timestamp(now()) + state_attr('input_datetime.ale_internet', 'timestamp')) | timestamp_custom('%H:%M:%S') }}
-        {%- else %}
-          -
-        {%- endif %}
+      value_template: "-"
 
 
 #++++++++++++++++++++++++++++++++++
@@ -700,10 +695,6 @@
         {% elif 293 < (wind_dir|float) <=338 %}NW [Maestrale]
         {%- endif %}
       icon_template: mdi:compass
-    dark_sky_forecast_header:
-      friendly_name: Date
-      value_template: Min ~ Max | Rain
-      icon_template: None
     dark_sky_forecast_1d:
       friendly_name_template: "{{ (as_timestamp(now()) + (1 * 86400)) | timestamp_custom('%A %d') }}"
       value_template: "{{ states('sensor.dark_sky_daily_low_temperature_1d') | round(0) }}° ~ {{ states('sensor.dark_sky_daily_high_temperature_1d') | round(0) }}° | {{ states('sensor.dark_sky_precip_probability_1d') | round(0) }}%"
@@ -1256,16 +1247,116 @@
         {%- endif -%}
 
 
-#++++++++++++++++++++++++++
-#+++++ Xiaomi sensors +++++
-#++++++++++++++++++++++++++
-- platform: template  #https://www.home-assistant.io/components/sensor.template
-  sensors:
-    xiaomi_attr_battery_door_window_1:
-      device_class: battery
-      unit_of_measurement: "%"
-      friendly_name: Battery
-      value_template: "{% if not is_state('binary_sensor.xiaomi_door_window_1', 'unknown') %}{{state_attr('binary_sensor.xiaomi_door_window_1', 'battery_level')}}{% else %}N/A{% endif %}"
+#+++++++++++++++++++++++++++++++++++++++++++++
+#+++++ Zigbee2Tasmota open/close sensors +++++
+#+++++++++++++++++++++++++++++++++++++++++++++
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: zb_openclose_1_battery
+  state_topic: "home/zigbee_gate_1/8450/tele/SENSOR"
+  value_template: >
+    {% if 'BatteryPercentage' in value_json %}
+      {{ value_json.BatteryPercentage }}
+    {% else %}
+      {{ states('sensor.zb_openclose_1_battery') }}
+    {% endif %}
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  device_class: battery
+  unit_of_measurement: "%"
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: zb_openclose_1_linkquality
+  state_topic: "home/zigbee_gate_1/8450/tele/SENSOR"
+  value_template: >
+    {% if 'LinkQuality' in value_json %}
+      {{ value_json.LinkQuality }}
+    {% else %}
+      {{ states('sensor.zb_openclose_1_linkquality') }}
+    {% endif %}
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: zb_openclose_2_battery
+  state_topic: "home/zigbee_gate_1/5345/tele/SENSOR"
+  value_template: >
+    {% if 'BatteryPercentage' in value_json %}
+      {{ value_json.BatteryPercentage }}
+    {% else %}
+      {{ states('sensor.zb_openclose_2_battery') }}
+    {% endif %}
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  device_class: battery
+  unit_of_measurement: "%"
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: zb_openclose_2_linkquality
+  state_topic: "home/zigbee_gate_1/5345/tele/SENSOR"
+  value_template: >
+    {% if 'LinkQuality' in value_json %}
+      {{ value_json.LinkQuality }}
+    {% else %}
+      {{ states('sensor.zb_openclose_2_linkquality') }}
+    {% endif %}
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: zb_openclose_3_battery
+  state_topic: "home/zigbee_gate_1/7692/tele/SENSOR"
+  value_template: >
+    {% if 'BatteryPercentage' in value_json %}
+      {{ value_json.BatteryPercentage }}
+    {% else %}
+      {{ states('sensor.zb_openclose_3_battery') }}
+    {% endif %}
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  device_class: battery
+  unit_of_measurement: "%"
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: zb_openclose_3_linkquality
+  state_topic: "home/zigbee_gate_1/7692/tele/SENSOR"
+  value_template: >
+    {% if 'LinkQuality' in value_json %}
+      {{ value_json.LinkQuality }}
+    {% else %}
+      {{ states('sensor.zb_openclose_3_linkquality') }}
+    {% endif %}
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: zb_openclose_4_battery
+  state_topic: "home/zigbee_gate_1/EF3E/tele/SENSOR"
+  value_template: >
+    {% if 'BatteryPercentage' in value_json %}
+      {{ value_json.BatteryPercentage }}
+    {% else %}
+      {{ states('sensor.zb_openclose_4_battery') }}
+    {% endif %}
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  device_class: battery
+  unit_of_measurement: "%"
+- platform: mqtt  #https://www.home-assistant.io/components/sensor.mqtt
+  name: zb_openclose_4_linkquality
+  state_topic: "home/zigbee_gate_1/EF3E/tele/SENSOR"
+  value_template: >
+    {% if 'LinkQuality' in value_json %}
+      {{ value_json.LinkQuality }}
+    {% else %}
+      {{ states('sensor.zb_openclose_4_linkquality') }}
+    {% endif %}
+  availability_topic: "home/zigbee_gate_1/tele/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
 
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++

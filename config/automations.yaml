@@ -1234,44 +1234,9 @@
           - "\U0001F4AB Refresh:/sensors_adguard, \U0001F519 Go back:/sensors"
 
 
-#++++++++++++++++++++++++++++++++++++++++++++++
-#+++++ Mobile devices related automations +++++
-#++++++++++++++++++++++++++++++++++++++++++++++
-- id: xiaomi_hub_warn_wifi_change_connection
-  #Avvisa quando il gateway xiaomi si connette/disconnette a/da WiFi
-  alias: xiaomi_hub_warn_wifi_change_connection
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.online_xiaomi_gateway
-      from: "on"
-      to: "off"
-    - platform: state
-      entity_id: binary_sensor.online_xiaomi_gateway
-      from: "off"
-      to: "on"
-  condition:
-    - condition: state
-      entity_id: input_select.home_mode
-      state: "giorno"
-  action:
-    - service: script.tts_speak
-      data:
-        message2say: >
-          {% if (trigger.to_state.state == 'on') %}
-            Il gateway Xiaomi, è connesso!
-          {% elif (trigger.to_state.state == 'off') %}
-            Il gateway Xiaomi, è disconnesso!
-          {% endif %}
-        volume: "0.4"
-    - service: notify.telegram_paolo
-      data:
-        message: >
-          {% if (trigger.to_state.state == 'on') %}
-            {{'\U0001F44D'}} Il gateway Xiaomi è connesso!
-          {% elif (trigger.to_state.state == 'off') %}
-            {{'\U000026A0'}} Il gateway Xiaomi è disconnesso!
-          {% endif %}
-
+#+++++++++++++++++++++++++++++++++++
+#+++++ Nas related automations +++++
+#+++++++++++++++++++++++++++++++++++
 - id: nas_warn_wifi_change_connection
   #Avvisa quando il Nas si connette/disconnette a/da WiFi
   alias: nas_warn_wifi_change_connection
@@ -1337,36 +1302,7 @@
         message2say: Silvia. È quasi ora di tornare in ufficio.
         volume: "0.6"
 
-- id: ale_internet_timer_start
-  #Avvia il timer in attivazione dello switch per la connessione internet
-  alias: ale_internet_timer_start
-  trigger:
-    - platform: state
-      entity_id: switch.fritzbox_profile_tablet_ale
-      from: "off"
-      to: "on"
-  action:
-    - service: timer.start
-      data:
-        entity_id: timer.ale_internet
-        duration: >
-          {{states('input_datetime.ale_internet')}}
-
-- id: ale_internet_timer_stop
-  #Interrompe il timer in disattivazione dello switch per la connessione internet
-  alias: ale_internet_timer_stop
-  trigger:
-    - platform: state
-      entity_id: switch.fritzbox_profile_tablet_ale
-      from: "on"
-      to: "off"
-  action:
-    - service: timer.finish
-      data:
-        entity_id: timer.ale_internet
-
 - id: ale_internet_timer_complete
-  #Interrompe la connessione internet a scadenza del timer
   alias: ale_internet_timer_complete
   trigger:
     - platform: event
@@ -1375,7 +1311,7 @@
         entity_id: timer.ale_internet
   action:
     - service: switch.turn_off
-      entity_id: switch.fritzbox_profile_tablet_ale
+      entity_id: switch.ale_internet_timer
 
 
 #+++++++++++++++++++++++++++++++++++++++++
@@ -1422,3 +1358,42 @@
         message: >
           {{'\U0001F69C'}} Mower state changed:
             From '{{trigger.from_state.state}}' to '{{trigger.to_state.state}}'
+
+
+#++++++++++++++++++++++++++++++++++++++++++++++
+#+++++ Zigbee2Tasmota gateway automations +++++
+#++++++++++++++++++++++++++++++++++++++++++++++
+- id: zigbee_hub_warn_wifi_change_connection
+  #Avvisa quando il gateway zigbee si connette/disconnette via MQTT
+  alias: zigbee_hub_warn_wifi_change_connection
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.online_zigbee_gateway
+      from: "on"
+      to: "off"
+    - platform: state
+      entity_id: binary_sensor.online_zigbee_gateway
+      from: "off"
+      to: "on"
+  condition:
+    - condition: state
+      entity_id: input_select.home_mode
+      state: "giorno"
+  action:
+    # - service: script.tts_speak
+    #   data:
+    #     message2say: >
+    #       {% if (trigger.to_state.state == 'on') %}
+    #         Il gateway Zigbee, è connesso!
+    #       {% elif (trigger.to_state.state == 'off') %}
+    #         Il gateway Zigbee, è disconnesso!
+    #       {% endif %}
+    #     volume: "0.4"
+    - service: notify.telegram_paolo
+      data:
+        message: >
+          {% if (trigger.to_state.state == 'on') %}
+            {{'\U0001F44D'}} Il gateway Zigbee è connesso!
+          {% elif (trigger.to_state.state == 'off') %}
+            {{'\U000026A0'}} Il gateway Zigbee è disconnesso!
+          {% endif %}

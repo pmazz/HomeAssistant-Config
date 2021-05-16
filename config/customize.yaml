@@ -259,9 +259,10 @@ binary_sensor.online_google_chromecast:
   friendly_name: Chromecast
   icon: mdi:google-chrome
   device_class: connectivity
-binary_sensor.online_xiaomi_gateway:
-  friendly_name: Xiaomi Gateway
+binary_sensor.online_zigbee_gateway_1:
+  friendly_name: Zigbee Gateway
   icon: mdi:blur-radial
+  # icon: si:zigbee
   device_class: connectivity
 binary_sensor.online_epson_printer:
   friendly_name: Epson WF-3620
