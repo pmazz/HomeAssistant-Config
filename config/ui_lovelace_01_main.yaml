@@ -85,11 +85,14 @@ cards:
             state_color: true
           - entity: binary_sensor.online_tablet_paolo
             state_color: true
+          - entity: binary_sensor.online_tablet_silvia
+            name: Tablet Silvia (Nero)
+            state_color: true
           - entity: binary_sensor.online_tablet_ale
             name: Tablet Ale (Blu)
             state_color: true
-          - entity: binary_sensor.online_tablet_silvia
-            name: Tablet Silvia (Nero)
+          - entity: binary_sensor.online_tablet_ale_scuola
+            name: Tablet Ale (Scuola)
             state_color: true
       - id: main.batteries
         type: custom:battery-state-card  #https://github.com/maxwroc/battery-state-card

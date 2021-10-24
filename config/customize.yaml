@@ -234,6 +234,10 @@ binary_sensor.online_tablet_ale:
   friendly_name: Tablet Ale
   icon: mdi:tablet-android
   device_class: connectivity
+binary_sensor.online_tablet_ale_scuola:
+  friendly_name: Tablet Ale Scuola
+  icon: mdi:tablet-android
+  device_class: connectivity
 binary_sensor.online_tablet_silvia:
   friendly_name: Tablet Silvia
   icon: mdi:tablet-android
