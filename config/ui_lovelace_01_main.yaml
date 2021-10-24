@@ -46,8 +46,14 @@ cards:
                   url_path: http://nas.local:8080
           - entity: binary_sensor.online_adguard
             state_color: true
-          - entity: binary_sensor.online_google_home
-            name: Google Home
+          - entity: binary_sensor.online_google_home_salotto
+            name: Google Home Mini (Salotto)
+            state_color: true
+          - entity: binary_sensor.online_google_nesthub_cucina
+            name: Google Nest Hub (Cucina)
+            state_color: true
+          - entity: binary_sensor.online_xiaomi_speaker_studio
+            name: Xiaomi Smart Speaker (Studio)
             state_color: true
           - entity: binary_sensor.online_samsung_tv
             name: TV

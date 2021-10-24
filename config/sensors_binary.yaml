@@ -319,8 +319,20 @@
   scan_interval: 30
 
 - platform: ping  #https://www.home-assistant.io/components/binary_sensor.ping
-  host: !secret google_home_ip
-  name: online_google_home
+  host: !secret google_homemini_salotto_ip
+  name: online_google_home_salotto
+  count: 2
+  scan_interval: 30
+
+- platform: ping  #https://www.home-assistant.io/components/binary_sensor.ping
+  host: !secret google_nesthub_cucina_ip
+  name: online_google_nesthub_cucina
+  count: 2
+  scan_interval: 30
+
+- platform: ping  #https://www.home-assistant.io/components/binary_sensor.ping
+  host: !secret google_speaker_studio_ip
+  name: online_xiaomi_speaker_studio
   count: 2
   scan_interval: 30
 

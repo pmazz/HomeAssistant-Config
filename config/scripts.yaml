@@ -330,7 +330,7 @@ wifi_guest_start:
         volume: "0.5"
     - service: switch.turn_on #Start guest wifi
       data:
-        entity_id: switch.fritzbox_7530_guest_wifi
+        entity_id: switch.fritz_box_7530_wi_fi_mazzwifi_guest
     - delay: "00:00:10" #Wait for guest wifi to activate
     - service: notify.telegram_paolo
       data:
@@ -348,7 +348,7 @@ wifi_guest_stop:
   sequence:
     - service: switch.turn_off #Stop guest wifi
       data:
-        entity_id: switch.fritzbox_7530_guest_wifi
+        entity_id: switch.fritz_box_7530_wi_fi_mazzwifi_guest
     - delay: "00:00:10" #Wait for guest wifi to deactivate
     - service: notify.telegram_paolo
       data:
@@ -364,7 +364,7 @@ wifi_24ghz_start:
   sequence:
     - service: switch.turn_on #Start 2.4 ghz wifi
       data:
-        entity_id: switch.fritzbox_7530_wifi
+        entity_id: switch.fritz_box_7530_wi_fi_mazzwifi
     - delay: "00:00:10" #Wait for 2.4 ghz wifi to activate
     - service: notify.telegram_paolo
       data:
@@ -376,7 +376,7 @@ wifi_24ghz_stop:
   sequence:
     - service: switch.turn_off #Stop 2.4 ghz wifi
       data:
-        entity_id: switch.fritzbox_7530_wifi
+        entity_id: switch.fritz_box_7530_wi_fi_mazzwifi
     - delay: "00:00:10" #Wait for 2.4 ghz wifi to deactivate
     - service: notify.telegram_paolo
       data:
@@ -388,7 +388,7 @@ wifi_5ghz_start:
   sequence:
     - service: switch.turn_on #Start 5 ghz wifi
       data:
-        entity_id: switch.fritzbox_7530_wifi_5ghz
+        entity_id: switch.fritz_box_7530_wi_fi_mazzwifi_5ghz
     - delay: "00:00:10" #Wait for 5 ghz wifi to activate
     - service: notify.telegram_paolo
       data:
@@ -400,7 +400,7 @@ wifi_5ghz_stop:
   sequence:
     - service: switch.turn_off #Stop 5 ghz wifi
       data:
-        entity_id: switch.fritzbox_7530_wifi_5ghz
+        entity_id: switch.fritz_box_7530_wi_fi_mazzwifi_5ghz
     - delay: "00:00:10" #Wait for 5 ghz wifi to deactivate
     - service: notify.telegram_paolo
       data:

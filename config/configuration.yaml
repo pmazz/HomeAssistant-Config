@@ -140,6 +140,9 @@ binary_sensor: !include sensors_binary.yaml
 
 timer: !include timers.yaml
 
+simpleicons:  #https://github.com/vigonotion/hass-simpleicons
+fontawesome:  #https://github.com/thomasloven/hass-fontawesome
+
 hacs:
   token: !secret github_hacs
 

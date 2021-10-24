@@ -110,27 +110,27 @@
   switches:
     wifi_guest:
       friendly_name: Wifi Guest
-      icon_template: "{% if is_state('switch.fritzbox_7530_guest_wifi', 'on') %}mdi:wifi{% else %}mdi:wifi-off{% endif %}"
-      availability_template: "{{ not is_state('switch.fritzbox_7530_guest_wifi', 'unknown') and not is_state('switch.fritzbox_7530_guest_wifi', 'unavailable') }}"
-      value_template: "{{ is_state('switch.fritzbox_7530_guest_wifi', 'on') }}"
+      icon_template: "{% if is_state('switch.fritz_box_7530_wi_fi_mazzwifi_guest', 'on') %}mdi:wifi{% else %}mdi:wifi-off{% endif %}"
+      availability_template: "{{ not is_state('switch.fritz_box_7530_wi_fi_mazzwifi_guest', 'unknown') and not is_state('switch.fritz_box_7530_wi_fi_mazzwifi_guest', 'unavailable') }}"
+      value_template: "{{ is_state('switch.fritz_box_7530_wi_fi_mazzwifi_guest', 'on') }}"
       turn_on:
         service: script.wifi_guest_start
       turn_off:
         service: script.wifi_guest_stop
     wifi_24ghz:
       friendly_name: Wifi 2.4 GHz
-      icon_template: "{% if is_state('switch.fritzbox_7530_wifi', 'on') %}mdi:wifi{% else %}mdi:wifi-off{% endif %}"
-      availability_template: "{{ not is_state('switch.fritzbox_7530_wifi', 'unknown') and not is_state('switch.fritzbox_7530_wifi', 'unavailable') }}"
-      value_template: "{{ is_state('switch.fritzbox_7530_wifi', 'on') }}"
+      icon_template: "{% if is_state('switch.fritz_box_7530_wi_fi_mazzwifi', 'on') %}mdi:wifi{% else %}mdi:wifi-off{% endif %}"
+      availability_template: "{{ not is_state('switch.fritz_box_7530_wi_fi_mazzwifi', 'unknown') and not is_state('switch.fritz_box_7530_wi_fi_mazzwifi', 'unavailable') }}"
+      value_template: "{{ is_state('switch.fritz_box_7530_wi_fi_mazzwifi', 'on') }}"
       turn_on:
         service: script.wifi_24ghz_start
       turn_off:
         service: script.wifi_24ghz_stop
     wifi_5ghz:
       friendly_name: Wifi 5 GHz
-      icon_template: "{% if is_state('switch.fritzbox_7530_wifi_5ghz', 'on') %}mdi:wifi{% else %}mdi:wifi-off{% endif %}"
-      availability_template: "{{ not is_state('switch.fritzbox_7530_wifi_5ghz', 'unknown') and not is_state('switch.fritzbox_7530_wifi_5ghz', 'unavailable') }}"
-      value_template: "{{ is_state('switch.fritzbox_7530_wifi_5ghz', 'on') }}"
+      icon_template: "{% if is_state('switch.fritz_box_7530_wi_fi_mazzwifi_5ghz', 'on') %}mdi:wifi{% else %}mdi:wifi-off{% endif %}"
+      availability_template: "{{ not is_state('switch.fritz_box_7530_wi_fi_mazzwifi_5ghz', 'unknown') and not is_state('switch.fritz_box_7530_wi_fi_mazzwifi_5ghz', 'unavailable') }}"
+      value_template: "{{ is_state('switch.fritz_box_7530_wi_fi_mazzwifi_5ghz', 'on') }}"
       turn_on:
         service: script.wifi_5ghz_start
       turn_off:

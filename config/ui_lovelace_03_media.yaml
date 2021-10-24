@@ -17,7 +17,7 @@ cards:
       - id: media.google_home
         type: conditional  #https://www.home-assistant.io/lovelace/conditional
         conditions:
-          - entity: binary_sensor.online_google_home
+          - entity: binary_sensor.online_google_home_salotto
             state: "on"
         card:
           type: entities  #https://www.home-assistant.io/lovelace/entities

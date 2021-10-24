@@ -1068,16 +1068,16 @@
         chat_id: "{{ trigger.event.data.user_id }}"
         message: >
           *- FritzBox sensors -*{% if not is_state('binary_sensor.online_router_fritzbox', 'unknown') and is_state('binary_sensor.online_router_fritzbox', 'on')%}
-            *Status:* {% if not is_state('sensor.fritz_netmonitor', 'unknown') %}{{states('sensor.fritz_netmonitor')}}{% else %}N/A{% endif %}
-            *Uptime:* {% if not is_state('sensor.fritz_attr_uptime', 'unknown') %}{{states('sensor.fritz_attr_uptime')}} {{state_attr('sensor.fritz_attr_uptime', 'unit_of_measurement')}}{% else %}N/A{% endif %}
-            *External IP:* {% if not is_state('sensor.fritz_attr_external_ip', 'unknown') %}{{states('sensor.fritz_attr_external_ip')}}{% else %}N/A{% endif %}
+            *Uptime Dev.:* {{states('sensor.fritz_box_7530_uptime_device')}}
+            *Uptime Conn.:* {{states('sensor.fritz_box_7530_uptime_connection')}}
+            *External IP:* {% if not is_state('sensor.fritz_box_7530_external_ip', 'unknown') %}{{states('sensor.fritz_box_7530_external_ip')}}{% else %}N/A{% endif %}
             *Connection*
-              *Linked to provider:* {% if not is_state('sensor.fritz_attr_is_linked', 'unknown') %}{{states('sensor.fritz_attr_is_linked')}}{% else %}N/A{% endif %}
-              *Internet connected:* {% if not is_state('sensor.fritz_attr_is_connected', 'unknown') %}{{states('sensor.fritz_attr_is_connected')}}{% else %}N/A{% endif %}
-              *Sent:* {% if not is_state('sensor.fritz_attr_sent_mb', 'unknown') %}{{states('sensor.fritz_attr_sent_mb')}} {{state_attr('sensor.fritz_attr_sent_mb', 'unit_of_measurement')}}{% else %}N/A{% endif %}
-              *Received:* {% if not is_state('sensor.fritz_attr_received_mb', 'unknown') %}{{states('sensor.fritz_attr_received_mb')}} {{state_attr('sensor.fritz_attr_received_mb', 'unit_of_measurement')}}{% else %}N/A{% endif %}
-              *Upstream:* {% if not is_state('sensor.fritz_attr_transmission_rate_up', 'unknown') %}{{states('sensor.fritz_attr_transmission_rate_up')}} {{state_attr('sensor.fritz_attr_transmission_rate_up', 'unit_of_measurement')}}{% else %}N/A{% endif %}
-              *Downstream:* {% if not is_state('sensor.fritz_attr_transmission_rate_down', 'unknown') %}{{states('sensor.fritz_attr_transmission_rate_down')}} {{state_attr('sensor.fritz_attr_transmission_rate_down', 'unit_of_measurement')}}{% else %}N/A{% endif %}
+              *Link to provider:* {{states('binary_sensor.fritz_box_7530_link')}}
+              *Internet connection:* {{states('binary_sensor.fritz_box_7530_connection')}}
+              *Sent:* {% if not is_state('sensor.fritz_box_7530_gb_sent', 'unknown') %}{{states('sensor.fritz_box_7530_gb_sent')}} {{state_attr('sensor.fritz_box_7530_gb_sent', 'unit_of_measurement')}}{% else %}N/A{% endif %}
+              *Received:* {% if not is_state('sensor.fritz_box_7530_gb_received', 'unknown') %}{{states('sensor.fritz_box_7530_gb_received')}} {{state_attr('sensor.fritz_box_7530_gb_received', 'unit_of_measurement')}}{% else %}N/A{% endif %}
+              *Upstream:* {% if not is_state('sensor.fritz_box_7530_upload_throughput', 'unknown') %}{{states('sensor.fritz_box_7530_upload_throughput')}} {{state_attr('sensor.fritz_box_7530_upload_throughput', 'unit_of_measurement')}}{% else %}N/A{% endif %}
+              *Downstream:* {% if not is_state('sensor.fritz_box_7530_download_throughput', 'unknown') %}{{states('sensor.fritz_box_7530_download_throughput')}} {{state_attr('sensor.fritz_box_7530_download_throughput', 'unit_of_measurement')}}{% else %}N/A{% endif %}
             {% else %}
             {{"\U0000274C"}} This device is OFF or not connected.
             {% endif %}

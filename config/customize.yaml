@@ -51,15 +51,6 @@ script.hass_config_check_result:
   can_cancel: false
 
 
-#++++++++++++++++++++++++++
-#+++++ Router sensors +++++
-#++++++++++++++++++++++++++
-sensor.fritz_netmonitor:
-  friendly_name: Status
-  icon: mdi:router
-  hidden: true
-
-
 #+++++++++++++++++++++++
 #+++++ NAS sensors +++++
 #+++++++++++++++++++++++
@@ -251,9 +242,17 @@ binary_sensor.online_tablet_paolo:
   friendly_name: Tablet Paolo
   icon: mdi:tablet-android
   device_class: connectivity
-binary_sensor.online_google_home:
+binary_sensor.online_google_home_salotto:
   friendly_name: Google Home Mini
   icon: mdi:google-home
+  device_class: connectivity
+binary_sensor.online_google_nesthub_cucina:
+  friendly_name: Google Nest Hub
+  icon: mdi:monitor-speaker
+  device_class: connectivity
+binary_sensor.online_xiaomi_speaker_studio:
+  friendly_name: Xiaomi Smart Speaker
+  icon: mdi:speaker-wireless
   device_class: connectivity
 binary_sensor.online_google_chromecast:
   friendly_name: Chromecast

@@ -22,33 +22,40 @@ cards:
           show_header_toggle: false
           entities:
             - type: section
-            - sensor.fritz_attr_uptime
-            - sensor.fritz_attr_external_ip
-            - entity: sensor.fritz_attr_is_connected
+            - entity: sensor.fritz_box_7530_uptime_connection
               type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-              name: Connected to
+              name: Uptime
+              state_header: Connection
+              entities:
+                - entity: sensor.fritz_box_7530_uptime_device
+                  name: Device
+            - entity: sensor.fritz_box_7530_external_ip
+              name: External IP
+            - entity: binary_sensor.fritz_box_7530_connection
+              type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+              name: Connection Status
               state_header: Internet
               entities:
-                - entity: sensor.fritz_attr_is_linked
+                - entity: binary_sensor.fritz_box_7530_link
                   name: Provider
-            - entity: sensor.fritz_attr_received_mb
+            - entity: sensor.fritz_box_7530_gb_received
               type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-              name: Data Volume (MB)
+              name: Data Transfer (GB)
               state_header: Received
-              unit: " "
+              unit: []
               entities:
-                - entity: sensor.fritz_attr_sent_mb
+                - entity: sensor.fritz_box_7530_gb_sent
                   name: Sent
-                  unit: " "
-            - entity: sensor.fritz_attr_transmission_rate_down
+                  unit: []
+            - entity: sensor.fritz_box_7530_download_throughput
               type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-              name: Current Stream (byte/sec)
-              state_header: Down
-              unit: " "
+              name: Current Throughput (kB/s)
+              state_header: Download
+              unit: []
               entities:
-                - entity: sensor.fritz_attr_transmission_rate_up
-                  name: Up
-                  unit: " "
+                - entity: sensor.fritz_box_7530_upload_throughput
+                  name: Upload
+                  unit: []
             - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
               head:
                 type: section
