@@ -56,6 +56,10 @@ cards:
                 - entity: sensor.fritz_box_7530_upload_throughput
                   name: Upload
                   unit: []
+            - entity: binary_sensor.fritz_box_7530_firmware_update
+              name: Firmware Update
+              icon: mdi:cog-refresh
+              state_color: true
             - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
               head:
                 type: section

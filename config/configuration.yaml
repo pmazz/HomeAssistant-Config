@@ -205,9 +205,6 @@ cover: !include covers.yaml
 
 camera: !include cameras.yaml
 
-openuv:  #https://www.home-assistant.io/components/openuv
-  api_key: !secret openuv_api_key
-
 uilogs:  #https://github.com/custom-components/uilogs
 
 octoprint:  #https://www.home-assistant.io/integrations/octoprint
@@ -215,17 +212,6 @@ octoprint:  #https://www.home-assistant.io/integrations/octoprint
   api_key: !secret octoprint_api_key
   bed: true
   number_of_tools: 1
-
-proxmoxve:  #https://www.home-assistant.io/integrations/proxmoxve
-  - host: !secret proxmox_host
-    verify_ssl: false
-    username: !secret proxmox_username
-    password: !secret proxmox_pwd
-    realm: !secret proxmox_realm
-    nodes:
-      - node: homesrv
-        vms:
-          - 100
 
 landroid_cloud:  #https://github.com/MTrab/landroid_cloud
   - email: !secret landroid_user
