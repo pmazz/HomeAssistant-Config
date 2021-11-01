@@ -355,9 +355,7 @@
         chat_id: "{{ trigger.event.data.chat_id }}"
         inline_keyboard:
           - "\U000026A1 Reload Scripts:/ha_reload_scripts, \U000026A1 Reload Automations:/ha_reload_automations"
-          - "\U000026A1 Reload Customize:/ha_reload_customize"
           - "\U0001F503 Reboot Host:/ho_reboot, \U0001F501 Restart HA:/ha_restart"
-          - "\U0001F50C Shutdown Host:/ho_shutdown, \U000023F9 Stop HA:/ha_stop"
           - "\U0001F519 Go back:/goback_main"
 
 - id: bot_cmd_sensors
@@ -459,11 +457,11 @@
               *{% if not is_state('switch.smartplug_8', 'unknown') %}{{state_attr('switch.smartplug_8', 'friendly_name')}}{% else %}Smart Plug 3{% endif %}:*
               {%- if is_state('switch.smartplug_8', 'unavailable') %} {{"\U000026D4"}} Disconnected{% elif is_state('switch.smartplug_8', 'on') %} {{"\U00002705"}} On{% elif is_state('switch.smartplug_8', 'off') %} {{"\U0000274C"}} Off{% endif %}
         inline_keyboard:
-          - "{%- if is_state('switch.sonoff_basic_1', 'on') %}{{'\U0001F7E1'}}{% elif is_state('switch.sonoff_basic_1', 'off') %}{{'\U000026AB'}}{% else %}{{'\U000026D4'}}{% endif %} {{state_attr('switch.sonoff_basic_1', 'friendly_name')}}:/switches_toggle_sonoff_basic_1, {%- if is_state('switch.sonoff_basic_2', 'on') %}{{'\U0001F7E1'}}{% elif is_state('switch.sonoff_basic_2', 'off') %}{{'\U000026AB'}}{% else %}{{'\U000026D4'}}{% endif %} {{state_attr('switch.sonoff_basic_2', 'friendly_name')}}:/switches_toggle_sonoff_basic_2"
-          - "{%- if is_state('switch.smartplug_1', 'on') %}{{'\U0001F7E1'}}{% elif is_state('switch.smartplug_1', 'off') %}{{'\U000026AB'}}{% else %}{{'\U000026D4'}}{% endif %} {{state_attr('switch.smartplug_1', 'friendly_name')}}:/switches_toggle_plug1, {%- if is_state('switch.smartplug_2', 'on') %}{{'\U0001F7E1'}}{% elif is_state('switch.smartplug_2', 'off') %}{{'\U000026AB'}}{% else %}{{'\U000026D4'}}{% endif %} {{state_attr('switch.smartplug_2', 'friendly_name')}}:/switches_toggle_plug2"
-          - "{%- if is_state('switch.smartplug_3', 'on') %}{{'\U0001F7E1'}}{% elif is_state('switch.smartplug_3', 'off') %}{{'\U000026AB'}}{% else %}{{'\U000026D4'}}{% endif %} {{state_attr('switch.smartplug_3', 'friendly_name')}}:/switches_toggle_plug3, {%- if is_state('switch.smartplug_4', 'on') %}{{'\U0001F7E1'}}{% elif is_state('switch.smartplug_4', 'off') %}{{'\U000026AB'}}{% else %}{{'\U000026D4'}}{% endif %} {{state_attr('switch.smartplug_4', 'friendly_name')}}:/switches_toggle_plug4"
-          - "{%- if is_state('switch.smartplug_5', 'on') %}{{'\U0001F7E1'}}{% elif is_state('switch.smartplug_5', 'off') %}{{'\U000026AB'}}{% else %}{{'\U000026D4'}}{% endif %} {{state_attr('switch.smartplug_5', 'friendly_name')}}:/switches_toggle_plug5, {%- if is_state('switch.smartplug_6', 'on') %}{{'\U0001F7E1'}}{% elif is_state('switch.smartplug_6', 'off') %}{{'\U000026AB'}}{% else %}{{'\U000026D4'}}{% endif %} {{state_attr('switch.smartplug_6', 'friendly_name')}}:/switches_toggle_plug6"
-          - "{%- if is_state('switch.smartplug_7', 'on') %}{{'\U0001F7E1'}}{% elif is_state('switch.smartplug_7', 'off') %}{{'\U000026AB'}}{% else %}{{'\U000026D4'}}{% endif %} {{state_attr('switch.smartplug_7', 'friendly_name')}}:/switches_toggle_plug7, {%- if is_state('switch.smartplug_8', 'on') %}{{'\U0001F7E1'}}{% elif is_state('switch.smartplug_8', 'off') %}{{'\U000026AB'}}{% else %}{{'\U000026D4'}}{% endif %} {{state_attr('switch.smartplug_8', 'friendly_name')}}:/switches_toggle_plug8"
+          - "{%- if is_state('switch.sonoff_basic_1', 'on') %}{{'\U0001F4A1'}}{% elif is_state('switch.sonoff_basic_1', 'off') %}{{'\U000026AB'}}{% else %}{{'\U000026D4'}}{% endif %} {{state_attr('switch.sonoff_basic_1', 'friendly_name')}}:/switches_toggle_sonoff_basic_1, {%- if is_state('switch.sonoff_basic_2', 'on') %}{{'\U0001F4A1'}}{% elif is_state('switch.sonoff_basic_2', 'off') %}{{'\U000026AB'}}{% else %}{{'\U000026D4'}}{% endif %} {{state_attr('switch.sonoff_basic_2', 'friendly_name')}}:/switches_toggle_sonoff_basic_2"
+          - "{%- if is_state('switch.smartplug_1', 'on') %}{{'\U0001F4A1'}}{% elif is_state('switch.smartplug_1', 'off') %}{{'\U000026AB'}}{% else %}{{'\U000026D4'}}{% endif %} {{state_attr('switch.smartplug_1', 'friendly_name')}}:/switches_toggle_plug1, {%- if is_state('switch.smartplug_2', 'on') %}{{'\U0001F4A1'}}{% elif is_state('switch.smartplug_2', 'off') %}{{'\U000026AB'}}{% else %}{{'\U000026D4'}}{% endif %} {{state_attr('switch.smartplug_2', 'friendly_name')}}:/switches_toggle_plug2"
+          - "{%- if is_state('switch.smartplug_3', 'on') %}{{'\U0001F4A1'}}{% elif is_state('switch.smartplug_3', 'off') %}{{'\U000026AB'}}{% else %}{{'\U000026D4'}}{% endif %} {{state_attr('switch.smartplug_3', 'friendly_name')}}:/switches_toggle_plug3, {%- if is_state('switch.smartplug_4', 'on') %}{{'\U0001F4A1'}}{% elif is_state('switch.smartplug_4', 'off') %}{{'\U000026AB'}}{% else %}{{'\U000026D4'}}{% endif %} {{state_attr('switch.smartplug_4', 'friendly_name')}}:/switches_toggle_plug4"
+          - "{%- if is_state('switch.smartplug_5', 'on') %}{{'\U0001F4A1'}}{% elif is_state('switch.smartplug_5', 'off') %}{{'\U000026AB'}}{% else %}{{'\U000026D4'}}{% endif %} {{state_attr('switch.smartplug_5', 'friendly_name')}}:/switches_toggle_plug5, {%- if is_state('switch.smartplug_6', 'on') %}{{'\U0001F4A1'}}{% elif is_state('switch.smartplug_6', 'off') %}{{'\U000026AB'}}{% else %}{{'\U000026D4'}}{% endif %} {{state_attr('switch.smartplug_6', 'friendly_name')}}:/switches_toggle_plug6"
+          - "{%- if is_state('switch.smartplug_7', 'on') %}{{'\U0001F4A1'}}{% elif is_state('switch.smartplug_7', 'off') %}{{'\U000026AB'}}{% else %}{{'\U000026D4'}}{% endif %} {{state_attr('switch.smartplug_7', 'friendly_name')}}:/switches_toggle_plug7, {%- if is_state('switch.smartplug_8', 'on') %}{{'\U0001F4A1'}}{% elif is_state('switch.smartplug_8', 'off') %}{{'\U000026AB'}}{% else %}{{'\U000026D4'}}{% endif %} {{state_attr('switch.smartplug_8', 'friendly_name')}}:/switches_toggle_plug8"
           - "\U0001F53C Cover Up:/switches_cover_up, \U000023F9 Stop:/switches_cover_stop, \U0001F53D Cover Down:/switches_cover_down"
           - "\U0001F4AB Refresh:/switches, \U0001F519 Go back:/goback_main"
 
@@ -856,16 +854,6 @@
         inline_keyboard:
           - "\U0001F4AB Refresh:/wherearewe_silvia, \U0001F519 Go back:/wherearewe"
 
-- id: bot_cmd_system_ha_reload_customize
-  alias: bot_cmd_system_ha_reload_customize
-  trigger:
-    platform: event
-    event_type: telegram_callback
-    event_data:
-      data: "/ha_reload_customize"
-  action:
-    - service: script.hass_reload_customize
-
 - id: bot_cmd_system_ha_reload_scripts
   alias: bot_cmd_system_ha_reload_scripts
   trigger:
@@ -922,90 +910,6 @@
     event_type: telegram_callback
     event_data:
       data: "/ha_restart_cancel"
-  action:
-    - service: telegram_bot.delete_message
-      data:
-        message_id: "last"
-        chat_id: "{{ trigger.event.data.chat_id }}"
-
-- id: bot_cmd_system_ha_stop
-  alias: bot_cmd_system_ha_stop
-  trigger:
-    platform: event
-    event_type: telegram_callback
-    event_data:
-      data: "/ha_stop"
-  action:
-    - service: telegram_bot.send_message
-      data:
-        message: "Confermi l'operazione?"
-        disable_notification: true
-        inline_keyboard:
-          - "\U0001F44D Yes:/ha_stop_confirm, \U0001F44E No:/ha_stop_cancel"
-
-- id: bot_cmd_system_ha_stop_confirm
-  alias: bot_cmd_system_ha_stop_confirm
-  trigger:
-    platform: event
-    event_type: telegram_callback
-    event_data:
-      data: "/ha_stop_confirm"
-  action:
-    - service: telegram_bot.delete_message
-      data:
-        message_id: "last"
-        chat_id: "{{ trigger.event.data.chat_id }}"
-    - service: script.hass_stop
-
-- id: bot_cmd_system_ha_stop_cancel
-  alias: bot_cmd_system_ha_stop_cancel
-  trigger:
-    platform: event
-    event_type: telegram_callback
-    event_data:
-      data: "/ha_stop_cancel"
-  action:
-    - service: telegram_bot.delete_message
-      data:
-        message_id: "last"
-        chat_id: "{{ trigger.event.data.chat_id }}"
-
-- id: bot_cmd_system_ho_shutdown
-  alias: bot_cmd_system_ho_shutdown
-  trigger:
-    platform: event
-    event_type: telegram_callback
-    event_data:
-      data: "/ho_shutdown"
-  action:
-    - service: telegram_bot.send_message
-      data:
-        message: "Confermi l'operazione?"
-        disable_notification: true
-        inline_keyboard:
-          - "\U0001F44D Yes:/ho_shutdown_confirm, \U0001F44E No:/ho_shutdown_cancel"
-
-- id: bot_cmd_system_ho_shutdown_confirm
-  alias: bot_cmd_system_ho_shutdown_confirm
-  trigger:
-    platform: event
-    event_type: telegram_callback
-    event_data:
-      data: "/ho_shutdown_confirm"
-  action:
-    - service: telegram_bot.delete_message
-      data:
-        message_id: "last"
-        chat_id: "{{ trigger.event.data.chat_id }}"
-    - service: script.hass_server_shutdown
-
-- id: bot_cmd_system_ho_shutdown_cancel
-  alias: bot_cmd_system_ho_shutdown_cancel
-  trigger:
-    platform: event
-    event_type: telegram_callback
-    event_data:
-      data: "/ho_shutdown_cancel"
   action:
     - service: telegram_bot.delete_message
       data:

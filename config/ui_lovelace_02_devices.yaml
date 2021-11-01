@@ -64,20 +64,19 @@ cards:
               head:
                 type: section
                 label: Wifi Networks
+              group_config:
+                row: true
               open: true
               items:
                 - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
-                  row: true
                   card:
                     entity: switch.wifi_24ghz
                     state_color: true
                 - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
-                  row: true
                   card:
                     entity: switch.wifi_5ghz
                     state_color: true
                 - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
-                  row: true
                   card:
                     entity: switch.wifi_guest
                     state_color: true
@@ -155,7 +154,7 @@ cards:
                 icon: mdi:printer-3d
                 tap_action:
                   action: url
-                  url_path: http://prusamini.local
+                  url_path: !secret prusa_mini_url
           - entity: sensor.octoprint_job_percentage
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
             name: Current Job

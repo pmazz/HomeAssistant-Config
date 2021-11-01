@@ -94,8 +94,8 @@
 
 - platform: command_line  #https://www.home-assistant.io/components/sensor.command_line
   name: hass_ip_address
-  command: ifconfig | sed -n -e 's/:127\.0\.0\.1 //g' -e 's/:172\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\} //g' -e 's/ *inet addr:\([0-9.]\+\).*/\1/gp'
-  scan_interval: 600
+  command: ifconfig | sed -n -e 's/:127\.0\.0\.1 //g' -e 's/:172\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\} //g' -e 's/:100\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\} //g' -e 's/ *inet addr:\([0-9.]\+\).*/\1/gp'
+  scan_interval: 6000
 
 - platform: sql  #https://www.home-assistant.io/integrations/sql
   db_url: !secret db_url
@@ -545,46 +545,16 @@
 #++++++++++++++++++++++++++
 #+++++ Router sensors +++++
 #++++++++++++++++++++++++++
-- platform: fritzbox_netmonitor  #https://www.home-assistant.io/components/sensor.fritzbox_netmonitor
 - platform: template  #https://www.home-assistant.io/components/sensor.template
   sensors:
-    fritz_attr_uptime: #Uptime in seconds
+    fritz_box_7530_uptime_device:
       icon_template: mdi:clock
-      friendly_name: Uptime
-      value_template: "{% if not is_state('sensor.fritz_netmonitor', 'unknown') %}{{state_attr('sensor.fritz_netmonitor', 'uptime') // 60}}{% else %}N/A{% endif %}"
-      unit_of_measurement: minutes
-    fritz_attr_external_ip: #External ip address
-      icon_template: mdi:earth
-      friendly_name: External IP
-      value_template: "{% if not is_state('sensor.fritz_netmonitor', 'unknown') %}{{state_attr('sensor.fritz_netmonitor', 'external_ip')}}{% else %}N/A{% endif %}"
-    fritz_attr_is_linked: #True if the FritzBox is physically linked to the provider
-      icon_template: "{% if not is_state('sensor.fritz_netmonitor', 'unknown') and state_attr('sensor.fritz_netmonitor', 'is_linked') %}mdi:ethernet-cable{% else %}mdi:ethernet-cable-off{% endif %}"
-      friendly_name: Linked to provider
-      value_template: "{% if not is_state('sensor.fritz_netmonitor', 'unknown') %}{{state_attr('sensor.fritz_netmonitor', 'is_linked')}}{% else %}N/A{% endif %}"
-    fritz_attr_is_connected: #True if the FritzBox has established an internet-connection
-      icon_template: "{% if not is_state('sensor.fritz_netmonitor', 'unknown') and state_attr('sensor.fritz_netmonitor', 'is_connected') %}mdi:ethernet-cable{% else %}mdi:ethernet-cable-off{% endif %}"
-      friendly_name: Internet connected
-      value_template: "{% if not is_state('sensor.fritz_netmonitor', 'unknown') %}{{state_attr('sensor.fritz_netmonitor', 'is_connected')}}{% else %}N/A{% endif %}"
-    fritz_attr_sent_mb: #Bytes sent
-      icon_template: mdi:call-made
-      friendly_name: Sent
-      value_template: "{% if not is_state('sensor.fritz_netmonitor', 'unknown') %}{{state_attr('sensor.fritz_netmonitor', 'bytes_sent') // 1024 // 1024}}{% else %}N/A{% endif %}"
-      unit_of_measurement: MB
-    fritz_attr_received_mb: #Bytes received
-      icon_template: mdi:call-received
-      friendly_name: Received
-      value_template: "{% if not is_state('sensor.fritz_netmonitor', 'unknown') %}{{state_attr('sensor.fritz_netmonitor', 'bytes_received') // 1024 // 1024}}{% else %}N/A{% endif %}"
-      unit_of_measurement: MB
-    fritz_attr_transmission_rate_up: #Current upstream speed in bytes/s
-      icon_template: mdi:upload-network
-      friendly_name: Current upstream
-      value_template: "{% if not is_state('sensor.fritz_netmonitor', 'unknown') %}{{state_attr('sensor.fritz_netmonitor', 'transmission_rate_up')}}{% else %}N/A{% endif %}"
-      unit_of_measurement: bytes/sec
-    fritz_attr_transmission_rate_down: #Current downstream speed in bytes/s
-      icon_template: mdi:download-network
-      friendly_name: Current downstream
-      value_template: "{% if not is_state('sensor.fritz_netmonitor', 'unknown') %}{{state_attr('sensor.fritz_netmonitor', 'transmission_rate_down')}}{% else %}N/A{% endif %}"
-      unit_of_measurement: bytes/sec
+      friendly_name: Device Uptime
+      value_template: "{% if not is_state('sensor.fritz_box_7530_connection_uptime', 'unknown') %}{{as_timestamp(states('sensor.fritz_box_7530_connection_uptime')) | timestamp_custom('%Y-%m-%d %H:%M')}}{% else %}N/A{% endif %}"
+    fritz_box_7530_uptime_connection:
+      icon_template: mdi:clock
+      friendly_name: Connection Uptime
+      value_template: "{% if not is_state('sensor.fritz_box_7530_device_uptime', 'unknown') %}{{as_timestamp(states('sensor.fritz_box_7530_device_uptime')) | timestamp_custom('%Y-%m-%d %H:%M')}}{% else %}N/A{% endif %}"
 
 
 #+++++++++++++++++++++++

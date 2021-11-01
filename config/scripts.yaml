@@ -629,7 +629,6 @@ set_home_mode_day:
         option: "giorno"
 
 say_goodmorning:
-  #Messaggio di buongiorno
   alias: Good Morning Message
   description: "Say the 'good morning' message."
   sequence:
@@ -640,6 +639,7 @@ say_goodmorning:
           {% set dd = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica"] %}
           Buongiorno. Oggi è {{ dd[now.weekday()] }} {{ now.day | int }}, e sono le {{ now.strftime('%I') | int }} e {{ now.strftime('%M') | int }}.
         volume: "0.5"
+    - delay: "00:00:03"
     - wait_template: "{{ states('media_player.salotto') != 'playing' }}"
     - service: script.tts_speak
       data:
@@ -650,21 +650,25 @@ say_goodmorning:
           Attenzione: Oggi potrebbe piovere!
           {% endif %}
         volume: "0.5"
-    - wait_template: "{{ states('media_player.salotto') != 'playing' }}"
+
+play_breaking_news:
+  alias: Play Breaking News
+  description: "Play the Breaking News on speakers."
+  sequence:
     - service: script.tts_speak
       data:
         message2say: Ecco le ultime notizie.
-        volume: "0.5"
-    - wait_template: "{{ states('media_player.salotto') != 'playing' }}"
+        volume: "0.4"
+    - delay: "00:00:03"
     - service: media_player.volume_set
       data:
         entity_id: media_player.salotto
         volume_level: "0.4"
-    - service: media_player.play_media #Play TGCom24 news
+    - service: media_player.play_media
       data:
         entity_id: media_player.salotto
-        media_content_id: https://podcast.unitedradio.it/105.net/NEW/upload/uploadedContent/repliche/tgcom24/tgcom24.mp3
         media_content_type: "audio/mp4"
+        media_content_id: "{% if news_media_url and news_media_url | trim() != '' %}{{ news_media_url }}{% endif %}"
 
 set_home_mode_night:
   #Imposta la modalità casa su 'notte'

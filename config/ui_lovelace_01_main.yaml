@@ -25,7 +25,7 @@ cards:
               - icon: mdi:open-in-new
                 tap_action: 
                   action: url
-                  url_path: http://fritz.box
+                  url_path: !secret router_url
           - entity: binary_sensor.online_repeater_fritzbox
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
             name: Repeater
@@ -34,7 +34,7 @@ cards:
               - icon: mdi:open-in-new
                 tap_action: 
                   action: url
-                  url_path: http://fritz.box
+                  url_path: !secret router_repeater_url
           - entity: binary_sensor.online_nas_qnap
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
             name: NAS
@@ -43,7 +43,7 @@ cards:
               - icon: mdi:open-in-new
                 tap_action: 
                   action: url
-                  url_path: http://nas.local:8080
+                  url_path: !secret nas_url
           - entity: binary_sensor.online_adguard
             state_color: true
           - entity: binary_sensor.online_google_home_salotto
@@ -71,7 +71,7 @@ cards:
               - icon: mdi:open-in-new
                 tap_action: 
                   action: url
-                  url_path: http://prusa-mini.local
+                  url_path: !secret prusa_mini_url
       - break
       - id: main.mobile_devices
         type: entities  #https://www.home-assistant.io/lovelace/entities

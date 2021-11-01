@@ -34,10 +34,6 @@ cards:
             row: true
             card:
               entity: script.hass_server_reboot
-          - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
-            row: true
-            card:
-              entity: script.hass_server_shutdown
       - id: system.broker_mqtt
         type: entities  #https://www.home-assistant.io/lovelace/entities
         title: MQTT Broker
@@ -119,13 +115,14 @@ cards:
                     attribute: updates_count
                     unit: update(s)
                     name: []
+            group_config:
+                state_color: true
+                show_state: false
             items:
               - entity: binary_sensor.addon_adguard_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: AdGuard Home
                 icon: si:adguard
-                state_color: true
-                show_state: false
                 entities:
                   - icon: mdi:open-in-new
                     tap_action: 
@@ -152,8 +149,6 @@ cards:
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: Bitwarden RS
                 icon: si:bitwarden
-                state_color: true
-                show_state: false
                 entities:
                   - icon: mdi:open-in-new
                     tap_action: 
@@ -178,8 +173,6 @@ cards:
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: Dasshio
                 icon: fas:puzzle-piece
-                state_color: true
-                show_state: false
                 entities:
                   - icon: mdi:hammer-screwdriver
                     tap_action: 
@@ -200,8 +193,6 @@ cards:
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: Duck DNS
                 icon: mdi:dns-outline
-                state_color: true
-                show_state: false
                 entities:
                   - icon: mdi:hammer-screwdriver
                     tap_action: 
@@ -222,8 +213,6 @@ cards:
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: MariaDB
                 icon: si:mariadb
-                state_color: true
-                show_state: false
                 entities:
                   - icon: mdi:hammer-screwdriver
                     tap_action: 
@@ -244,8 +233,6 @@ cards:
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: Mosquitto
                 icon: si:eclipsemosquitto
-                state_color: true
-                show_state: false
                 entities:
                   - icon: mdi:hammer-screwdriver
                     tap_action: 
@@ -266,8 +253,6 @@ cards:
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: motionEye
                 icon: mdi:webcam
-                state_color: true
-                show_state: false
                 entities:
                   - icon: mdi:open-in-new
                     tap_action: 
@@ -292,8 +277,6 @@ cards:
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: Network UPS Tools
                 icon: fas:puzzle-piece
-                state_color: true
-                show_state: false
                 entities:
                   - icon: mdi:hammer-screwdriver
                     tap_action: 
@@ -314,8 +297,6 @@ cards:
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: Node-RED
                 icon: si:node-red
-                state_color: true
-                show_state: false
                 entities:
                   - icon: mdi:open-in-new
                     tap_action: 
@@ -340,8 +321,6 @@ cards:
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: phpMyAdmin
                 icon: si:php
-                state_color: true
-                show_state: false
                 entities:
                   - icon: mdi:open-in-new
                     tap_action: 
@@ -366,8 +345,6 @@ cards:
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: Samba share
                 icon: fas:puzzle-piece
-                state_color: true
-                show_state: false
                 entities:
                   - icon: mdi:hammer-screwdriver
                     tap_action: 
@@ -388,8 +365,6 @@ cards:
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: SSH & Web Terminal
                 icon: fas:terminal
-                state_color: true
-                show_state: false
                 entities:
                   - icon: mdi:open-in-new
                     tap_action: 
@@ -414,8 +389,6 @@ cards:
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: TasmoAdmin
                 icon: fas:puzzle-piece
-                state_color: true
-                show_state: false
                 entities:
                   - icon: mdi:open-in-new
                     tap_action: 
@@ -440,8 +413,6 @@ cards:
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: Visual Studio Code
                 icon: si:visualstudiocode
-                state_color: true
-                show_state: false
                 entities:
                   - icon: mdi:open-in-new
                     tap_action: 
@@ -521,10 +492,6 @@ cards:
           - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
             row: true
             card:
-              entity: script.hass_reload_customize
-          - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
-            row: true
-            card:
               entity: script.hass_reload_scripts
           - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
             row: true
@@ -534,10 +501,6 @@ cards:
             row: true
             card:
               entity: script.hass_restart
-          - type: custom:restriction-card  #https://github.com/iantrich/restriction-card
-            row: true
-            card:
-              entity: script.hass_stop
       - break
       - id: system.configuration
         type: entities  #https://www.home-assistant.io/lovelace/entities

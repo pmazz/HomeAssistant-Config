@@ -32,7 +32,7 @@ cards:
                   - icon: mdi:open-in-new
                     tap_action: 
                       action: url
-                      url_path: http://pzem-004t.local
+                      url_path: !secret sonoff_pzem004t_1_url
                   - entity: sensor.pzem_wifi_rssi
                     name: Wifi
           - entity: sensor.pzem_power
@@ -405,7 +405,7 @@ cards:
                       - icon: mdi:open-in-new
                         tap_action: 
                           action: url
-                          url_path: http://pzem-004t.local
+                          url_path: !secret sonoff_4ch_1_url
                       - entity: sensor.sonoff_4ch_1_wifi_rssi
                         name: Wifi
               - entity: binary_sensor.irrigation_status

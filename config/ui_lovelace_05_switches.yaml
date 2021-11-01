@@ -37,7 +37,7 @@ cards:
                       - icon: mdi:open-in-new
                         tap_action: 
                           action: url
-                          url_path: http://sonoff-basic-1.local
+                          url_path: !secret sonoff_basic_1_url
                       - entity: sensor.sonoff_basic_1_wifi_rssi
                         name: Wifi
                       - entity: sensor.sonoff_basic_1_boot_count
@@ -118,7 +118,7 @@ cards:
                       - icon: mdi:open-in-new
                         tap_action: 
                           action: url
-                          url_path: http://sonoff-basic-2.local
+                          url_path: !secret sonoff_basic_2_url
                       - entity: sensor.sonoff_basic_2_wifi_rssi
                         name: Wifi
                       - entity: sensor.sonoff_basic_2_boot_count
@@ -192,6 +192,7 @@ cards:
                   card:
                     entity: switch.sonoff_basic_3
                     state_color: true
+                clickable: false
                 items:
                   - entity: sensor.sonoff_basic_3_boot_count
                     type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
@@ -202,7 +203,7 @@ cards:
                       - icon: mdi:open-in-new
                         tap_action: 
                           action: url
-                          url_path: http://sonoff-basic-3.local
+                          url_path: !secret sonoff_basic_3_url
                       - entity: sensor.sonoff_basic_3_wifi_rssi
                         name: Wifi
                       - entity: sensor.sonoff_basic_3_boot_count
@@ -228,6 +229,7 @@ cards:
                   restrictions:
                     confirm:
                       text: "Confermi esecuzione ?"
+                clickable: false
                 items:
                   - entity: sensor.sonoff_rele_1_boot_count
                     type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
@@ -238,7 +240,7 @@ cards:
                       - icon: mdi:open-in-new
                         tap_action: 
                           action: url
-                          url_path: http://sonoff-rele-1.local
+                          url_path: !secret sonoff_rele_1_url
                       - entity: sensor.sonoff_rele_1_wifi_rssi
                         name: Wifi
                       - entity: sensor.sonoff_rele_1_boot_count
@@ -258,6 +260,7 @@ cards:
                   restrictions:
                     confirm:
                       text: "Confermi esecuzione ?"
+                clickable: false
                 items:
                   # - entity: sensor.sonoff_rele_2_boot_count
                   #   type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
@@ -288,6 +291,7 @@ cards:
                   restrictions:
                     confirm:
                       text: "Confermi esecuzione ?"
+                clickable: false
                 items:
                   # - entity: sensor.sonoff_rele_2_boot_count
                   #   type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
@@ -329,7 +333,7 @@ cards:
                       - icon: mdi:open-in-new
                         tap_action: 
                           action: url
-                          url_path: http://smart-plug-1.local
+                          url_path: !secret smartplug_1_url
                       - entity: sensor.smart_plug_1_wifi_rssi
                         name: Wifi
                       - entity: sensor.smart_plug_1_boot_count
@@ -410,7 +414,7 @@ cards:
                       - icon: mdi:open-in-new
                         tap_action: 
                           action: url
-                          url_path: http://smart-plug-2.local
+                          url_path: !secret smartplug_2_url
                       - entity: sensor.smart_plug_2_wifi_rssi
                         name: Wifi
                       - entity: sensor.smart_plug_2_boot_count
@@ -491,7 +495,7 @@ cards:
                       - icon: mdi:open-in-new
                         tap_action: 
                           action: url
-                          url_path: http://smart-plug-3.local
+                          url_path: !secret smartplug_3_url
                       - entity: sensor.smart_plug_3_wifi_rssi
                         name: Wifi
                       - entity: sensor.smart_plug_3_boot_count
@@ -572,7 +576,7 @@ cards:
                       - icon: mdi:open-in-new
                         tap_action: 
                           action: url
-                          url_path: http://smart-plug-4.local
+                          url_path: !secret smartplug_4_url
                       - entity: sensor.smart_plug_4_wifi_rssi
                         name: Wifi
                       - entity: sensor.smart_plug_4_boot_count
@@ -653,7 +657,7 @@ cards:
                       - icon: mdi:open-in-new
                         tap_action: 
                           action: url
-                          url_path: http://smart-plug-5.local
+                          url_path: !secret smartplug_5_url
                       - entity: sensor.smart_plug_5_wifi_rssi
                         name: Wifi
                       - entity: sensor.smart_plug_5_boot_count
@@ -734,7 +738,7 @@ cards:
                       - icon: mdi:open-in-new
                         tap_action: 
                           action: url
-                          url_path: http://smart-plug-6.local
+                          url_path: !secret smartplug_6_url
                       - entity: sensor.smart_plug_6_wifi_rssi
                         name: Wifi
                       - entity: sensor.smart_plug_6_boot_count
@@ -815,7 +819,7 @@ cards:
                       - icon: mdi:open-in-new
                         tap_action: 
                           action: url
-                          url_path: http://smart-plug-7.local
+                          url_path: !secret smartplug_7_url
                       - entity: sensor.smart_plug_7_wifi_rssi
                         name: Wifi
                       - entity: sensor.smart_plug_7_boot_count
@@ -896,7 +900,7 @@ cards:
                       - icon: mdi:open-in-new
                         tap_action: 
                           action: url
-                          url_path: http://smart-plug-8.local
+                          url_path: !secret smartplug_8_url
                       - entity: sensor.smart_plug_8_wifi_rssi
                         name: Wifi
                       - entity: sensor.smart_plug_8_boot_count
@@ -992,7 +996,7 @@ cards:
                     - icon: mdi:open-in-new
                       tap_action: 
                         action: url
-                        url_path: http://sonoff-dual-1.local
+                        url_path: !secret sonoff_dual_1_url
                     - entity: sensor.sonoff_dual_1_wifi_rssi
                       name: Wifi
             - entity: cover.home_cover

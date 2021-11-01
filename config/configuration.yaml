@@ -143,9 +143,6 @@ timer: !include timers.yaml
 simpleicons:  #https://github.com/vigonotion/hass-simpleicons
 fontawesome:  #https://github.com/thomasloven/hass-fontawesome
 
-hacs:
-  token: !secret github_hacs
-
 samsungtv:  #https://www.home-assistant.io/integrations/samsungtv
   - host: !secret samsung_tv_ip
 
