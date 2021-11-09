@@ -14,9 +14,6 @@ resources:
   - url: /hacsfiles/lovelace-card-tools/card-tools.js
     #https://github.com/thomasloven/lovelace-card-tools
     type: module
-  - url: /hacsfiles/lovelace-layout-card/layout-card.js
-    #https://github.com/thomasloven/lovelace-layout-card
-    type: module
   - url: /hacsfiles/lovelace-multiple-entity-row/multiple-entity-row.js
     #https://github.com/benct/lovelace-multiple-entity-row
     type: module
@@ -40,6 +37,9 @@ resources:
     type: module
   - url: /hacsfiles/battery-state-card/battery-state-card.js
     #https://github.com/maxwroc/battery-state-card
+    type: module
+  - url: /hacsfiles/timer-bar-card/timer-bar-card.js
+    #https://github.com/rianadon/timer-bar-card
     type: module
 #+++++ TEST COMPONENTS +++++
 

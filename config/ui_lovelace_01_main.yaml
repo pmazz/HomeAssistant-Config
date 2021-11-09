@@ -4,12 +4,9 @@
 path: main
 title: Main
 icon: mdi:home-assistant
-panel: true
 cards:
-  - id: main.container
-    type: custom:layout-card  #https://github.com/thomasloven/lovelace-layout-card
-    layout: vertical
-    max_columns: 2
+  - id: main.col1
+    type: vertical-stack
     cards:
       - id: main.connected_devices
         type: entities  #https://www.home-assistant.io/lovelace/entities
@@ -72,7 +69,9 @@ cards:
                 tap_action: 
                   action: url
                   url_path: !secret prusa_mini_url
-      - break
+  - id: main.col2
+    type: vertical-stack
+    cards:
       - id: main.mobile_devices
         type: entities  #https://www.home-assistant.io/lovelace/entities
         title: Mobile Devices

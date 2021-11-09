@@ -15,19 +15,19 @@ hass_theme_selected_saved:
   name: Selected Theme
   icon: mdi:theme-light-dark
 
-event_ale_letto:
-  name: Avviso
-  icon: mdi:comment-alert-outline
-
-event_ale_scuola:
-  name: Avviso
-  icon: mdi:comment-alert-outline
-
 event_sveglia_1:
   name: Avviso
   icon: mdi:comment-alert-outline
 
 event_sveglia_2:
+  name: Avviso
+  icon: mdi:comment-alert-outline
+
+event_sveglia_3:
+  name: Avviso
+  icon: mdi:comment-alert-outline
+
+event_sveglia_4:
   name: Avviso
   icon: mdi:comment-alert-outline
 

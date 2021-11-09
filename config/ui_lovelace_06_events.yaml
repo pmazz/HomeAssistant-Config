@@ -4,12 +4,9 @@
 path: events
 title: Events
 icon: mdi:calendar-clock
-panel: true
 cards:
-  - id: events.container
-    type: custom:layout-card  #https://github.com/thomasloven/lovelace-layout-card
-    layout: vertical
-    max_columns: 3
+  - id: events.col1
+    type: vertical-stack
     cards:
       - id: events.today
         type: entities  #https://www.home-assistant.io/lovelace/entities
@@ -54,71 +51,66 @@ cards:
         title: Avviso Orario
         show_header_toggle: false
         entities:
+          - type: section
           - entity: input_boolean.event_sonoleore
             state_color: true
           - input_select.event_type_sonoleore
           - input_number.event_volume_sonoleore
-      - break
-      - id: events.ale
+  - id: events.col2
+    type: vertical-stack
+    cards:
+      - id: events.sveglia3
         type: entities  #https://www.home-assistant.io/lovelace/entities
-        title: Avvisi per Ale
+        title: Avviso 1
         show_header_toggle: false
         entities:
-          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-            head:
-              type: section
-              label: Ale a letto
-            open: true
-            items:
-              - entity: switch.event_ale_letto
-                state_color: true
-              - input_datetime.event_ale_letto
-              - input_text.event_ale_letto
-              - input_number.event_volume_ale_letto
-              - input_select.event_daytype_ale_letto
-              - input_select.event_homemode_ale_letto
-          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-            head:
-              type: section
-              label: Ale a scuola
-            open: true
-            items:
-              - entity: switch.event_ale_scuola
-                state_color: true
-              - input_datetime.event_ale_scuola
-              - input_text.event_ale_scuola
-              - input_number.event_volume_ale_scuola
-              - input_select.event_daytype_ale_scuola
-              - input_select.event_homemode_ale_scuola
-      - break
-      - id: events.sveglie
+          - type: section
+          - entity: switch.event_sveglia_3
+            state_color: true
+          - input_datetime.event_sveglia_3
+          - input_text.event_sveglia_3
+          - input_number.event_volume_sveglia_3
+          - input_select.event_daytype_sveglia_3
+          - input_select.event_homemode_sveglia_3
+      - id: events.sveglia4
         type: entities  #https://www.home-assistant.io/lovelace/entities
-        title: Sveglie
+        title: Avviso 2
         show_header_toggle: false
         entities:
-          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-            head:
-              type: section
-              label: Sveglia 1
-            open: true
-            items:
-              - entity: switch.event_sveglia_1
-                state_color: true
-              - input_datetime.event_sveglia_1
-              - input_text.event_sveglia_1
-              - input_number.event_volume_sveglia_1
-              - input_select.event_daytype_sveglia_1
-              - input_select.event_homemode_sveglia_1
-          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
-            head:
-              type: section
-              label: Sveglia 2
-            open: true
-            items:
-              - entity: switch.event_sveglia_2
-                state_color: true
-              - input_datetime.event_sveglia_2
-              - input_text.event_sveglia_2
-              - input_number.event_volume_sveglia_2
-              - input_select.event_daytype_sveglia_2
-              - input_select.event_homemode_sveglia_2
+          - type: section
+          - entity: switch.event_sveglia_4
+            state_color: true
+          - input_datetime.event_sveglia_4
+          - input_text.event_sveglia_4
+          - input_number.event_volume_sveglia_4
+          - input_select.event_daytype_sveglia_4
+          - input_select.event_homemode_sveglia_4
+  - id: events.col3
+    type: vertical-stack
+    cards:
+      - id: events.sveglia1
+        type: entities  #https://www.home-assistant.io/lovelace/entities
+        title: Sveglia 1
+        show_header_toggle: false
+        entities:
+          - type: section
+          - entity: switch.event_sveglia_1
+            state_color: true
+          - input_datetime.event_sveglia_1
+          - input_text.event_sveglia_1
+          - input_number.event_volume_sveglia_1
+          - input_select.event_daytype_sveglia_1
+          - input_select.event_homemode_sveglia_1
+      - id: events.sveglia2
+        type: entities  #https://www.home-assistant.io/lovelace/entities
+        title: Sveglia 2
+        show_header_toggle: false
+        entities:
+          - type: section
+          - entity: switch.event_sveglia_2
+            state_color: true
+          - input_datetime.event_sveglia_2
+          - input_text.event_sveglia_2
+          - input_number.event_volume_sveglia_2
+          - input_select.event_daytype_sveglia_2
+          - input_select.event_homemode_sveglia_2

@@ -4,12 +4,9 @@
 path: switches
 title: Switches
 icon: mdi:dip-switch
-panel: true
 cards:
-  - id: switches.container
-    type: custom:layout-card  #https://github.com/thomasloven/lovelace-layout-card
-    layout: vertical
-    max_columns: 3
+  - id: switches.col1
+    type: vertical-stack
     cards:
       - id: switches.switches
         type: entities  #https://www.home-assistant.io/lovelace/entities
@@ -91,6 +88,8 @@ cards:
                         state: "Timer Off"
                     row:
                       entity: timer.event_timer_off_sonoff_basic_1
+                      type: custom:timer-bar-card  #https://github.com/rianadon/timer-bar-card
+                      name: Timer
                   - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_sonoff_basic_1
@@ -172,6 +171,8 @@ cards:
                         state: "Timer Off"
                     row:
                       entity: timer.event_timer_off_sonoff_basic_2
+                      type: custom:timer-bar-card  #https://github.com/rianadon/timer-bar-card
+                      name: Timer
                   - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_sonoff_basic_2
@@ -387,6 +388,8 @@ cards:
                         state: "Timer Off"
                     row:
                       entity: timer.event_timer_off_smartplug_1
+                      type: custom:timer-bar-card  #https://github.com/rianadon/timer-bar-card
+                      name: Timer
                   - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_1
@@ -468,6 +471,8 @@ cards:
                         state: "Timer Off"
                     row:
                       entity: timer.event_timer_off_smartplug_2
+                      type: custom:timer-bar-card  #https://github.com/rianadon/timer-bar-card
+                      name: Timer
                   - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_2
@@ -549,6 +554,8 @@ cards:
                         state: "Timer Off"
                     row:
                       entity: timer.event_timer_off_smartplug_3
+                      type: custom:timer-bar-card  #https://github.com/rianadon/timer-bar-card
+                      name: Timer
                   - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_3
@@ -630,6 +637,8 @@ cards:
                         state: "Timer Off"
                     row:
                       entity: timer.event_timer_off_smartplug_4
+                      type: custom:timer-bar-card  #https://github.com/rianadon/timer-bar-card
+                      name: Timer
                   - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_4
@@ -711,6 +720,8 @@ cards:
                         state: "Timer Off"
                     row:
                       entity: timer.event_timer_off_smartplug_5
+                      type: custom:timer-bar-card  #https://github.com/rianadon/timer-bar-card
+                      name: Timer
                   - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_5
@@ -792,6 +803,8 @@ cards:
                         state: "Timer Off"
                     row:
                       entity: timer.event_timer_off_smartplug_6
+                      type: custom:timer-bar-card  #https://github.com/rianadon/timer-bar-card
+                      name: Timer
                   - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_6
@@ -873,6 +886,8 @@ cards:
                         state: "Timer Off"
                     row:
                       entity: timer.event_timer_off_smartplug_7
+                      type: custom:timer-bar-card  #https://github.com/rianadon/timer-bar-card
+                      name: Timer
                   - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_7
@@ -954,6 +969,8 @@ cards:
                         state: "Timer Off"
                     row:
                       entity: timer.event_timer_off_smartplug_8
+                      type: custom:timer-bar-card  #https://github.com/rianadon/timer-bar-card
+                      name: Timer
                   - type: conditional  #https://www.home-assistant.io/lovelace/entities/#conditional
                     conditions:
                       - entity: input_select.event_starttype_smartplug_8
@@ -967,7 +984,9 @@ cards:
                     row:
                       entity: input_number.event_charge_level_smartplug_8
                   - type: section
-      - break
+  - id: switches.col2
+    type: vertical-stack
+    cards:
       - id: events.cover
         type: conditional  #https://www.home-assistant.io/lovelace/conditional
         conditions:
@@ -1073,4 +1092,3 @@ cards:
                 - entity: input_number.event_duration_cover_down
                   name: Durata (sec.)
                 - input_select.event_daytype_cover_down
-      - break

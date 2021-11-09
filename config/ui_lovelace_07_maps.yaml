@@ -4,12 +4,9 @@
 path: maps
 title: Maps
 icon: mdi:map-marker-radius
-panel: true
 cards:
-  - id: maps.container
-    type: custom:layout-card  #https://github.com/thomasloven/lovelace-layout-card
-    layout: vertical
-    max_columns: 2
+  - id: maps.col1
+    type: vertical-stack
     cards:
       - id: maps.where_is_paolo
         type: entities  #https://www.home-assistant.io/lovelace/entities
@@ -57,7 +54,9 @@ cards:
         default_zoom: 17
         entities:
           - device_tracker.cell_paolo
-      - break
+  - id: maps.col2
+    type: vertical-stack
+    cards:
       - id: maps.where_is_silvia
         type: entities  #https://www.home-assistant.io/lovelace/entities
         title: Where is Silvia?

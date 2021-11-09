@@ -12,30 +12,6 @@
         service: input_boolean.turn_off
         data:
           entity_id: input_boolean.event_sonoleore
-    event_ale_letto:
-      friendly_name: "Attivo"
-      icon_template: "{% if is_state('input_boolean.event_ale_letto', 'on') %}mdi:bell{% else %}mdi:bell-off{% endif %}"
-      value_template: "{{ is_state('input_boolean.event_ale_letto', 'on') }}"
-      turn_on:
-        service: input_boolean.turn_on
-        data:
-          entity_id: input_boolean.event_ale_letto
-      turn_off:
-        service: input_boolean.turn_off
-        data:
-          entity_id: input_boolean.event_ale_letto
-    event_ale_scuola:
-      friendly_name: "Attivo"
-      icon_template: "{% if is_state('input_boolean.event_ale_scuola', 'on') %}mdi:bell{% else %}mdi:bell-off{% endif %}"
-      value_template: "{{ is_state('input_boolean.event_ale_scuola', 'on') }}"
-      turn_on:
-        service: input_boolean.turn_on
-        data:
-          entity_id: input_boolean.event_ale_scuola
-      turn_off:
-        service: input_boolean.turn_off
-        data:
-          entity_id: input_boolean.event_ale_scuola
     event_sveglia_1:
       friendly_name: "Attivo"
       icon_template: "{% if is_state('input_boolean.event_sveglia_1', 'on') %}mdi:bell{% else %}mdi:bell-off{% endif %}"
@@ -60,6 +36,30 @@
         service: input_boolean.turn_off
         data:
           entity_id: input_boolean.event_sveglia_2
+    event_sveglia_3:
+      friendly_name: "Attivo"
+      icon_template: "{% if is_state('input_boolean.event_sveglia_3', 'on') %}mdi:bell{% else %}mdi:bell-off{% endif %}"
+      value_template: "{{ is_state('input_boolean.event_sveglia_3', 'on') }}"
+      turn_on:
+        service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.event_sveglia_3
+      turn_off:
+        service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.event_sveglia_3
+    event_sveglia_4:
+      friendly_name: "Attivo"
+      icon_template: "{% if is_state('input_boolean.event_sveglia_4', 'on') %}mdi:bell{% else %}mdi:bell-off{% endif %}"
+      value_template: "{{ is_state('input_boolean.event_sveglia_4', 'on') }}"
+      turn_on:
+        service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.event_sveglia_4
+      turn_off:
+        service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.event_sveglia_4
     event_cover_up:
       friendly_name: "Attivo"
       icon_template: "{% if is_state('input_boolean.event_cover_up', 'on') %}mdi:bell{% else %}mdi:bell-off{% endif %}"

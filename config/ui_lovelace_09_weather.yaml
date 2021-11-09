@@ -4,12 +4,9 @@
 path: weather
 title: Weather
 icon: mdi:weather-partly-cloudy
-panel: true
 cards:
-  - id: weather.container
-    type: custom:layout-card  #https://github.com/thomasloven/lovelace-layout-card
-    layout: vertical
-    max_columns: 2
+  - id: weather.col1
+    type: vertical-stack
     cards:
       - id: weather.weather_current
         type: entities  #https://www.home-assistant.io/lovelace/entities
@@ -59,10 +56,14 @@ cards:
           # - sensor.skin_type_4_safe_exposure_time
           # - sensor.skin_type_5_safe_exposure_time
           # - sensor.skin_type_6_safe_exposure_time
-      - break
+  - id: weather.col2
+    type: vertical-stack
+    cards:
       - id: weather.weather_meteogram
-        type: picture
-        image: https://www.yr.no/place/Italy/Veneto/Ponzano_Veneto/meteogram.svg
+        type: picture  #https://www.home-assistant.io/lovelace/picture
+        image: https://www.yr.no/nb/innhold/2-6541576/meteogram.svg
+        tap_action:
+          action: none
       - id: weather.weather_forecast
         type: entities  #https://www.home-assistant.io/lovelace/entities
         title: Forecast

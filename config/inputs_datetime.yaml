@@ -16,18 +16,6 @@
 #  has_time: true
 #  initial: "00:00"
 
-event_ale_letto:
-  name: Ora
-  icon: mdi:clock-alert-outline
-  has_date: false
-  has_time: true
-
-event_ale_scuola:
-  name: Ora
-  icon: mdi:clock-alert-outline
-  has_date: false
-  has_time: true
-
 event_sveglia_1:
   name: Ora
   icon: mdi:clock-alert-outline
@@ -35,6 +23,18 @@ event_sveglia_1:
   has_time: true
 
 event_sveglia_2:
+  name: Ora
+  icon: mdi:clock-alert-outline
+  has_date: false
+  has_time: true
+
+event_sveglia_3:
+  name: Ora
+  icon: mdi:clock-alert-outline
+  has_date: false
+  has_time: true
+
+event_sveglia_4:
   name: Ora
   icon: mdi:clock-alert-outline
   has_date: false
@@ -308,7 +308,7 @@ irrigation_start_time:
   has_time: true
 
 ale_internet:
-  name: Durata
+  name: Durata (hh:mm)
   icon: mdi:web-clock
   has_date: false
   has_time: true

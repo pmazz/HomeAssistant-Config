@@ -1,18 +1,18 @@
 #https://www.home-assistant.io/components/input_boolean
 
-event_ale_letto:
-  name: Attivo
-  icon: mdi:bell
-
-event_ale_scuola:
-  name: Attivo
-  icon: mdi:bell
-
 event_sveglia_1:
   name: Attivo
   icon: mdi:bell
 
 event_sveglia_2:
+  name: Attivo
+  icon: mdi:bell
+
+event_sveglia_3:
+  name: Attivo
+  icon: mdi:bell
+
+event_sveglia_4:
   name: Attivo
   icon: mdi:bell
 

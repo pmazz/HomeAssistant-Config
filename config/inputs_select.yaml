@@ -60,14 +60,14 @@ event_homemode_sveglia_2:
     - notte
   icon: mdi:home-circle
 
-event_daytype_ale_letto:
+event_daytype_sveglia_3:
   name: Tipo Giorno
   options:
     - tutti
     - feriale
     - festivo
   icon: mdi:calendar
-event_homemode_ale_letto:
+event_homemode_sveglia_3:
   name: Modalità casa
   options:
     - tutti
@@ -75,14 +75,14 @@ event_homemode_ale_letto:
     - notte
   icon: mdi:home-circle
 
-event_daytype_ale_scuola:
+event_daytype_sveglia_4:
   name: Tipo Giorno
   options:
     - tutti
     - feriale
     - festivo
   icon: mdi:calendar
-event_homemode_ale_scuola:
+event_homemode_sveglia_4:
   name: Modalità casa
   options:
     - tutti

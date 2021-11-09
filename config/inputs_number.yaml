@@ -47,7 +47,7 @@ event_volume_sveglia_2:
   step: 0.1
   mode: slider
 
-event_volume_ale_letto:
+event_volume_sveglia_3:
   name: Volume
   icon: mdi:volume-high
   min: 0
@@ -55,7 +55,7 @@ event_volume_ale_letto:
   step: 0.1
   mode: slider
 
-event_volume_ale_scuola:
+event_volume_sveglia_4:
   name: Volume
   icon: mdi:volume-high
   min: 0
@@ -145,7 +145,7 @@ event_charge_level_sonoff_basic_2:
 event_duration_cover_up:
   name: Durata
   icon: mdi:timer-sand
-  unit_of_measurement: sec.
+  # unit_of_measurement: sec.
   min: 1
   max: 15
   step: 1
@@ -153,7 +153,7 @@ event_duration_cover_up:
 event_duration_cover_down:
   name: Durata
   icon: mdi:timer-sand
-  unit_of_measurement: sec.
+  # unit_of_measurement: sec.
   min: 1
   max: 15
   step: 1
@@ -161,7 +161,7 @@ event_duration_cover_down:
 event_afterdawn_cover_up:
   name: Dopo Alba
   icon: mdi:timer-sand
-  unit_of_measurement: min.
+  # unit_of_measurement: min.
   min: -60
   max: 120
   step: 1
@@ -169,7 +169,7 @@ event_afterdawn_cover_up:
 event_aftersunset_cover_down:
   name: Dopo Tramonto
   icon: mdi:timer-sand
-  unit_of_measurement: min.
+  # unit_of_measurement: min.
   min: -60
   max: 120
   step: 1
@@ -178,7 +178,7 @@ event_aftersunset_cover_down:
 irrigation_zone1_minutes:
   name: Zona 1
   icon: mdi:numeric-1-box-outline
-  unit_of_measurement: min.
+  # unit_of_measurement: min.
   min: 0
   max: 60
   step: 1
@@ -186,7 +186,7 @@ irrigation_zone1_minutes:
 irrigation_zone2_minutes:
   name: Zona 2
   icon: mdi:numeric-2-box-outline
-  unit_of_measurement: min.
+  # unit_of_measurement: min.
   min: 0
   max: 60
   step: 1
@@ -194,7 +194,7 @@ irrigation_zone2_minutes:
 irrigation_zone3_minutes:
   name: Zona 3
   icon: mdi:numeric-3-box-outline
-  unit_of_measurement: min.
+  # unit_of_measurement: min.
   min: 0
   max: 60
   step: 1
@@ -202,7 +202,7 @@ irrigation_zone3_minutes:
 irrigation_nextstart_in_days:
   name: Prossimo avvio tra
   icon: mdi:calendar-month
-  unit_of_measurement: giorni
+  # unit_of_measurement: giorni
   min: 1
   max: 7
   step: 1

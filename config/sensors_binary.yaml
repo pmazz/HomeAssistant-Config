@@ -124,7 +124,7 @@
         - sensor.addon_mariadb
         - sensor.addon_mosquitto
         - sensor.addon_phpmyadmin
-        - sensor.addon_vscode
+        - sensor.addon_fileeditor
       value_template: >
         {%- set addon_upd = namespace(value=0) -%}
         {%- for addon in states['sensor'] if addon.name.startswith("addon_") -%}
@@ -250,13 +250,13 @@
         version: "{{ state_attr('sensor.addon_phpmyadmin', 'version') }}"
         version_latest: "{{ state_attr('sensor.addon_phpmyadmin', 'version_latest') }}"
 
-    addon_vscode_update:
-      icon_template: "{{ state_attr('sensor.addon_vscode', 'icon') }}"
-      value_template: "{{ state_attr('sensor.addon_vscode', 'version') != state_attr('sensor.addon_vscode', 'version_latest') }}"
+    addon_fileeditor_update:
+      icon_template: "{{ state_attr('sensor.addon_fileeditor', 'icon') }}"
+      value_template: "{{ state_attr('sensor.addon_fileeditor', 'version') != state_attr('sensor.addon_fileeditor', 'version_latest') }}"
       attribute_templates:
-        name: "{{ state_attr('sensor.addon_vscode', 'name') }}"
-        version: "{{ state_attr('sensor.addon_vscode', 'version') }}"
-        version_latest: "{{ state_attr('sensor.addon_vscode', 'version_latest') }}"
+        name: "{{ state_attr('sensor.addon_fileeditor', 'name') }}"
+        version: "{{ state_attr('sensor.addon_fileeditor', 'version') }}"
+        version_latest: "{{ state_attr('sensor.addon_fileeditor', 'version_latest') }}"
 
 - platform: mqtt  #https://www.home-assistant.io/integrations/binary_sensor.mqtt
   name: online_pzem_004t

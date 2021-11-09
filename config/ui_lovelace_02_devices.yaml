@@ -4,12 +4,9 @@
 path: devices
 title: Devices
 icon: mdi:monitor-cellphone-star
-panel: true
 cards:
-  - id: devices.container
-    type: custom:layout-card  #https://github.com/thomasloven/lovelace-layout-card
-    layout: vertical
-    max_columns: 3
+  - id: devices.col1
+    type: vertical-stack
     cards:
       - id: devices.router
         type: conditional  #https://www.home-assistant.io/lovelace/conditional
@@ -95,10 +92,13 @@ cards:
                     state_color: true
                 - input_datetime.ale_internet
                 - entity: timer.ale_internet
+                  type: custom:timer-bar-card  #https://github.com/rianadon/timer-bar-card
                   name: Countdown
                   icon: mdi:clock-end
                 - entity: sensor.ale_internet_end
-      - break
+  - id: devices.col2
+    type: vertical-stack
+    cards:
       - id: devices.adguard
         type: entities  #https://www.home-assistant.io/lovelace/entities
         title: AdGuard Home
@@ -202,7 +202,9 @@ cards:
               - entity: sensor.octoprint_target_tool0_temp
                 name: Target °C
                 unit: " "
-      - break
+  - id: devices.col3
+    type: vertical-stack
+    cards:
       - id: devices.ups
         type: entities  #https://www.home-assistant.io/lovelace/entities
         title: UPS

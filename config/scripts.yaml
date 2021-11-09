@@ -314,7 +314,7 @@ hass_reload_addon_status:
         entity_id: sensor.addon_phpmyadmin
     - service: homeassistant.update_entity
       data:
-        entity_id: sensor.addon_vscode
+        entity_id: sensor.addon_fileeditor
 
 
 #++++++++++++++++++++++++++++++++++
@@ -505,15 +505,8 @@ tts_speak:
       description: "Volume level to be set."
       example: "0.7"
   sequence:
-    - service: input_text.set_value #Elaborate message before TTS
-      data:
-        entity_id: input_text.tts_last_sentence
-        value: "{{ message2say.split('|') | random }}"
-    - service: input_datetime.set_datetime #Store last time TTS occurred
-      data:
-        entity_id: input_datetime.tts_last_occurred
-        date: "{{ now().strftime('%Y-%m-%d') }}"
-        time: "{{ now().strftime('%H:%M:%S') }}"
+    - variables:
+        msg: "{{ message2say.split('|') | random }}"
     - service: media_player.volume_set
       data:
         entity_id: media_player.salotto
@@ -521,7 +514,16 @@ tts_speak:
     - service: tts.google_say
       entity_id: media_player.salotto
       data:
-        message: "{{ states('input_text.tts_last_sentence') }}"
+        message: "{{ msg }}"
+    - service: input_text.set_value #Elaborate message before TTS
+      data:
+        entity_id: input_text.tts_last_sentence
+        value: "{{ msg }}"
+    - service: input_datetime.set_datetime #Store last time TTS occurred
+      data:
+        entity_id: input_datetime.tts_last_occurred
+        date: "{{ now().strftime('%Y-%m-%d') }}"
+        time: "{{ now().strftime('%H:%M:%S') }}"
 
 speak_generic:
   #Pronuncia il testo specificato
@@ -705,9 +707,8 @@ home_contarina_pick_tomorrow:
   alias: Contarina Pick
   description: "Avvisa se c'è una raccolta della spazzatura il giorno dopo."
   sequence:
-    - service: script.tts_speak
-      data:
-        message2say: >
+    - variables:
+        msg: >
           {% set raccolte = states.sensor | selectattr("entity_id", ">=", "sensor.ics_1") | selectattr("entity_id", "<=", "sensor.ics_5") 
             | selectattr("attributes.remaining", "==", 1) | list %}
           {% if raccolte | count > 0 %}
@@ -721,10 +722,13 @@ home_contarina_pick_tomorrow:
           {% else %}
             Per domani non è prevista nessuna raccolta.
           {% endif %}
+    - service: script.tts_speak
+      data:
+        message2say: "{{ msg }}"
         volume: "0.6"
     - service: notify.telegram_paolo
       data:
-        message: "{{'\U0000267B'}} {{ states('input_text.tts_last_sentence') }}"
+        message: "{{'\U0000267B'}} {{ msg }}"
 
 home_contarina_pick_when:
   alias: Contarina Pick
@@ -734,9 +738,8 @@ home_contarina_pick_when:
       description: "Tipo di raccolta da considerare ('Carta', 'Plastica', 'Vetro', 'Umido', 'Secco', 'Vegetale')."
       example: "Carta"
   sequence:
-    - service: script.tts_speak
-      data:
-        message2say: >
+    - variables:
+        msg: >
           {% if pick_type == "carta" %}
             {% set sensor = "ics_4" %}
             {% set msg_part = "della carta" %}
@@ -769,6 +772,9 @@ home_contarina_pick_when:
             {% endif %}
           {% endif %}
           {{ msg }}
+    - service: script.tts_speak
+      data:
+        message2say: "{{ msg }}"
         volume: "0.6"
 
 home_cover_up:
@@ -913,6 +919,50 @@ garage_door_close:
     - service: switch.turn_on
       data:
         entity_id: switch.sonoff_rele_1
+
+say_school_subjects:
+  alias: School subjects reminder
+  description: "Reminder for school subjects."
+  fields:
+    days_offset:
+      description: "0 for today, 1 for tomorrow, -1 for yesterday, etc."
+      example: "0"
+  sequence:
+    - variables:
+        msg: >
+          {% set wd = (now() + timedelta(days=days_offset)).weekday() %}
+          {% set subjets = [
+            "Tecnologia, Storia, Grammatica, Inglese, Scienze", 
+            "Antologia, Geografia, Religione, Matematica, Motoria, Inglese", 
+            "Antologia, Grammatica, Spagnolo, Scienze, Musica", 
+            "Inglese, Spagnolo, Motoria, Antologia, Storia", 
+            "Matematica, Scienze, Arte, Geografia"
+          ] %}
+          {% set msg = subjets[wd] %}
+          {% set wd_names = ["lunedì", "martedì", "mercoledì", "giovedì", "venerdì", "sabato", "domenica"] %}
+          {% set wd_names_prev = ["scorso", "scorso", "scorso", "scorso", "scorso", "scorso", "scorsa"] %}
+          {% set wd_names_next = ["prossimo", "prossimo", "prossimo", "prossimo", "prossimo", "prossimo", "prossima"] %}
+          {% if msg != null %}
+            {% set msg = "Le materie di {0} sono: " ~ msg %}
+          {% else %}
+            {% set msg = "Nessuna materia per {0}" %}
+          {% endif %}
+          {% if days_offset == 0 %}
+            {% set msg = msg.replace("{0}", "oggi") %}
+          {% elif days_offset == 1 %}
+            {% set msg = msg.replace("{0}", "domani") %}
+          {% elif days_offset == -1 %}
+            {% set msg = msg.replace("{0}", "ieri") %}
+          {% elif days_offset > 1 %}
+            {% set msg = msg.replace("{0}", wd_names[wd] ~ " " ~ wd_names_next[wd]) %}
+          {% elif days_offset < -1 %}
+            {% set msg = msg.replace("{0}", wd_names[wd] ~ " " ~ wd_names_prev[wd]) %}
+          {% endif %}
+          {{ msg }}
+    - service: script.tts_speak
+      data:
+        message2say: "{{ msg }}"
+        volume: "0.6"
 
 
 #++++++++++++++++++++++++++++++++++

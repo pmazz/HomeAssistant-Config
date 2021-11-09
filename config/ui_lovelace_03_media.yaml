@@ -4,12 +4,9 @@
 path: media
 title: Media
 icon: mdi:animation-play
-panel: true
 cards:
-  - id: media.container
-    type: custom:layout-card  #https://github.com/thomasloven/lovelace-layout-card
-    layout: vertical
-    max_columns: 3
+  - id: media.col1
+    type: vertical-stack
     cards:
       - id: media.google_home_player
         type: media-control  #https://www.home-assistant.io/lovelace/media-control
@@ -181,7 +178,9 @@ cards:
                             service_data:
                               entity_id: input_select.radio_station
                               option: "-Off-"
-      - break
+  - id: media.col2
+    type: vertical-stack
+    cards:
       - id: media.samsung_tv_player
         type: media-control  #https://www.home-assistant.io/lovelace/media-control
         entity: media_player.samsung_tv
@@ -259,7 +258,9 @@ cards:
                         service_data:
                           entity_id: media_player.samsung_tv
                           is_volume_muted: true
-      - break
+  - id: media.col3
+    type: vertical-stack
+    cards:
       - id: media.google_chromecast_player
         type: media-control  #https://www.home-assistant.io/lovelace/media-control
         entity: media_player.chromecast1100

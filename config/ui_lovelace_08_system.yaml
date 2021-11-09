@@ -4,12 +4,9 @@
 path: system
 title: System
 icon: mdi:cog
-panel: true
 cards:
-  - id: system.container
-    type: custom:layout-card  #https://github.com/thomasloven/lovelace-layout-card
-    layout: vertical
-    max_columns: 3
+  - id: system.col1
+    type: vertical-stack
     cards:
       - id: system.server
         type: entities  #https://www.home-assistant.io/lovelace/entities
@@ -63,7 +60,9 @@ cards:
             entities:
               - entity: sensor.mqtt_broker_bytes_sent
                 name: Sent
-      - break
+  - id: system.col2
+    type: vertical-stack
+    cards:
       - id: system.hass
         type: entities  #https://www.home-assistant.io/lovelace/entities
         title: Home Assistant
@@ -144,31 +143,7 @@ cards:
                     name: Status
                     unit: []
                     styles:
-                      width: 40px
-              - entity: binary_sensor.addon_bitwarden_update
-                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-                name: Bitwarden RS
-                icon: si:bitwarden
-                entities:
-                  - icon: mdi:open-in-new
-                    tap_action: 
-                      action: url
-                      url_path: https://mazzpass.duckdns.org:7277
-                  - icon: mdi:hammer-screwdriver
-                    tap_action: 
-                      action: url
-                      url_path: /hassio/addon/a0d7b954_bitwarden/config
-                  - attribute: version
-                    styles:
-                      width: 40px
-                  - attribute: version_latest
-                    styles:
-                      width: 40px
-                  - entity: sensor.addon_bitwarden
-                    name: []
-                    unit: []
-                    styles:
-                      width: 40px
+                      width: 50px
               - entity: binary_sensor.addon_dasshio_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: Dasshio
@@ -188,7 +163,7 @@ cards:
                     name: []
                     unit: []
                     styles:
-                      width: 40px
+                      width: 50px
               - entity: binary_sensor.addon_duckdns_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: Duck DNS
@@ -208,7 +183,31 @@ cards:
                     name: []
                     unit: []
                     styles:
+                      width: 50px
+              - entity: binary_sensor.addon_fileeditor_update
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: File Editor
+                icon: mdi:file-document-edit-outline
+                entities:
+                  - icon: mdi:open-in-new
+                    tap_action: 
+                      action: url
+                      url_path: /hassio/ingress/core_configurator
+                  - icon: mdi:hammer-screwdriver
+                    tap_action: 
+                      action: url
+                      url_path: /hassio/addon/core_configurator/config
+                  - attribute: version
+                    styles:
                       width: 40px
+                  - attribute: version_latest
+                    styles:
+                      width: 40px
+                  - entity: sensor.addon_fileeditor
+                    name: []
+                    unit: []
+                    styles:
+                      width: 50px
               - entity: binary_sensor.addon_mariadb_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: MariaDB
@@ -228,7 +227,7 @@ cards:
                     name: []
                     unit: []
                     styles:
-                      width: 40px
+                      width: 50px
               - entity: binary_sensor.addon_mosquitto_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: Mosquitto
@@ -248,7 +247,7 @@ cards:
                     name: []
                     unit: []
                     styles:
-                      width: 40px
+                      width: 50px
               - entity: binary_sensor.addon_motioneye_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: motionEye
@@ -272,7 +271,7 @@ cards:
                     name: []
                     unit: []
                     styles:
-                      width: 40px
+                      width: 50px
               - entity: binary_sensor.addon_nut_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: Network UPS Tools
@@ -292,7 +291,7 @@ cards:
                     name: []
                     unit: []
                     styles:
-                      width: 40px
+                      width: 50px
               - entity: binary_sensor.addon_nodered_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: Node-RED
@@ -316,7 +315,7 @@ cards:
                     name: []
                     unit: []
                     styles:
-                      width: 40px
+                      width: 50px
               - entity: binary_sensor.addon_phpmyadmin_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: phpMyAdmin
@@ -340,7 +339,7 @@ cards:
                     name: []
                     unit: []
                     styles:
-                      width: 40px
+                      width: 50px
               - entity: binary_sensor.addon_samba_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: Samba share
@@ -360,7 +359,7 @@ cards:
                     name: []
                     unit: []
                     styles:
-                      width: 40px
+                      width: 50px
               - entity: binary_sensor.addon_ssh_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: SSH & Web Terminal
@@ -384,7 +383,7 @@ cards:
                     name: []
                     unit: []
                     styles:
-                      width: 40px
+                      width: 50px
               - entity: binary_sensor.addon_tasmoadmin_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
                 name: TasmoAdmin
@@ -408,67 +407,69 @@ cards:
                     name: []
                     unit: []
                     styles:
-                      width: 40px
-              - entity: binary_sensor.addon_vscode_update
+                      width: 50px
+              - entity: binary_sensor.addon_bitwarden_update
                 type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-                name: Visual Studio Code
-                icon: si:visualstudiocode
+                name: Vaultwarden (Bitwarden)
+                icon: si:bitwarden
                 entities:
                   - icon: mdi:open-in-new
                     tap_action: 
                       action: url
-                      url_path: /hassio/ingress/a0d7b954_vscode
+                      url_path: https://mazzpass.duckdns.org:7277
                   - icon: mdi:hammer-screwdriver
                     tap_action: 
                       action: url
-                      url_path: /hassio/addon/a0d7b954_vscode/config
+                      url_path: /hassio/addon/a0d7b954_bitwarden/config
                   - attribute: version
                     styles:
                       width: 40px
                   - attribute: version_latest
                     styles:
                       width: 40px
-                  - entity: sensor.addon_vscode
+                  - entity: sensor.addon_bitwarden
                     name: []
                     unit: []
                     styles:
+                      width: 50px
+          - type: custom:fold-entity-row  #https://github.com/thomasloven/lovelace-fold-entity-row
+            head:
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                entity: sensor.hass_db_filesize
+                name: HASS Database
+                state_header: Size
+                entities:
+                  - entity: sensor.hass_db_states_count
+                    name: "States"
+                  - entity: sensor.hass_db_events_count
+                    name: "Events"
+            items:
+              - entity: sensor.hass_sensor_count
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: HASS Sensors 1/2
+                state_header: Sensors
+                styles:
+                  width: 40px
+                entities:
+                  - entity: sensor.hass_switch_count
+                    styles:
                       width: 40px
-          - type: section
-          - entity: sensor.hass_db_filesize
-            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-            name: HASS Database
-            state_header: Size
-            entities:
-              - entity: sensor.hass_db_states_count
-                name: "States"
-              - entity: sensor.hass_db_events_count
-                name: "Events"
-          - entity: sensor.hass_sensor_count
-            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-            name: HASS Sensors 1/2
-            state_header: Sensors
-            styles:
-              width: 40px
-            entities:
-              - entity: sensor.hass_switch_count
+                  - entity: sensor.hass_lights_count
+                    styles:
+                      width: 40px
+              - entity: sensor.hass_automation_count
+                type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
+                name: HASS Sensors 2/2
+                state_header: Autom.
                 styles:
                   width: 40px
-              - entity: sensor.hass_lights_count
-                styles:
-                  width: 40px
-          - entity: sensor.hass_automation_count
-            type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
-            name: HASS Sensors 2/2
-            state_header: Autom.
-            styles:
-              width: 40px
-            entities:
-              - entity: sensor.hass_input_count
-                styles:
-                  width: 40px
-              - entity: sensor.hass_script_count
-                styles:
-                  width: 40px
+                entities:
+                  - entity: sensor.hass_input_count
+                    styles:
+                      width: 40px
+                  - entity: sensor.hass_script_count
+                    styles:
+                      width: 40px
           - type: section
           - entity: sensor.hass_config_check_result
             type: custom:multiple-entity-row  #https://github.com/benct/lovelace-multiple-entity-row
@@ -501,7 +502,9 @@ cards:
             row: true
             card:
               entity: script.hass_restart
-      - break
+  - id: system.col3
+    type: vertical-stack
+    cards:
       - id: system.configuration
         type: entities  #https://www.home-assistant.io/lovelace/entities
         title: Configuration

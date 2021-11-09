@@ -4,12 +4,9 @@
 path: home
 title: Home Stuff
 icon: mdi:home
-panel: true
 cards:
-  - id: home.container
-    type: custom:layout-card  #https://github.com/thomasloven/lovelace-layout-card
-    layout: vertical
-    max_columns: 3
+  - id: home.col1
+    type: vertical-stack
     cards:
       - id: home.electricity
         type: entities  #https://www.home-assistant.io/lovelace/entities
@@ -96,7 +93,9 @@ cards:
               - entity: sensor.pzem_energy_entire_day
                 name: Consumi (ultimi 15 giorni)
                 show_state: false
-      - break
+  - id: home.col2
+    type: vertical-stack
+    cards:
       - id: home.zigbee
         type: entities  #https://www.home-assistant.io/lovelace/entities
         title: Zigbee Sensors
@@ -307,7 +306,9 @@ cards:
             state_color: true
           - input_select.event_daytype_big_gate
           - input_datetime.event_time_big_gate
-      - break
+  - id: home.col3
+    type: vertical-stack
+    cards:
       - id: events.garden
         type: entities  #https://www.home-assistant.io/lovelace/entities
         title: Giardino

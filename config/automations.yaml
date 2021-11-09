@@ -1217,6 +1217,26 @@
     - service: switch.turn_off
       entity_id: switch.ale_internet_timer
 
+- id: say_school_subjects
+  alias: say_school_subjects
+  trigger:
+    - platform: time
+      at:
+        - "18:30:00"
+        - "20:01:00"
+  condition:
+    - condition: time
+      weekday:
+        - sun
+        - mon
+        - tue
+        - wed
+        - thu
+  action:
+    - service: script.say_school_subjects
+      data:
+        days_offset: 1
+
 
 #+++++++++++++++++++++++++++++++++++++++++
 #+++++ Energy monitoring automations +++++
